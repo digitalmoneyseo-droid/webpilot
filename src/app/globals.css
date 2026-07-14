@@ -51,23 +51,35 @@ button { color: inherit; }
 .status-pill, .eyebrow { display: inline-flex; align-items: center; border-radius: 999px; background: #fff; padding: 6px 10px; font-size: 11px; line-height: 1; }
 .status-pill i { width: 6px; height: 6px; border-radius: 50%; background: #41d87d; box-shadow: 0 0 0 3px rgba(65,216,125,.12); margin-right: 7px; }
 .hero h1 { width:100%; margin: 16px 0 13px; max-width: 760px; font-size: clamp(38px, 3.55vw, 52px); line-height: .98; letter-spacing: -.06em; font-weight: 680; }
-.hero h1.shiny-text {
+.hero h1.shiny-text { color: var(--ink); }
+.hero h1.shiny-text > span {
+  display: block;
+  width: max-content;
+  max-width: 100%;
+  margin-inline: auto;
   color: var(--ink);
-  background: linear-gradient(110deg, var(--ink) 38%, #777773 46%, #fff 50%, #777773 54%, var(--ink) 62%);
+  background-image: linear-gradient(110deg, var(--ink) 42%, #343432 47%, #8a8a85 50%, #343432 53%, var(--ink) 58%);
   background-size: 250% 100%;
   background-position: 150% 50%;
   background-clip: text;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
-  animation: hero-shine 5.5s linear infinite;
+  will-change: background-position;
+  animation: hero-shine 9.6s linear infinite;
+  animation-delay: var(--shine-delay, 0s);
 }
+.hero h1.shiny-text > span:nth-child(2) { --shine-delay: 2.2s; }
+.hero h1.shiny-text > span:nth-child(3) { --shine-delay: 4.4s; }
 @keyframes hero-shine {
-  to { background-position: -150% 50%; }
+  0% { background-position: 150% 50%; }
+  23%, 100% { background-position: -150% 50%; }
 }
 @media (prefers-reduced-motion: reduce) {
-  .hero h1.shiny-text {
+  .hero h1.shiny-text > span {
     animation: none;
-    background-position: 50% 50%;
+    background: none;
+    -webkit-text-fill-color: currentColor;
+    will-change: auto;
   }
 }
 .hero p { width:100%; margin: 0; max-width: 560px; font-size: 16px; line-height: 1.45; color: #51514d; letter-spacing: -.02em; }
