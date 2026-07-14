@@ -2,8 +2,9 @@
 
 import Link from "next/link";
 import { useEffect, useState } from "react";
-import { ArrowUpRight, MenuIcon, Plus } from "@/components/icons";
+import { ArrowUpRight, MenuIcon, Plus, TranslateIcon } from "@/components/icons";
 import { BrandMark } from "@/components/brand-mark";
+import { useLanguage } from "@/components/language-provider";
 
 const links = [
   ["Work", "/work"], ["Services", "/services"], ["About", "/about"],
@@ -12,6 +13,7 @@ const links = [
 
 export function SiteHeader() {
   const [open, setOpen] = useState(false);
+  const { language, toggleLanguage } = useLanguage();
   useEffect(() => {
     document.body.style.overflow = open ? "hidden" : "";
     const closeOnEscape = (event: KeyboardEvent) => { if (event.key === "Escape") setOpen(false); };
@@ -24,6 +26,9 @@ export function SiteHeader() {
       <header className="site-header">
         <Link href="/" className="header-mark" aria-label="Webpilot home"><BrandMark /></Link>
         <Link href="/work" className="header-pill">Recent work</Link>
+        <button className="header-language" type="button" onClick={toggleLanguage} aria-label={language === "de" ? "Switch to English" : "Auf Deutsch wechseln"} data-no-translate>
+          <TranslateIcon /><span className={language === "de" ? "is-active" : ""}>DE</span><i>/</i><span className={language === "en" ? "is-active" : ""}>EN</span>
+        </button>
         <button className="header-menu" type="button" onClick={() => setOpen(true)} aria-label="Open navigation" aria-expanded={open}>
           <MenuIcon />
         </button>

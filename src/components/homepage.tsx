@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { BenefitIcon, type BenefitIconName } from "@/components/benefit-icon";
 import { CtaButton, TextLink } from "@/components/buttons";
 import { Faq } from "@/components/faq";
 import { FinalCta } from "@/components/final-cta";
@@ -10,12 +11,12 @@ import { SiteFooter } from "@/components/site-footer";
 import { faqs, projects, team } from "@/lib/content";
 
 const benefits = [
-  ["✦", "Outcome obsessed", "Beautiful work is only the beginning. Every engagement is tied to qualified demand, conversion, pipeline, or efficiency."],
-  ["⌁", "Senior specialists only", "You work directly with experienced strategists, designers, developers, marketers, and automation specialists."],
-  ["◫", "Strategy through execution", "Positioning, creative, technology, acquisition, content, and automation work as one coordinated system."],
-  ["◎", "One accountable partner", "One senior team owns the strategy, delivery, communication, and performance from end to end."],
-  ["✣", "Creative and technology together", "Brand, content, code, data, and AI are planned together—not managed as disconnected silos."],
-] as const;
+  ["outcome", "Outcome obsessed", "Beautiful work is only the beginning. Every engagement is tied to qualified demand, conversion, pipeline, or efficiency."],
+  ["senior", "Senior specialists only", "You work directly with experienced strategists, designers, developers, marketers, and automation specialists."],
+  ["system", "Strategy through execution", "Positioning, creative, technology, acquisition, content, and automation work as one coordinated system."],
+  ["ownership", "One accountable partner", "One senior team owns the strategy, delivery, communication, and performance from end to end."],
+  ["creative-tech", "Creative and technology together", "Brand, content, code, data, and AI are planned together—not managed as disconnected silos."],
+] as const satisfies readonly (readonly [BenefitIconName, string, string])[];
 
 const testimonials = [
   ["NORTH/CO", "The team connected our website, search strategy, paid acquisition, and CRM automation into one cohesive growth system.", "Camille R. · VP Growth"],
@@ -34,15 +35,17 @@ const tools = [
 ];
 
 export function Homepage() {
+  const ribbonProjects = projects.slice(0, 4);
+
   return <>
     <main>
       <section className="hero hero--home"><div className="hero-inner"><span className="status-pill"><i /> Senior studio · selected engagements</span><h1><ShinyText text="A full-stack growth and technology partner for ambitious brands." speed={3.5} delay={1} color="#0c0c0c" shineColor="#b8b8b2" spread={120} yoyo /></h1><p>Brand, web, SEO, AI search, content, paid acquisition, and intelligent automation—all delivered by one senior team.</p><div className="hero-actions"><CtaButton href="/contact">Book strategy call</CtaButton><CtaButton href="/work" light>Explore our work</CtaButton></div></div></section>
 
-      <section className="work-ribbon" aria-label="Selected work"><div className="work-ribbon-track">{projects.slice(0, 4).map(project => <ProjectCard project={project} key={project.slug} />)}</div></section>
+      <section className="work-ribbon" aria-label="Selected work"><div className="work-ribbon-track"><div className="work-ribbon-group">{ribbonProjects.map(project => <ProjectCard project={project} key={project.slug} />)}</div><div className="work-ribbon-group" aria-hidden="true">{ribbonProjects.map(project => <ProjectCard project={project} decorative key={`duplicate-${project.slug}`} />)}</div></div></section>
 
       <section className="logo-cloud"><h2>Trusted by ambitious teams building what’s next.</h2><div className="logo-row"><span>VERDANT</span><span>North/Co</span><span>orbit*</span><span>MORROW</span><span>Arc Labs</span><span>KINDRED</span><span>FORM</span><span>+ 20 more</span></div></section>
 
-      <section className="why-section section-pad"><SectionHeading title="Why Webpilot" align="center" /><div className="benefit-grid">{benefits.map(([icon, title, copy], index) => <Reveal key={title} className={`benefit-card benefit-card-${index + 1}`} delay={index * 50}><div className="benefit-visual"><span>{icon}</span><i /><i /><i /></div><h3>{title}</h3><p>{copy}</p></Reveal>)}</div></section>
+      <section className="why-section section-pad"><SectionHeading title="Why Webpilot" align="center" /><div className="benefit-grid">{benefits.map(([icon, title, copy], index) => <Reveal key={title} className={`benefit-card benefit-card-${index + 1}`} delay={index * 50}><div className="benefit-visual"><BenefitIcon name={icon} /></div><h3>{title}</h3><p>{copy}</p></Reveal>)}</div></section>
 
       <section className="service-section section-pad"><SectionHeading eyebrow="One coordinated system" title="Build. Grow. Automate." copy="The studio model is intentionally broad at the edges and tightly connected at the center: your commercial outcome." /><div className="service-trio">{[
         ["Build", "We create distinctive brands, high-converting websites, and digital products designed for long-term growth.", "brand-web-product", "01"],
@@ -67,7 +70,7 @@ export function Homepage() {
         ["Audits & strategy", "Focused growth, search, analytics, conversion, AI-readiness, and automation discovery."],
       ].map(([title, copy], index) => <div key={title}><span>0{index + 1}</span><h3>{title}</h3><p>{copy}</p></div>)}</div></section>
 
-      <section className="faq-section section-pad"><SectionHeading title="FAQs" align="center" /><Faq items={faqs} /></section><FinalCta />
+      <section className="faq-section section-pad"><div className="faq-layout"><SectionHeading eyebrow="Good to know" title="FAQs" /><Faq items={faqs} /></div></section><FinalCta />
     </main><SiteFooter />
   </>;
 }

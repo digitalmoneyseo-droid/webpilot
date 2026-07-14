@@ -1,0 +1,34 @@
+import type { SVGProps } from "react";
+
+export type BenefitIconName = "outcome" | "senior" | "system" | "ownership" | "creative-tech";
+
+export function BenefitIcon({ name, ...props }: { name: BenefitIconName } & SVGProps<SVGSVGElement>) {
+  const commonProps = {
+    viewBox: "0 0 64 64",
+    fill: "none",
+    stroke: "currentColor",
+    strokeWidth: 1.6,
+    strokeLinecap: "round" as const,
+    strokeLinejoin: "round" as const,
+    "aria-hidden": true,
+    ...props,
+  };
+
+  if (name === "outcome") {
+    return <svg {...commonProps}><circle cx="28" cy="34" r="18" /><circle cx="28" cy="34" r="10" /><circle cx="28" cy="34" r="3" fill="currentColor" /><path d="m38 23 11-11m0 0v8m0-8h-8" /></svg>;
+  }
+
+  if (name === "senior") {
+    return <svg {...commonProps}><circle cx="32" cy="22" r="8" /><circle cx="15" cy="28" r="5" /><circle cx="49" cy="28" r="5" /><path d="M18 50c1-9 6-14 14-14s13 5 14 14M5 49c1-7 4-11 10-11 3 0 5 1 7 3m37 8c-1-7-4-11-10-11-3 0-5 1-7 3" /></svg>;
+  }
+
+  if (name === "system") {
+    return <svg {...commonProps}><circle cx="12" cy="18" r="5" /><circle cx="52" cy="18" r="5" /><circle cx="32" cy="48" r="5" /><path d="M17 18h30M15 22l14 21m20-21L35 43" /><path d="m28 18 4 4 4-4" /></svg>;
+  }
+
+  if (name === "ownership") {
+    return <svg {...commonProps}><circle cx="32" cy="32" r="21" /><circle cx="32" cy="32" r="14" /><path d="m25 32 5 5 10-11" /><path d="M32 6v5m0 42v5M6 32h5m42 0h5" /></svg>;
+  }
+
+  return <svg {...commonProps}><path d="m19 22-9 10 9 10m26-20 9 10-9 10M37 14 27 50" /><path d="m45 8 1.5 4.5L51 14l-4.5 1.5L45 20l-1.5-4.5L39 14l4.5-1.5L45 8Z" /></svg>;
+}

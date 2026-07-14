@@ -236,18 +236,11 @@ export const team = [
 ] as const;
 
 export const faqs = [
-  ["What services do you provide?", "We work across brand, websites, digital products, search, content, social, paid acquisition, analytics, AI systems, and workflow automation."],
-  ["Do you work on one-time projects or monthly retainers?", "Both. Defined builds work well as projects; ongoing acquisition, content, optimization, and embedded teams work best as retainers."],
-  ["Can you act as our entire digital growth team?", "Yes. Our embedded model combines strategy, creative, development, acquisition, analytics, and automation around one shared plan."],
-  ["What is AI search optimization and GEO?", "It is the work of making your expertise easy for answer engines to understand, trust, retrieve, and cite—supported by strong technical SEO and useful content."],
-  ["How do you measure marketing performance?", "We define a small measurement plan around commercial outcomes, then connect leading indicators such as qualified demand, conversion, and pipeline."],
-  ["Do you manage advertising budgets?", "Yes. Media spend remains in accounts you own, while we manage planning, campaigns, creative testing, optimization, and reporting."],
-  ["Can you work alongside our internal team?", "Absolutely. We often fill specialist gaps, lead a focused workstream, or provide an embedded senior team alongside internal owners."],
-  ["What kinds of AI systems can you build?", "Common builds include support agents, knowledge assistants, research workflows, lead qualification, reporting automation, and task-specific internal tools."],
-  ["How do you handle customer and company data?", "We minimize data access, document data flows, use approved vendors, apply role-based access, and keep humans responsible for sensitive decisions."],
-  ["When should we expect results?", "Early operational and conversion improvements can appear within weeks. Search authority, brand demand, and durable acquisition efficiency compound over months."],
-  ["Who owns the website, content, accounts, data, and code?", "You do. Final deliverables, production accounts, source code, and approved content are handed over under the terms of the engagement."],
-  ["What does a typical engagement cost?", "Focused strategy and audits begin in the low five figures. Full builds and embedded programs are scoped around team, complexity, and pace."],
+  ["Why work with Webpilot instead of a traditional agency?", "You get one senior, multidisciplinary team across strategy, design, development, growth, and AI. There are no junior handoffs and no separate vendors to coordinate."],
+  ["Who will actually work on our project?", "The specialists you meet are the people doing the work. Your core team stays close from the first working session through launch and improvement."],
+  ["What can Webpilot own end to end?", "We can take a project from positioning and creative direction through design, development, launch, acquisition, measurement, and automation."],
+  ["How do we work together?", "We agree on the outcome, assemble the right senior team, and work in a clear weekly rhythm with visible decisions, progress, and next steps."],
+  ["Who owns the work when the engagement ends?", "You do. Approved designs, source code, content, production accounts, and project documentation are handed over to your team."],
 ] as const;
 
 export function getProject(slug: string) {

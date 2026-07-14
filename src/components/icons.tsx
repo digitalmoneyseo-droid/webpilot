@@ -16,3 +16,6 @@ export function MenuIcon(props: SVGProps<SVGSVGElement>) {
   return <svg viewBox="0 0 20 20" fill="none" aria-hidden="true" {...props}><path d="M4 7h12M4 13h12" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" /></svg>;
 }
 
+export function TranslateIcon(props: SVGProps<SVGSVGElement>) {
+  return <svg viewBox="0 0 20 20" fill="none" aria-hidden="true" {...props}><path d="M3.5 4.5h8M7.5 3v1.5m-2.8 3h5.6M5.3 4.5c.4 3.1 2.4 5.4 5.2 6.6M10.1 4.5c-.4 3.1-2.4 5.4-5.2 6.6M11.5 16.5l2.8-7 2.8 7m-4.7-2.1h3.8" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round" /></svg>;
+}

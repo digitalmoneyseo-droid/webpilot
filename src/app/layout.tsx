@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import { SiteHeader } from "@/components/site-header";
+import { LanguageProvider } from "@/components/language-provider";
 import "./globals.css";
 
 const inter = Inter({
@@ -10,8 +11,8 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: { default: "Webpilot — Digital Growth & AI Studio", template: "%s — Webpilot" },
-  description: "A full-stack growth and technology partner for ambitious brands.",
+  title: { default: "Webpilot — Studio für digitales Wachstum & KI", template: "%s — Webpilot" },
+  description: "Ein ganzheitlicher Wachstums- und Technologiepartner für ambitionierte Marken.",
   applicationName: "Webpilot",
   keywords: ["digital growth studio", "AI studio", "brand", "web design", "SEO", "automation"],
   authors: [{ name: "Webpilot" }],
@@ -19,8 +20,8 @@ export const metadata: Metadata = {
   openGraph: {
     type: "website",
     siteName: "Webpilot",
-    title: "Webpilot — Digital Growth & AI Studio",
-    description: "Brand, technology, growth, and AI—working as one system.",
+    title: "Webpilot — Studio für digitales Wachstum & KI",
+    description: "Marke, Technologie, Wachstum und KI als ein System.",
   },
   robots: { index: false, follow: false, nocache: true, googleBot: { index: false, follow: false } },
 };
@@ -31,8 +32,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`${inter.variable} h-full antialiased`}>
-      <body className="min-h-full"><SiteHeader />{children}</body>
+    <html lang="de" className={`${inter.variable} h-full antialiased`}>
+      <body className="min-h-full"><LanguageProvider><SiteHeader />{children}</LanguageProvider></body>
     </html>
   );
 }
