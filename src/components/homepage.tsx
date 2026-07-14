@@ -35,7 +35,7 @@ const tools = [
 export function Homepage() {
   return <>
     <main>
-      <section className="hero hero--home"><div className="hero-inner"><span className="status-pill"><i /> Senior studio · selected engagements</span><h1>A full-stack growth and technology partner for ambitious brands.</h1><p>Brand, web, SEO, AI search, content, paid acquisition, and intelligent automation—all delivered by one senior team.</p><div className="hero-actions"><CtaButton href="/contact">Book strategy call</CtaButton><CtaButton href="/work" light>Explore our work</CtaButton></div></div></section>
+      <section className="hero hero--home"><div className="hero-inner"><span className="status-pill"><i /> Senior studio · selected engagements</span><h1 className="shiny-text">A full-stack growth and technology partner for ambitious brands.</h1><p>Brand, web, SEO, AI search, content, paid acquisition, and intelligent automation—all delivered by one senior team.</p><div className="hero-actions"><CtaButton href="/contact">Book strategy call</CtaButton><CtaButton href="/work" light>Explore our work</CtaButton></div></div></section>
 
       <section className="work-ribbon" aria-label="Selected work"><div className="work-ribbon-track">{projects.slice(0, 4).map(project => <ProjectCard project={project} key={project.slug} />)}</div></section>
 
