@@ -22,7 +22,7 @@ a { color: inherit; text-decoration: none; }
 button { color: inherit; }
 ::selection { background: #191919; color: #fff; }
 
-.site-header { position: absolute; z-index: 50; top: 22px; left: 0; right: 0; width: max-content; margin: auto; display: flex; align-items: center; gap: 8px; }
+.site-header { position: fixed; z-index: 50; top: 22px; left: 22px; width: max-content; display: flex; align-items: center; gap: 8px; }
 .header-mark, .header-pill, .header-language, .header-menu { height: 42px; background: #fff; border: 0; border-radius: 999px; display: inline-flex; align-items: center; justify-content: center; box-shadow: 0 1px 0 rgba(0,0,0,.04); }
 .header-mark { width: 42px; }
 .header-pill { padding: 0 17px; font-size: 13px; white-space: nowrap; }
@@ -69,9 +69,9 @@ button { color: inherit; }
 .text-link svg { width: 17px; }
 
 .work-ribbon { overflow: hidden; padding: 0 16px 46px; }
-.work-ribbon-track { --ribbon-gap:14px; --ribbon-half-gap:7px; display:flex; gap:var(--ribbon-gap); width:max-content; will-change:transform; animation:work-ribbon-scroll 30s linear infinite; }
+.work-ribbon-track { --ribbon-gap:14px; --ribbon-half-gap:7px; display:flex; gap:var(--ribbon-gap); width:max-content; will-change:transform; animation:work-ribbon-scroll 38s linear infinite; }
 .work-ribbon-group { display:flex; gap:var(--ribbon-gap); flex:none; }
-.work-ribbon .project-card { width: 320px; height: 230px; flex: none; border-radius: 20px; }
+.work-ribbon .project-card { width: 410px; height: 280px; flex: none; border-radius: 20px; }
 .work-ribbon .project-visual { min-height: 0; }
 @keyframes work-ribbon-scroll { to { transform:translate3d(calc(-50% - var(--ribbon-half-gap)),0,0); } }
 .project-card { position: relative; display: flex; flex-direction: column; background: #fff; border-radius: var(--radius); overflow: hidden; min-height: 520px; isolation: isolate; transition: transform .45s cubic-bezier(.22,1,.36,1); }
@@ -199,27 +199,31 @@ button { color: inherit; }
 }
 
 @media (max-width: 900px) {
+  .site-header { left:15px; }
   .header-menu, .menu-close { right: 15px; }
   .work-ribbon-track { transform:none; }
-  .work-ribbon .project-card { width: 300px; height: 215px; }
+  .work-ribbon .project-card { width: 310px; height: 260px; }
   .faq-layout { grid-template-columns:1fr; gap:40px; }
 }
 
 @media (max-width: 600px) {
-  .hero h1 { font-size: 35px; line-height: 1.04; }
-  .section-heading h2 { font-size: 35px; }
-  .search-copy h2 { font-size: 38px; }
-  .menu-links a { font-size: 38px; }
-  .editorial-hero h1, .case-hero h1 { font-size: 48px; }
-  .split-cta h2 { font-size: 38px; }
-  .service-statement h2, .about-manifesto h2 { font-size: 34px; }
+  .hero { min-height:0; padding:92px 18px 28px; }
+  .hero h1 { font-size:30px; line-height:1.06; letter-spacing:-.045em; }
+  .hero-actions { width:min(270px,100%); flex-direction:column; align-items:stretch; }
+  .hero-actions .pill-button { width:100%; min-height:44px; justify-content:space-between; white-space:nowrap; }
+  .section-heading h2 { font-size:32px; }
+  .search-copy h2 { font-size:34px; }
+  .menu-links a { font-size:36px; }
+  .editorial-hero h1, .case-hero h1 { font-size:42px; }
+  .split-cta h2 { font-size:34px; }
+  .service-statement h2, .about-manifesto h2 { font-size:30px; }
   .insight-card h2 { font-size: 25px; }
-  .article-page header h1, .contact-intro h1 { font-size: 46px; }
-  .article-body h2 { font-size: 28px; }
-  .location-band h2 { font-size: 46px; }
+  .article-page header h1, .contact-intro h1 { font-size:40px; }
+  .article-body h2 { font-size:27px; }
+  .location-band h2 { font-size:40px; }
   .work-ribbon { padding-inline:12px; }
   .work-ribbon-track { --ribbon-gap:10px; --ribbon-half-gap:5px; }
-  .work-ribbon .project-card { width: 260px; height: 190px; }
+  .work-ribbon .project-card { width:230px; height:264px; border-radius:18px; }
   .service-card, .service-card:last-child { min-height: 440px; }
   .service-symbol { height: 180px; }
   .faq-question { font-size:16px; }

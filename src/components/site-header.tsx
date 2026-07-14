@@ -25,7 +25,6 @@ export function SiteHeader() {
     <>
       <header className="site-header">
         <Link href="/" className="header-mark" aria-label="Webpilot home"><BrandMark /></Link>
-        <Link href="/work" className="header-pill">Recent work</Link>
         <button className="header-language" type="button" onClick={toggleLanguage} aria-label={language === "de" ? "Switch to English" : "Auf Deutsch wechseln"} data-no-translate>
           <TranslateIcon /><span className={language === "de" ? "is-active" : ""}>DE</span><i>/</i><span className={language === "en" ? "is-active" : ""}>EN</span>
         </button>
