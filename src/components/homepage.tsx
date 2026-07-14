@@ -21,7 +21,7 @@ const testimonials = [
   ["NORTH/CO", "The team connected our website, search strategy, paid acquisition, and CRM automation into one cohesive growth system.", "Camille R. · VP Growth"],
   ["MORROW", "They made a complex product feel obvious. The new story sharpened every sales conversation and gave marketing a real system to build on.", "Ben A. · Co-founder"],
   ["ARC LABS", "Our support agent now handles the repetitive work with care and gives the team better context when a person needs to step in.", "Sonia K. · COO"],
-  ["KINSHIP", "Fifth Signal brought brand taste and performance discipline to the same table. That combination changed the trajectory of the launch.", "Alex D. · CEO"],
+  ["KINSHIP", "Webpilot brought brand taste and performance discipline to the same table. That combination changed the trajectory of the launch.", "Alex D. · CEO"],
   ["VANTAIRE", "Fast, senior, and unusually rigorous. Every weekly review ended with clearer decisions, not another deck of marketing activity.", "Maya L. · CMO"],
   ["FOLD", "They were the rare partner who could move from a positioning decision to a working product experience without losing the thread.", "Jonas P. · Product Lead"],
 ] as const;
@@ -42,7 +42,7 @@ export function Homepage() {
 
       <section className="logo-cloud"><h2>Trusted by ambitious teams building what’s next.</h2><div className="logo-row"><span>VERDANT</span><span>North/Co</span><span>orbit*</span><span>MORROW</span><span>Arc Labs</span><span>KINDRED</span><span>FORM</span><span>+ 20 more</span></div></section>
 
-      <section className="why-section section-pad"><SectionHeading title="Why Fifth Signal" align="center" /><div className="benefit-grid">{benefits.map(([icon, title, copy], index) => <Reveal key={title} className={`benefit-card benefit-card-${index + 1}`} delay={index * 50}><div className="benefit-visual"><span>{icon}</span><i /><i /><i /></div><h3>{title}</h3><p>{copy}</p></Reveal>)}</div></section>
+      <section className="why-section section-pad"><SectionHeading title="Why Webpilot" align="center" /><div className="benefit-grid">{benefits.map(([icon, title, copy], index) => <Reveal key={title} className={`benefit-card benefit-card-${index + 1}`} delay={index * 50}><div className="benefit-visual"><span>{icon}</span><i /><i /><i /></div><h3>{title}</h3><p>{copy}</p></Reveal>)}</div></section>
 
       <section className="service-section section-pad"><SectionHeading eyebrow="One coordinated system" title="Build. Grow. Automate." copy="The studio model is intentionally broad at the edges and tightly connected at the center: your commercial outcome." /><div className="service-trio">{[
         ["Build", "We create distinctive brands, high-converting websites, and digital products designed for long-term growth.", "brand-web-product", "01"],

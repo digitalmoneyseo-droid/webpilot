@@ -22,16 +22,16 @@ export function SiteHeader() {
   return (
     <>
       <header className="site-header">
-        <Link href="/" className="header-mark" aria-label="Fifth Signal home"><BrandMark /></Link>
+        <Link href="/" className="header-mark" aria-label="Webpilot home"><BrandMark /></Link>
         <Link href="/work" className="header-pill">Recent work</Link>
         <button className="header-menu" type="button" onClick={() => setOpen(true)} aria-label="Open navigation" aria-expanded={open}>
-          <MenuIcon /> <span>Menu</span>
+          <MenuIcon />
         </button>
       </header>
 
       <div className={`menu-overlay${open ? " is-open" : ""}`} aria-hidden={!open} role="dialog" aria-modal="true" aria-label="Site navigation">
         <div className="menu-top">
-          <Link href="/" onClick={() => setOpen(false)} className="menu-brand"><BrandMark inverse /><span>Fifth Signal</span></Link>
+          <Link href="/" onClick={() => setOpen(false)} className="menu-brand"><BrandMark inverse /><span>Webpilot</span></Link>
           <button type="button" className="menu-close" onClick={() => setOpen(false)} aria-label="Close navigation"><Plus /></button>
         </div>
         <nav className="menu-links" aria-label="Main navigation">
@@ -41,7 +41,7 @@ export function SiteHeader() {
             </Link>
           ))}
         </nav>
-        <div className="menu-bottom"><span>Berlin · Working worldwide</span><a href="mailto:hello@fifthsignal.studio">hello@fifthsignal.studio</a></div>
+        <div className="menu-bottom"><span>Berlin · Working worldwide</span><a href="mailto:hello@webpilot.studio">hello@webpilot.studio</a></div>
       </div>
     </>
   );

@@ -7,7 +7,7 @@ import { SiteFooter } from "@/components/site-footer";
 import { projects } from "@/lib/content";
 
 export function EditorialHero({ eyebrow, title, copy, index }: { eyebrow: string; title: string; copy?: string; index?: string }) {
-  return <section className="editorial-hero"><div className="editorial-kicker"><span>{index ?? "Fifth Signal"}</span><span>{eyebrow}</span></div><h1>{title}</h1>{copy && <p>{copy}</p>}</section>;
+  return <section className="editorial-hero"><div className="editorial-kicker"><span>{index ?? "Webpilot"}</span><span>{eyebrow}</span></div><h1>{title}</h1>{copy && <p>{copy}</p>}</section>;
 }
 
 export function RelatedWork({ title = "Related work", slugs }: { title?: string; slugs?: string[] }) {

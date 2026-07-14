@@ -10,16 +10,16 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: { default: "Fifth Signal — Digital Growth & AI Studio", template: "%s — Fifth Signal" },
+  title: { default: "Webpilot — Digital Growth & AI Studio", template: "%s — Webpilot" },
   description: "A full-stack growth and technology partner for ambitious brands.",
-  applicationName: "Fifth Signal",
+  applicationName: "Webpilot",
   keywords: ["digital growth studio", "AI studio", "brand", "web design", "SEO", "automation"],
-  authors: [{ name: "Fifth Signal" }],
-  creator: "Fifth Signal",
+  authors: [{ name: "Webpilot" }],
+  creator: "Webpilot",
   openGraph: {
     type: "website",
-    siteName: "Fifth Signal",
-    title: "Fifth Signal — Digital Growth & AI Studio",
+    siteName: "Webpilot",
+    title: "Webpilot — Digital Growth & AI Studio",
     description: "Brand, technology, growth, and AI—working as one system.",
   },
   robots: { index: false, follow: false, nocache: true, googleBot: { index: false, follow: false } },
