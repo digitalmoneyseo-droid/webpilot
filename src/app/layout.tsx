@@ -1,6 +1,13 @@
 import type { Metadata } from "next";
+import { Inter } from "next/font/google";
 import { SiteHeader } from "@/components/site-header";
 import "./globals.css";
+
+const inter = Inter({
+  subsets: ["latin"],
+  display: "swap",
+  variable: "--font-inter",
+});
 
 export const metadata: Metadata = {
   title: { default: "Fifth Signal — Digital Growth & AI Studio", template: "%s — Fifth Signal" },
@@ -24,7 +31,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className="h-full antialiased">
+    <html lang="en" className={`${inter.variable} h-full antialiased`}>
       <body className="min-h-full"><SiteHeader />{children}</body>
     </html>
   );
