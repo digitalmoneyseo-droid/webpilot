@@ -5,6 +5,7 @@ import { FinalCta } from "@/components/final-cta";
 import { ProjectCard } from "@/components/project-card";
 import { Reveal } from "@/components/reveal";
 import { SectionHeading } from "@/components/section-heading";
+import { ShinyText } from "@/components/shiny-text";
 import { SiteFooter } from "@/components/site-footer";
 import { faqs, projects, team } from "@/lib/content";
 
@@ -35,7 +36,7 @@ const tools = [
 export function Homepage() {
   return <>
     <main>
-      <section className="hero hero--home"><div className="hero-inner"><span className="status-pill"><i /> Senior studio · selected engagements</span><h1 className="shiny-text"><span>A full-stack growth and</span><span>technology partner for</span><span>ambitious brands.</span></h1><p>Brand, web, SEO, AI search, content, paid acquisition, and intelligent automation—all delivered by one senior team.</p><div className="hero-actions"><CtaButton href="/contact">Book strategy call</CtaButton><CtaButton href="/work" light>Explore our work</CtaButton></div></div></section>
+      <section className="hero hero--home"><div className="hero-inner"><span className="status-pill"><i /> Senior studio · selected engagements</span><h1><ShinyText text="A full-stack growth and technology partner for ambitious brands." speed={5} delay={1.5} color="#0c0c0c" shineColor="#8a8a85" spread={120} /></h1><p>Brand, web, SEO, AI search, content, paid acquisition, and intelligent automation—all delivered by one senior team.</p><div className="hero-actions"><CtaButton href="/contact">Book strategy call</CtaButton><CtaButton href="/work" light>Explore our work</CtaButton></div></div></section>
 
       <section className="work-ribbon" aria-label="Selected work"><div className="work-ribbon-track">{projects.slice(0, 4).map(project => <ProjectCard project={project} key={project.slug} />)}</div></section>
 
