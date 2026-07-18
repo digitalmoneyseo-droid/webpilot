@@ -32,6 +32,11 @@ test("FAQ and filters expose accessible state", async ({ page }) => {
   await page.getByRole("button", { name: "AI", exact: true }).click();
   await expect(page.locator("[data-result-count]")).toContainText("projects");
   await expect(page.locator('[data-project]:not([hidden])')).toHaveCount(2);
+  const allFilter = page.getByRole("button", { name: "All", exact: true });
+  await allFilter.click();
+  await expect(allFilter).toHaveAttribute("aria-pressed", "true");
+  await expect(page.locator('[data-project]:not([hidden])')).toHaveCount(8);
+  await expect(page.locator("[data-result-count]")).toContainText("8 projects");
 });
 
 test("concept mode collects no contact data", async ({ page }) => {
@@ -40,7 +45,23 @@ test("concept mode collects no contact data", async ({ page }) => {
   await expect(page.getByText("The contact form is not active yet.")).toBeVisible();
 });
 
+test("portfolio ribbon stays aligned at narrow viewport widths", async ({ page }) => {
+  for (const width of [320, 375, 425]) {
+    await page.setViewportSize({ width, height: 900 });
+    await page.goto("/en");
+
+    const firstCard = page.locator(".work-ribbon .project-card").first();
+    const bounds = await firstCard.boundingBox();
+    expect(bounds?.x).toBe(16);
+    expect((bounds?.width ?? 0) + 32).toBeLessThanOrEqual(width);
+    await expect(page.locator('.work-ribbon-group[aria-hidden="true"]')).toHaveCSS("display", "none");
+    await expect(page.locator(".work-ribbon-track")).toHaveCSS("animation-name", "none");
+    expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBe(width);
+  }
+});
+
 test("representative page has no serious accessibility violations", async ({ page }) => {
+  await page.emulateMedia({ reducedMotion: "reduce" });
   await page.goto("/en");
   const results = await new AxeBuilder({ page }).exclude(".project-visual").analyze();
   expect(results.violations.filter((violation) => ["serious", "critical"].includes(violation.impact ?? ""))).toEqual([]);

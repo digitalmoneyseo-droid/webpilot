@@ -19,9 +19,26 @@ const filters = ["All", "Brand", "Website", "Product", "Growth", "SEO & GEO", "C
       const buttons = [...portfolio.querySelectorAll<HTMLButtonElement>("[data-filter]")];
       const projects = [...portfolio.querySelectorAll<HTMLElement>("[data-project]")];
       const announcement = portfolio.querySelector<HTMLElement>("[data-result-count]");
-      buttons.forEach((button) => button.addEventListener("click", () => {
+
+      projects.forEach((project, index) => {
+        project.style.viewTransitionName = `portfolio-card-${index}`;
+      });
+
+      const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
+      type ViewTransitionHandle = { finished: Promise<void>; skipTransition: () => void };
+      type ViewTransitionDocument = Document & {
+        startViewTransition?: (update: () => void) => ViewTransitionHandle;
+      };
+      let activeTransition: ViewTransitionHandle | null = null;
+
+      const applyFilter = (button: HTMLButtonElement) => {
         const filter = button.dataset.filter ?? "All";
-        buttons.forEach((item) => { const active = item === button; item.classList.toggle("is-active", active); item.setAttribute("aria-pressed", String(active)); });
+        buttons.forEach((item) => {
+          const active = item === button;
+          item.classList.toggle("is-active", active);
+          item.setAttribute("aria-pressed", String(active));
+        });
+
         let count = 0;
         projects.forEach((project) => {
           const categories = JSON.parse(project.dataset.categories ?? "[]") as string[];
@@ -31,6 +48,23 @@ const filters = ["All", "Brand", "Website", "Product", "Growth", "SEO & GEO", "C
           if (visible) count += 1;
         });
         if (announcement) announcement.textContent = `${count} ${document.documentElement.lang === "de" ? "Projekte" : "projects"}`;
+      };
+
+      buttons.forEach((button) => button.addEventListener("click", () => {
+        const viewTransitionDocument = document as ViewTransitionDocument;
+        if (reducedMotion.matches || !viewTransitionDocument.startViewTransition) {
+          activeTransition?.skipTransition();
+          activeTransition = null;
+          applyFilter(button);
+          return;
+        }
+
+        activeTransition?.skipTransition();
+        const transition = viewTransitionDocument.startViewTransition(() => applyFilter(button));
+        activeTransition = transition;
+        void transition.finished.finally(() => {
+          if (activeTransition === transition) activeTransition = null;
+        });
       }));
     });
   </script>

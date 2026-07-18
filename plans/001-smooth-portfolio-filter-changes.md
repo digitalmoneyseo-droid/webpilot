@@ -1,6 +1,6 @@
 # 001 — Smooth portfolio filter changes
 
-- **Status**: TODO
+- **Status**: DONE
 - **Commit**: uncommitted workspace (no `HEAD` exists)
 - **Severity**: MEDIUM
 - **Category**: Missed opportunities / state indication

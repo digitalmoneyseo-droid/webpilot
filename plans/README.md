@@ -2,7 +2,7 @@
 
 | # | Plan | Severity | Status |
 | --- | --- | --- | --- |
-| 001 | [Smooth portfolio filter changes](001-smooth-portfolio-filter-changes.md) | MEDIUM | TODO |
+| 001 | [Smooth portfolio filter changes](001-smooth-portfolio-filter-changes.md) | MEDIUM | DONE |
 
 ## Recommended execution order
 

@@ -35,17 +35,21 @@ const links = [
   const closeButton = overlay?.querySelector<HTMLButtonElement>(".menu-close");
   const menuLinks = [...(overlay?.querySelectorAll<HTMLAnchorElement>("a") ?? [])];
   const background = [...document.querySelectorAll<HTMLElement>("body > main, body > footer")];
+  const mobileMenu = window.matchMedia("(max-width: 900px)");
   let returnFocus: HTMLElement | null = null;
+
+  overlay?.setAttribute("aria-modal", String(mobileMenu.matches));
 
   const focusable = () => overlay ? [...overlay.querySelectorAll<HTMLElement>('a[href], button:not([disabled]), [tabindex]:not([tabindex="-1"])')] : [];
   const setOpen = (open: boolean) => {
     if (!overlay || !openButton) return;
     overlay.classList.toggle("is-open", open);
     overlay.setAttribute("aria-hidden", String(!open));
+    overlay.setAttribute("aria-modal", String(mobileMenu.matches));
     openButton.setAttribute("aria-expanded", String(open));
     menuLinks.forEach((link) => link.tabIndex = open ? 0 : -1);
-    background.forEach((element) => element.inert = open);
-    document.body.style.overflow = open ? "hidden" : "";
+    background.forEach((element) => element.inert = open && mobileMenu.matches);
+    document.body.style.overflow = open && mobileMenu.matches ? "hidden" : "";
     if (open) {
       returnFocus = document.activeElement instanceof HTMLElement ? document.activeElement : openButton;
       closeButton?.focus();
@@ -57,10 +61,18 @@ const links = [
   openButton?.addEventListener("click", () => setOpen(true));
   closeButton?.addEventListener("click", () => setOpen(false));
   menuLinks.forEach((link) => link.addEventListener("click", () => setOpen(false)));
+  document.addEventListener("pointerdown", (event) => {
+    if (!overlay?.classList.contains("is-open") || mobileMenu.matches) return;
+    if (event.target instanceof Node && !overlay.contains(event.target) && !openButton?.contains(event.target)) setOpen(false);
+  });
+  mobileMenu.addEventListener("change", () => {
+    if (overlay?.classList.contains("is-open")) setOpen(false);
+    else overlay?.setAttribute("aria-modal", String(mobileMenu.matches));
+  });
   document.addEventListener("keydown", (event) => {
     if (!overlay?.classList.contains("is-open")) return;
     if (event.key === "Escape") setOpen(false);
-    if (event.key !== "Tab") return;
+    if (event.key !== "Tab" || !mobileMenu.matches) return;
     const items = focusable();
     const first = items[0];
     const last = items.at(-1);
