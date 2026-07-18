@@ -18,7 +18,7 @@ const links = [
   <button class="header-menu" type="button" aria-label={t(locale, "Open navigation")} aria-expanded="false" aria-controls="site-menu"><Icon name="menu" /></button>
 </header>
 
-<div id="site-menu" class="menu-overlay t-dropdown" data-origin="top-right" aria-hidden="true" inert role="dialog" aria-modal="true" aria-label={t(locale, "Site navigation")}>
+<div id="site-menu" class="menu-overlay" aria-hidden="true" inert role="dialog" aria-modal="true" aria-label={t(locale, "Site navigation")}>
   <div class="menu-top">
     <a href={localizePath("/", locale)} class="menu-brand"><BrandMark inverse /><span>Webpilot</span></a>
     <button type="button" class="menu-close" aria-label={t(locale, "Close navigation")}><Icon name="plus" /></button>
@@ -51,7 +51,7 @@ const links = [
     } else {
       overlay.classList.remove("is-open");
       overlay.classList.add("is-closing");
-      const closeMs = Number.parseFloat(getComputedStyle(document.documentElement).getPropertyValue("--dropdown-close-dur")) || 150;
+      const closeMs = Number.parseFloat(getComputedStyle(document.documentElement).getPropertyValue("--menu-close-dur")) || 300;
       closeTimer = window.setTimeout(() => overlay.classList.remove("is-closing"), closeMs);
     }
     overlay.setAttribute("aria-hidden", String(!open));
