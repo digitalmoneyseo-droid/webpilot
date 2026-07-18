@@ -18,7 +18,7 @@ const links = [
   <button class="header-menu" type="button" aria-label={t(locale, "Open navigation")} aria-expanded="false" aria-controls="site-menu"><Icon name="menu" /></button>
 </header>
 
-<div id="site-menu" class="menu-overlay" aria-hidden="true" role="dialog" aria-modal="true" aria-label={t(locale, "Site navigation")}>
+<div id="site-menu" class="menu-overlay t-dropdown" data-origin="top-right" aria-hidden="true" inert role="dialog" aria-modal="true" aria-label={t(locale, "Site navigation")}>
   <div class="menu-top">
     <a href={localizePath("/", locale)} class="menu-brand"><BrandMark inverse /><span>Webpilot</span></a>
     <button type="button" class="menu-close" aria-label={t(locale, "Close navigation")}><Icon name="plus" /></button>
@@ -37,15 +37,26 @@ const links = [
   const background = [...document.querySelectorAll<HTMLElement>("body > main, body > footer")];
   const mobileMenu = window.matchMedia("(max-width: 900px)");
   let returnFocus: HTMLElement | null = null;
+  let closeTimer: number | undefined;
 
   overlay?.setAttribute("aria-modal", String(mobileMenu.matches));
 
   const focusable = () => overlay ? [...overlay.querySelectorAll<HTMLElement>('a[href], button:not([disabled]), [tabindex]:not([tabindex="-1"])')] : [];
   const setOpen = (open: boolean) => {
     if (!overlay || !openButton) return;
-    overlay.classList.toggle("is-open", open);
+    window.clearTimeout(closeTimer);
+    overlay.classList.remove("is-closing");
+    if (open) {
+      overlay.classList.add("is-open");
+    } else {
+      overlay.classList.remove("is-open");
+      overlay.classList.add("is-closing");
+      const closeMs = Number.parseFloat(getComputedStyle(document.documentElement).getPropertyValue("--dropdown-close-dur")) || 150;
+      closeTimer = window.setTimeout(() => overlay.classList.remove("is-closing"), closeMs);
+    }
     overlay.setAttribute("aria-hidden", String(!open));
     overlay.setAttribute("aria-modal", String(mobileMenu.matches));
+    overlay.inert = !open;
     openButton.setAttribute("aria-expanded", String(open));
     menuLinks.forEach((link) => link.tabIndex = open ? 0 : -1);
     background.forEach((element) => element.inert = open && mobileMenu.matches);

@@ -20,6 +20,8 @@ test("navigation traps focus, closes with Escape, and restores focus", async ({ 
   await expect(trigger).toHaveAttribute("aria-expanded", "true");
   await expect(page.locator("#site-menu")).toHaveAttribute("aria-hidden", "false");
   await page.keyboard.press("Escape");
+  await expect(page.locator("#site-menu")).toHaveClass(/is-closing/);
+  await expect(page.locator("#site-menu")).not.toHaveClass(/is-closing/);
   await expect(trigger).toBeFocused();
 });
 
