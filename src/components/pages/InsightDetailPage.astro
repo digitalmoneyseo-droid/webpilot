@@ -1,0 +1,18 @@
+---
+import { render } from "astro:content";
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import FinalCta from "@/components/FinalCta.astro";
+import type { InsightEntry } from "@/lib/content";
+import { formatDate, localizePath, type Locale } from "@/lib/i18n";
+interface Props { locale: Locale; article: InsightEntry; }
+const { locale, article } = Astro.props;
+const { Content } = await render(article);
+const a = article.data;
+const structuredData = a.status === "verified" && a.indexable ? [
+  { "@context": "https://schema.org", "@type": "Article", headline: a.title, description: a.excerpt, datePublished: a.publishedAt.toISOString(), inLanguage: locale },
+  { "@context": "https://schema.org", "@type": "BreadcrumbList", itemListElement: [{ "@type": "ListItem", position: 1, name: locale === "de" ? "Insights" : "Insights", item: localizePath("/insights", locale) }, { "@type": "ListItem", position: 2, name: a.title }] },
+] : [];
+---
+<BaseLayout {locale} title={a.title} description={a.excerpt} indexable={a.indexable} article {structuredData}>
+  <main id="main-content"><article class="article-page"><header><a href={localizePath("/insights", locale)}>← {locale === "de" ? "Alle Insights" : "All insights"}</a><div><span>{a.category}</span><span>{formatDate(locale, a.publishedAt)} · {a.readMinutes} {locale === "de" ? "Min. Lesezeit" : "min read"}</span></div><span class="concept-label">{locale === "de" ? "Konzeptartikel · Fiktives Beispiel" : "Concept article · Fictional example"}</span><h1>{a.title}</h1><p>{a.excerpt}</p></header><div class="article-figure"><span>WEBPILOT</span><i></i><i></i><b>{a.category}</b></div><div class="article-body"><aside>{locale === "de" ? "Kurz gesagt" : "In brief"}</aside><div><Content /></div></div></article><FinalCta {locale} /></main>
+</BaseLayout>

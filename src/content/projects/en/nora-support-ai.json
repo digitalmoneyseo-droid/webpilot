@@ -1,0 +1,32 @@
+{
+  "translationKey": "nora-support-ai",
+  "locale": "en",
+  "slug": "nora-support-ai",
+  "status": "concept",
+  "indexable": false,
+  "order": 3,
+  "title": "AI Customer Support Assistant",
+  "shortTitle": "Nora",
+  "summary": "An on-brand support agent that resolves routine questions and gives the team better context.",
+  "categories": [
+    "AI",
+    "Automation",
+    "Product"
+  ],
+  "year": "2026",
+  "metric": "−60h",
+  "metricLabel": "manual work / month",
+  "challenge": "A lean support team was spending its best hours searching internal documentation and repeating standard replies.",
+  "strategy": "Create a governed knowledge layer with transparent citations, human escalation, and measurable resolution quality.",
+  "execution": "We mapped support intents, prepared the knowledge base, built retrieval and guardrails, and integrated the agent with the help desk.",
+  "timeline": "10 weeks",
+  "tools": [
+    "OpenAI",
+    "Supabase",
+    "Next.js",
+    "Intercom",
+    "n8n"
+  ],
+  "palette": "blue",
+  "visual": "assistant"
+}

@@ -1,0 +1,71 @@
+{
+  "$schema": "./node_modules/wrangler/config-schema.json",
+  "name": "webpilot-studio",
+  "main": "src/worker.ts",
+  "compatibility_date": "2026-07-18",
+  "compatibility_flags": ["nodejs_compat"],
+  "assets": {
+    "directory": "./dist",
+    "binding": "ASSETS",
+    "not_found_handling": "404-page",
+    "run_worker_first": ["/api/*"]
+  },
+  "vars": {
+    "PUBLIC_SITE_URL": "http://127.0.0.1:8787",
+    "PUBLIC_SITE_MODE": "concept",
+    "PUBLIC_TURNSTILE_SITE_KEY": "1x00000000000000000000AA",
+    "CONTACT_FORM_ENABLED": "false",
+    "CONTACT_RECIPIENT": "hello@webpilot.studio",
+    "CONTACT_SENDER": "website@webpilot.studio"
+  },
+  "ratelimits": [
+    {
+      "name": "CONTACT_RATE_LIMITER",
+      "namespace_id": "1001",
+      "simple": { "limit": 5, "period": 60 }
+    }
+  ],
+  "observability": {
+    "enabled": true,
+    "logs": { "head_sampling_rate": 1 },
+    "traces": { "enabled": true, "head_sampling_rate": 0.01 }
+  },
+  "env": {
+    "preview": {
+      "name": "webpilot-studio-preview",
+      "vars": {
+        "PUBLIC_SITE_URL": "https://preview.webpilot.studio",
+        "PUBLIC_SITE_MODE": "preview",
+        "PUBLIC_TURNSTILE_SITE_KEY": "1x00000000000000000000AA",
+        "CONTACT_FORM_ENABLED": "true",
+        "CONTACT_RECIPIENT": "hello@webpilot.studio",
+        "CONTACT_SENDER": "website@webpilot.studio"
+      },
+      "ratelimits": [
+        {
+          "name": "CONTACT_RATE_LIMITER",
+          "namespace_id": "1002",
+          "simple": { "limit": 5, "period": 60 }
+        }
+      ]
+    },
+    "production": {
+      "name": "webpilot-studio-production",
+      "vars": {
+        "PUBLIC_SITE_URL": "https://webpilot.studio",
+        "PUBLIC_SITE_MODE": "live",
+        "PUBLIC_TURNSTILE_SITE_KEY": "REPLACE_WITH_PRODUCTION_SITE_KEY",
+        "CONTACT_FORM_ENABLED": "true",
+        "CONTACT_RECIPIENT": "hello@webpilot.studio",
+        "CONTACT_SENDER": "website@webpilot.studio"
+      },
+      "ratelimits": [
+        {
+          "name": "CONTACT_RATE_LIMITER",
+          "namespace_id": "1003",
+          "simple": { "limit": 5, "period": 60 }
+        }
+      ]
+    }
+  }
+}

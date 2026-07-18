@@ -1,0 +1,39 @@
+{
+  "translationKey": "paid-acquisition",
+  "locale": "de",
+  "slug": "paid-acquisition",
+  "status": "concept",
+  "indexable": true,
+  "order": 4,
+  "title": "Paid acquisition",
+  "eyebrow": "Wachsen",
+  "summary": "Präzisere Kampagnen, besseres Creative Learning und verantwortbare Akquisition über die relevanten Kanäle.",
+  "problems": [
+    "Steigende Akquisitionskosten",
+    "Schwaches Creative Testing",
+    "Fragmentierte Kanalstrategie",
+    "Unklare Attribution"
+  ],
+  "deliverables": [
+    "Kanal- und Angebotsstrategie",
+    "Google Ads",
+    "Meta- und LinkedIn-Ads",
+    "Creative-Systeme",
+    "Landingpages",
+    "Performance-Reporting"
+  ],
+  "outcomes": [
+    "Niedrigere Akquisitionskosten",
+    "Hochwertigere Pipeline",
+    "Schnelleres Creative Learning",
+    "Klarere Investitionsentscheidungen"
+  ],
+  "tools": [
+    "Google Ads",
+    "Meta Ads",
+    "LinkedIn Ads",
+    "GA4",
+    "HubSpot",
+    "Looker Studio"
+  ]
+}

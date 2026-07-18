@@ -1,0 +1,5 @@
+---
+interface Props { eyebrow: string; title: string; copy?: string; index?: string; }
+const { eyebrow, title, copy, index } = Astro.props;
+---
+<section class="editorial-hero"><div class="editorial-kicker"><span>{index ?? "Webpilot"}</span><span>{eyebrow}</span></div><h1>{title}</h1>{copy && <p>{copy}</p>}</section>

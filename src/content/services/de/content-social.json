@@ -1,0 +1,39 @@
+{
+  "translationKey": "content-social",
+  "locale": "de",
+  "slug": "content-social",
+  "status": "concept",
+  "indexable": true,
+  "order": 3,
+  "title": "Content & social",
+  "eyebrow": "Wachsen",
+  "summary": "Expertengeführte Content-Systeme, die Aufmerksamkeit, Vertrauen und Nachfrage aufbauen, ohne das Content-Hamsterrad zu bedienen.",
+  "problems": [
+    "Unregelmäßige Veröffentlichungen",
+    "Austauschbare Thought Leadership",
+    "Geringes Vertrauen der Zielgruppe",
+    "Langsame Content-Produktion"
+  ],
+  "deliverables": [
+    "Redaktionelle Strategie",
+    "Content Design",
+    "Social-Systeme",
+    "Produktionsabläufe",
+    "Executive Content",
+    "Distributions-Playbooks"
+  ],
+  "outcomes": [
+    "Wiedererkennbare Expertise",
+    "Ein wiederholbarer Veröffentlichungsrhythmus",
+    "Wertvollere Interaktionen",
+    "Eine wachsende Content-Bibliothek"
+  ],
+  "tools": [
+    "Notion",
+    "Figma",
+    "LinkedIn",
+    "YouTube",
+    "Make",
+    "Claude"
+  ]
+}

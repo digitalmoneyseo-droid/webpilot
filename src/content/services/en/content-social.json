@@ -1,0 +1,39 @@
+{
+  "translationKey": "content-social",
+  "locale": "en",
+  "slug": "content-social",
+  "status": "concept",
+  "indexable": true,
+  "order": 3,
+  "title": "Content & social",
+  "eyebrow": "Grow",
+  "summary": "Expert-led content systems that build attention, trust, and demand without feeding the content treadmill.",
+  "problems": [
+    "Inconsistent publishing",
+    "Generic thought leadership",
+    "Low audience trust",
+    "Slow content production"
+  ],
+  "deliverables": [
+    "Editorial strategy",
+    "Content design",
+    "Social systems",
+    "Production workflows",
+    "Executive content",
+    "Distribution playbooks"
+  ],
+  "outcomes": [
+    "Recognizable expertise",
+    "A repeatable publishing rhythm",
+    "More useful engagement",
+    "A growing content library"
+  ],
+  "tools": [
+    "Notion",
+    "Figma",
+    "LinkedIn",
+    "YouTube",
+    "Make",
+    "Claude"
+  ]
+}

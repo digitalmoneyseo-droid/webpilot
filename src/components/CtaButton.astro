@@ -1,0 +1,8 @@
+---
+import Icon from "@/components/Icon.astro";
+interface Props { href: string; light?: boolean; external?: boolean; class?: string; }
+const { href, light = false, external = false, class: extraClass } = Astro.props;
+---
+<a class:list={["pill-button", extraClass, { "pill-button--light": light }]} href={href} target={external ? "_blank" : undefined} rel={external ? "noreferrer" : undefined}>
+  <slot /><Icon name={external ? "arrow-up-right" : "arrow-right"} />
+</a>

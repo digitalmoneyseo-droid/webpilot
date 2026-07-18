@@ -1,0 +1,7 @@
+---
+import ServiceDetailPage from "@/components/pages/ServiceDetailPage.astro";
+import { getProjects, getServices } from "@/lib/content";
+export async function getStaticPaths() { const [services, projects] = await Promise.all([getServices("de"), getProjects("de")]); return services.map((service) => ({ params: { service: service.data.slug }, props: { service, projects: projects.slice(0, 3) } })); }
+const { service, projects } = Astro.props;
+---
+<ServiceDetailPage locale="de" {service} {projects} />

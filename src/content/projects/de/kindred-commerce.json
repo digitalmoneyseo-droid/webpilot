@@ -1,0 +1,32 @@
+{
+  "translationKey": "kindred-commerce",
+  "locale": "de",
+  "slug": "kindred-commerce",
+  "status": "concept",
+  "indexable": false,
+  "order": 2,
+  "title": "E-Commerce-Wachstumssystem",
+  "shortTitle": "Kindred",
+  "summary": "Eine lebendige Identität und ein leistungsstarker Store, der mehr Entdeckung in Umsatz verwandelt.",
+  "categories": [
+    "Marke",
+    "Paid Media",
+    "Wachstum"
+  ],
+  "year": "2026",
+  "metric": "4.8×",
+  "metricLabel": "Return on Ad Spend",
+  "challenge": "Das Wachstum stagnierte, während die Akquisitionskosten stiegen und der Store den Produktwert nicht überzeugend vermittelte.",
+  "strategy": "Die Marke rund um Kundenrituale neu ausrichten und anschließend Creative Testing, Merchandising und Conversion-Daten verbinden.",
+  "execution": "Wir entwickelten eine neue Identität, ein Shopify-Designsystem, ein Landingpage-Programm, ein Paid-Creative-Toolkit und einen wöchentlichen Testrhythmus.",
+  "timeline": "20 Wochen",
+  "tools": [
+    "Figma",
+    "Shopify",
+    "Meta Ads",
+    "Klaviyo",
+    "Looker Studio"
+  ],
+  "palette": "orange",
+  "visual": "commerce"
+}

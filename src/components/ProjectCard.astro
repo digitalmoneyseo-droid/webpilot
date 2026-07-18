@@ -1,0 +1,13 @@
+---
+import Icon from "@/components/Icon.astro";
+import ProjectVisual from "@/components/ProjectVisual.astro";
+import type { ProjectEntry } from "@/lib/content";
+import { localizePath, type Locale } from "@/lib/i18n";
+interface Props { project: ProjectEntry["data"]; locale: Locale; featured?: boolean; decorative?: boolean; filterable?: boolean; }
+const { project, locale, featured = false, decorative = false, filterable = false } = Astro.props;
+---
+<a href={localizePath(`/work/${project.slug}`, locale)} class:list={["project-card", { "project-card--featured": featured }]} aria-hidden={decorative ? "true" : undefined} tabindex={decorative ? -1 : undefined} data-project={filterable ? "" : undefined} data-categories={filterable ? JSON.stringify(project.categories) : undefined}>
+  <div class="project-card-top"><span>{project.categories[0]}</span><span>{project.year}</span></div>
+  <ProjectVisual project={project} compact />
+  <div class="project-card-copy"><div><h3>{project.title}</h3><p>{project.summary}</p></div><span class="round-arrow"><Icon name="arrow-up-right" /></span></div>
+</a>

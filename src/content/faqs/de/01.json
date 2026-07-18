@@ -1,0 +1,10 @@
+{
+  "translationKey": "faq-1",
+  "locale": "de",
+  "slug": "faq-1",
+  "status": "concept",
+  "indexable": true,
+  "question": "Warum mit Webpilot statt mit einer klassischen Agentur arbeiten?",
+  "answer": "Sie erhalten ein erfahrenes, multidisziplinäres Team für Strategie, Design, Entwicklung, Wachstum und KI – ohne Übergaben an Juniors oder separate Dienstleister.",
+  "order": 1
+}

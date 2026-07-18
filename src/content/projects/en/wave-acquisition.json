@@ -1,0 +1,32 @@
+{
+  "translationKey": "wave-acquisition",
+  "locale": "en",
+  "slug": "wave-acquisition",
+  "status": "concept",
+  "indexable": false,
+  "order": 8,
+  "title": "Multi-Channel Acquisition Campaign",
+  "shortTitle": "Wave",
+  "summary": "A coordinated search, social, and content launch that made every channel reinforce the next.",
+  "categories": [
+    "Paid Media",
+    "Content",
+    "Growth"
+  ],
+  "year": "2025",
+  "metric": "−36%",
+  "metricLabel": "acquisition cost",
+  "challenge": "Campaigns were managed in channel silos, resulting in inconsistent stories, duplicated effort, and weak learning loops.",
+  "strategy": "Build one campaign architecture with shared messages, modular creative, and a measurement plan spanning the full journey.",
+  "execution": "We produced landing pages, paid search and social programs, creator briefs, nurture content, and executive reporting.",
+  "timeline": "14 weeks",
+  "tools": [
+    "Google Ads",
+    "Meta Ads",
+    "Figma",
+    "HubSpot",
+    "GA4"
+  ],
+  "palette": "ice",
+  "visual": "campaign"
+}

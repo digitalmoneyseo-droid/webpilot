@@ -1,0 +1,32 @@
+{
+  "translationKey": "atlas-growth-platform",
+  "locale": "en",
+  "slug": "atlas-growth-platform",
+  "status": "concept",
+  "indexable": false,
+  "order": 1,
+  "title": "B2B SaaS Growth Platform",
+  "shortTitle": "Atlas",
+  "summary": "A sharper product story and a search-led acquisition system for a complex B2B platform.",
+  "categories": [
+    "Website",
+    "SEO & GEO",
+    "Growth"
+  ],
+  "year": "2026",
+  "metric": "+184%",
+  "metricLabel": "organic traffic",
+  "challenge": "A strong product was hidden behind a fragmented story, slow site, and low-intent search footprint.",
+  "strategy": "Unify positioning, product education, technical search foundations, and demand capture around high-value use cases.",
+  "execution": "We rebuilt the information architecture, designed a modular product site, created an editorial engine, and connected attribution across the funnel.",
+  "timeline": "16 weeks",
+  "tools": [
+    "Figma",
+    "Next.js",
+    "Ahrefs",
+    "HubSpot",
+    "GA4"
+  ],
+  "palette": "violet",
+  "visual": "dashboard"
+}

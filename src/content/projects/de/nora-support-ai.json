@@ -1,0 +1,32 @@
+{
+  "translationKey": "nora-support-ai",
+  "locale": "de",
+  "slug": "nora-support-ai",
+  "status": "concept",
+  "indexable": false,
+  "order": 3,
+  "title": "KI-Assistent für den Kundenservice",
+  "shortTitle": "Nora",
+  "summary": "Ein markenkonformer Support-Agent, der Routinefragen löst und dem Team besseren Kontext liefert.",
+  "categories": [
+    "AI",
+    "Automatisierung",
+    "Produkt"
+  ],
+  "year": "2026",
+  "metric": "−60h",
+  "metricLabel": "manuelle Arbeit / Monat",
+  "challenge": "Ein kleines Support-Team verbrachte seine wertvollste Zeit mit der Suche in interner Dokumentation und wiederkehrenden Standardantworten.",
+  "strategy": "Eine kontrollierte Wissensschicht mit transparenten Quellen, menschlicher Eskalation und messbarer Lösungsqualität schaffen.",
+  "execution": "Wir strukturierten Support-Anliegen, bereiteten die Wissensbasis auf, entwickelten Retrieval und Leitplanken und integrierten den Agenten in das Helpdesk-System.",
+  "timeline": "10 Wochen",
+  "tools": [
+    "OpenAI",
+    "Supabase",
+    "Next.js",
+    "Intercom",
+    "n8n"
+  ],
+  "palette": "blue",
+  "visual": "assistant"
+}

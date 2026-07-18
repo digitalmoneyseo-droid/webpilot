@@ -1,0 +1,37 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import EditorialHero from "@/components/EditorialHero.astro";
+import Faq from "@/components/Faq.astro";
+import FinalCta from "@/components/FinalCta.astro";
+import NumberedList from "@/components/NumberedList.astro";
+import RelatedWork from "@/components/RelatedWork.astro";
+import SectionHeading from "@/components/SectionHeading.astro";
+import type { ProjectEntry, ServiceEntry } from "@/lib/content";
+import type { Locale } from "@/lib/i18n";
+interface Props { locale: Locale; service: ServiceEntry; projects: ProjectEntry[]; }
+const { locale, service, projects } = Astro.props;
+const s = service.data;
+const localFaq = locale === "de" ? [
+  { data: { question: `Was umfasst ein typisches Projekt für ${s.title}?`, answer: "Wir stellen Team und Umfang nach dem gewünschten Ergebnis zusammen und bestätigen dann eine klare Abfolge aus Recherche, Strategie, Produktion, Umsetzung und Messung." } },
+  { data: { question: "Wie schnell können wir starten?", answer: "Die meisten fokussierten Projekte beginnen innerhalb von zwei bis vier Wochen. Eingebettete Arbeit kann oft mit einem kurzen Discovery-Sprint starten." } },
+  { data: { question: "Können Sie mit unserem internen Team arbeiten?", answer: "Ja. Wir können den kompletten Arbeitsbereich verantworten oder eng mit internen Marken-, Produkt-, Marketing- und Engineering-Leads zusammenarbeiten." } },
+] : [
+  { data: { question: `What does a typical ${s.title.toLowerCase()} engagement include?`, answer: "We shape the team and scope around the outcome, then confirm a clear sequence of research, strategy, production, implementation, and measurement." } },
+  { data: { question: "How quickly can we start?", answer: "Most focused projects begin within two to four weeks. Embedded work can often start with a short discovery sprint." } },
+  { data: { question: "Can you work with our internal team?", answer: "Yes. We can own the complete workstream or partner closely with internal brand, product, marketing, and engineering leads." } },
+];
+const process = locale === "de" ? [
+  { title: "Entdecken", copy: "Geschäft, Zielgruppe, Belege, Einschränkungen und die Entscheidungen, die die Arbeit ermöglichen muss, abstimmen." },
+  { title: "Definieren", copy: "Die Erkenntnisse in eine klare Strategie, ein System und einen messbaren Lieferplan überführen." },
+  { title: "Umsetzen", copy: "In engen wöchentlichen Arbeitssitzungen gestalten, schreiben, bauen, testen und verfeinern." },
+  { title: "Starten & lernen", copy: "Sorgfältig veröffentlichen, das Wesentliche messen und frühe Erkenntnisse in die nächste Verbesserung überführen." },
+] : [
+  { title: "Discover", copy: "Align on the business, audience, evidence, constraints, and the decisions the work must unlock." },
+  { title: "Define", copy: "Turn the evidence into a clear strategy, system, and measurable plan for delivery." },
+  { title: "Make", copy: "Design, write, build, test, and refine in close weekly working sessions." },
+  { title: "Launch & learn", copy: "Ship carefully, measure what matters, and turn early evidence into the next improvement." },
+];
+---
+<BaseLayout {locale} title={s.title} description={s.summary} indexable={s.indexable}>
+  <main id="main-content"><EditorialHero eyebrow={s.eyebrow} index={locale === "de" ? "Leistung" : "Service"} title={s.title} copy={s.summary} /><section class="service-detail-intro section-pad"><div class="service-statement"><span>{locale === "de" ? "Was wir lösen" : "What we solve"}</span><h2>{locale === "de" ? "Das System an jedem Schritt klarer, schneller und wertvoller machen." : "Make the system clearer, faster, and more valuable at every step."}</h2></div><div class="tag-cloud">{s.problems.map((problem) => <span>{problem}</span>)}</div></section><section class="deliverables section-pad"><SectionHeading eyebrow={locale === "de" ? "Ergebnisse" : "Deliverables"} title={locale === "de" ? "Was wir einbringen." : "What we bring to the table."} /><NumberedList items={s.deliverables.map((title) => ({ title, copy: locale === "de" ? `Ein Senior-geführter Arbeitsbereich für ${title}, vom ersten Tag auf Ihr Team, Ihre Kundschaft und kommerziellen Prioritäten abgestimmt.` : `A senior-led ${title.toLowerCase()} workstream, aligned to your team, customers, and commercial priorities from day one.` }))} /></section><section class="process-section section-pad"><SectionHeading eyebrow={locale === "de" ? "Prozess" : "Process"} title={locale === "de" ? "Einfache Phasen. Ernsthaftes Handwerk." : "Simple stages. Serious craft."} /><NumberedList items={process} /></section><section class="outcomes-section section-pad"><SectionHeading eyebrow={locale === "de" ? "Erwartete Ergebnisse" : "Expected outcomes"} title={locale === "de" ? "Die Veränderung, auf die wir hinarbeiten." : "The change we are working toward."} /><div class="outcome-grid">{s.outcomes.map((outcome, index) => <div><span>0{index + 1}</span><h3>{outcome}</h3></div>)}</div></section><section class="case-tools service-tools"><span>{locale === "de" ? "Relevante Tools" : "Relevant tools"}</span><div>{s.tools.map((tool) => <i>{tool}</i>)}</div></section><RelatedWork title={locale === "de" ? "Passende Konzeptarbeiten" : "Related concept work"} {projects} {locale} /><section class="faq-section section-pad"><SectionHeading title={locale === "de" ? "Fragen zur Leistung" : "Service FAQs"} align="center" /><Faq items={localFaq} id={`service-faq-${locale}-${s.slug}`} /></section><FinalCta {locale} /></main>
+</BaseLayout>

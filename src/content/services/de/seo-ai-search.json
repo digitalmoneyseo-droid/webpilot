@@ -1,0 +1,39 @@
+{
+  "translationKey": "seo-ai-search",
+  "locale": "de",
+  "slug": "seo-ai-search",
+  "status": "concept",
+  "indexable": true,
+  "order": 2,
+  "title": "SEO & KI-Suche",
+  "eyebrow": "Wachsen",
+  "summary": "Technische und redaktionelle Sichtbarkeit überall dort, wo Kunden recherchieren, vergleichen und Empfehlungen suchen.",
+  "problems": [
+    "Sinkende organische Sichtbarkeit",
+    "Schwache Non-Brand-Nachfrage",
+    "Geringe Präsenz in KI-Antworten",
+    "Content ohne Conversion-Wirkung"
+  ],
+  "deliverables": [
+    "Technisches SEO",
+    "Such- und Entitätenstrategie",
+    "Generative Engine Optimization",
+    "Content-Systeme",
+    "Strukturierte Daten",
+    "Autoritätsaufbau"
+  ],
+  "outcomes": [
+    "Qualifizierte organische Nachfrage",
+    "Stärkere Quellenpräsenz in Antwortsystemen",
+    "Kumulierender Content-Wert",
+    "Niedrigere gemischte Akquisitionskosten"
+  ],
+  "tools": [
+    "Ahrefs",
+    "Semrush",
+    "Search Console",
+    "GA4",
+    "Looker Studio",
+    "Schema.org"
+  ]
+}

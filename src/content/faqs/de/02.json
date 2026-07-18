@@ -1,0 +1,10 @@
+{
+  "translationKey": "faq-2",
+  "locale": "de",
+  "slug": "faq-2",
+  "status": "concept",
+  "indexable": true,
+  "question": "Wer arbeitet konkret an unserem Projekt?",
+  "answer": "Die Spezialisten, die Sie kennenlernen, leisten auch die Arbeit. Ihr Kernteam bleibt von der ersten Sitzung bis zum Launch und der Weiterentwicklung eng eingebunden.",
+  "order": 2
+}

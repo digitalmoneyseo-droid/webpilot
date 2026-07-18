@@ -1,0 +1,10 @@
+{
+  "translationKey": "faq-1",
+  "locale": "en",
+  "slug": "faq-1",
+  "status": "concept",
+  "indexable": true,
+  "question": "Why work with Webpilot instead of a traditional agency?",
+  "answer": "You get one senior, multidisciplinary team across strategy, design, development, growth, and AI. There are no junior handoffs and no separate vendors to coordinate.",
+  "order": 1
+}

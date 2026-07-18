@@ -1,0 +1,32 @@
+{
+  "translationKey": "lumen-lead-system",
+  "locale": "de",
+  "slug": "lumen-lead-system",
+  "status": "concept",
+  "indexable": false,
+  "order": 6,
+  "title": "CRM-System zur Lead-Qualifizierung",
+  "shortTitle": "Lumen",
+  "summary": "Ein intelligenter Revenue-Workflow, der jeden relevanten Lead in Minuten recherchiert, weiterleitet und zusammenfasst.",
+  "categories": [
+    "AI",
+    "Automatisierung",
+    "Wachstum"
+  ],
+  "year": "2025",
+  "metric": "93%",
+  "metricLabel": "schnellere Lead-Reaktion",
+  "challenge": "Hochwertige Anfragen lagen in mehreren Systemen, während der Vertrieb Passung und Kontext manuell recherchierte.",
+  "strategy": "Einen einheitlichen Qualifizierungsprozess entwickeln, der Anreicherung, Fit-Scoring, Absicht und menschliche Prüfung für sensible Entscheidungen verbindet.",
+  "execution": "Wir verbanden Formulare, CRM, Datenanreicherung, Agentenrecherche, Scoring, Slack-Routing und personalisierte Follow-up-Entwürfe.",
+  "timeline": "8 Wochen",
+  "tools": [
+    "HubSpot",
+    "OpenAI",
+    "Clay",
+    "n8n",
+    "Slack"
+  ],
+  "palette": "yellow",
+  "visual": "crm"
+}

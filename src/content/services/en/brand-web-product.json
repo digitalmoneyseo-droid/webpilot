@@ -1,0 +1,39 @@
+{
+  "translationKey": "brand-web-product",
+  "locale": "en",
+  "slug": "brand-web-product",
+  "status": "concept",
+  "indexable": true,
+  "order": 1,
+  "title": "Brand, web & product",
+  "eyebrow": "Build",
+  "summary": "Distinctive brands and digital products with the clarity, craft, and systems needed to keep growing.",
+  "problems": [
+    "An undifferentiated position",
+    "A website that no longer reflects the business",
+    "Slow product delivery",
+    "Disconnected brand and product experiences"
+  ],
+  "deliverables": [
+    "Brand strategy and positioning",
+    "Visual and verbal identity",
+    "Web and product design",
+    "Full-stack development",
+    "Design systems",
+    "Motion and interaction"
+  ],
+  "outcomes": [
+    "Clearer market position",
+    "Higher conversion confidence",
+    "Faster launches",
+    "A scalable digital system"
+  ],
+  "tools": [
+    "Figma",
+    "Next.js",
+    "React",
+    "Shopify",
+    "Rive",
+    "Framer"
+  ]
+}

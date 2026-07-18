@@ -1,0 +1,39 @@
+{
+  "translationKey": "analytics-cro",
+  "locale": "de",
+  "slug": "analytics-cro",
+  "status": "concept",
+  "indexable": true,
+  "order": 6,
+  "title": "Analytics & CRO",
+  "eyebrow": "Optimize",
+  "summary": "Eine verlässliche Messgrundlage und ein Experimentierprogramm mit Fokus auf Geschäftsergebnisse.",
+  "problems": [
+    "Widersprüchliche Reports",
+    "Unbekannte Reibung im Funnel",
+    "Geringe Experimentiergeschwindigkeit",
+    "Aktivitätsmetriken ohne Entscheidungen"
+  ],
+  "deliverables": [
+    "Messstrategie",
+    "Analytics-Implementierung",
+    "Conversion-Research",
+    "Experimentdesign",
+    "Dashboards",
+    "Attributionsmodelle"
+  ],
+  "outcomes": [
+    "Vertrauenswürdige Performance-Daten",
+    "Höhere Conversion-Raten",
+    "Schnellere Lernzyklen",
+    "Sicherere Budgetallokation"
+  ],
+  "tools": [
+    "GA4",
+    "Google Tag Manager",
+    "Clarity",
+    "Hotjar",
+    "Looker Studio",
+    "Vercel Analytics"
+  ]
+}

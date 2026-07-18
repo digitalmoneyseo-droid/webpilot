@@ -1,0 +1,5 @@
+---
+interface Props { items: { title: string; copy: string }[]; }
+const { items } = Astro.props;
+---
+<div class="numbered-list">{items.map((item, index) => <div><span>{String(index + 1).padStart(2, "0")}</span><h3>{item.title}</h3><p>{item.copy}</p></div>)}</div>

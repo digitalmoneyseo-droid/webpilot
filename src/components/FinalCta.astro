@@ -1,0 +1,7 @@
+---
+import CtaButton from "@/components/CtaButton.astro";
+import { localizePath, t, type Locale } from "@/lib/i18n";
+interface Props { locale: Locale; }
+const { locale } = Astro.props;
+---
+<section class="final-cta"><span class="signal-dot"><i></i></span><h2>{locale === "de" ? "Bereit für Ihr nächstes" : "Ready to build your"}<br />{locale === "de" ? "Wachstumssystem?" : "next growth system?"}</h2><p>{locale === "de" ? "Lassen Sie uns Marke, Technologie, Marketing und KI für messbares Wachstum verbinden." : "Let’s combine brand, technology, marketing, and AI to create measurable growth."}</p><CtaButton href={localizePath("/contact", locale)} light>{t(locale, "Book strategy call")}</CtaButton></section>

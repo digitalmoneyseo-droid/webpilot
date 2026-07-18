@@ -1,0 +1,32 @@
+{
+  "translationKey": "orbit-content-engine",
+  "locale": "de",
+  "slug": "orbit-content-engine",
+  "status": "concept",
+  "indexable": false,
+  "order": 5,
+  "title": "Social-Content-System",
+  "shortTitle": "Orbit",
+  "summary": "Ein wiederholbares redaktionelles Betriebssystem, das eine Expertenidee in einen Monat nützlicher Inhalte verwandelt.",
+  "categories": [
+    "Content",
+    "Social",
+    "Automatisierung"
+  ],
+  "year": "2025",
+  "metric": "3.4×",
+  "metricLabel": "qualifizierte Interaktionen",
+  "challenge": "Fachexperten hatten viel zu sagen, doch der Veröffentlichungsprozess war uneinheitlich und schwer aufrechtzuerhalten.",
+  "strategy": "Eine wiedererkennbare redaktionelle Haltung und ein Produktionssystem schaffen, das mit Expertengesprächen beginnt.",
+  "execution": "Wir entwickelten Content-Formate, Produktionsabläufe, Review-Automatisierungen, Distributions-Playbooks und ein Messdashboard.",
+  "timeline": "12 Wochen",
+  "tools": [
+    "Notion",
+    "Figma",
+    "Claude",
+    "Make",
+    "LinkedIn"
+  ],
+  "palette": "ink",
+  "visual": "content"
+}
