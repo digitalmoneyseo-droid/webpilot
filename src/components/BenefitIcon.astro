@@ -1,11 +1,17 @@
 ---
+import { BadgeCheck, Blend, Handshake, Target, Waypoints } from "@lucide/astro";
+
 interface Props { name: "outcome" | "senior" | "system" | "ownership" | "creative-tech"; }
+
 const { name } = Astro.props;
+// Maintained source icons from Lucide: https://lucide.dev/icons/
+const icons = {
+  outcome: Target,
+  senior: BadgeCheck,
+  system: Waypoints,
+  ownership: Handshake,
+  "creative-tech": Blend,
+};
+const BenefitIcon = icons[name];
 ---
-<svg viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-  {name === "outcome" && <><circle cx="28" cy="34" r="18" /><circle cx="28" cy="34" r="10" /><circle cx="28" cy="34" r="3" fill="currentColor" /><path d="m38 23 11-11m0 0v8m0-8h-8" /></>}
-  {name === "senior" && <><circle cx="32" cy="22" r="8" /><circle cx="15" cy="28" r="5" /><circle cx="49" cy="28" r="5" /><path d="M18 50c1-9 6-14 14-14s13 5 14 14M5 49c1-7 4-11 10-11 3 0 5 1 7 3m37 8c-1-7-4-11-10-11-3 0-5 1-7 3" /></>}
-  {name === "system" && <><circle cx="12" cy="18" r="5" /><circle cx="52" cy="18" r="5" /><circle cx="32" cy="48" r="5" /><path d="M17 18h30M15 22l14 21m20-21L35 43" /><path d="m28 18 4 4 4-4" /></>}
-  {name === "ownership" && <><circle cx="32" cy="32" r="21" /><circle cx="32" cy="32" r="14" /><path d="m25 32 5 5 10-11" /><path d="M32 6v5m0 42v5M6 32h5m42 0h5" /></>}
-  {name === "creative-tech" && <><path d="m19 22-9 10 9 10m26-20 9 10-9 10M37 14 27 50" /><path d="m45 8 1.5 4.5L51 14l-4.5 1.5L45 20l-1.5-4.5L39 14l4.5-1.5L45 8Z" /></>}
-</svg>
+<BenefitIcon aria-hidden="true" stroke-width={1.7} />
