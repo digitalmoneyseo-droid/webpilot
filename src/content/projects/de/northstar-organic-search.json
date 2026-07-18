@@ -1,0 +1,32 @@
+{
+  "translationKey": "northstar-organic-search",
+  "locale": "de",
+  "slug": "northstar-organic-search",
+  "status": "concept",
+  "indexable": false,
+  "order": 4,
+  "title": "Transformation der organischen Suche",
+  "shortTitle": "Northstar",
+  "summary": "Ein technisches, redaktionelles und autoritätsbildendes Programm für Suchmaschinen und Antwortsysteme.",
+  "categories": [
+    "SEO & GEO",
+    "Content",
+    "Wachstum"
+  ],
+  "year": "2025",
+  "metric": "+230%",
+  "metricLabel": "Sichtbarkeit in der KI-Suche",
+  "challenge": "Die Marke rankte für ihren eigenen Namen, fehlte aber bei den Fragen, die Käufer beim Vergleich von Lösungen stellten.",
+  "strategy": "Thematische Autorität über Produkt-, Anwendungsfall-, Vergleichs- und Beleginhalte aufbauen, unterstützt durch klare Entitäten und Schema.",
+  "execution": "Wir behoben Crawling- und Rendering-Probleme, bauten das Content-Modell neu auf, veröffentlichten expertengeführte Cluster und entwickelten ein System zur Quellenbeobachtung.",
+  "timeline": "9 Monate",
+  "tools": [
+    "Semrush",
+    "Search Console",
+    "Sanity",
+    "Next.js",
+    "Looker Studio"
+  ],
+  "palette": "green",
+  "visual": "search"
+}

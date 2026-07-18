@@ -1,0 +1,30 @@
+---
+import Icon from "@/components/Icon.astro";
+interface FaqItem { data: { question: string; answer: string } }
+interface Props { items: FaqItem[]; compact?: boolean; id?: string; }
+const { items, compact = false, id = "faq" } = Astro.props;
+const instanceId = id;
+---
+<div class:list={["faq-list", { "faq-list--compact": compact }]} data-faq>
+  {items.map((item, index) => {
+    const itemId = `${instanceId}-${index}`;
+    return <div class:list={["faq-item", { "is-open": index === 0 }]}>
+      <button id={`${itemId}-button`} type="button" aria-expanded={index === 0 ? "true" : "false"} aria-controls={`${itemId}-answer`}><span class="faq-index">{String(index + 1).padStart(2, "0")}</span><span class="faq-question">{item.data.question}</span><span class="faq-toggle"><Icon name="plus" /></span></button>
+      <div id={`${itemId}-answer`} class="faq-answer" role="region" aria-labelledby={`${itemId}-button`} hidden={index !== 0}><div><p>{item.data.answer}</p></div></div>
+    </div>;
+  })}
+</div>
+<script>
+  document.querySelectorAll<HTMLElement>("[data-faq]").forEach((list) => {
+    list.querySelectorAll<HTMLElement>(".faq-item").forEach((item) => {
+      const button = item.querySelector<HTMLButtonElement>("button");
+      const answer = item.querySelector<HTMLElement>(".faq-answer");
+      button?.addEventListener("click", () => {
+        const open = button.getAttribute("aria-expanded") === "true";
+        button.setAttribute("aria-expanded", String(!open));
+        item.classList.toggle("is-open", !open);
+        if (answer) answer.hidden = open;
+      });
+    });
+  });
+</script>

@@ -1,58 +1,51 @@
-# Webpilot
+# Webpilot Studio
 
-A private, production-ready concept website for a digital growth and AI studio. Built with Next.js 16, React 19, TypeScript, Tailwind CSS 4, and Motion.
+Production-oriented Astro 6 website for the Webpilot studio concept. The original visual system, responsive breakpoints, CSS artwork, and placeholder content are retained, while every fictional project, result, person, testimonial, logo, and insight is explicitly disclosed and excluded from indexing.
 
-## What is included
+## Stack
 
-- Editorial homepage with original brand, portfolio mockups, results, services, testimonials, team, tools, FAQ, and CTA sections
-- Filterable work index and eight statically generated case studies
-- Services index and six statically generated service pages
-- About, insights, six article pages, contact, access, 404, and robots routes
-- Responsive desktop, tablet, and mobile layouts
-- Keyboard-accessible overlay navigation and FAQ accordions
-- Reduced-motion support
-- `noindex`, `nofollow`, and a fully blocked `robots.txt`
-- Optional server-verified password gate using an HTTP-only signed cookie
-
-All client names, case studies, metrics, people, and testimonials are fictional placeholder content. Replace them with verified material before any public use.
+- Astro 6 static rendering and MDX
+- strict TypeScript and Tailwind CSS 4 reset
+- Astro Content Collections for projects, services, insights, team, testimonials, and FAQs
+- Cloudflare Workers Static Assets with Worker execution only for `/api/*`
+- Cloudflare Turnstile and Resend for contact delivery outside concept mode
+- Playwright, axe, visual regression, Vitest, ESLint, and Wrangler validation
 
 ## Local development
 
-```bash
-npm install
+Use Node.js 24 and the committed npm lockfile.
+
+```sh
+npm ci
 npm run dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000).
+The default is safe `concept` mode. Copy `.env.example` to `.env` only when you need local overrides. Runtime secrets belong in `.dev.vars`, following `.dev.vars.example`.
 
-## Quality checks
+`npm run preview` builds preview mode and starts the complete Worker locally at `http://127.0.0.1:8787`. The included Cloudflare and Resend values are provider test placeholders; no real email is sent until valid preview credentials are configured.
 
-```bash
-npm run lint
-npx tsc --noEmit
-npm run build
+## Commands
+
+```sh
+npm run lint          # ESLint, including Astro files
+npm run typecheck     # Astro and Worker TypeScript
+npm test              # contact validation and email-safety units
+npm run test:e2e      # localization, interaction, mode, and axe gates
+npm run test:visual   # 0.1% visual-difference threshold
+npm run build         # config/content validation, Astro, security headers
+npm run cf:check      # Wrangler dry-run and binding validation
 ```
 
-## Private access
+## Content model
 
-Copy `.env.example` to `.env.local` and set both values:
+Localized entries live below `src/content`. Every entry has a shared `translationKey`, identical German/English slug, `status`, and `indexable` flag. The build rejects missing locale pairs and required metadata. Concept content is valid and does not fail a build; it is simply disclosed, excluded from claim-oriented structured data, and kept out of indexable sitemaps.
 
-```env
-ACCESS_PASSWORD=your-strong-shared-password
-ACCESS_SECRET=at-least-32-random-characters
-```
+German uses unprefixed routes. English uses `/en`. The language switch keeps the active route or entry. Reusable interface translations are typed in `src/i18n`.
 
-When both variables are present, all application routes redirect to `/access` until the correct password is submitted. The password is only compared on the server; the browser receives an HTTP-only signed cookie. If either value is absent, the app remains open for local development.
+## Deployment
 
-For a Vercel deployment, add both variables to Preview and Production environments, then enable Vercel Deployment Protection as the outer access layer when the account supports it.
+The initial deployment mode is `concept`: public, non-indexed, no analytics, and no personal-data collection. `preview` is intended for a Cloudflare Access-protected hostname. `live` is rejected unless the real legal operator, domain, email, Turnstile, and Resend configuration is complete.
 
-## Content structure
+Wrangler configuration is in `wrangler.jsonc`; operational setup, DNS authentication, Access, smoke tests, and rollback are documented in [docs/operations.md](docs/operations.md). CI validates reproducible `npm ci`, code, content, build output, interactions, accessibility, screenshots, and the Worker bundle before deployment.
 
-- `src/lib/content.ts` — projects, services, insights, team, and FAQs
-- `src/components/` — reusable UI, portfolio visuals, navigation, and page sections
-- `src/app/` — App Router pages, metadata, robots policy, and access action
-- `src/proxy.ts` — optional access-gate redirect and signed-cookie validation
-
-## Design note
-
-The site closely follows the supplied reference’s interface composition: compact floating controls, pale editorial canvas, centered hero, viewport-spilling project ribbon, rounded media cards, dense modular sections, and restrained motion. The identity, written content, people, portfolio material, mockups, and brand assets are original replacements.
+Do not enable `live` without legal review and verified SPF, DKIM, and DMARC records.

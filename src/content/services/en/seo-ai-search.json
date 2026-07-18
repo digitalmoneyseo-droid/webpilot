@@ -1,0 +1,39 @@
+{
+  "translationKey": "seo-ai-search",
+  "locale": "en",
+  "slug": "seo-ai-search",
+  "status": "concept",
+  "indexable": true,
+  "order": 2,
+  "title": "SEO & AI search",
+  "eyebrow": "Grow",
+  "summary": "Technical and editorial visibility wherever customers research, compare, and ask for recommendations.",
+  "problems": [
+    "Falling organic visibility",
+    "Weak non-brand demand",
+    "Little presence in AI answers",
+    "Content that does not convert"
+  ],
+  "deliverables": [
+    "Technical SEO",
+    "Search and entity strategy",
+    "Generative engine optimization",
+    "Content systems",
+    "Structured data",
+    "Authority building"
+  ],
+  "outcomes": [
+    "Qualified organic demand",
+    "Stronger answer-engine citations",
+    "Compounding content value",
+    "Lower blended acquisition cost"
+  ],
+  "tools": [
+    "Ahrefs",
+    "Semrush",
+    "Search Console",
+    "GA4",
+    "Looker Studio",
+    "Schema.org"
+  ]
+}

@@ -1,0 +1,32 @@
+{
+  "translationKey": "form-technology-rebrand",
+  "locale": "de",
+  "slug": "form-technology-rebrand",
+  "status": "concept",
+  "indexable": false,
+  "order": 7,
+  "title": "Rebranding einer Technologiemarke",
+  "shortTitle": "Form",
+  "summary": "Eine selbstbewusste Marken- und Produktgeschichte für ein Technologieunternehmen in seiner nächsten Wachstumsphase.",
+  "categories": [
+    "Marke",
+    "Website",
+    "Produkt"
+  ],
+  "year": "2025",
+  "metric": "+72%",
+  "metricLabel": "qualifizierte Leads",
+  "challenge": "Das Unternehmen war über eine Startup-Identität hinausgewachsen, die Qualität und Skalierung seiner Plattform unterschätzte.",
+  "strategy": "Die Kategorieposition schärfen, das System greifbar machen und eine flexible Identität schaffen, die von der Produktoberfläche bis zu Events funktioniert.",
+  "execution": "Wir lieferten Strategie, verbale Identität, Art Direction, visuelle Identität, Grundlagen für die Produktoberfläche und eine neue Website.",
+  "timeline": "18 Wochen",
+  "tools": [
+    "Figma",
+    "Rive",
+    "Next.js",
+    "Storybook",
+    "Sanity"
+  ],
+  "palette": "coral",
+  "visual": "brand"
+}

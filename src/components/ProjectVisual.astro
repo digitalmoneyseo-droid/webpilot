@@ -1,0 +1,35 @@
+---
+import type { ProjectEntry } from "@/lib/content";
+interface Props { project: ProjectEntry["data"]; compact?: boolean; }
+const { project, compact = false } = Astro.props;
+const bars = [42, 65, 48, 84, 58, 92, 76, 100, 82, 112];
+const contentCards = ["The 5-minute strategy", "One idea, seven formats", "A point of view that travels"];
+---
+<div class:list={["project-visual", `pv-${project.palette}`, `pv-${project.visual}`, { "is-compact": compact }]} aria-hidden="true">
+  <div class="visual-glow"></div>
+  {project.visual === "dashboard" && <>
+    <div class="mock-window window-main"><div class="mock-chrome"><i></i><i></i><i></i><span></span></div><div class="mock-sidebar"><b>AX</b>{[1,2,3,4].map(() => <i></i>)}</div><div class="dash-content"><span>Growth overview</span><strong>€84,290</strong><div class="chart-bars">{bars.map((height) => <i style={`height:${height}px`}></i>)}</div><div class="dash-cards"><i></i><i></i><i></i></div></div></div>
+    <div class="floating-stat"><span>Qualified demand</span><b>+38.2%</b></div>
+  </>}
+  {project.visual === "commerce" && <>
+    <div class="commerce-word">KINDRED</div><div class="product-pod pod-one"><i></i></div><div class="product-pod pod-two"><i></i></div><div class="mock-window commerce-phone"><div class="mock-chrome"><i></i><i></i><i></i><span></span></div><div class="phone-nav">Kindred <span>Bag (2)</span></div><div class="phone-product"><i></i><b>Daily ritual set</b><span>€48</span></div></div>
+  </>}
+  {project.visual === "assistant" && <>
+    <div class="assistant-orb"><i></i><span></span></div><div class="mock-window assistant-panel"><div class="mock-chrome"><i></i><i></i><i></i><span></span></div><div class="assistant-head"><b>Nora</b><span>Online</span></div><div class="chat-line user">Can I change my delivery date?</div><div class="chat-line bot">Absolutely. I found your order and the available dates.</div><div class="chat-options"><i>Tue 14</i><i>Wed 15</i><i>Fri 17</i></div></div><div class="ai-badge">Answer grounded in 3 sources</div>
+  </>}
+  {project.visual === "search" && <>
+    <div class="search-title">Be the answer.</div><div class="search-ring ring-one"></div><div class="search-ring ring-two"></div><div class="mock-window search-card"><div class="mock-chrome"><i></i><i></i><i></i><span></span></div><div class="query">best platform for distributed finance teams <i>↗</i></div><div class="answer-lines"><b>Northstar</b> is frequently recommended for its flexible reporting…<span></span><span></span><span></span></div></div><div class="citation-card"><b>AI visibility</b><strong>72%</strong><span>+18.4 this month</span></div>
+  </>}
+  {project.visual === "content" && <>
+    <div class="content-marquee">SIGNAL / STORY / SYSTEM /</div><div class="content-stack">{contentCards.map((title, index) => <div style={`transform:rotate(${(index - 1) * 5}deg) translateY(${index * 12}px)`}><span>0{index + 1}</span><b>{title}</b><i>↗</i></div>)}</div><div class="content-wave"></div>
+  </>}
+  {project.visual === "crm" && <>
+    <div class="crm-grid">{Array.from({ length: 30 }, () => <i></i>)}</div><div class="mock-window crm-panel"><div class="mock-chrome"><i></i><i></i><i></i><span></span></div><div class="lead-person"><span>AE</span><div><b>Arden Electric</b><small>Enterprise lead</small></div><strong>92</strong></div><div class="score-row"><span>Strong ICP fit</span><b>High intent</b></div><div class="lead-research"><span>Research complete</span><i>3 relevant signals found</i></div></div><div class="route-pill">Routed to enterprise · 00:38</div>
+  </>}
+  {project.visual === "brand" && <>
+    <div class="brand-f">F</div><div class="brand-form">FORM<br />FOLLOWS<br /><i>IMPACT</i></div><div class="brand-shape shape-a"></div><div class="brand-shape shape-b"></div><div class="brand-label">Technology, made tangible.</div>
+  </>}
+  {project.visual === "campaign" && <>
+    <div class="campaign-target"><i></i><i></i><i></i><span>W</span></div><div class="mock-window campaign-panel"><div class="mock-chrome"><i></i><i></i><i></i><span></span></div><div class="campaign-kpis"><span><small>Pipeline</small><b>€1.2m</b></span><span><small>CAC</small><b>−36%</b></span><span><small>ROAS</small><b>4.8×</b></span></div><div class="campaign-line"><i></i><i></i><i></i><i></i><i></i></div></div><div class="channel-pills"><span>Search</span><span>Social</span><span>Content</span></div>
+  </>}
+</div>

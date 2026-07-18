@@ -1,0 +1,71 @@
+---
+import BrandMark from "@/components/BrandMark.astro";
+import Icon from "@/components/Icon.astro";
+import { alternatePath, localizePath, t, type Locale } from "@/lib/i18n";
+interface Props { locale: Locale; pathname: string; }
+const { locale, pathname } = Astro.props;
+const otherLocale: Locale = locale === "de" ? "en" : "de";
+const links = [
+  ["Work", "/work"], ["Services", "/services"], ["About", "/about"],
+  ["Insights", "/insights"], ["Contact", "/contact"],
+] as const;
+---
+<header class="site-header">
+  <a href={localizePath("/", locale)} class="header-mark" aria-label={t(locale, "Webpilot home")}><BrandMark /></a>
+  <a class="header-language" href={alternatePath(pathname, otherLocale)} aria-label={locale === "de" ? "Switch to English" : "Auf Deutsch wechseln"}>
+    <Icon name="translate" /><span class:list={{ "is-active": locale === "de" }}>DE</span><i>/</i><span class:list={{ "is-active": locale === "en" }}>EN</span>
+  </a>
+  <button class="header-menu" type="button" aria-label={t(locale, "Open navigation")} aria-expanded="false" aria-controls="site-menu"><Icon name="menu" /></button>
+</header>
+
+<div id="site-menu" class="menu-overlay" aria-hidden="true" role="dialog" aria-modal="true" aria-label={t(locale, "Site navigation")}>
+  <div class="menu-top">
+    <a href={localizePath("/", locale)} class="menu-brand"><BrandMark inverse /><span>Webpilot</span></a>
+    <button type="button" class="menu-close" aria-label={t(locale, "Close navigation")}><Icon name="plus" /></button>
+  </div>
+  <nav class="menu-links" aria-label={t(locale, "Main navigation")}>
+    {links.map(([label, href], index) => <a href={localizePath(href, locale)} tabindex="-1"><span>{String(index + 1).padStart(2, "0")}</span>{t(locale, label)}<Icon name="arrow-up-right" /></a>)}
+  </nav>
+  <div class="menu-bottom"><span>{t(locale, "Berlin · Working worldwide")}</span><a href="mailto:hello@webpilot.studio">hello@webpilot.studio</a></div>
+</div>
+
+<script>
+  const openButton = document.querySelector<HTMLButtonElement>(".header-menu");
+  const overlay = document.querySelector<HTMLElement>("#site-menu");
+  const closeButton = overlay?.querySelector<HTMLButtonElement>(".menu-close");
+  const menuLinks = [...(overlay?.querySelectorAll<HTMLAnchorElement>("a") ?? [])];
+  const background = [...document.querySelectorAll<HTMLElement>("body > main, body > footer")];
+  let returnFocus: HTMLElement | null = null;
+
+  const focusable = () => overlay ? [...overlay.querySelectorAll<HTMLElement>('a[href], button:not([disabled]), [tabindex]:not([tabindex="-1"])')] : [];
+  const setOpen = (open: boolean) => {
+    if (!overlay || !openButton) return;
+    overlay.classList.toggle("is-open", open);
+    overlay.setAttribute("aria-hidden", String(!open));
+    openButton.setAttribute("aria-expanded", String(open));
+    menuLinks.forEach((link) => link.tabIndex = open ? 0 : -1);
+    background.forEach((element) => element.inert = open);
+    document.body.style.overflow = open ? "hidden" : "";
+    if (open) {
+      returnFocus = document.activeElement instanceof HTMLElement ? document.activeElement : openButton;
+      closeButton?.focus();
+    } else {
+      returnFocus?.focus();
+    }
+  };
+
+  openButton?.addEventListener("click", () => setOpen(true));
+  closeButton?.addEventListener("click", () => setOpen(false));
+  menuLinks.forEach((link) => link.addEventListener("click", () => setOpen(false)));
+  document.addEventListener("keydown", (event) => {
+    if (!overlay?.classList.contains("is-open")) return;
+    if (event.key === "Escape") setOpen(false);
+    if (event.key !== "Tab") return;
+    const items = focusable();
+    const first = items[0];
+    const last = items.at(-1);
+    if (!first || !last) return;
+    if (event.shiftKey && document.activeElement === first) { event.preventDefault(); last.focus(); }
+    else if (!event.shiftKey && document.activeElement === last) { event.preventDefault(); first.focus(); }
+  });
+</script>

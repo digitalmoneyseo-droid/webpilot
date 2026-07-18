@@ -1,0 +1,9 @@
+---
+import ProjectCard from "@/components/ProjectCard.astro";
+import SectionHeading from "@/components/SectionHeading.astro";
+import type { ProjectEntry } from "@/lib/content";
+import type { Locale } from "@/lib/i18n";
+interface Props { title: string; projects: ProjectEntry[]; locale: Locale; }
+const { title, projects, locale } = Astro.props;
+---
+<section class="related-work section-pad"><SectionHeading title={title} /><div class="related-grid">{projects.map((project) => <ProjectCard project={project.data} locale={locale} />)}</div></section>

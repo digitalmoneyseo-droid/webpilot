@@ -1,0 +1,41 @@
+name: Deploy production
+
+on:
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    environment: production
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+      - run: npm ci
+      - run: npm run deploy:production
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          PUBLIC_SITE_URL: https://webpilot.studio
+          PUBLIC_TURNSTILE_SITE_KEY: ${{ secrets.PUBLIC_TURNSTILE_SITE_KEY }}
+          PUBLIC_CLOUDFLARE_ANALYTICS_TOKEN: ${{ secrets.PUBLIC_CLOUDFLARE_ANALYTICS_TOKEN }}
+          CONTACT_FORM_ENABLED: "true"
+          CONTACT_RECIPIENT: hello@webpilot.studio
+          CONTACT_SENDER: website@webpilot.studio
+          TURNSTILE_SECRET_KEY: ${{ secrets.TURNSTILE_SECRET_KEY }}
+          RESEND_API_KEY: ${{ secrets.RESEND_API_KEY }}
+          LEGAL_NAME: ${{ secrets.LEGAL_NAME }}
+          LEGAL_STREET_ADDRESS: ${{ secrets.LEGAL_STREET_ADDRESS }}
+          LEGAL_POSTAL_CODE: ${{ secrets.LEGAL_POSTAL_CODE }}
+          LEGAL_CITY: ${{ secrets.LEGAL_CITY }}
+          LEGAL_COUNTRY: ${{ secrets.LEGAL_COUNTRY }}
+          LEGAL_REPRESENTATIVE: ${{ secrets.LEGAL_REPRESENTATIVE }}
+          LEGAL_EMAIL: ${{ secrets.LEGAL_EMAIL }}
+          LEGAL_REGISTER_NAME: ${{ secrets.LEGAL_REGISTER_NAME }}
+          LEGAL_REGISTER_NUMBER: ${{ secrets.LEGAL_REGISTER_NUMBER }}
+          LEGAL_VAT_ID: ${{ secrets.LEGAL_VAT_ID }}

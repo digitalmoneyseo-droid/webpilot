@@ -1,0 +1,39 @@
+{
+  "translationKey": "ai-automation",
+  "locale": "de",
+  "slug": "ai-automation",
+  "status": "concept",
+  "indexable": true,
+  "order": 5,
+  "title": "KI & Automatisierung",
+  "eyebrow": "Automatisieren",
+  "summary": "Nützliche Agenten, Workflows und interne Tools, die repetitive Arbeit reduzieren und Menschen die Kontrolle lassen.",
+  "problems": [
+    "Manuelle Übergaben",
+    "In Dokumenten gebundenes Wissen",
+    "Langsame Lead- und Support-Reaktion",
+    "Getrennte operative Daten"
+  ],
+  "deliverables": [
+    "KI-Agenten",
+    "Wissenssysteme",
+    "Workflow-Automatisierung",
+    "CRM-Automatisierung",
+    "Interne Tools",
+    "API-Integrationen"
+  ],
+  "outcomes": [
+    "Zurückgewonnene Teamzeit",
+    "Schnellere Reaktionszeiten",
+    "Konsistentere Abläufe",
+    "Bessere Nutzung des Unternehmenswissens"
+  ],
+  "tools": [
+    "OpenAI",
+    "Claude",
+    "n8n",
+    "Make",
+    "Supabase",
+    "Airtable"
+  ]
+}

@@ -1,0 +1,10 @@
+{
+  "translationKey": "faq-2",
+  "locale": "en",
+  "slug": "faq-2",
+  "status": "concept",
+  "indexable": true,
+  "question": "Who will actually work on our project?",
+  "answer": "The specialists you meet are the people doing the work. Your core team stays close from the first working session through launch and improvement.",
+  "order": 2
+}

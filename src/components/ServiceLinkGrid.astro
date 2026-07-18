@@ -1,0 +1,9 @@
+---
+import type { ServiceEntry } from "@/lib/content";
+import { localizePath, type Locale } from "@/lib/i18n";
+interface Props { services: ServiceEntry[]; locale: Locale; }
+const { services, locale } = Astro.props;
+---
+<div class="service-link-grid">
+  {services.map((service, index) => <a href={localizePath(`/services/${service.data.slug}`, locale)}><span>{String(index + 1).padStart(2, "0")} · {service.data.eyebrow}</span><h2>{service.data.title}</h2><p>{service.data.summary}</p><b>{locale === "de" ? "Entdecken ↗" : "Explore ↗"}</b></a>)}
+</div>

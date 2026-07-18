@@ -1,0 +1,32 @@
+{
+  "translationKey": "wave-acquisition",
+  "locale": "de",
+  "slug": "wave-acquisition",
+  "status": "concept",
+  "indexable": false,
+  "order": 8,
+  "title": "Multichannel-Akquisitionskampagne",
+  "shortTitle": "Wave",
+  "summary": "Ein koordinierter Launch über Suche, Social und Content, bei dem jeder Kanal den nächsten verstärkte.",
+  "categories": [
+    "Paid Media",
+    "Content",
+    "Wachstum"
+  ],
+  "year": "2025",
+  "metric": "−36%",
+  "metricLabel": "Akquisitionskosten",
+  "challenge": "Kampagnen wurden in Kanalsilos gesteuert, was zu uneinheitlichen Geschichten, doppelter Arbeit und schwachen Lernschleifen führte.",
+  "strategy": "Eine Kampagnenarchitektur mit gemeinsamen Botschaften, modularen Creatives und einem Messplan für die gesamte Journey entwickeln.",
+  "execution": "Wir produzierten Landingpages, Paid-Search- und Social-Programme, Creator-Briefings, Nurture-Content und Executive Reporting.",
+  "timeline": "14 Wochen",
+  "tools": [
+    "Google Ads",
+    "Meta Ads",
+    "Figma",
+    "HubSpot",
+    "GA4"
+  ],
+  "palette": "ice",
+  "visual": "campaign"
+}

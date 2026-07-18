@@ -12,10 +12,19 @@
 
 # testing
 /coverage
+/test-results
+/playwright-report
+/tests/visual/astro-home-en.png
+/tests/visual/baseline-next/test.png
 
 # next.js
 /.next/
 /out/
+
+# astro / cloudflare
+/.astro/
+/dist/
+/.wrangler/
 
 # production
 /build
@@ -33,6 +42,8 @@ yarn-error.log*
 # env files (can opt-in for committing if needed)
 .env*
 !.env.example
+.dev.vars
+!.dev.vars.example
 
 # vercel
 .vercel

@@ -1,0 +1,7 @@
+---
+import WorkDetailPage from "@/components/pages/WorkDetailPage.astro";
+import { getProjects } from "@/lib/content";
+export async function getStaticPaths() { const projects = await getProjects("en"); return projects.map((project) => ({ params: { project: project.data.slug }, props: { project, related: projects.filter((entry) => entry.id !== project.id).slice(0, 3) } })); }
+const { project, related } = Astro.props;
+---
+<WorkDetailPage locale="en" {project} {related} />

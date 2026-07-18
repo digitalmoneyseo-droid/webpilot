@@ -1,0 +1,32 @@
+{
+  "translationKey": "form-technology-rebrand",
+  "locale": "en",
+  "slug": "form-technology-rebrand",
+  "status": "concept",
+  "indexable": false,
+  "order": 7,
+  "title": "Technology Brand Redesign",
+  "shortTitle": "Form",
+  "summary": "A confident brand and product story for a technical company entering its next stage of growth.",
+  "categories": [
+    "Brand",
+    "Website",
+    "Product"
+  ],
+  "year": "2025",
+  "metric": "+72%",
+  "metricLabel": "qualified leads",
+  "challenge": "The company had outgrown a startup identity that undersold the quality and scale of its platform.",
+  "strategy": "Clarify the category position, make the system tangible, and create a flexible identity that works from product UI to events.",
+  "execution": "We delivered strategy, verbal identity, art direction, visual identity, product UI foundations, and a new website.",
+  "timeline": "18 weeks",
+  "tools": [
+    "Figma",
+    "Rive",
+    "Next.js",
+    "Storybook",
+    "Sanity"
+  ],
+  "palette": "coral",
+  "visual": "brand"
+}
