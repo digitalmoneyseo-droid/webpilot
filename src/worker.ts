@@ -2,6 +2,12 @@ import { renderContactEmail, validateContactForm, type ContactSubmission } from 
 
 const MAX_BODY_BYTES = 32_768;
 const API_HEADERS = { "Cache-Control": "no-store", "X-Content-Type-Options": "nosniff" } as const;
+const LEGACY_SERVICE_REDIRECTS: Readonly<Record<string, string>> = {
+  "/services/brand-web-product": "/services#build",
+  "/services/brand-web-product/": "/services#build",
+  "/en/services/brand-web-product": "/en/services#build",
+  "/en/services/brand-web-product/": "/en/services#build",
+};
 
 interface TurnstileResult { success?: boolean; hostname?: string; "error-codes"?: string[]; }
 interface ResendResult { id?: string; }
@@ -118,6 +124,11 @@ async function handleContact(request: Request, env: Env): Promise<Response> {
 export default {
   async fetch(request, env): Promise<Response> {
     const url = new URL(request.url);
+    const legacyDestination = LEGACY_SERVICE_REDIRECTS[url.pathname];
+    if (legacyDestination) {
+      const destination = new URL(legacyDestination, url.origin);
+      return new Response(null, { status: 301, headers: { Location: destination.toString(), "Cache-Control": "public, max-age=86400" } });
+    }
     if (url.pathname === "/api/contact") return handleContact(request, env);
     return Response.json({ ok: false, category: "not_found" }, { status: 404, headers: API_HEADERS });
   },

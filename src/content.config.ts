@@ -41,6 +41,7 @@ const services = defineCollection({
   schema: z.object({
     ...localized,
     order: z.number().int().positive(),
+    pillar: z.enum(["build", "grow", "automate"]),
     title: z.string(),
     eyebrow: z.string(),
     summary: z.string(),

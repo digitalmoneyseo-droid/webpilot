@@ -1,0 +1,33 @@
+{
+  "translationKey": "website-design-development",
+  "locale": "de",
+  "slug": "website-design-development",
+  "status": "concept",
+  "indexable": true,
+  "order": 2,
+  "pillar": "build",
+  "title": "Website-Design & Entwicklung",
+  "eyebrow": "Aufbauen",
+  "summary": "Conversionstarke Marketing- und Commerce-Websites, die konsequent auf Geschäftsziele ausgerichtet konzipiert, geschrieben, gestaltet und entwickelt werden.",
+  "problems": [
+    "Eine Website, die das Unternehmen nicht mehr widerspiegelt",
+    "Eine unklare Customer Journey",
+    "Schwache Conversion",
+    "Langsames oder schwieriges Veröffentlichen"
+  ],
+  "deliverables": [
+    "Website-Strategie und Informationsarchitektur",
+    "UX- und UI-Design",
+    "Copywriting und Content Design",
+    "Full-Stack- und CMS-Entwicklung",
+    "E-Commerce-Implementierung",
+    "Analytics-, SEO- und Performance-Grundlagen"
+  ],
+  "outcomes": [
+    "Eine klarere Unternehmensgeschichte",
+    "Höhere Conversion-Sicherheit",
+    "Schnelleres Veröffentlichen",
+    "Eine skalierbare, leistungsstarke Website"
+  ],
+  "tools": ["Figma", "Astro", "Next.js", "Shopify", "Webflow", "WordPress"]
+}

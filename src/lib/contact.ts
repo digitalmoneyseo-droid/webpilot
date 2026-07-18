@@ -1,4 +1,4 @@
-export const INTERESTS = ["brand-website", "seo-ai-search", "content-paid", "ai-automation", "analytics-cro", "embedded-team"] as const;
+export const INTERESTS = ["branding-identity", "website-design-development", "app-design-development", "seo-ai-search", "content-paid", "ai-automation", "analytics-cro", "embedded-team"] as const;
 export const BUDGETS = ["15-30k", "30-60k", "60-120k", "120k-plus"] as const;
 export const LOCALES = ["de", "en"] as const;
 

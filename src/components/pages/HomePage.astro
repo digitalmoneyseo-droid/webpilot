@@ -10,12 +10,13 @@ import ServiceSymbol from "@/components/ServiceSymbol.astro";
 import SectionHeading from "@/components/SectionHeading.astro";
 import TextLink from "@/components/TextLink.astro";
 import ToolLogo from "@/components/ToolLogo.astro";
-import { getFaqs, getProjects, getTeam, getTestimonials } from "@/lib/content";
+import { getFaqs, getProjects, getServices, getTeam, getTestimonials } from "@/lib/content";
 import { localizePath, t, type Locale } from "@/lib/i18n";
+import { localizedPillarDescription, localizedPillarTitle, servicePillars, servicesForPillar } from "@/lib/services";
 
 interface Props { locale: Locale; }
 const { locale } = Astro.props;
-const [projects, team, testimonials, faqs] = await Promise.all([getProjects(locale), getTeam(locale), getTestimonials(locale), getFaqs(locale)]);
+const [projects, services, team, testimonials, faqs] = await Promise.all([getProjects(locale), getServices(locale), getTeam(locale), getTestimonials(locale), getFaqs(locale)]);
 const benefits = [
   ["outcome", "Outcome obsessed", "Beautiful work is only the beginning. Every engagement is tied to qualified demand, conversion, pipeline, or efficiency."],
   ["senior", "Senior specialists only", "You work directly with experienced strategists, designers, developers, marketers, and automation specialists."],
@@ -24,7 +25,7 @@ const benefits = [
   ["creative-tech", "Creative and technology together", "Brand, content, code, data, and AI are planned together—not managed as disconnected silos."],
 ] as const;
 const tools = ["Figma", "Framer", "Webflow", "Astro", "TypeScript", "Tailwind CSS", "Shopify", "WordPress", "After Effects", "Rive", "Lottie", "OpenAI", "Make", "n8n"];
-const description = t(locale, "Brand, web, SEO, AI search, content, paid acquisition, and intelligent automation—all delivered by one senior team.");
+const description = t(locale, "Branding, websites, apps, SEO, AI search, content, paid acquisition, analytics, and intelligent automation—all delivered by one senior team.");
 ---
 <BaseLayout {locale} {description}>
   <main id="main-content">
@@ -32,15 +33,28 @@ const description = t(locale, "Brand, web, SEO, AI search, content, paid acquisi
 
     <section class="work-ribbon" aria-label={t(locale, "Selected work")}><div class="work-ribbon-track"><div class="work-ribbon-group">{projects.map(({ data }) => <ProjectCard project={data} {locale} />)}</div><div class="work-ribbon-group" aria-hidden="true">{projects.map(({ data }) => <ProjectCard project={data} {locale} decorative />)}</div></div></section>
 
-    <section class="logo-cloud"><h2>{locale === "de" ? "Fiktive Marken zur Veranschaulichung des Systems." : "Fictional brands created to demonstrate the system."}</h2><div class="logo-row"><span>VERDANT</span><span>North/Co</span><span>orbit*</span><span>MORROW</span><span>Arc Labs</span><span>KINDRED</span><span>FORM</span><span>+ 20 more</span></div></section>
-
     <section class="why-section section-pad"><SectionHeading title={t(locale, "Why Webpilot")} align="center" /><div class="benefit-grid">{benefits.map(([icon, title, copy], index) => <Reveal class={`benefit-card benefit-card-${index + 1}`} delay={index * 50}><div class="benefit-visual"><BenefitIcon name={icon} /></div><h3>{t(locale, title)}</h3><p>{t(locale, copy)}</p></Reveal>)}</div></section>
 
-    <section class="service-section section-pad"><SectionHeading eyebrow={t(locale, "One coordinated system")} title={t(locale, "Build. Grow. Automate.")} copy={t(locale, "The studio model is intentionally broad at the edges and tightly connected at the center: your commercial outcome.")} /><div class="service-trio">{([
-      ["Build", "We create distinctive brands, high-converting websites, and digital products designed for long-term growth.", "brand-web-product", "01"],
-      ["Grow", "We increase visibility and demand through SEO, AI search, content, paid acquisition, and conversion optimization.", "seo-ai-search", "02"],
-      ["Automate", "We build AI agents, workflow automations, CRM systems, and intelligent tools that reduce manual work.", "ai-automation", "03"],
-    ] as const).map(([title, copy, slug, number]) => <a href={localizePath(`/services/${slug}`, locale)} class="service-card"><span>{number}</span><ServiceSymbol name={title.toLowerCase() as "build" | "grow" | "automate"} /><h3>{t(locale, title)}</h3><p>{t(locale, copy)}</p><b>{t(locale, "Explore service")} ↗</b></a>)}</div></section>
+    <section class="service-section section-pad">
+      <SectionHeading eyebrow={t(locale, "One coordinated system")} title={t(locale, "Build. Grow. Automate.")} copy={t(locale, "The studio model is intentionally broad at the edges and tightly connected at the center: your commercial outcome.")} />
+      <div class="service-trio">
+        {servicePillars.map((pillar) => {
+          const pillarServices = servicesForPillar(services, pillar.id);
+          return <a href={`${localizePath("/services", locale)}#${pillar.id}`} class={`service-card service-card--${pillar.id}`}>
+            <span>{pillar.number}</span>
+            <ServiceSymbol name={pillar.symbol} />
+            <h3>{localizedPillarTitle(pillar, locale)}</h3>
+            <p>{localizedPillarDescription(pillar, locale)}</p>
+            <div class="service-card-services">
+              <span>{t(locale, "Included services")}</span>
+              <ul>{pillarServices.map((service) => <li>{service.data.title}</li>)}</ul>
+            </div>
+            <b>{t(locale, "Explore services ↗")}</b>
+          </a>;
+        })}
+      </div>
+      <div class="service-section-footer"><TextLink href={localizePath("/services", locale)}>{t(locale, "View all services")}</TextLink></div>
+    </section>
 
     <section class="results-section section-pad"><div class="results-intro"><SectionHeading eyebrow={t(locale, "Selected outcomes")} title={t(locale, "Work that earns its place on the dashboard.")} copy={locale === "de" ? "Alle Ergebnisse sind fiktive Konzeptdaten und werden vor einer Live-Veröffentlichung durch verifizierte Kundendaten ersetzt." : "Every result is fictional concept data and will be replaced by verified client reporting before a live release."} /><TextLink href={localizePath("/work", locale)}>{t(locale, "See all case studies")}</TextLink></div><div class="metrics-grid">{projects.slice(0, 4).map(({ data }, index) => <Reveal class="metric-card" delay={index * 70}><span>{locale === "de" ? "Konzept-Ergebnis" : "Concept result"}</span><strong>{data.metric}</strong><h3>{data.metricLabel}</h3><a href={localizePath(`/work/${data.slug}`, locale)}>{data.shortTitle} ↗</a></Reveal>)}</div></section>
 
@@ -53,7 +67,7 @@ const description = t(locale, "Brand, web, SEO, AI search, content, paid acquisi
     <section class="team-section section-pad"><SectionHeading title={locale === "de" ? "Konzept-Team · Nah an der Arbeit." : "Concept team · Close to the work."} align="center" /><div class="team-grid">{team.map(({ data }, index) => <Reveal class="team-card" delay={(index % 5) * 40}><div class={`team-portrait portrait-${(index % 5) + 1}`}><span>{data.initials}</span><i></i></div><h3>{data.name}</h3><p>{data.role}</p></Reveal>)}</div></section>
 
     <section class="engagement-section section-pad"><SectionHeading eyebrow={t(locale, "Ways to work together")} title={t(locale, "The right shape for the problem.")} /><div class="engagement-list">{([
-      ["Projects", "Branding, websites, product design, development, AI implementations, and automation systems."],
+      ["Projects", "Branding, websites, web and mobile apps, AI implementations, and automation systems."],
       ["Growth retainers", "SEO, content, social media, paid acquisition, analytics, and conversion optimization."],
       ["Embedded growth team", "A multidisciplinary monthly team across strategy, creative, technology, acquisition, content, data, and AI."],
       ["Audits & strategy", "Focused growth, search, analytics, conversion, AI-readiness, and automation discovery."],

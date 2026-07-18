@@ -5,9 +5,9 @@ import type { Locale } from "@/lib/i18n";
 interface Props { locale: Locale; }
 const { locale } = Astro.props;
 const interests = locale === "de" ? [
-  ["brand-website", "Marke & Website"], ["seo-ai-search", "SEO & KI-Suche"], ["content-paid", "Content & Paid"], ["ai-automation", "KI & Automation"], ["analytics-cro", "Analytics & CRO"], ["embedded-team", "Eingebettetes Team"],
+  ["branding-identity", "Branding & Identität"], ["website-design-development", "Websites"], ["app-design-development", "Apps"], ["seo-ai-search", "SEO & KI-Suche"], ["content-paid", "Content & Paid"], ["ai-automation", "KI & Automation"], ["analytics-cro", "Analytics & CRO"], ["embedded-team", "Eingebettetes Team"],
 ] : [
-  ["brand-website", "Brand & website"], ["seo-ai-search", "SEO & AI search"], ["content-paid", "Content & paid"], ["ai-automation", "AI & automation"], ["analytics-cro", "Analytics & CRO"], ["embedded-team", "Embedded team"],
+  ["branding-identity", "Branding & identity"], ["website-design-development", "Websites"], ["app-design-development", "Apps"], ["seo-ai-search", "SEO & AI search"], ["content-paid", "Content & paid"], ["ai-automation", "AI & automation"], ["analytics-cro", "Analytics & CRO"], ["embedded-team", "Embedded team"],
 ];
 ---
 <BaseLayout {locale} title={locale === "de" ? "Kontakt" : "Contact"} description={locale === "de" ? "Starten Sie ein Gespräch mit Webpilot." : "Start a conversation with Webpilot."}>

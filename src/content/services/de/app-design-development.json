@@ -1,0 +1,33 @@
+{
+  "translationKey": "app-design-development",
+  "locale": "de",
+  "slug": "app-design-development",
+  "status": "concept",
+  "indexable": true,
+  "order": 3,
+  "pillar": "build",
+  "title": "App-Design & Entwicklung",
+  "eyebrow": "Aufbauen",
+  "summary": "Nützliche Web- und Mobile-Apps – von Produktstrategie und UX über Interface-Design bis zur produktionsreifen Entwicklung.",
+  "problems": [
+    "Ein unklarer Produktumfang",
+    "Verwirrende Nutzerabläufe",
+    "Langsame Produktentwicklung",
+    "Getrennte Design- und Engineering-Prozesse"
+  ],
+  "deliverables": [
+    "Produktstrategie und Discovery",
+    "Nutzerforschung und Journey Mapping",
+    "UX/UI-Design und Prototyping",
+    "Designsysteme",
+    "Web- und Mobile-App-Entwicklung",
+    "Testing und Iteration"
+  ],
+  "outcomes": [
+    "Schnellere Validierung",
+    "Ein intuitiveres Produkterlebnis",
+    "Schnellere Releases",
+    "Eine skalierbare Produktgrundlage"
+  ],
+  "tools": ["Figma", "React", "React Native", "Next.js", "TypeScript", "Rive"]
+}

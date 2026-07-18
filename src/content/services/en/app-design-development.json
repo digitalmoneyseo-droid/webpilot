@@ -1,0 +1,33 @@
+{
+  "translationKey": "app-design-development",
+  "locale": "en",
+  "slug": "app-design-development",
+  "status": "concept",
+  "indexable": true,
+  "order": 3,
+  "pillar": "build",
+  "title": "App design & development",
+  "eyebrow": "Build",
+  "summary": "Useful web and mobile applications shaped from product strategy through UX, interface design, and production-ready development.",
+  "problems": [
+    "Unclear product scope",
+    "Confusing user workflows",
+    "Slow product delivery",
+    "Disconnected design and engineering processes"
+  ],
+  "deliverables": [
+    "Product strategy and discovery",
+    "User research and journey mapping",
+    "UX/UI design and prototyping",
+    "Design systems",
+    "Web and mobile app development",
+    "Testing and iteration"
+  ],
+  "outcomes": [
+    "Faster validation",
+    "A more intuitive product experience",
+    "Faster releases",
+    "A scalable product foundation"
+  ],
+  "tools": ["Figma", "React", "React Native", "Next.js", "TypeScript", "Rive"]
+}

@@ -1,6 +1,6 @@
 # Webpilot Studio
 
-Production-oriented Astro 6 website for the Webpilot studio concept. The original visual system, responsive breakpoints, CSS artwork, and placeholder content are retained, while every fictional project, result, person, testimonial, logo, and insight is explicitly disclosed and excluded from indexing.
+Production-oriented Astro 6 website for the Webpilot studio concept. The original visual system and responsive breakpoints are retained. Fictional projects, results, people, testimonials, and logos are explicitly disclosed and excluded from indexing; published editorial insights are original, verified Webpilot content.
 
 ## Stack
 

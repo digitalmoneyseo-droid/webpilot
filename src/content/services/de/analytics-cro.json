@@ -4,9 +4,10 @@
   "slug": "analytics-cro",
   "status": "concept",
   "indexable": true,
-  "order": 6,
+  "order": 7,
+  "pillar": "grow",
   "title": "Analytics & CRO",
-  "eyebrow": "Optimize",
+  "eyebrow": "Wachsen",
   "summary": "Eine verlässliche Messgrundlage und ein Experimentierprogramm mit Fokus auf Geschäftsergebnisse.",
   "problems": [
     "Widersprüchliche Reports",

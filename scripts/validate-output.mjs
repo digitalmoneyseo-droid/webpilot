@@ -15,9 +15,14 @@ const htmlFiles = (await filesUnder(dist)).filter((file) => file.endsWith(".html
 const broken = [];
 for (const file of htmlFiles) {
   const html = await readFile(file, "utf8");
-  if (!html.includes('<link rel="canonical"') || !html.includes('hreflang="de"') || !html.includes('hreflang="en"') || !html.includes('hreflang="x-default"')) throw new Error(`Missing localized metadata in ${file}`);
+  const isRedirect = html.includes('http-equiv="refresh"');
+  if (isRedirect) {
+    if (!html.includes('<link rel="canonical"') || !html.includes('<meta name="robots" content="noindex"')) throw new Error(`Redirect metadata is incomplete in ${file}`);
+  } else if (!html.includes('<link rel="canonical"') || !html.includes('hreflang="de"') || !html.includes('hreflang="en"') || !html.includes('hreflang="x-default"')) {
+    throw new Error(`Missing localized metadata in ${file}`);
+  }
   if (/[ÃÂ]|â(?:€|™|œ|ž|†)/.test(html)) throw new Error(`Possible encoding corruption in ${file}`);
-  if (mode !== "live" && !html.includes('content="noindex, nofollow, noarchive"')) throw new Error(`Non-live page lacks noindex in ${file}`);
+  if (mode !== "live" && !isRedirect && !html.includes('content="noindex, nofollow, noarchive"')) throw new Error(`Non-live page lacks noindex in ${file}`);
   for (const match of html.matchAll(/href="([^"]+)"/g)) {
     const href = match[1];
     if (!href?.startsWith("/") || href.startsWith("//")) continue;

@@ -8,7 +8,7 @@
     "directory": "./dist",
     "binding": "ASSETS",
     "not_found_handling": "404-page",
-    "run_worker_first": ["/api/*"]
+    "run_worker_first": ["/api/*", "/services/brand-web-product*", "/en/services/brand-web-product*"]
   },
   "vars": {
     "PUBLIC_SITE_URL": "http://127.0.0.1:8787",

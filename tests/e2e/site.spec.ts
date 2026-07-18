@@ -75,9 +75,57 @@ test("portfolio ribbon stays aligned at narrow viewport widths", async ({ page }
   }
 });
 
+test("service discovery is grouped into localized Build, Grow, and Automate pillars", async ({ page }) => {
+  await page.goto("/en");
+
+  const buildCard = page.locator(".service-card--build");
+  const growCard = page.locator(".service-card--grow");
+  const automateCard = page.locator(".service-card--automate");
+
+  await expect(buildCard).toHaveAttribute("href", "/en/services#build");
+  await expect(growCard).toHaveAttribute("href", "/en/services#grow");
+  await expect(automateCard).toHaveAttribute("href", "/en/services#automate");
+  await expect(buildCard.locator("li")).toHaveText(["Branding & identity", "Website design & development", "App design & development"]);
+  await expect(growCard.locator("li")).toHaveText(["SEO & AI search", "Content & social", "Paid acquisition", "Analytics & CRO"]);
+  await expect(automateCard.locator("li")).toHaveText(["AI & automation"]);
+
+  await growCard.click();
+  await expect(page).toHaveURL(/\/en\/services#grow$/);
+  await expect(page.locator("#grow")).toBeVisible();
+  await expect(page.locator(".service-pillar")).toHaveCount(3);
+  await expect(page.locator("#build .service-link-grid > a")).toHaveCount(3);
+  await expect(page.locator("#grow .service-link-grid > a")).toHaveCount(4);
+  await expect(page.locator("#automate .service-link-grid > a")).toHaveCount(1);
+  await expect(page.getByText("Optimize", { exact: true })).toHaveCount(0);
+  await expect(page.getByText("Brand, web & product", { exact: true })).toHaveCount(0);
+
+  await page.goto("/services");
+  await expect(page.locator("#build h2")).toHaveText("Aufbauen");
+  await expect(page.locator("#grow h2")).toHaveText("Wachsen");
+  await expect(page.locator("#automate h2")).toHaveText("Automatisieren");
+});
+
+test("new Build service routes render and the retired route redirects", async ({ page }) => {
+  for (const slug of ["branding-identity", "website-design-development", "app-design-development"]) {
+    await page.goto(`/en/services/${slug}`);
+    await expect(page.locator("main h1")).toBeVisible();
+    await page.goto(`/services/${slug}`);
+    await expect(page.locator("main h1")).toBeVisible();
+  }
+
+  await page.goto("/en/services/brand-web-product");
+  await expect(page).toHaveURL(/\/en\/services#build$/);
+  await page.goto("/services/brand-web-product");
+  await expect(page).toHaveURL(/\/services#build$/);
+});
+
 test("representative page has no serious accessibility violations", async ({ page }) => {
   await page.emulateMedia({ reducedMotion: "reduce" });
   await page.goto("/en");
   const results = await new AxeBuilder({ page }).exclude(".project-visual").analyze();
   expect(results.violations.filter((violation) => ["serious", "critical"].includes(violation.impact ?? ""))).toEqual([]);
+
+  await page.goto("/en/services");
+  const servicesResults = await new AxeBuilder({ page }).analyze();
+  expect(servicesResults.violations.filter((violation) => ["serious", "critical"].includes(violation.impact ?? ""))).toEqual([]);
 });

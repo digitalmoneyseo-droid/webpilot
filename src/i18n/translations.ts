@@ -354,18 +354,11 @@ export const deTranslations = {
   "Higher conversion rates": "Höhere Conversion-Raten",
   "Faster learning cycles": "Schnellere Lernzyklen",
   "More confident allocation": "Sicherere Budgetallokation",
-  "Search is becoming a recommendation layer": "Suche wird zur Empfehlungsebene",
-  "How brand authority, product clarity, and technical evidence influence answer engines.": "Wie Markenautorität, Produktklarheit und technische Belege Antwortsysteme beeinflussen.",
-  "The compounding value of a content system": "Der kumulierende Wert eines Content-Systems",
-  "A practical operating model for turning expertise into useful, reusable demand assets.": "Ein praktisches Betriebsmodell, das Expertise in nützliche, wiederverwendbare Nachfrage-Assets verwandelt.",
-  "What to automate first": "Was zuerst automatisiert werden sollte",
-  "A simple way to find high-value workflows without automating a broken process.": "Ein einfacher Weg, wertvolle Workflows zu finden, ohne einen fehlerhaften Prozess zu automatisieren.",
-  "Why brand and performance belong together": "Warum Marke und Performance zusammengehören",
-  "The best growth systems make memory and measurement reinforce one another.": "Die besten Wachstumssysteme lassen Erinnerung und Messung einander verstärken.",
-  "A better B2B website brief": "Ein besseres Briefing für B2B-Websites",
-  "The decisions to make before wireframes, visual directions, or a single line of code.": "Die Entscheidungen, die vor Wireframes, visuellen Richtungen oder einer einzigen Codezeile getroffen werden sollten.",
-  "Measurement for AI-assisted growth": "Messung für KI-gestütztes Wachstum",
-  "How to distinguish real operational leverage from impressive-looking automation demos.": "Wie sich echte operative Hebelwirkung von beeindruckend aussehenden Automatisierungsdemos unterscheiden lässt."
+  "Branding, websites, apps, SEO, AI search, content, paid acquisition, analytics, and intelligent automation—all delivered by one senior team.": "Branding, Websites, Apps, SEO, KI-Suche, Content, Paid Acquisition, Analytics und intelligente Automatisierung – alles aus einem erfahrenen Team.",
+  "Included services": "Enthaltene Leistungen",
+  "Explore services ↗": "Leistungen entdecken ↗",
+  "View all services": "Alle Leistungen ansehen",
+  "Branding, websites, web and mobile apps, AI implementations, and automation systems.": "Branding, Websites, Web- und Mobile-Apps, KI-Implementierungen und Automatisierungssysteme."
 } as const;
 
 export type TranslationKey = keyof typeof deTranslations;

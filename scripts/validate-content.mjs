@@ -48,6 +48,13 @@ for (const collection of collections) {
     const locales = new Set(pair.map((entry) => entry.data.locale));
     if (pair.length !== 2 || !locales.has("de") || !locales.has("en")) throw new Error(`${collection}/${key} must have one de and one en entry`);
     if (pair[0].data.slug !== pair[1].data.slug) throw new Error(`${collection}/${key} must use the same slug in both locales`);
+    if (collection === "services") {
+      for (const entry of pair) {
+        if (!["build", "grow", "automate"].includes(entry.data.pillar)) throw new Error(`${entry.file} has an invalid service pillar`);
+      }
+      if (pair[0].data.pillar !== pair[1].data.pillar) throw new Error(`${collection}/${key} must use the same pillar in both locales`);
+      if (pair[0].data.order !== pair[1].data.order) throw new Error(`${collection}/${key} must use the same order in both locales`);
+    }
   }
 }
 

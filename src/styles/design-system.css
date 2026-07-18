@@ -89,6 +89,8 @@ body {
   .filter-row button, .case-meta, .case-summary span, .case-narrative span,
   .case-quote > span, .case-quote p, .case-tools > span, .case-tools i,
   .service-link-grid span, .service-link-grid b, .service-statement span,
+  .service-card-services > span, .service-pillar-nav span,
+  .service-pillar-nav small, .service-pillar-meta,
   .tag-cloud span, .numbered-list span, .outcome-grid span,
   .about-manifesto > div:last-child > span, .location-band > span,
   .insight-art > span, .insight-meta, .insight-card > b,
@@ -104,7 +106,8 @@ body {
 
 :is(
   .header-pill, .header-language, .pill-button, .text-link,
-  .project-card-copy p, .service-card b, .metric-card h3, .metric-card a,
+  .project-card-copy p, .service-card b, .service-card-services li,
+  .service-pillar-nav strong, .metric-card h3, .metric-card a,
   .testimonial-card small, .team-card h3, .footer-links a,
   .contact-form label > span, .contact-form legend, .form-options span,
   .not-found a, .access-card button, .form-status
@@ -114,6 +117,12 @@ body {
 }
 
 .form-options span { font-size: var(--type-small) !important; }
+.service-card b,
+.service-pillar-nav strong,
+.service-link-grid b { font-weight: var(--weight-control); }
+.service-card-services li { font-weight: var(--weight-medium); }
+.service-card-services > span,
+.service-pillar-meta { letter-spacing: var(--tracking-label); }
 
 :is(
   .hero p, .section-heading p, .benefit-card p, .service-card p,
@@ -149,7 +158,7 @@ body {
 
 :is(
   .service-card h3, .engagement-list h3, .insight-card h2,
-  .case-summary h2, .case-narrative h2, .service-link-grid h2,
+  .case-summary h2, .case-narrative h2, .service-link-grid h3,
   .article-body h2, .access-card h1
 ) {
   font-size: var(--type-heading-md);
@@ -160,6 +169,7 @@ body {
 
 :is(
   .section-heading h2, .search-copy h2, .split-cta h2,
+  .service-pillar-header h2,
   .service-statement h2, .about-manifesto h2, .concept-contact-notice h2,
   .legal-page h2, .menu-links a
 ) {
@@ -234,10 +244,6 @@ body {
 }
 .editorial-hero > p { max-width: var(--measure-narrow); }
 
-.logo-cloud { padding: var(--space-7) var(--page-gutter) var(--section-space); }
-.logo-cloud h2 { margin-bottom: var(--space-6); font-size: var(--type-body); }
-.logo-row { gap: var(--space-6); }
-
 .benefit-grid,
 .work-grid,
 .insights-grid { gap: var(--space-5); }
@@ -254,7 +260,7 @@ body {
 .testimonial-card,
 .outcome-grid > div { padding: var(--space-5); }
 .service-card h3 { margin-bottom: var(--space-3); }
-.service-card p { margin-bottom: var(--space-5); }
+.service-card p { margin-bottom: 0; }
 
 .project-card-copy {
   min-height: 7.5rem;

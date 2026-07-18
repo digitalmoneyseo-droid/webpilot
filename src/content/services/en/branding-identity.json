@@ -1,0 +1,33 @@
+{
+  "translationKey": "branding-identity",
+  "locale": "en",
+  "slug": "branding-identity",
+  "status": "concept",
+  "indexable": true,
+  "order": 1,
+  "pillar": "build",
+  "title": "Branding & identity",
+  "eyebrow": "Build",
+  "summary": "Strategy, identity, and creative systems that make ambitious businesses distinctive, trusted, and easier to choose.",
+  "problems": [
+    "Unclear market positioning",
+    "A generic brand identity",
+    "Inconsistent messaging and visual expression",
+    "A brand system that cannot scale"
+  ],
+  "deliverables": [
+    "Brand research and positioning",
+    "Brand strategy",
+    "Naming and verbal identity",
+    "Visual identity",
+    "Creative direction",
+    "Brand guidelines and templates"
+  ],
+  "outcomes": [
+    "Clearer market position",
+    "Stronger recognition",
+    "A more consistent brand experience",
+    "A scalable creative system"
+  ],
+  "tools": ["Figma", "Adobe Illustrator", "After Effects", "Rive", "Notion", "Framer"]
+}
