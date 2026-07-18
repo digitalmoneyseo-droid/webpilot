@@ -9,7 +9,6 @@ const { services, locale } = Astro.props;
   {servicePillars.map((pillar) => {
     const count = servicesForPillar(services, pillar.id).length;
     return <a href={`#${pillar.id}`}>
-      <span>{pillar.number}</span>
       <strong>{localizedPillarTitle(pillar, locale)}</strong>
       <small>{localizedServiceCount(count, locale)}</small>
     </a>;
@@ -21,13 +20,11 @@ const { services, locale } = Astro.props;
     const pillarServices = servicesForPillar(services, pillar.id);
     return <section class={`service-pillar service-pillar--${pillar.id}`} id={pillar.id} aria-labelledby={`${pillar.id}-title`}>
       <header class="service-pillar-header">
-        <div class="service-pillar-meta"><span>{pillar.number} / {locale === "de" ? "Leistungsbereich" : "Pillar"}</span><small>{localizedServiceCount(pillarServices.length, locale)}</small></div>
         <h2 id={`${pillar.id}-title`}>{localizedPillarTitle(pillar, locale)}</h2>
         <p>{localizedPillarDescription(pillar, locale)}</p>
       </header>
       <div class="service-link-grid">
         {pillarServices.map((service) => <a href={localizePath(`/services/${service.data.slug}`, locale)}>
-          <span>{String(service.data.order).padStart(2, "0")}</span>
           <div><h3>{service.data.title}</h3><p>{service.data.summary}</p></div>
           <b>{locale === "de" ? "Entdecken ↗" : "Explore ↗"}</b>
         </a>)}

@@ -9,8 +9,7 @@ import Reveal from "@/components/Reveal.astro";
 import ServiceSymbol from "@/components/ServiceSymbol.astro";
 import SectionHeading from "@/components/SectionHeading.astro";
 import TextLink from "@/components/TextLink.astro";
-import ToolLogo from "@/components/ToolLogo.astro";
-import { Blocks, ClipboardCheck, PencilRuler, Rocket, ScanSearch } from "@lucide/astro";
+import { PencilRuler, Rocket, ScanSearch } from "@lucide/astro";
 import { getFaqs, getProjects, getServices, getTestimonials } from "@/lib/content";
 import { localizePath, t, type Locale } from "@/lib/i18n";
 import { localizedPillarDescription, localizedPillarTitle, servicePillars, servicesForPillar } from "@/lib/services";
@@ -25,14 +24,10 @@ const benefits = [
   ["ownership", "One accountable partner", "One senior team owns the strategy, delivery, communication, and performance from end to end."],
   ["creative-tech", "Creative and technology together", "Brand, content, code, data, and AI are planned together—not managed as disconnected silos."],
 ] as const;
-const tools = ["Figma", "Framer", "Webflow", "Astro", "TypeScript", "Tailwind CSS", "Shopify", "WordPress", "After Effects", "Rive", "Lottie", "OpenAI", "Make", "n8n"];
-const toolRows = [tools, [...tools.slice(7), ...tools.slice(0, 7)]];
 const processSteps = [
-  { icon: ScanSearch, title: "Discover & align", copy: "We audit the current setup, clarify the opportunity, and agree on outcomes, scope, and priorities." },
-  { icon: PencilRuler, title: "Design the system", copy: "We turn the strategy into a tailored concept, experience, and technical blueprint." },
-  { icon: Blocks, title: "Build & integrate", copy: "We create the solution and connect it cleanly with your tools, data, content, and workflows." },
-  { icon: ClipboardCheck, title: "Test & approve", copy: "We validate quality, performance, and edge cases with your team before final approval." },
-  { icon: Rocket, title: "Launch & improve", copy: "We go live with a measured rollout, then learn from real usage and keep improving." },
+  { icon: ScanSearch, title: "Define", copy: "Goals, users, positioning and scope." },
+  { icon: PencilRuler, title: "Create", copy: "Design, build and integrate." },
+  { icon: Rocket, title: "Launch and improve", copy: "Test, release and optimise." },
 ] as const;
 const description = t(locale, "Branding, websites, apps, SEO, AI search, content, paid acquisition, analytics, and intelligent automation—all delivered by one senior team.");
 ---
@@ -50,7 +45,6 @@ const description = t(locale, "Branding, websites, apps, SEO, AI search, content
         {servicePillars.map((pillar) => {
           const pillarServices = servicesForPillar(services, pillar.id);
           return <a href={`${localizePath("/services", locale)}#${pillar.id}`} class={`service-card service-card--${pillar.id}`}>
-            <span>{pillar.number}</span>
             <ServiceSymbol name={pillar.symbol} />
             <h3>{localizedPillarTitle(pillar, locale)}</h3>
             <p>{localizedPillarDescription(pillar, locale)}</p>
@@ -67,9 +61,7 @@ const description = t(locale, "Branding, websites, apps, SEO, AI search, content
 
     <section class="results-section section-pad"><div class="results-intro"><SectionHeading eyebrow={t(locale, "Selected outcomes")} title={t(locale, "Work that earns its place on the dashboard.")} copy={locale === "de" ? "Alle Ergebnisse sind fiktive Konzeptdaten und werden vor einer Live-Veröffentlichung durch verifizierte Kundendaten ersetzt." : "Every result is fictional concept data and will be replaced by verified client reporting before a live release."} /><TextLink href={localizePath("/work", locale)}>{t(locale, "See all case studies")}</TextLink></div><div class="metrics-grid">{projects.slice(0, 4).map(({ data }, index) => <Reveal class="metric-card" delay={index * 70}><span>{locale === "de" ? "Konzept-Ergebnis" : "Concept result"}</span><strong>{data.metric}</strong><h3>{data.metricLabel}</h3><a href={localizePath(`/work/${data.slug}`, locale)}>{data.shortTitle} ↗</a></Reveal>)}</div></section>
 
-    <section class="testimonial-section section-pad"><SectionHeading title={t(locale, "Testimonials")} align="center" /><div class="testimonial-grid">{testimonials.map(({ data }, index) => <Reveal class="testimonial-card" delay={(index % 3) * 50}><span>{data.brand}</span><blockquote>“{data.quote}”</blockquote><small>{data.attribution}</small><i>{locale === "de" ? "Konzept-Kundenstimme" : "Concept testimonial"}</i></Reveal>)}</div></section>
-
-    <section class="tools-section section-pad"><SectionHeading title={t(locale, "Tools we’ve mastered")} align="center" /><div class="tools-marquee-list">{toolRows.map((row, rowIndex) => <div class="tools-marquee"><div class={`tools-marquee-track tools-marquee-track--${rowIndex + 1}`}>{[0, 1].map((group) => <div class="tools-marquee-group" aria-hidden={group === 1 ? "true" : undefined}>{row.map((tool) => <span><ToolLogo name={tool} />{tool}</span>)}</div>)}</div></div>)}</div></section>
+    <section class="testimonial-section section-pad"><SectionHeading title={t(locale, "Testimonials")} align="center" /><div class="testimonial-grid">{testimonials.slice(0, 3).map(({ data }, index) => <Reveal class="testimonial-card" delay={(index % 3) * 50}><span>{data.brand}</span><blockquote>“{data.quote}”</blockquote><small>{data.attribution}</small><i>{locale === "de" ? "Konzept-Kundenstimme" : "Concept testimonial"}</i></Reveal>)}</div></section>
 
     <section class="engagement-section process-section section-pad">
       <SectionHeading title={t(locale, "From first signal to live system.")} copy={t(locale, "A clear, collaborative process keeps strategy, design, technology, and delivery moving as one.")} />

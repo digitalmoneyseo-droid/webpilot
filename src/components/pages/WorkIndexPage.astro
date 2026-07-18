@@ -9,6 +9,7 @@ interface Props { locale: Locale; }
 const { locale } = Astro.props;
 const projects = await getProjects(locale);
 const filters = [
+  { id: "All", categories: [...new Set(projects.flatMap(({ data }) => data.categories))] },
   { id: "Build", categories: ["Brand", "Website", "Product"] },
   { id: "Grow", categories: ["Growth", "SEO & GEO", "Content", "Social", "Paid Media"] },
   { id: "Automate", categories: ["AI", "Automation"] },
