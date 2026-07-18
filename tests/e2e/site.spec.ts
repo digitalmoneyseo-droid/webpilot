@@ -13,6 +13,7 @@ test("localized routes, metadata, and disclosures are complete", async ({ page }
 });
 
 test("navigation traps focus, closes with Escape, and restores focus", async ({ page }) => {
+  await page.setViewportSize({ width: 390, height: 844 });
   await page.goto("/en");
   const trigger = page.locator(".header-menu");
   await trigger.focus();
@@ -23,6 +24,14 @@ test("navigation traps focus, closes with Escape, and restores focus", async ({ 
   await expect(page.locator("#site-menu")).toHaveClass(/is-closing/);
   await expect(page.locator("#site-menu")).not.toHaveClass(/is-closing/);
   await expect(trigger).toBeFocused();
+});
+
+test("desktop navigation is always available without a menu trigger", async ({ page }) => {
+  await page.setViewportSize({ width: 1280, height: 720 });
+  await page.goto("/en");
+  await expect(page.locator(".desktop-nav")).toBeVisible();
+  await expect(page.locator(".desktop-nav a")).toHaveCount(5);
+  await expect(page.locator(".header-menu")).toBeHidden();
 });
 
 test("FAQ and filters expose accessible state", async ({ page }) => {

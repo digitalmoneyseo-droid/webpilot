@@ -9,9 +9,16 @@ const links = [
   ["Work", "/work"], ["Services", "/services"], ["About", "/about"],
   ["Insights", "/insights"], ["Contact", "/contact"],
 ] as const;
+const isActive = (href: string) => {
+  const localizedHref = localizePath(href, locale);
+  return pathname === localizedHref || pathname.startsWith(`${localizedHref}/`);
+};
 ---
 <header class="site-header">
   <a href={localizePath("/", locale)} class="header-mark" aria-label={t(locale, "Webpilot home")}><BrandMark /></a>
+  <nav class="desktop-nav" aria-label={t(locale, "Main navigation")}>
+    {links.map(([label, href]) => <a href={localizePath(href, locale)} class:list={{ "is-active": isActive(href) }} aria-current={isActive(href) ? "page" : undefined}>{t(locale, label)}</a>)}
+  </nav>
   <a class="header-language" href={alternatePath(pathname, otherLocale)} aria-label={locale === "de" ? "Switch to English" : "Auf Deutsch wechseln"}>
     <Icon name="translate" /><span class:list={{ "is-active": locale === "de" }}>DE</span><i>/</i><span class:list={{ "is-active": locale === "en" }}>EN</span>
   </a>

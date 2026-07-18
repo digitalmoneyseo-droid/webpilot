@@ -8,6 +8,7 @@ import ProjectCard from "@/components/ProjectCard.astro";
 import Reveal from "@/components/Reveal.astro";
 import SectionHeading from "@/components/SectionHeading.astro";
 import TextLink from "@/components/TextLink.astro";
+import ToolLogo from "@/components/ToolLogo.astro";
 import { getFaqs, getProjects, getTeam, getTestimonials } from "@/lib/content";
 import { localizePath, t, type Locale } from "@/lib/i18n";
 
@@ -21,14 +22,14 @@ const benefits = [
   ["ownership", "One accountable partner", "One senior team owns the strategy, delivery, communication, and performance from end to end."],
   ["creative-tech", "Creative and technology together", "Brand, content, code, data, and AI are planned together—not managed as disconnected silos."],
 ] as const;
-const tools = ["Figma", "Framer", "Webflow", "Astro", "TypeScript", "Tailwind CSS", "Shopify", "WordPress", "After Effects", "Rive", "Lottie", "Google Analytics", "Search Console", "Ahrefs", "Semrush", "Looker Studio", "HubSpot", "Microsoft Clarity", "Hotjar", "Google Ads", "Meta Ads", "LinkedIn Ads", "TikTok Ads", "YouTube", "Instagram", "LinkedIn", "OpenAI", "Claude", "Gemini", "Make", "Zapier", "n8n", "Airtable", "Notion", "Supabase"];
+const tools = ["Figma", "Framer", "Webflow", "Astro", "TypeScript", "Tailwind CSS", "Shopify", "WordPress", "After Effects", "Rive", "Lottie", "OpenAI", "Make", "n8n"];
 const description = t(locale, "Brand, web, SEO, AI search, content, paid acquisition, and intelligent automation—all delivered by one senior team.");
 ---
 <BaseLayout {locale} {description}>
   <main id="main-content">
-    <section class="hero hero--home"><div class="hero-inner"><span class="status-pill"><i></i>{t(locale, "Senior studio · selected engagements")}</span><h1><span class="shiny-text">{t(locale, "A full-stack growth and technology partner for ambitious brands.")}</span></h1><p>{description}</p><div class="hero-actions"><CtaButton href={localizePath("/contact", locale)}>{t(locale, "Book strategy call")}</CtaButton><CtaButton href={localizePath("/work", locale)} light>{t(locale, "Explore our work")}</CtaButton></div></div></section>
+    <section class="hero hero--home"><div class="hero-inner"><h1><span class="shiny-text">{t(locale, "A full-stack growth and technology partner for ambitious brands.")}</span></h1><p>{description}</p><div class="hero-actions"><CtaButton href={localizePath("/contact", locale)}>{t(locale, "Book strategy call")}</CtaButton><CtaButton href={localizePath("/work", locale)} light>{t(locale, "Explore our work")}</CtaButton></div></div></section>
 
-    <section class="work-ribbon" aria-label={t(locale, "Selected work")}><div class="work-ribbon-track"><div class="work-ribbon-group">{projects.slice(0, 4).map(({ data }) => <ProjectCard project={data} {locale} />)}</div><div class="work-ribbon-group" aria-hidden="true">{projects.slice(0, 4).map(({ data }) => <ProjectCard project={data} {locale} decorative />)}</div></div></section>
+    <section class="work-ribbon" aria-label={t(locale, "Selected work")}><div class="work-ribbon-track"><div class="work-ribbon-group">{projects.map(({ data }) => <ProjectCard project={data} {locale} />)}</div><div class="work-ribbon-group" aria-hidden="true">{projects.map(({ data }) => <ProjectCard project={data} {locale} decorative />)}</div></div></section>
 
     <section class="logo-cloud"><h2>{locale === "de" ? "Fiktive Marken zur Veranschaulichung des Systems." : "Fictional brands created to demonstrate the system."}</h2><div class="logo-row"><span>VERDANT</span><span>North/Co</span><span>orbit*</span><span>MORROW</span><span>Arc Labs</span><span>KINDRED</span><span>FORM</span><span>+ 20 more</span></div></section>
 
@@ -46,7 +47,7 @@ const description = t(locale, "Brand, web, SEO, AI search, content, paid acquisi
 
     <section class="testimonial-section section-pad"><SectionHeading title={t(locale, "Testimonials")} align="center" /><div class="testimonial-grid">{testimonials.map(({ data }, index) => <Reveal class="testimonial-card" delay={(index % 3) * 50}><span>{data.brand}</span><blockquote>“{data.quote}”</blockquote><small>{data.attribution}</small><i>{locale === "de" ? "Konzept-Kundenstimme" : "Concept testimonial"}</i></Reveal>)}</div></section>
 
-    <section class="tools-section section-pad"><SectionHeading title={t(locale, "Tools we’ve mastered")} align="center" /><div class="tools-marquee"><div>{[...tools, ...tools].map((tool) => <span><i></i>{tool}</span>)}</div></div></section>
+    <section class="tools-section section-pad"><SectionHeading title={t(locale, "Tools we’ve mastered")} align="center" /><div class="tools-marquee"><div class="tools-marquee-track">{[0, 1].map((group) => <div class="tools-marquee-group" aria-hidden={group === 1 ? "true" : undefined}>{tools.map((tool) => <span><ToolLogo name={tool} />{tool}</span>)}</div>)}</div></div></section>
 
     <section class="team-section section-pad"><SectionHeading title={locale === "de" ? "Konzept-Team · Nah an der Arbeit." : "Concept team · Close to the work."} align="center" /><div class="team-grid">{team.map(({ data }, index) => <Reveal class="team-card" delay={(index % 5) * 40}><div class={`team-portrait portrait-${(index % 5) + 1}`}><span>{data.initials}</span><i></i></div><h3>{data.name}</h3><p>{data.role}</p></Reveal>)}</div></section>
 
