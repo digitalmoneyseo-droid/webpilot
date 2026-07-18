@@ -447,3 +447,28 @@ body {
   .case-tools { padding-block: var(--section-space-compact); }
   .contact-form { padding: var(--space-5); }
 }
+
+/* Page-specific alignment and control parity. */
+.filter-row {
+  height: 44px;
+  gap: 1px;
+  padding: 4px;
+  box-shadow: var(--shadow-surface);
+}
+.filter-row button {
+  height: 36px;
+  min-height: 36px;
+  padding: 0 14px;
+  color: #696965;
+  font-size: var(--type-small);
+  line-height: var(--leading-small);
+  font-weight: 600;
+  letter-spacing: -.01em;
+}
+.filter-indicator { inset-block: 4px; }
+.faq-layout {
+  display: block;
+  max-width: 820px;
+  margin-inline: auto;
+}
+.location-band { display: none; }
