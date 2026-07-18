@@ -19,11 +19,27 @@ const instanceId = id;
     list.querySelectorAll<HTMLElement>(".faq-item").forEach((item) => {
       const button = item.querySelector<HTMLButtonElement>("button");
       const answer = item.querySelector<HTMLElement>(".faq-answer");
+
+      const setExpanded = (expanded: boolean) => {
+        button?.setAttribute("aria-expanded", String(expanded));
+        item.classList.toggle("is-open", expanded);
+        answer?.setAttribute("aria-hidden", String(!expanded));
+      };
+
       button?.addEventListener("click", () => {
         const open = button.getAttribute("aria-expanded") === "true";
-        button.setAttribute("aria-expanded", String(!open));
-        item.classList.toggle("is-open", !open);
-        answer?.setAttribute("aria-hidden", String(open));
+
+        if (!open) {
+          list.querySelectorAll<HTMLElement>(".faq-item.is-open").forEach((openItem) => {
+            const openButton = openItem.querySelector<HTMLButtonElement>("button");
+            const openAnswer = openItem.querySelector<HTMLElement>(".faq-answer");
+            openButton?.setAttribute("aria-expanded", "false");
+            openItem.classList.remove("is-open");
+            openAnswer?.setAttribute("aria-hidden", "true");
+          });
+        }
+
+        setExpanded(!open);
       });
     });
   });

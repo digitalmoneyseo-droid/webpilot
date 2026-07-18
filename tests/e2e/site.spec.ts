@@ -36,6 +36,8 @@ test("desktop navigation is always available without a menu trigger", async ({ p
 
 test("FAQ and filters expose accessible state", async ({ page }) => {
   await page.goto("/en");
+  const firstFaq = page.locator("[data-faq] button").first();
+  const firstAnswer = page.locator("[data-faq] .faq-answer").first();
   const secondFaq = page.locator("[data-faq] button").nth(1);
   const secondAnswer = page.locator("[data-faq] .faq-answer").nth(1);
   await expect(secondAnswer).toHaveAttribute("aria-hidden", "true");
@@ -43,6 +45,8 @@ test("FAQ and filters expose accessible state", async ({ page }) => {
   await secondFaq.click();
   await expect(secondFaq).toHaveAttribute("aria-expanded", "true");
   await expect(secondAnswer).toHaveAttribute("aria-hidden", "false");
+  await expect(firstFaq).toHaveAttribute("aria-expanded", "false");
+  await expect(firstAnswer).toHaveAttribute("aria-hidden", "true");
   await page.goto("/en/work");
   await page.getByRole("button", { name: "AI", exact: true }).click();
   await expect(page.locator("[data-result-count]")).toContainText("projects");
