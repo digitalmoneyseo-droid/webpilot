@@ -17,7 +17,7 @@ export const deTranslations = {
   "Email": "E-Mail",
   "Private preview · noindex": "Private Vorschau · noindex",
   "Senior studio · selected engagements": "Senior Studio · ausgewählte Mandate",
-  "A full-stack growth and technology partner for ambitious brands.": "Ein ganzheitlicher Wachstums- und Technologiepartner für ambitionierte Marken.",
+  "We build growth systems for ambitious brands.": "Wir bauen Wachstumssysteme für ambitionierte Marken.",
   "Brand, web, SEO, AI search, content, paid acquisition, and intelligent automation—all delivered by one senior team.": "Marke, Web, SEO, KI-Suche, Content, Paid Acquisition und intelligente Automatisierung – alles aus einem erfahrenen Team.",
   "Book strategy call": "Strategiegespräch buchen",
   "Explore our work": "Unsere Arbeiten ansehen",

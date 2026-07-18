@@ -1,35 +1,55 @@
 :root {
-  /* Type scale: 1.25 major-third foundation with fluid marketing display steps. */
-  --type-caption: 0.75rem;
-  --type-small: 0.875rem;
-  --type-body: 1rem;
-  --type-body-lg: 1.125rem;
-  --type-title-sm: 1.25rem;
-  --type-title-md: clamp(1.75rem, 2.5vw, 2.5rem);
-  --type-title-lg: clamp(2.125rem, 4vw, 3.25rem);
-  --type-display: clamp(2.625rem, 6vw, 5.125rem);
+  /* Primitive scale: minor-third guidance, adjusted to practical 4px steps. */
+  --font-size-100: 0.8125rem;/* 13px */
+  --font-size-200: 0.875rem; /* 14px */
+  --font-size-300: 1rem;     /* 16px */
+  --font-size-400: 1.125rem; /* 18px */
+  --font-size-500: 1.25rem;  /* 20px */
+  --font-size-600: clamp(1.5rem, 2vw, 1.75rem); /* 24–28px */
+  --font-size-700: clamp(1.75rem, 3vw, 2.5rem); /* 28–40px */
+  --font-size-800: clamp(2rem, 4vw, 3rem);      /* 32–48px */
+  --font-size-900: clamp(2.125rem, 4.5vw, 3.5rem);/* 34–56px */
+
+  /* Semantic roles: visual hierarchy is independent of HTML heading level. */
+  --type-caption: var(--font-size-100);
+  --type-small: var(--font-size-200);
+  --type-body: var(--font-size-300);
+  --type-body-lg: var(--font-size-400);
+  --type-heading-sm: var(--font-size-500);
+  --type-heading-md: var(--font-size-600);
+  --type-heading-lg: var(--font-size-700);
+  --type-display-sm: var(--font-size-800);
+  --type-display-lg: var(--font-size-900);
 
   --leading-caption: 1.4;
   --leading-small: 1.5;
   --leading-body: 1.6;
-  --leading-title-sm: 1.25;
-  --leading-title-md: 1.1;
-  --leading-title-lg: 1.04;
-  --leading-display: 0.98;
+  --leading-heading-sm: 1.25;
+  --leading-heading-md: 1.2;
+  --leading-heading-lg: 1.12;
+  --leading-display-sm: 1.06;
+  --leading-display-lg: 1.04;
 
-  --weight-body: 400;
-  --weight-medium: 500;
-  --weight-heading: 630;
-  --weight-control: 650;
-  --weight-strong: 700;
+  --font-weight-regular: 400;
+  --font-weight-medium: 500;
+  --font-weight-semibold: 630;
+  --font-weight-bold: 700;
+  --weight-body: var(--font-weight-regular);
+  --weight-medium: var(--font-weight-medium);
+  --weight-heading: var(--font-weight-semibold);
+  --weight-control: var(--font-weight-semibold);
+  --weight-strong: var(--font-weight-bold);
 
   --tracking-label: 0.05em;
-  --tracking-title-sm: -0.02em;
-  --tracking-title-md: -0.04em;
-  --tracking-display: -0.055em;
+  --tracking-heading-sm: -0.01em;
+  --tracking-heading-md: -0.015em;
+  --tracking-heading-lg: -0.02em;
+  --tracking-display-sm: -0.025em;
+  --tracking-display-lg: -0.035em;
 
   --measure-reading: 70ch;
   --measure-narrow: 58ch;
+  --measure-hero: 24ch;
 
   /* Spacing scale: 4 / 8 / 12 / 16 / 24 / 32 / 48 / 64 / 80 / 120. */
   --space-1: 0.25rem;
@@ -87,7 +107,7 @@ body {
   .project-card-copy p, .service-card b, .metric-card h3, .metric-card a,
   .testimonial-card small, .team-card h3, .footer-links a,
   .contact-form label > span, .contact-form legend, .form-options span,
-  .not-found a, .access-card button
+  .not-found a, .access-card button, .form-status
 ) {
   font-size: var(--type-small);
   line-height: var(--leading-small);
@@ -109,18 +129,22 @@ body {
   line-height: var(--leading-body);
 }
 
-:is(.article-body .article-lede, .case-narrative p) {
+:is(
+  .article-body .article-lede, .case-narrative p,
+  .footer-brand, .logo-row span
+) {
   font-size: var(--type-body-lg);
   line-height: var(--leading-body);
 }
 
 :is(
   .project-card-copy h3, .benefit-card h3, .team-card h3,
-  .numbered-list h3, .outcome-grid h3
+  .numbered-list h3, .outcome-grid h3, .faq-question
 ) {
-  font-size: var(--type-title-sm);
-  line-height: var(--leading-title-sm);
-  letter-spacing: var(--tracking-title-sm);
+  font-size: var(--type-heading-sm);
+  line-height: var(--leading-heading-sm);
+  letter-spacing: var(--tracking-heading-sm);
+  font-weight: var(--weight-heading);
 }
 
 :is(
@@ -128,32 +152,46 @@ body {
   .case-summary h2, .case-narrative h2, .service-link-grid h2,
   .article-body h2, .access-card h1
 ) {
-  font-size: var(--type-title-md);
-  line-height: var(--leading-title-md);
-  letter-spacing: var(--tracking-title-md);
+  font-size: var(--type-heading-md);
+  line-height: var(--leading-heading-md);
+  letter-spacing: var(--tracking-heading-md);
   font-weight: var(--weight-heading);
 }
 
 :is(
   .section-heading h2, .search-copy h2, .split-cta h2,
   .service-statement h2, .about-manifesto h2, .concept-contact-notice h2,
-  .legal-page h2
+  .legal-page h2, .menu-links a
 ) {
-  font-size: var(--type-title-lg);
-  line-height: var(--leading-title-lg);
-  letter-spacing: var(--tracking-title-md);
+  font-size: var(--type-heading-lg);
+  line-height: var(--leading-heading-lg);
+  letter-spacing: var(--tracking-heading-lg);
   font-weight: var(--weight-heading);
 }
 
 :is(
-  .hero h1, .editorial-hero h1, .case-hero h1,
+  .editorial-hero h1, .case-hero h1,
   .article-page header h1, .contact-intro h1, .legal-page h1,
   .location-band h2, .final-cta h2, .case-quote blockquote,
   .not-found h1
 ) {
-  font-size: var(--type-display);
-  line-height: var(--leading-display);
-  letter-spacing: var(--tracking-display);
+  font-size: var(--type-display-sm);
+  line-height: var(--leading-display-sm);
+  letter-spacing: var(--tracking-display-sm);
+  font-weight: var(--weight-heading);
+}
+
+.hero h1 {
+  font-size: var(--type-display-lg);
+  line-height: var(--leading-display-lg);
+  letter-spacing: var(--tracking-display-lg);
+  font-weight: var(--weight-strong);
+}
+
+:is(.metric-card strong, .case-summary strong) {
+  font-size: var(--type-display-sm);
+  line-height: var(--leading-display-sm);
+  letter-spacing: var(--tracking-display-sm);
   font-weight: var(--weight-heading);
 }
 
@@ -180,7 +218,7 @@ body {
 }
 .hero-inner { max-width: 58rem; }
 .hero h1 {
-  max-width: 17ch;
+  max-width: var(--measure-hero);
   margin: var(--space-5) 0 var(--space-4);
 }
 .hero p { max-width: var(--measure-narrow); }
@@ -374,6 +412,8 @@ body {
     --section-space: 4.5rem;
     --section-space-compact: 3.5rem;
     --section-heading-gap: 2.5rem;
+    --leading-display-sm: 1.08;
+    --leading-display-lg: 1.09;
   }
 
   .hero { min-height: 0; padding-top: 6.5rem; padding-bottom: var(--space-7); }

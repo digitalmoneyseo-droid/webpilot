@@ -27,7 +27,7 @@ const description = t(locale, "Brand, web, SEO, AI search, content, paid acquisi
 ---
 <BaseLayout {locale} {description}>
   <main id="main-content">
-    <section class="hero hero--home"><div class="hero-inner"><h1><span class="shiny-text">{t(locale, "A full-stack growth and technology partner for ambitious brands.")}</span></h1><p>{description}</p><div class="hero-actions"><CtaButton href={localizePath("/contact", locale)}>{t(locale, "Book strategy call")}</CtaButton><CtaButton href={localizePath("/work", locale)} light>{t(locale, "Explore our work")}</CtaButton></div></div></section>
+    <section class="hero hero--home"><div class="hero-inner"><h1><span class="shiny-text">{t(locale, "We build growth systems for ambitious brands.")}</span></h1><p>{description}</p><div class="hero-actions"><CtaButton href={localizePath("/contact", locale)}>{t(locale, "Book strategy call")}</CtaButton><CtaButton href={localizePath("/work", locale)} light>{t(locale, "Explore our work")}</CtaButton></div></div></section>
 
     <section class="work-ribbon" aria-label={t(locale, "Selected work")}><div class="work-ribbon-track"><div class="work-ribbon-group">{projects.map(({ data }) => <ProjectCard project={data} {locale} />)}</div><div class="work-ribbon-group" aria-hidden="true">{projects.map(({ data }) => <ProjectCard project={data} {locale} decorative />)}</div></div></section>
 

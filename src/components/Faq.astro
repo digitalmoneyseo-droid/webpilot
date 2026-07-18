@@ -10,7 +10,7 @@ const instanceId = id;
     const itemId = `${instanceId}-${index}`;
     return <div class:list={["faq-item", { "is-open": index === 0 }]}>
       <button id={`${itemId}-button`} type="button" aria-expanded={index === 0 ? "true" : "false"} aria-controls={`${itemId}-answer`}><span class="faq-index">{String(index + 1).padStart(2, "0")}</span><span class="faq-question">{item.data.question}</span><span class="faq-toggle"><Icon name="plus" /></span></button>
-      <div id={`${itemId}-answer`} class="faq-answer" role="region" aria-labelledby={`${itemId}-button`} hidden={index !== 0}><div><p>{item.data.answer}</p></div></div>
+      <div id={`${itemId}-answer`} class="faq-answer" role="region" aria-labelledby={`${itemId}-button`} aria-hidden={index === 0 ? "false" : "true"}><div><p>{item.data.answer}</p></div></div>
     </div>;
   })}
 </div>
@@ -23,7 +23,7 @@ const instanceId = id;
         const open = button.getAttribute("aria-expanded") === "true";
         button.setAttribute("aria-expanded", String(!open));
         item.classList.toggle("is-open", !open);
-        if (answer) answer.hidden = open;
+        answer?.setAttribute("aria-hidden", String(open));
       });
     });
   });
