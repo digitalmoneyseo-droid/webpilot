@@ -48,14 +48,15 @@ test("FAQ and filters expose accessible state", async ({ page }) => {
   await expect(firstFaq).toHaveAttribute("aria-expanded", "false");
   await expect(firstAnswer).toHaveAttribute("aria-hidden", "true");
   await page.goto("/en/work");
-  await page.getByRole("button", { name: "AI", exact: true }).click();
-  await expect(page.locator("[data-result-count]")).toContainText("projects");
-  await expect(page.locator('[data-project]:not([hidden])')).toHaveCount(2);
-  const allFilter = page.getByRole("button", { name: "All", exact: true });
-  await allFilter.click();
-  await expect(allFilter).toHaveAttribute("aria-pressed", "true");
-  await expect(page.locator('[data-project]:not([hidden])')).toHaveCount(8);
-  await expect(page.locator("[data-result-count]")).toContainText("8 projects");
+  const automateFilter = page.getByRole("button", { name: "Automate", exact: true });
+  await automateFilter.click();
+  await expect(automateFilter).toHaveAttribute("aria-pressed", "true");
+  await expect(page.locator('[data-project]:not([hidden])')).toHaveCount(3);
+  await expect(page.locator("[data-result-count]")).toContainText("3 projects");
+  const buildFilter = page.getByRole("button", { name: "Build", exact: true });
+  await buildFilter.click();
+  await expect(buildFilter).toHaveAttribute("aria-pressed", "true");
+  await expect(page.locator('[data-project]:not([hidden])')).toHaveCount(4);
 });
 
 test("concept mode collects no contact data", async ({ page }) => {

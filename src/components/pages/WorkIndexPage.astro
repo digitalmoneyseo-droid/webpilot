@@ -8,17 +8,43 @@ import { t, type Locale } from "@/lib/i18n";
 interface Props { locale: Locale; }
 const { locale } = Astro.props;
 const projects = await getProjects(locale);
-const filters = ["All", "Brand", "Website", "Product", "Growth", "SEO & GEO", "Content", "Social", "Paid Media", "AI", "Automation"];
+const filters = [
+  { id: "Build", categories: ["Brand", "Website", "Product"] },
+  { id: "Grow", categories: ["Growth", "SEO & GEO", "Content", "Social", "Paid Media"] },
+  { id: "Automate", categories: ["AI", "Automation"] },
+] as const;
+const initialCategories: readonly string[] = filters[0].categories;
 ---
 <BaseLayout {locale} title={t(locale, "Work")} description={locale === "de" ? "Ausgewählte fiktive Marken-, Digital-, Wachstums- und KI-Systeme von Webpilot." : "Selected fictional brand, digital, growth, and AI systems by Webpilot."}>
   <main id="main-content"><EditorialHero eyebrow={t(locale, "Selected work")} index={`01 / ${t(locale, "Work")}`} title={t(locale, "Built to look exceptional. Designed to perform.")} copy={locale === "de" ? "Konzeptarbeiten aus Marke, digitalen Produkten, Nachfragegenerierung und intelligenten Abläufen." : "Concept work spanning brand, digital products, demand generation, and intelligent operations."} />
-    <section class="work-index section-pad" data-portfolio><div class="filter-row" role="group" aria-label={locale === "de" ? "Projekte filtern" : "Filter projects"}>{filters.map((filter, index) => <button type="button" class:list={{ "is-active": index === 0 }} data-filter={filter} aria-pressed={index === 0 ? "true" : "false"}>{t(locale, filter)}</button>)}</div><p class="sr-only" aria-live="polite" data-result-count>{projects.length} {locale === "de" ? "Projekte" : "projects"}</p><div class="work-grid">{projects.map(({ data }, index) => <ProjectCard project={data} {locale} featured={index === 0} filterable />)}</div></section><FinalCta {locale} />
+    <section class="work-index section-pad" data-portfolio><div class="filter-row" role="group" aria-label={locale === "de" ? "Projekte nach Leistung filtern" : "Filter projects by service"}><span class="filter-indicator" aria-hidden="true"></span>{filters.map((filter, index) => <button type="button" class:list={{ "is-active": index === 0 }} data-filter={filter.id} data-categories={JSON.stringify(filter.categories)} aria-pressed={index === 0 ? "true" : "false"}>{t(locale, filter.id)}</button>)}</div><p class="sr-only" aria-live="polite" data-result-count>{projects.filter(({ data }) => data.categories.some((category) => initialCategories.includes(category))).length} {locale === "de" ? "Projekte" : "projects"}</p><div class="work-grid">{projects.map(({ data }) => <ProjectCard project={data} {locale} filterable hidden={!data.categories.some((category) => initialCategories.includes(category))} />)}</div></section><FinalCta {locale} />
   </main>
   <script>
     document.querySelectorAll<HTMLElement>("[data-portfolio]").forEach((portfolio) => {
       const buttons = [...portfolio.querySelectorAll<HTMLButtonElement>("[data-filter]")];
       const projects = [...portfolio.querySelectorAll<HTMLElement>("[data-project]")];
       const announcement = portfolio.querySelector<HTMLElement>("[data-result-count]");
+      const indicator = portfolio.querySelector<HTMLElement>(".filter-indicator");
+
+      const positionIndicator = (button: HTMLButtonElement, animate = true) => {
+        if (!indicator) return;
+        indicator.style.setProperty("--filter-x", `${button.offsetLeft}px`);
+        indicator.style.setProperty("--filter-width", `${button.offsetWidth}px`);
+        if (animate) indicator.classList.add("is-ready");
+        else {
+          indicator.classList.remove("is-ready");
+          requestAnimationFrame(() => indicator.classList.add("is-ready"));
+        }
+      };
+
+      if (buttons[0]) {
+        positionIndicator(buttons[0], false);
+      }
+      const filterResizeObserver = new ResizeObserver(() => {
+        const activeButton = buttons.find((item) => item.classList.contains("is-active"));
+        if (activeButton) positionIndicator(activeButton, false);
+      });
+      filterResizeObserver.observe(portfolio.querySelector<HTMLElement>(".filter-row")!);
 
       projects.forEach((project, index) => {
         project.style.viewTransitionName = `portfolio-card-${index}`;
@@ -32,19 +58,19 @@ const filters = ["All", "Brand", "Website", "Product", "Growth", "SEO & GEO", "C
       let activeTransition: ViewTransitionHandle | null = null;
 
       const applyFilter = (button: HTMLButtonElement) => {
-        const filter = button.dataset.filter ?? "All";
+        const filterCategories = JSON.parse(button.dataset.categories ?? "[]") as string[];
         buttons.forEach((item) => {
           const active = item === button;
           item.classList.toggle("is-active", active);
           item.setAttribute("aria-pressed", String(active));
         });
+        positionIndicator(button);
 
         let count = 0;
         projects.forEach((project) => {
           const categories = JSON.parse(project.dataset.categories ?? "[]") as string[];
-          const visible = filter === "All" || categories.includes(filter);
+          const visible = categories.some((category) => filterCategories.includes(category));
           project.hidden = !visible;
-          project.classList.toggle("project-card--featured", filter === "All" && project === projects[0]);
           if (visible) count += 1;
         });
         if (announcement) announcement.textContent = `${count} ${document.documentElement.lang === "de" ? "Projekte" : "projects"}`;
