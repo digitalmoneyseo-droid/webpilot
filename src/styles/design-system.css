@@ -125,7 +125,7 @@ body {
 .service-pillar-meta { letter-spacing: var(--tracking-label); }
 
 :is(
-  .hero p, .section-heading p, .benefit-card p, .service-card p,
+  .hero p, .section-heading p, .benefit-card p, .process-copy p, .service-card p,
   .search-copy p, .testimonial-card blockquote, .engagement-list p,
   .faq-answer p, .final-cta p, .editorial-hero > p, .case-hero > p,
   .case-summary p, .service-link-grid p, .split-cta p, .numbered-list p,
@@ -147,7 +147,7 @@ body {
 }
 
 :is(
-  .project-card-copy h3, .benefit-card h3, .team-card h3,
+  .project-card-copy h3, .benefit-card h3, .process-copy h3, .team-card h3,
   .numbered-list h3, .outcome-grid h3, .faq-question
 ) {
   font-size: var(--type-heading-sm);
@@ -251,6 +251,7 @@ body {
 .metrics-grid,
 .testimonial-grid,
 .related-grid { gap: var(--space-4); }
+.service-trio { align-items: start; }
 .outcome-grid { gap: var(--space-3); }
 
 .benefit-card { padding: var(--space-3) var(--space-5) var(--space-6); }
@@ -259,8 +260,10 @@ body {
 .metric-card,
 .testimonial-card,
 .outcome-grid > div { padding: var(--space-5); }
+.service-card { min-height: 0; }
 .service-card h3 { margin-bottom: var(--space-3); }
 .service-card p { margin-bottom: 0; }
+.service-card b { margin-top: var(--space-5); padding-top: 0; }
 
 .project-card-copy {
   min-height: 7.5rem;
@@ -290,10 +293,10 @@ body {
   padding: var(--space-6) 0;
 }
 .faq-layout { gap: var(--space-9); }
-.faq-item button { gap: var(--space-3); padding: var(--space-5) 0; }
+.faq-item button { gap: var(--space-3); padding: var(--space-4) var(--space-5); }
 .faq-answer p {
   max-width: var(--measure-reading);
-  padding-bottom: var(--space-5);
+  padding: 0 var(--space-5) var(--space-5);
 }
 
 .final-cta {
@@ -429,10 +432,10 @@ body {
   .article-page header h1 { margin-top: var(--space-7); }
 
   .benefit-card { padding-inline: 0; }
-  .service-card { min-height: 27rem; }
+  .service-card { min-height: 0; }
   .team-grid { gap: var(--space-6) var(--space-3); }
   .faq-layout { gap: var(--space-7); }
-  .faq-answer p { margin-inline: 2.625rem; }
+  .faq-answer p { margin-inline: 0; }
 
   .final-cta { min-height: 30rem; }
   .footer-main { gap: var(--space-8); }
@@ -470,5 +473,9 @@ body {
   display: block;
   max-width: 820px;
   margin-inline: auto;
+}
+.faq-item .faq-question {
+  font-size: var(--type-body);
+  line-height: 1.35;
 }
 .location-band { display: none; }

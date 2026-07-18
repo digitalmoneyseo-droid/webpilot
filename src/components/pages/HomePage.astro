@@ -10,13 +10,14 @@ import ServiceSymbol from "@/components/ServiceSymbol.astro";
 import SectionHeading from "@/components/SectionHeading.astro";
 import TextLink from "@/components/TextLink.astro";
 import ToolLogo from "@/components/ToolLogo.astro";
-import { getFaqs, getProjects, getServices, getTeam, getTestimonials } from "@/lib/content";
+import { Blocks, ClipboardCheck, PencilRuler, Rocket, ScanSearch } from "@lucide/astro";
+import { getFaqs, getProjects, getServices, getTestimonials } from "@/lib/content";
 import { localizePath, t, type Locale } from "@/lib/i18n";
 import { localizedPillarDescription, localizedPillarTitle, servicePillars, servicesForPillar } from "@/lib/services";
 
 interface Props { locale: Locale; }
 const { locale } = Astro.props;
-const [projects, services, team, testimonials, faqs] = await Promise.all([getProjects(locale), getServices(locale), getTeam(locale), getTestimonials(locale), getFaqs(locale)]);
+const [projects, services, testimonials, faqs] = await Promise.all([getProjects(locale), getServices(locale), getTestimonials(locale), getFaqs(locale)]);
 const benefits = [
   ["outcome", "Outcome obsessed", "Beautiful work is only the beginning. Every engagement is tied to qualified demand, conversion, pipeline, or efficiency."],
   ["senior", "Senior specialists only", "You work directly with experienced strategists, designers, developers, marketers, and automation specialists."],
@@ -25,6 +26,14 @@ const benefits = [
   ["creative-tech", "Creative and technology together", "Brand, content, code, data, and AI are planned together—not managed as disconnected silos."],
 ] as const;
 const tools = ["Figma", "Framer", "Webflow", "Astro", "TypeScript", "Tailwind CSS", "Shopify", "WordPress", "After Effects", "Rive", "Lottie", "OpenAI", "Make", "n8n"];
+const toolRows = [tools, [...tools.slice(7), ...tools.slice(0, 7)]];
+const processSteps = [
+  { icon: ScanSearch, title: "Discover & align", copy: "We audit the current setup, clarify the opportunity, and agree on outcomes, scope, and priorities." },
+  { icon: PencilRuler, title: "Design the system", copy: "We turn the strategy into a tailored concept, experience, and technical blueprint." },
+  { icon: Blocks, title: "Build & integrate", copy: "We create the solution and connect it cleanly with your tools, data, content, and workflows." },
+  { icon: ClipboardCheck, title: "Test & approve", copy: "We validate quality, performance, and edge cases with your team before final approval." },
+  { icon: Rocket, title: "Launch & improve", copy: "We go live with a measured rollout, then learn from real usage and keep improving." },
+] as const;
 const description = t(locale, "Branding, websites, apps, SEO, AI search, content, paid acquisition, analytics, and intelligent automation—all delivered by one senior team.");
 ---
 <BaseLayout {locale} {description}>
@@ -60,16 +69,18 @@ const description = t(locale, "Branding, websites, apps, SEO, AI search, content
 
     <section class="testimonial-section section-pad"><SectionHeading title={t(locale, "Testimonials")} align="center" /><div class="testimonial-grid">{testimonials.map(({ data }, index) => <Reveal class="testimonial-card" delay={(index % 3) * 50}><span>{data.brand}</span><blockquote>“{data.quote}”</blockquote><small>{data.attribution}</small><i>{locale === "de" ? "Konzept-Kundenstimme" : "Concept testimonial"}</i></Reveal>)}</div></section>
 
-    <section class="tools-section section-pad"><SectionHeading title={t(locale, "Tools we’ve mastered")} align="center" /><div class="tools-marquee"><div class="tools-marquee-track">{[0, 1].map((group) => <div class="tools-marquee-group" aria-hidden={group === 1 ? "true" : undefined}>{tools.map((tool) => <span><ToolLogo name={tool} />{tool}</span>)}</div>)}</div></div></section>
+    <section class="tools-section section-pad"><SectionHeading title={t(locale, "Tools we’ve mastered")} align="center" /><div class="tools-marquee-list">{toolRows.map((row, rowIndex) => <div class="tools-marquee"><div class={`tools-marquee-track tools-marquee-track--${rowIndex + 1}`}>{[0, 1].map((group) => <div class="tools-marquee-group" aria-hidden={group === 1 ? "true" : undefined}>{row.map((tool) => <span><ToolLogo name={tool} />{tool}</span>)}</div>)}</div></div>)}</div></section>
 
-    <section class="team-section section-pad"><SectionHeading title={locale === "de" ? "Konzept-Team · Nah an der Arbeit." : "Concept team · Close to the work."} align="center" /><div class="team-grid">{team.map(({ data }, index) => <Reveal class="team-card" delay={(index % 5) * 40}><div class={`team-portrait portrait-${(index % 5) + 1}`}><span>{data.initials}</span><i></i></div><h3>{data.name}</h3><p>{data.role}</p></Reveal>)}</div></section>
-
-    <section class="engagement-section section-pad"><SectionHeading title={t(locale, "The right shape for the problem.")} /><div class="engagement-list">{([
-      ["Projects", "Branding, websites, web and mobile apps, AI implementations, and automation systems."],
-      ["Growth retainers", "SEO, content, social media, paid acquisition, analytics, and conversion optimization."],
-      ["Embedded growth team", "A multidisciplinary monthly team across strategy, creative, technology, acquisition, content, data, and AI."],
-      ["Audits & strategy", "Focused growth, search, analytics, conversion, AI-readiness, and automation discovery."],
-    ] as const).map(([title, copy], index) => <div><span>0{index + 1}</span><h3>{t(locale, title)}</h3><p>{t(locale, copy)}</p></div>)}</div></section>
+    <section class="engagement-section process-section section-pad">
+      <SectionHeading title={t(locale, "From first signal to live system.")} copy={t(locale, "A clear, collaborative process keeps strategy, design, technology, and delivery moving as one.")} />
+      <ol class="process-list" data-reveal>
+        {processSteps.map(({ icon: StepIcon, title, copy }, index) => <li class="process-step" style={`--process-delay:${index * 350}ms`}>
+          <span class="process-node" aria-hidden="true"></span>
+          <div class="process-marker"><StepIcon aria-hidden="true" /></div>
+          <div class="process-copy"><h3>{t(locale, title)}</h3><p>{t(locale, copy)}</p></div>
+        </li>)}
+      </ol>
+    </section>
 
     <section class="faq-section section-pad"><SectionHeading title="FAQs" align="center" /><div class="faq-layout"><Faq items={faqs} id={`home-faq-${locale}`} /></div></section><FinalCta {locale} />
   </main>

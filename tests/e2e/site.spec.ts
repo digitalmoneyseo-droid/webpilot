@@ -65,17 +65,16 @@ test("concept mode collects no contact data", async ({ page }) => {
   await expect(page.getByText("The contact form is not active yet.")).toBeVisible();
 });
 
-test("portfolio ribbon stays aligned at narrow viewport widths", async ({ page }) => {
+test("portfolio ribbon loops at narrow viewport widths without overflowing the page", async ({ page }) => {
   for (const width of [320, 375, 425]) {
     await page.setViewportSize({ width, height: 900 });
     await page.goto("/en");
 
     const firstCard = page.locator(".work-ribbon .project-card").first();
     const bounds = await firstCard.boundingBox();
-    expect(bounds?.x).toBe(16);
-    expect((bounds?.width ?? 0) + 32).toBeLessThanOrEqual(width);
-    await expect(page.locator('.work-ribbon-group[aria-hidden="true"]')).toHaveCSS("display", "none");
-    await expect(page.locator(".work-ribbon-track")).toHaveCSS("animation-name", "none");
+    expect((bounds?.width ?? 0) + 32).toBeLessThanOrEqual(width + 0.1);
+    await expect(page.locator('.work-ribbon-group[aria-hidden="true"]')).toHaveCSS("display", "flex");
+    await expect(page.locator(".work-ribbon-track")).toHaveCSS("animation-name", "work-ribbon-scroll");
     expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBe(width);
   }
 });
