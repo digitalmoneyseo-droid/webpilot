@@ -1,0 +1,16 @@
+---
+import { ChartNoAxesCombined, PanelsTopLeft, Workflow } from "@lucide/astro";
+
+interface Props {
+  name: "build" | "grow" | "automate";
+}
+
+const { name } = Astro.props;
+---
+
+<div class={`service-symbol symbol-${name}`} aria-hidden="true">
+  <span></span><span></span>
+  {name === "build" && <PanelsTopLeft />}
+  {name === "grow" && <ChartNoAxesCombined />}
+  {name === "automate" && <Workflow />}
+</div>

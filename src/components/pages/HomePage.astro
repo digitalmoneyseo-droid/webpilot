@@ -6,6 +6,7 @@ import Faq from "@/components/Faq.astro";
 import FinalCta from "@/components/FinalCta.astro";
 import ProjectCard from "@/components/ProjectCard.astro";
 import Reveal from "@/components/Reveal.astro";
+import ServiceSymbol from "@/components/ServiceSymbol.astro";
 import SectionHeading from "@/components/SectionHeading.astro";
 import TextLink from "@/components/TextLink.astro";
 import ToolLogo from "@/components/ToolLogo.astro";
@@ -39,7 +40,7 @@ const description = t(locale, "Brand, web, SEO, AI search, content, paid acquisi
       ["Build", "We create distinctive brands, high-converting websites, and digital products designed for long-term growth.", "brand-web-product", "01"],
       ["Grow", "We increase visibility and demand through SEO, AI search, content, paid acquisition, and conversion optimization.", "seo-ai-search", "02"],
       ["Automate", "We build AI agents, workflow automations, CRM systems, and intelligent tools that reduce manual work.", "ai-automation", "03"],
-    ] as const).map(([title, copy, slug, number]) => <a href={localizePath(`/services/${slug}`, locale)} class="service-card"><span>{number}</span><div class={`service-symbol symbol-${title.toLowerCase()}`}><i></i><i></i><i></i></div><h3>{t(locale, title)}</h3><p>{t(locale, copy)}</p><b>{t(locale, "Explore service")} ↗</b></a>)}</div></section>
+    ] as const).map(([title, copy, slug, number]) => <a href={localizePath(`/services/${slug}`, locale)} class="service-card"><span>{number}</span><ServiceSymbol name={title.toLowerCase() as "build" | "grow" | "automate"} /><h3>{t(locale, title)}</h3><p>{t(locale, copy)}</p><b>{t(locale, "Explore service")} ↗</b></a>)}</div></section>
 
     <section class="results-section section-pad"><div class="results-intro"><SectionHeading eyebrow={t(locale, "Selected outcomes")} title={t(locale, "Work that earns its place on the dashboard.")} copy={locale === "de" ? "Alle Ergebnisse sind fiktive Konzeptdaten und werden vor einer Live-Veröffentlichung durch verifizierte Kundendaten ersetzt." : "Every result is fictional concept data and will be replaced by verified client reporting before a live release."} /><TextLink href={localizePath("/work", locale)}>{t(locale, "See all case studies")}</TextLink></div><div class="metrics-grid">{projects.slice(0, 4).map(({ data }, index) => <Reveal class="metric-card" delay={index * 70}><span>{locale === "de" ? "Konzept-Ergebnis" : "Concept result"}</span><strong>{data.metric}</strong><h3>{data.metricLabel}</h3><a href={localizePath(`/work/${data.slug}`, locale)}>{data.shortTitle} ↗</a></Reveal>)}</div></section>
 
