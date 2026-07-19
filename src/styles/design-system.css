@@ -597,8 +597,9 @@ body {
 /* 2026 editorial refinement: concrete service IA, quieter surfaces, stronger hierarchy. */
 .final-cta .signal-dot { display: none; }
 
+.desktop-nav { position: relative; }
 .desktop-services {
-  position: relative;
+  position: static;
   height: 36px;
 }
 .desktop-services-trigger {
@@ -626,8 +627,8 @@ body {
 .desktop-services:focus-within .desktop-services-trigger svg { transform: rotate(180deg); }
 .desktop-megamenu {
   position: absolute;
-  top: 48px;
-  left: 50%;
+  top: 52px;
+  left: 4px;
   width: min(25rem, calc(100vw - 2rem));
   padding: .5rem .75rem;
   border: 1px solid rgba(12, 12, 12, .1);
@@ -636,29 +637,37 @@ body {
   box-shadow: var(--shadow-surface);
   opacity: 0;
   visibility: hidden;
-  transform: translate(-50%, -8px);
+  transform: translateY(-8px);
   pointer-events: none;
   transition: opacity 180ms var(--ease-out), transform 220ms var(--ease-out), visibility 180ms;
 }
-.desktop-megamenu::before { content: ""; position: absolute; inset: -8px 0 auto; height: 8px; }
+.desktop-megamenu::before { content: ""; position: absolute; top: -13px; left: -1rem; right: -1rem; height: 13px; }
 .desktop-services:hover .desktop-megamenu,
-.desktop-services:focus-within .desktop-megamenu { opacity: 1; visibility: visible; transform: translate(-50%, 0); pointer-events: auto; }
+.desktop-services:focus-within .desktop-megamenu { opacity: 1; visibility: visible; transform: translateY(0); pointer-events: auto; }
 .megamenu-list { padding: 0; }
 .megamenu-list > a {
+  position: relative;
   display: grid;
   grid-template-columns: minmax(0, 1fr) auto;
   align-items: center;
   gap: .75rem;
   min-height: 3rem;
-  padding: .6rem .25rem;
-  border-bottom: 1px solid var(--line);
-  border-radius: 0;
-  transition: color 160ms var(--ease-out);
+  padding: .6rem .75rem;
+  border-radius: 999px;
+  transition: color 180ms var(--ease-out), background-color 180ms var(--ease-out), scale 150ms var(--ease-out);
 }
-.megamenu-list > a:last-child { border-bottom: 0; }
-.megamenu-list > a:hover, .megamenu-list > a:focus-visible { color: #686863; background: transparent; transform: none; }
+.megamenu-list > a::after { content: ""; position: absolute; left: .75rem; right: .75rem; bottom: 0; height: 1px; background: var(--line); }
+.megamenu-list > a:last-child::after { display: none; }
+.megamenu-list > a:hover, .megamenu-list > a:focus-visible { color: #111; background: #f1f1ee; transform: none; }
+.megamenu-list > a:hover::after,
+.megamenu-list > a:focus-visible::after,
+.megamenu-list > a:has(+ a:hover)::after,
+.megamenu-list > a:has(+ a:focus-visible)::after { opacity: 0; }
+.megamenu-list > a:active { scale: .98; }
 .megamenu-list strong { font-size: var(--type-small); line-height: var(--leading-small); font-weight: var(--weight-control); letter-spacing: -.01em; }
-.megamenu-arrow { color: #74746f; font-size: .9rem; }
+.megamenu-arrow { color: currentColor; font-size: 1.3rem; line-height: 1; font-weight: 900; -webkit-text-stroke: .35px currentColor; transform: translateY(-2px); transition: transform 180ms var(--ease-out); }
+.megamenu-list > a:hover .megamenu-arrow,
+.megamenu-list > a:focus-visible .megamenu-arrow { transform: translateY(-6px); }
 
 .service-card {
   min-height: 24rem;

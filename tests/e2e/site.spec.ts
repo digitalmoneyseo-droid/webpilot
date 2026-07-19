@@ -34,6 +34,10 @@ test("desktop navigation is always available without a menu trigger", async ({ p
   await expect(page.locator(".desktop-services-trigger")).toBeVisible();
   await page.locator(".desktop-services").hover();
   await expect(page.locator(".desktop-megamenu")).toBeVisible();
+  const firstServiceLink = page.locator(".megamenu-list > a").first();
+  await firstServiceLink.hover();
+  await expect(firstServiceLink).toBeVisible();
+  await expect(page.locator(".desktop-megamenu")).toBeVisible();
   await expect(page.locator(".header-menu")).toBeHidden();
 });
 

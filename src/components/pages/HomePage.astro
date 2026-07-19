@@ -9,7 +9,6 @@ import Reveal from "@/components/Reveal.astro";
 import ServiceSymbol from "@/components/ServiceSymbol.astro";
 import ServiceCategoryGrid from "@/components/ServiceCategoryGrid.astro";
 import SectionHeading from "@/components/SectionHeading.astro";
-import TextLink from "@/components/TextLink.astro";
 import { PencilRuler, Rocket, ScanSearch } from "@lucide/astro";
 import { getFaqs, getProjects, getServices, getTestimonials } from "@/lib/content";
 import { localizePath, t, type Locale } from "@/lib/i18n";
@@ -53,13 +52,11 @@ const description = t(locale, "Branding, websites, apps, SEO, AI search, content
 
     <section class="service-category-section section-pad"><SectionHeading eyebrow={locale === "de" ? "Leistungen" : "What we do"} title={locale === "de" ? "Konkrete Expertise. Klar organisiert." : "Concrete expertise. Clearly organised."} copy={locale === "de" ? "Vier Leistungsbereiche, die einzeln funktionieren und gemeinsam stärker werden." : "Four service categories that work independently and become stronger together."} /><ServiceCategoryGrid {services} {locale} compact /></section>
 
-    <section class="results-section section-pad"><div class="results-intro"><SectionHeading eyebrow={t(locale, "Selected outcomes")} title={t(locale, "Work that earns its place on the dashboard.")} copy={locale === "de" ? "Alle Ergebnisse sind fiktive Konzeptdaten und werden vor einer Live-Veröffentlichung durch verifizierte Kundendaten ersetzt." : "Every result is fictional concept data and will be replaced by verified client reporting before a live release."} /><TextLink href={localizePath("/work", locale)}>{t(locale, "See all case studies")}</TextLink></div><div class="metrics-grid">{projects.slice(0, 4).map(({ data }, index) => <Reveal class="metric-card" delay={index * 70}><span>{locale === "de" ? "Konzept-Ergebnis" : "Concept result"}</span><strong>{data.metric}</strong><h3>{data.metricLabel}</h3><a href={localizePath(`/work/${data.slug}`, locale)}>{data.shortTitle} ↗</a></Reveal>)}</div></section>
-
     <section class="testimonial-section section-pad"><SectionHeading title={t(locale, "Testimonials")} align="center" /><div class="testimonial-grid">{testimonials.slice(0, 3).map(({ data }, index) => <Reveal class="testimonial-card" delay={(index % 3) * 50}><span>{data.brand}</span><blockquote>“{data.quote}”</blockquote><small>{data.attribution}</small><i>{locale === "de" ? "Konzept-Kundenstimme" : "Concept testimonial"}</i></Reveal>)}</div></section>
 
     <section class="engagement-section process-section section-pad">
       <SectionHeading title={t(locale, "From first signal to live system.")} copy={t(locale, "A clear, collaborative process keeps strategy, design, technology, and delivery moving as one.")} />
-      <ol class="process-list" data-reveal>
+      <ol class="process-list" data-reveal data-mobile-reveal-items>
         {processSteps.map(({ icon: StepIcon, title, copy }, index) => <li class="process-step" style={`--process-delay:${index * 350}ms`}>
           <span class="process-node" aria-hidden="true"></span>
           <div class="process-marker"><StepIcon aria-hidden="true" /></div>

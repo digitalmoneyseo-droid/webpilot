@@ -81,7 +81,12 @@ if (operator) schemas.unshift({
           entry.target.classList.add("is-visible");
           observer.unobserve(entry.target);
         }), { threshold: 0.12 });
-        reveals.forEach((element) => observer.observe(element));
+        const mobile = window.matchMedia("(max-width: 900px)").matches;
+        reveals.forEach((element) => {
+          if (mobile && element.hasAttribute("data-mobile-reveal-items")) {
+            [...element.children].forEach((item) => observer.observe(item));
+          } else observer.observe(element);
+        });
       }
     </script>
     {analyticsEnabled && analyticsToken && <script is:inline defer src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon={JSON.stringify({ token: analyticsToken })}></script>}

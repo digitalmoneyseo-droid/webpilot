@@ -369,10 +369,12 @@ button { color: inherit; }
 
 @media (max-width:900px){
   .process-list{grid-template-columns:1fr;gap:52px;padding:0 0 0 32px}
-  .process-step{min-height:0}
+  .process-step{min-height:0;--process-delay:0ms!important}
   .process-node{top:28px;left:-38px}
   .process-step:not(:last-child)::before{top:40px;right:auto;bottom:-80px;left:-32px;width:2px;height:auto;transform-origin:top}
   .reveal-ready .process-list .process-step::before{transform:scaleY(0)}
+  .reveal-ready .process-list .process-step.is-visible{opacity:1;filter:blur(0);transform:none}
+  .reveal-ready .process-list .process-step.is-visible::before{transform:scaleY(1)}
   .reveal-ready .process-list.is-visible .process-step::before{transform:scaleY(1)}
   .service-pillar-nav{margin-bottom:var(--space-7)}
   .service-pillar{padding:var(--space-6)}
