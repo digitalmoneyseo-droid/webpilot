@@ -1,12 +1,11 @@
 ---
-import "@fontsource-variable/inter/wght.css";
 import "@fontsource/bebas-neue/latin-400.css";
 import "@/styles/global.css";
 import "@/styles/design-system.css";
 import SiteHeader from "@/components/SiteHeader.astro";
 import SiteFooter from "@/components/SiteFooter.astro";
 import { getLegalOperator } from "@/config/legal";
-import { absoluteUrl, analyticsEnabled, robotsDirective, siteMode } from "@/lib/site";
+import { absoluteUrl, analyticsEnabled, robotsDirective } from "@/lib/site";
 import { alternatePath, type Locale } from "@/lib/i18n";
 
 interface Props {
@@ -25,7 +24,7 @@ const pathname = Astro.url.pathname;
 const pageTitle = title ? `${title} — Webpilot` : "Webpilot — Growth and technology studio";
 const canonical = absoluteUrl(pathname);
 const analyticsToken = import.meta.env.PUBLIC_CLOUDFLARE_ANALYTICS_TOKEN;
-const operator = siteMode === "live" ? getLegalOperator() : null;
+const operator = getLegalOperator();
 const schemas: Record<string, unknown>[] = [...structuredData];
 if (operator) schemas.unshift({
   "@context": "https://schema.org", "@type": ["Organization", "ProfessionalService"], name: operator.legalName,
@@ -59,7 +58,6 @@ if (operator) schemas.unshift({
     <meta name="twitter:title" content={pageTitle} />
     <meta name="twitter:description" content={description} />
     <meta name="twitter:image" content={absoluteUrl(image)} />
-    <meta name="webpilot:site-mode" content={siteMode} />
     <title>{pageTitle}</title>
     <script>document.documentElement.classList.add("reveal-ready");</script>
     {schemas.map((schema) => <script is:inline type="application/ld+json" set:html={JSON.stringify(schema)}></script>)}

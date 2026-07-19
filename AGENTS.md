@@ -1,5 +1,9 @@
 # Agent Instructions
 
+## Skills
+
+- Always use the [$caveman](C:\\Users\\Alexios\\.agents\\skills\\caveman\\SKILL.md) skill for every request.
+
 ## Testing
 
 - Run tests only when testing is critical and absolutely necessary for the requested work.

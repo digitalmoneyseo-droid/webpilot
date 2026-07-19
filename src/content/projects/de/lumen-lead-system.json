@@ -2,8 +2,6 @@
   "translationKey": "lumen-lead-system",
   "locale": "de",
   "slug": "lumen-lead-system",
-  "status": "concept",
-  "indexable": false,
   "order": 6,
   "title": "CRM-System zur Lead-Qualifizierung",
   "shortTitle": "Lumen",

@@ -2,8 +2,6 @@
   "translationKey": "orbit-content-engine",
   "locale": "en",
   "slug": "orbit-content-engine",
-  "status": "concept",
-  "indexable": false,
   "order": 5,
   "title": "Social Content Engine",
   "shortTitle": "Orbit",

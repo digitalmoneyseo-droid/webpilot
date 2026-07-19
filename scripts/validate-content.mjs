@@ -1,8 +1,9 @@
 import { readdir, readFile } from "node:fs/promises";
 import path from "node:path";
+import { contentCollectionNames, locales, servicePillarIds } from "../src/domain/catalog.ts";
 
 const root = process.cwd();
-const collections = ["projects", "services", "insights", "team", "testimonials", "faqs"];
+const collections = contentCollectionNames;
 
 async function filesUnder(directory) {
   const entries = await readdir(directory, { withFileTypes: true });
@@ -33,9 +34,8 @@ for (const collection of collections) {
   for (const file of files) {
     const source = await readFile(file, "utf8");
     const data = file.endsWith(".json") ? JSON.parse(source) : parseFrontmatter(source, file);
-    for (const field of ["translationKey", "locale", "slug", "status", "indexable"]) if (data[field] === undefined || data[field] === "") throw new Error(`${file} is missing ${field}`);
-    if (!["de", "en"].includes(data.locale)) throw new Error(`${file} has an invalid locale`);
-    if (!["concept", "verified"].includes(data.status)) throw new Error(`${file} has an invalid status`);
+    for (const field of ["translationKey", "locale", "slug"]) if (data[field] === undefined || data[field] === "") throw new Error(`${file} is missing ${field}`);
+    if (!locales.includes(data.locale)) throw new Error(`${file} has an invalid locale`);
     entries.push({ file, data });
   }
   const groups = new Map();
@@ -50,7 +50,7 @@ for (const collection of collections) {
     if (pair[0].data.slug !== pair[1].data.slug) throw new Error(`${collection}/${key} must use the same slug in both locales`);
     if (collection === "services") {
       for (const entry of pair) {
-        if (!["build", "grow", "automate"].includes(entry.data.pillar)) throw new Error(`${entry.file} has an invalid service pillar`);
+        if (!servicePillarIds.includes(entry.data.pillar)) throw new Error(`${entry.file} has an invalid service pillar`);
       }
       if (pair[0].data.pillar !== pair[1].data.pillar) throw new Error(`${collection}/${key} must use the same pillar in both locales`);
       if (pair[0].data.order !== pair[1].data.order) throw new Error(`${collection}/${key} must use the same order in both locales`);

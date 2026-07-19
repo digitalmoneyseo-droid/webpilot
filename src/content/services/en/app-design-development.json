@@ -2,8 +2,6 @@
   "translationKey": "app-design-development",
   "locale": "en",
   "slug": "app-design-development",
-  "status": "concept",
-  "indexable": true,
   "order": 3,
   "pillar": "build",
   "title": "App design & development",

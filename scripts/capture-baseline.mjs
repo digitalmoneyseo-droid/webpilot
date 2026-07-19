@@ -22,8 +22,6 @@ const routes = [
   "/services/ai-automation",
   "/services/analytics-cro",
   "/about",
-  "/insights",
-  "/insights/build-grow-automate",
   "/contact",
   "/access",
   "/missing-page",

@@ -2,8 +2,6 @@
   "translationKey": "ai-automation",
   "locale": "en",
   "slug": "ai-automation",
-  "status": "concept",
-  "indexable": true,
   "order": 8,
   "pillar": "automate",
   "title": "AI & automation",

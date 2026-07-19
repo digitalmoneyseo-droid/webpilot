@@ -2,8 +2,6 @@
   "translationKey": "faq-5",
   "locale": "de",
   "slug": "faq-5",
-  "status": "concept",
-  "indexable": true,
   "question": "Wem gehören die Arbeitsergebnisse nach Abschluss?",
   "answer": "Ihnen. Freigegebene Designs, Quellcode, Inhalte, Produktionszugänge und Projektdokumentation werden an Ihr Team übergeben.",
   "order": 5

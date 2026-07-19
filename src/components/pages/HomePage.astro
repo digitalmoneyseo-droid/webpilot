@@ -63,7 +63,7 @@ const description = t(locale, "Branding, websites, apps, SEO, AI search, content
       </ol>
     </section>
 
-    <section class="testimonial-section section-pad"><SectionHeading title={t(locale, "Testimonials")} align="center" /><div class="testimonial-grid">{testimonials.slice(0, 3).map(({ data }, index) => <Reveal class="testimonial-card" delay={(index % 3) * 50}><span>{data.brand}</span><blockquote>“{data.quote}”</blockquote><small>{data.attribution}</small><i>{locale === "de" ? "Konzept-Kundenstimme" : "Concept testimonial"}</i></Reveal>)}</div></section>
+    <section class="testimonial-section section-pad"><SectionHeading title={t(locale, "Testimonials")} align="center" /><div class="testimonial-grid">{testimonials.slice(0, 3).map(({ data }, index) => <Reveal class="testimonial-card" delay={(index % 3) * 50}><span>{data.brand}</span><blockquote>“{data.quote}”</blockquote><small>{data.attribution}</small><i>{locale === "de" ? "Kundenstimme" : "Client testimonial"}</i></Reveal>)}</div></section>
 
     <section class="faq-section section-pad"><SectionHeading title="FAQs" align="center" /><div class="faq-layout"><Faq items={faqs} id={`home-faq-${locale}`} /></div></section><FinalCta {locale} />
   </main>

@@ -4,5 +4,14 @@ interface Props { href: string; light?: boolean; external?: boolean; class?: str
 const { href, light = false, external = false, class: extraClass } = Astro.props;
 ---
 <a class:list={["pill-button", extraClass, { "pill-button--light": light }]} href={href} target={external ? "_blank" : undefined} rel={external ? "noreferrer" : undefined}>
-  <slot /><Icon name={external ? "arrow-up-right" : "arrow-right"} />
+  <span class="pill-button__label">
+    <span class="pill-button__label-track">
+      <span class="pill-button__label-copy"><slot /></span>
+      <span class="pill-button__label-copy" aria-hidden="true"><slot /></span>
+    </span>
+  </span>
+  <span class="pill-button__icon" aria-hidden="true">
+    <Icon name="arrow-right" class="pill-button__arrow pill-button__arrow--right" />
+    <Icon name="arrow-up-right" class="pill-button__arrow pill-button__arrow--up-right" />
+  </span>
 </a>

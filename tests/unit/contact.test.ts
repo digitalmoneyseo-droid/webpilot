@@ -1,21 +1,24 @@
 import { describe, expect, it } from "vitest";
-import { escapeHtml, renderContactEmail, validateContactForm } from "../../src/lib/contact";
+import { escapeHtml, handleContactRequest, renderContactEmail, validateContactForm, type ContactIntakePorts } from "../../src/contact/intake";
 
 function validForm(): URLSearchParams {
-  return new URLSearchParams({ name: "Ada Lovelace", email: "ada@example.com", interests: "branding-identity", brief: "We need a clear new growth system for launch.", locale: "en", website: "", "cf-turnstile-response": "token" });
+  return new URLSearchParams({ name: "Ada Lovelace", email: "ada@example.com", interests: "web-app-design", brief: "We need a clear new growth system for launch.", locale: "en", website: "", "cf-turnstile-response": "token" });
 }
 
 describe("contact validation", () => {
-  it("accepts a valid localized submission", () => { expect(validateContactForm(validForm())).toMatchObject({ success: true, data: { locale: "en", interests: ["branding-identity"] } }); });
+  it("accepts a valid localized submission", () => { expect(validateContactForm(validForm())).toMatchObject({ success: true, data: { locale: "en", interests: ["web-app-design"] } }); });
 
-  it("accepts every active Build interest and rejects the retired combined interest", () => {
-    for (const interest of ["branding-identity", "website-design-development", "app-design-development"]) {
+  it("accepts every active service and the open-ended option", () => {
+    for (const interest of ["web-app-design", "seo-geo", "paid-campaigns", "ai-automation", "other"]) {
       const form = validForm();
       form.set("interests", interest);
       expect(validateContactForm(form)).toMatchObject({ success: true, data: { interests: [interest] } });
     }
+  });
+
+  it("rejects retired combined interests", () => {
     const retired = validForm();
-    retired.set("interests", "brand-website");
+    retired.set("interests", "content-paid");
     expect(validateContactForm(retired)).toMatchObject({ success: false, category: "interests" });
   });
   it.each([
@@ -34,5 +37,45 @@ describe("email safety", () => {
     const email = renderContactEmail(result.data);
     expect(email.html).not.toContain("<script>");
     expect(email.html).toContain("&lt;script&gt;");
+  });
+});
+
+function intakePorts(overrides: Partial<ContactIntakePorts> = {}): ContactIntakePorts {
+  return {
+    expectedOrigin: "https://webpilot.studio",
+    createRequestId: () => "request-1",
+    rateLimit: async () => true,
+    verifyTurnstile: async () => true,
+    sendEmail: async () => "message-1",
+    log: () => undefined,
+    ...overrides,
+  };
+}
+
+function contactRequest(): Request {
+  return new Request("https://webpilot.studio/api/contact", {
+    method: "POST",
+    headers: { "Content-Type": "application/x-www-form-urlencoded", Origin: "https://webpilot.studio", Accept: "application/json" },
+    body: validForm(),
+  });
+}
+
+describe("contact intake", () => {
+  it("runs complete intake through narrow provider adapters", async () => {
+    const sent: string[] = [];
+    const response = await handleContactRequest(contactRequest(), intakePorts({ sendEmail: async (email) => { sent.push(email.replyTo); return "message-1"; } }));
+    expect(response.status).toBe(200);
+    await expect(response.json()).resolves.toEqual({ ok: true, category: "success" });
+    expect(sent).toEqual(["ada@example.com"]);
+  });
+
+  it.each([
+    ["rate limit", intakePorts({ rateLimit: async () => false }), 429, "rate_limit"],
+    ["Turnstile provider", intakePorts({ verifyTurnstile: async () => { throw new Error("offline"); } }), 502, "turnstile_provider"],
+    ["email provider", intakePorts({ sendEmail: async () => undefined }), 502, "email_provider"],
+  ])("maps %s failure", async (_name, ports, status, category) => {
+    const response = await handleContactRequest(contactRequest(), ports);
+    expect(response.status).toBe(status);
+    await expect(response.json()).resolves.toEqual({ ok: false, category });
   });
 });

@@ -2,8 +2,6 @@
   "translationKey": "nora-support-ai",
   "locale": "en",
   "slug": "nora-support-ai",
-  "status": "concept",
-  "indexable": false,
   "order": 3,
   "title": "AI Customer Support Assistant",
   "shortTitle": "Nora",

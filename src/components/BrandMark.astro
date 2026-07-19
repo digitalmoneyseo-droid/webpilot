@@ -1,5 +1,15 @@
 ---
 interface Props { inverse?: boolean; }
 const { inverse = false } = Astro.props;
+const letters = [..."Webpilot"];
 ---
-<span class:list={["brand-wordmark", { "brand-wordmark--inverse": inverse }]}>Webpilot</span>
+<span class:list={["brand-wordmark", { "brand-wordmark--inverse": inverse }]}>
+  <span class="sr-only">Webpilot</span>
+  <span class="brand-wordmark__letters" aria-hidden="true">
+    {letters.map((letter, index) => (
+      <span class="brand-wordmark__letter" style={`--letter-index:${index};--letter-reverse:${letters.length - index - 1}`}>
+        <span class="brand-wordmark__track"><span>{letter}</span><span>{letter}</span></span>
+      </span>
+    ))}
+  </span>
+</span>

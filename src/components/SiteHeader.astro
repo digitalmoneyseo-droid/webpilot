@@ -16,22 +16,38 @@ const isActive = (href: string) => {
   <nav class="desktop-nav" aria-label={t(locale, "Main navigation")}>
     <a href={localizePath("/work", locale)} class:list={{ "is-active": isActive("/work") }} aria-current={isActive("/work") ? "page" : undefined}>{t(locale, "Work")}</a>
     <div class="desktop-services">
-      <button type="button" class:list={["desktop-services-trigger", { "is-active": isActive("/services") }]} aria-haspopup="true"><span>{t(locale, "Services")}</span><Icon name="chevron-down" /></button>
-      <div class="desktop-megamenu">
+      <button type="button" class:list={["desktop-services-trigger", { "is-active": isActive("/services") }]} aria-haspopup="true" aria-expanded="false" aria-controls="desktop-services-menu"><span>{t(locale, "Services")}</span><Icon name="chevron-down" /></button>
+      <div id="desktop-services-menu" class="desktop-megamenu" aria-hidden="true">
         <div class="megamenu-list">
-          {serviceCategories.map((category) => <a href={localizePath(category.href, locale)}>
-              <strong>{localizedCategoryTitle(category, locale)}</strong>
-              <span class="megamenu-arrow" aria-hidden="true">↗</span>
+          {serviceCategories.map((category) => <a href={localizePath(category.href, locale)} aria-label={localizedCategoryTitle(category, locale)}>
+              <span class="megamenu-label">
+                <span class="megamenu-label-track">
+                  <strong>{localizedCategoryTitle(category, locale)}</strong>
+                  <strong aria-hidden="true">{localizedCategoryTitle(category, locale)}</strong>
+                </span>
+              </span>
+              <span class="megamenu-arrow-box" aria-hidden="true">
+                <Icon name="arrow-right" class="megamenu-arrow megamenu-arrow--right" />
+                <Icon name="arrow-up-right" class="megamenu-arrow megamenu-arrow--up-right" />
+              </span>
             </a>)}
         </div>
       </div>
     </div>
     <a href={localizePath("/about", locale)} class:list={{ "is-active": isActive("/about") }} aria-current={isActive("/about") ? "page" : undefined}>{t(locale, "About")}</a>
-    <a href={localizePath("/insights", locale)} class:list={{ "is-active": isActive("/insights") }} aria-current={isActive("/insights") ? "page" : undefined}>{t(locale, "Insights")}</a>
     <a href={localizePath("/contact", locale)} class:list={{ "is-active": isActive("/contact") }} aria-current={isActive("/contact") ? "page" : undefined}>{t(locale, "Contact")}</a>
   </nav>
   <a class="header-language" href={alternatePath(pathname, otherLocale)} aria-label={locale === "de" ? "Switch to English" : "Auf Deutsch wechseln"}>
-    <Icon name="translate" /><span class:list={{ "is-active": locale === "de" }}>DE</span><i>/</i><span class:list={{ "is-active": locale === "en" }}>EN</span>
+    <span class="header-language__icon-box" aria-hidden="true">
+      <Icon name="translate" class="header-language__icon header-language__icon--out" />
+      <Icon name="translate" class="header-language__icon header-language__icon--in" />
+    </span>
+    <span class="header-language__label">
+      <span class="header-language__label-track">
+        <span class="header-language__row"><span class:list={{ "is-active": locale === "de" }}>DE</span><i>/</i><span class:list={{ "is-active": locale === "en" }}>EN</span></span>
+        <span class="header-language__row" aria-hidden="true"><span class:list={{ "is-active": locale === "de" }}>DE</span><i>/</i><span class:list={{ "is-active": locale === "en" }}>EN</span></span>
+      </span>
+    </span>
   </a>
   <button class="header-menu" type="button" aria-label={t(locale, "Open navigation")} aria-expanded="false" aria-controls="site-menu"><Icon name="menu" /></button>
 </header>
@@ -50,93 +66,12 @@ const isActive = (href: string) => {
       </div></div>
     </div>
     <a href={localizePath("/about", locale)} tabindex="-1"><span>03</span><b>{t(locale, "About")}</b><Icon name="arrow-up-right" /></a>
-    <a href={localizePath("/insights", locale)} tabindex="-1"><span>04</span><b>{t(locale, "Insights")}</b><Icon name="arrow-up-right" /></a>
-    <a href={localizePath("/contact", locale)} tabindex="-1"><span>05</span><b>{t(locale, "Contact")}</b><Icon name="arrow-up-right" /></a>
+    <a href={localizePath("/contact", locale)} tabindex="-1"><span>04</span><b>{t(locale, "Contact")}</b><Icon name="arrow-up-right" /></a>
   </nav>
   <div class="menu-bottom"><span>{t(locale, "Berlin · Working worldwide")}</span><a href="mailto:hello@webpilot.studio">hello@webpilot.studio</a></div>
 </div>
 
 <script>
-  const openButton = document.querySelector<HTMLButtonElement>(".header-menu");
-  const overlay = document.querySelector<HTMLElement>("#site-menu");
-  const closeButton = overlay?.querySelector<HTMLButtonElement>(".menu-close");
-  const menuLinksContainer = overlay?.querySelector<HTMLElement>(".menu-links");
-  const menuLinks = [...(overlay?.querySelectorAll<HTMLAnchorElement>("a") ?? [])];
-  const primaryMenuLinks = [...(overlay?.querySelectorAll<HTMLAnchorElement>(".menu-links > a") ?? [])];
-  const serviceTrigger = overlay?.querySelector<HTMLButtonElement>(".menu-services-trigger");
-  const serviceList = overlay?.querySelector<HTMLElement>(".menu-service-list");
-  const serviceLinks = [...(serviceList?.querySelectorAll<HTMLAnchorElement>("a") ?? [])];
-  const desktopServiceTrigger = document.querySelector<HTMLButtonElement>(".desktop-services-trigger");
-  const background = [...document.querySelectorAll<HTMLElement>("body > main, body > footer")];
-  const mobileMenu = window.matchMedia("(max-width: 900px)");
-  let returnFocus: HTMLElement | null = null;
-  let closeTimer: number | undefined;
-
-  overlay?.setAttribute("aria-modal", String(mobileMenu.matches));
-
-  const focusable = () => overlay ? [...overlay.querySelectorAll<HTMLElement>('a[href], button:not([disabled]), [tabindex]:not([tabindex="-1"])')] : [];
-  const setServicesExpanded = (expanded: boolean) => {
-    serviceTrigger?.setAttribute("aria-expanded", String(expanded));
-    serviceList?.setAttribute("aria-hidden", String(!expanded));
-    serviceTrigger?.closest(".menu-services")?.classList.toggle("is-open", expanded);
-    menuLinksContainer?.classList.toggle("is-services-open", expanded);
-    const menuOpen = overlay?.classList.contains("is-open") ?? false;
-    primaryMenuLinks.forEach((link) => link.tabIndex = menuOpen && !expanded ? 0 : -1);
-    serviceLinks.forEach((link) => link.tabIndex = menuOpen && expanded ? 0 : -1);
-  };
-  const setOpen = (open: boolean) => {
-    if (!overlay || !openButton) return;
-    window.clearTimeout(closeTimer);
-    overlay.classList.remove("is-closing");
-    if (open) {
-      overlay.classList.add("is-open");
-    } else {
-      overlay.classList.remove("is-open");
-      overlay.classList.add("is-closing");
-      const closeMs = Number.parseFloat(getComputedStyle(document.documentElement).getPropertyValue("--menu-close-dur")) || 300;
-      closeTimer = window.setTimeout(() => overlay.classList.remove("is-closing"), closeMs);
-    }
-    overlay.setAttribute("aria-hidden", String(!open));
-    overlay.setAttribute("aria-modal", String(mobileMenu.matches));
-    overlay.inert = !open;
-    openButton.setAttribute("aria-expanded", String(open));
-    menuLinks.forEach((link) => link.tabIndex = open ? 0 : -1);
-    if (!open) setServicesExpanded(false);
-    else setServicesExpanded(serviceTrigger?.getAttribute("aria-expanded") === "true");
-    if (serviceTrigger) serviceTrigger.tabIndex = open ? 0 : -1;
-    background.forEach((element) => element.inert = open && mobileMenu.matches);
-    document.body.style.overflow = open && mobileMenu.matches ? "hidden" : "";
-    if (open) {
-      returnFocus = document.activeElement instanceof HTMLElement ? document.activeElement : openButton;
-      closeButton?.focus();
-    } else {
-      returnFocus?.focus();
-    }
-  };
-
-  openButton?.addEventListener("click", () => setOpen(true));
-  closeButton?.addEventListener("click", () => setOpen(false));
-  serviceTrigger?.addEventListener("click", () => setServicesExpanded(serviceTrigger.getAttribute("aria-expanded") !== "true"));
-  desktopServiceTrigger?.addEventListener("pointerdown", (event) => event.preventDefault());
-  menuLinks.forEach((link) => link.addEventListener("click", () => setOpen(false)));
-  document.addEventListener("pointerdown", (event) => {
-    if (!overlay?.classList.contains("is-open") || mobileMenu.matches) return;
-    if (event.target instanceof Node && !overlay.contains(event.target) && !openButton?.contains(event.target)) setOpen(false);
-  });
-  mobileMenu.addEventListener("change", () => {
-    if (overlay?.classList.contains("is-open")) setOpen(false);
-    else overlay?.setAttribute("aria-modal", String(mobileMenu.matches));
-  });
-  document.addEventListener("keydown", (event) => {
-    if (!overlay?.classList.contains("is-open")) return;
-    if (event.key === "Escape") setOpen(false);
-    if (event.key !== "Tab" || !mobileMenu.matches) return;
-    const items = focusable();
-    const first = items[0];
-    const last = items.at(-1);
-    if (!first || !last) return;
-    if (event.shiftKey && document.activeElement === first) { event.preventDefault(); last.focus(); }
-    else if (!event.shiftKey && document.activeElement === last) { event.preventDefault(); first.focus(); }
-  });
-
+  import { initNavigation } from "@/browser/navigation";
+  initNavigation();
 </script>

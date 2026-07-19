@@ -1,15 +1,13 @@
 import { defineCollection } from "astro:content";
 import { glob } from "astro/loaders";
 import { z } from "astro/zod";
+import { locales, servicePillarIds } from "./domain/catalog";
 
-const locale = z.enum(["de", "en"]);
-const status = z.enum(["concept", "verified"]);
+const locale = z.enum(locales);
 const localized = {
   translationKey: z.string().min(1),
   locale,
   slug: z.string().regex(/^[a-z0-9]+(?:-[a-z0-9]+)*$/),
-  status,
-  indexable: z.boolean(),
 };
 
 const entryId = ({ entry }: { entry: string }) => entry.replace(/\.(json|mdx)$/, "");
@@ -41,7 +39,7 @@ const services = defineCollection({
   schema: z.object({
     ...localized,
     order: z.number().int().positive(),
-    pillar: z.enum(["build", "grow", "automate"]),
+    pillar: z.enum(servicePillarIds),
     title: z.string(),
     eyebrow: z.string(),
     summary: z.string(),
@@ -49,19 +47,6 @@ const services = defineCollection({
     deliverables: z.array(z.string()).min(1),
     outcomes: z.array(z.string()).min(1),
     tools: z.array(z.string()).min(1),
-  }),
-});
-
-const insights = defineCollection({
-  loader: glob({ pattern: "**/*.mdx", base: "./src/content/insights", generateId: entryId }),
-  schema: z.object({
-    ...localized,
-    order: z.number().int().positive(),
-    category: z.string(),
-    publishedAt: z.coerce.date(),
-    readMinutes: z.number().int().positive(),
-    title: z.string(),
-    excerpt: z.string(),
   }),
 });
 
@@ -97,4 +82,4 @@ const faqs = defineCollection({
   }),
 });
 
-export const collections = { projects, services, insights, team, testimonials, faqs };
+export const collections = { projects, services, team, testimonials, faqs };

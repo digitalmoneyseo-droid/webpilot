@@ -1,49 +1,166 @@
 ---
 import BaseLayout from "@/layouts/BaseLayout.astro";
-import { contactFormEnabled, siteMode, turnstileSiteKey } from "@/lib/site";
+import Icon from "@/components/Icon.astro";
+import { turnstileSiteKey } from "@/lib/site";
 import type { Locale } from "@/lib/i18n";
+import { contactBudgets, localizedCategoryTitle, serviceCategories } from "@/domain/catalog";
+
 interface Props { locale: Locale; }
+
 const { locale } = Astro.props;
-const interests = locale === "de" ? [
-  ["branding-identity", "Branding & Identität"], ["website-design-development", "Websites"], ["app-design-development", "Apps"], ["seo-ai-search", "SEO & KI-Suche"], ["content-paid", "Content & Paid"], ["ai-automation", "KI & Automation"], ["analytics-cro", "Analytics & CRO"], ["embedded-team", "Eingebettetes Team"],
-] : [
-  ["branding-identity", "Branding & identity"], ["website-design-development", "Websites"], ["app-design-development", "Apps"], ["seo-ai-search", "SEO & AI search"], ["content-paid", "Content & paid"], ["ai-automation", "AI & automation"], ["analytics-cro", "Analytics & CRO"], ["embedded-team", "Embedded team"],
+const interests = [
+  ...serviceCategories.map((category) => [category.id, localizedCategoryTitle(category, locale)] as const),
+  ["other", locale === "de" ? "Anderes / noch unsicher" : "Other / not sure yet"] as const,
 ];
+const budgets = contactBudgets.map(({ id, label }) => [id, label[locale]] as const);
 ---
-<BaseLayout {locale} title={locale === "de" ? "Kontakt" : "Contact"} description={locale === "de" ? "Starten Sie ein Gespräch mit Webpilot." : "Start a conversation with Webpilot."}>
-  <main id="main-content" class="page-main page-main--contact"><section class="contact-page"><div class="contact-intro"><h1>{locale === "de" ? "Lassen Sie uns Ihr nächstes Wachstumssystem bauen." : "Let’s build your next growth system."}</h1><p>{locale === "de" ? "Erzählen Sie uns, was Sie aufbauen, wo Wachstum stockt und wie ein starkes Ergebnis aussehen würde." : "Tell us what you are building, where growth is getting stuck, and what a strong outcome would look like."}</p><a href="mailto:hello@webpilot.studio">hello@webpilot.studio ↗</a></div>
-      {contactFormEnabled ? <form class="contact-form" action="/api/contact" method="post" enctype="application/x-www-form-urlencoded" data-contact-form>
+
+<BaseLayout
+  {locale}
+  title={locale === "de" ? "Kontakt" : "Contact"}
+  description={locale === "de" ? "Starten Sie ein Gespräch mit Webpilot." : "Start a conversation with Webpilot."}
+>
+  <main id="main-content" class="page-main page-main--contact">
+    <section class="contact-page">
+      <div class="contact-intro">
+        <h1>{locale === "de" ? <>Lassen Sie uns Ihr nächstes Wachstums<wbr />system bauen.</> : "Let’s build your next growth system."}</h1>
+        <p>{locale === "de" ? "Erzählen Sie uns, was Sie aufbauen, wo Wachstum stockt und wie ein starkes Ergebnis aussehen würde." : "Tell us what you are building, where growth is getting stuck, and what a strong outcome would look like."}</p>
+        <a href="mailto:hello@webpilot.studio">hello@webpilot.studio ↗</a>
+      </div>
+
+      <form class="contact-form" action="/api/contact" method="post" enctype="application/x-www-form-urlencoded" data-contact-form>
+        <header class="contact-form-header">
+          <h2>{locale === "de" ? "Ein paar Details genügen." : "A few details are enough."}</h2>
+          <p>{locale === "de" ? "Wählen Sie aus, was passt. Mehrere Leistungen und „noch unsicher“ sind völlig in Ordnung." : "Choose whatever fits. Multiple services and “not sure yet” are completely fine."}</p>
+        </header>
+
         <div class="form-status" role="status" aria-live="polite" tabindex="-1" data-form-status hidden></div>
-        <label><span>{locale === "de" ? "Ihr Name" : "Your name"}</span><input name="name" type="text" autocomplete="name" minlength="2" maxlength="100" required placeholder="Ada Lovelace" /></label>
-        <label><span>{locale === "de" ? "Geschäftliche E-Mail" : "Work email"}</span><input name="email" type="email" autocomplete="email" maxlength="254" required placeholder="ada@company.com" /></label>
-        <label><span>{locale === "de" ? "Unternehmen" : "Company"}</span><input name="company" type="text" autocomplete="organization" maxlength="120" placeholder={locale === "de" ? "Unternehmensname" : "Company name"} /></label>
-        <fieldset><legend>{locale === "de" ? "Wobei können wir helfen?" : "What can we help with?"}</legend><div class="form-options">{interests.map(([value, label]) => <label><input type="checkbox" name="interests" value={value} /><span>{label}</span></label>)}</div></fieldset>
-        <label><span>{locale === "de" ? "Was möchten Sie erreichen?" : "What are you trying to achieve?"}</span><textarea name="brief" minlength="20" maxlength="4000" required rows="5" placeholder={locale === "de" ? "Ein wenig Kontext, die wichtigste Einschränkung und wie Erfolg aussieht…" : "A little context, the important constraint, and what success looks like…"}></textarea></label>
-        <label><span>{locale === "de" ? "Investitionsrahmen" : "Indicative investment"}</span><select name="budget"><option value="">{locale === "de" ? "Bereich wählen" : "Select a range"}</option><option value="15-30k">€15k–€30k</option><option value="30-60k">€30k–€60k</option><option value="60-120k">€60k–€120k</option><option value="120k-plus">€120k+</option></select></label>
-        <input type="hidden" name="locale" value={locale} /><label class="website-field" aria-hidden="true"><span>Website</span><input name="website" type="text" tabindex="-1" autocomplete="off" /></label>
-        <div class="cf-turnstile" data-sitekey={turnstileSiteKey} data-theme="light"></div>
-        <button class="form-submit" type="submit">{locale === "de" ? "Projektanfrage senden" : "Send project brief"} <span>↗</span></button><small>{locale === "de" ? "Ihre Angaben werden nur zur Beantwortung der Anfrage verarbeitet und nicht von Webpilot gespeichert." : "Your details are processed only to answer this request and are not stored by Webpilot."}</small>
-      </form> : <div class="contact-form concept-contact-notice"><h2>{locale === "de" ? "Das Kontaktformular ist noch nicht aktiv." : "The contact form is not active yet."}</h2><p>{locale === "de" ? "Diese Website wurde noch nicht veröffentlicht. Damit keine personenbezogenen Daten gesammelt werden, bleibt das vollständig implementierte Formular bis zum Live-Modus deaktiviert." : "This website has not launched. To avoid collecting personal data, the fully implemented form remains disabled until live mode."}</p><a class="pill-button" href="mailto:hello@webpilot.studio">hello@webpilot.studio ↗</a><small>{locale === "de" ? "Aktueller Modus" : "Current mode"}: {siteMode}</small></div>}
-    </section></main>
-  {contactFormEnabled && <script is:inline src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>}
-  {contactFormEnabled && <script>
+
+        <section class="form-section form-section--about" aria-labelledby="contact-details-heading">
+          <h3 id="contact-details-heading">{locale === "de" ? "Über Sie" : "About you"}</h3>
+          <div class="form-row">
+            <label class="form-field">
+              <span>{locale === "de" ? "Ihr Name" : "Your name"} <em class="required-marker" aria-hidden="true">*</em></span>
+              <input name="name" type="text" autocomplete="name" minlength="2" maxlength="100" required placeholder="Ada Lovelace" />
+            </label>
+            <label class="form-field">
+              <span>{locale === "de" ? "Geschäftliche E-Mail" : "Work email"} <em class="required-marker" aria-hidden="true">*</em></span>
+              <span class="form-control form-control--email">
+                <input name="email" type="email" autocomplete="email" maxlength="254" required spellcheck="false" placeholder="ada@company.com" aria-describedby="email-hint" data-email-input />
+                <span class="email-valid-icon" aria-hidden="true">✓</span>
+              </span>
+              <small class="field-message" id="email-hint" aria-live="polite" data-email-hint></small>
+            </label>
+          </div>
+
+          <label class="form-field">
+            <span>{locale === "de" ? "Unternehmen" : "Company"} <em>({locale === "de" ? "optional" : "optional"})</em></span>
+            <input name="company" type="text" autocomplete="organization" maxlength="120" placeholder={locale === "de" ? "Unternehmensname" : "Company name"} />
+          </label>
+        </section>
+
+        <fieldset class="form-services form-section">
+          <legend>{locale === "de" ? "Wobei können wir helfen?" : "What can we help with?"} <em class="required-marker" aria-hidden="true">*</em><span class="sr-only"> {locale === "de" ? "Pflichtfeld" : "Required"}</span></legend>
+          <p class="form-section-note">{locale === "de" ? "Mehrfachauswahl möglich" : "Select all that apply"}</p>
+          <div class="form-options form-options--services">
+            {interests.map(([value, label]) => (
+              <label>
+                <input type="checkbox" name="interests" value={value} />
+                <span><b>{label}</b></span>
+              </label>
+            ))}
+          </div>
+        </fieldset>
+
+        <section class="form-section form-section--project" aria-labelledby="project-heading">
+          <h3 id="project-heading">{locale === "de" ? "Ihr Projekt" : "Your project"} <em class="required-marker" aria-hidden="true">*</em></h3>
+          <p class="form-section-note form-section-note--project">{locale === "de" ? "Erzählen Sie uns, was Sie aufbauen, was aktuell nicht funktioniert und wie ein gutes Ergebnis aussehen würde." : "Tell us what you are building, what is currently not working, and what a good outcome would look like."}</p>
+          <label class="form-field form-field--brief">
+            <span class="sr-only">{locale === "de" ? "Projektdetails" : "Project details"}</span>
+            <textarea name="brief" minlength="20" maxlength="4000" required rows="2" placeholder={locale === "de" ? "Projekt, Herausforderung und gewünschtes Ergebnis…" : "Project, challenge, and desired outcome…"}></textarea>
+          </label>
+        </section>
+
+        <fieldset class="form-services form-section form-budget">
+          <legend>{locale === "de" ? "Mit welchem Budgetrahmen arbeiten Sie?" : "What budget range are you working with?"} <em>({locale === "de" ? "optional" : "optional"})</em></legend>
+          <p class="form-section-note">{locale === "de" ? "Eine Auswahl" : "Choose one"}</p>
+          <div class="form-options form-options--budget">
+            {budgets.map(([value, label]) => (
+              <label>
+                <input type="radio" name="budget" value={value} />
+                <span><b>{label}</b></span>
+              </label>
+            ))}
+          </div>
+        </fieldset>
+
+        <input type="hidden" name="locale" value={locale} />
+        <label class="website-field" aria-hidden="true"><span>Website</span><input name="website" type="text" tabindex="-1" autocomplete="off" /></label>
+        <div class="cf-turnstile" data-sitekey={turnstileSiteKey} data-theme="light" data-size="flexible" data-appearance="interaction-only"></div>
+        <button class="form-submit" type="submit">
+          <span class="form-submit__label">
+            <span class="form-submit__label-track">
+              <span>{locale === "de" ? "Anfrage senden" : "Send enquiry"}</span>
+              <span aria-hidden="true">{locale === "de" ? "Anfrage senden" : "Send enquiry"}</span>
+            </span>
+          </span>
+          <span class="pill-button__icon" aria-hidden="true">
+            <Icon name="arrow-right" class="pill-button__arrow pill-button__arrow--right" />
+            <Icon name="arrow-up-right" class="pill-button__arrow pill-button__arrow--up-right" />
+          </span>
+        </button>
+        <small>{locale === "de" ? "Ihre Angaben werden nur zur Beantwortung der Anfrage verarbeitet und nicht von Webpilot gespeichert." : "Your details are processed only to answer this request and are not stored by Webpilot."}</small>
+      </form>
+    </section>
+  </main>
+
+  <script is:inline src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
+  <script>
     const status = document.querySelector<HTMLElement>("[data-form-status]");
     const state = new URLSearchParams(window.location.search).get("status");
     if (status && state) {
       status.hidden = false;
       const de = document.documentElement.lang === "de";
-      status.textContent = state === "success" ? (de ? "Danke — Ihre Anfrage wurde gesendet." : "Thank you — your request was sent.") : (de ? "Die Anfrage konnte nicht gesendet werden. Bitte prüfen Sie Ihre Angaben oder schreiben Sie uns per E-Mail." : "The request could not be sent. Check your details or email us instead.");
+      status.textContent = state === "success"
+        ? (de ? "Danke — Ihre Anfrage wurde gesendet." : "Thank you — your request was sent.")
+        : (de ? "Die Anfrage konnte nicht gesendet werden. Bitte prüfen Sie Ihre Angaben oder schreiben Sie uns per E-Mail." : "The request could not be sent. Check your details or email us instead.");
       status.focus();
     }
+
+    const brief = document.querySelector<HTMLTextAreaElement>('textarea[name="brief"]');
+    const resizeBrief = () => {
+      if (!brief) return;
+      brief.style.height = "auto";
+      brief.style.height = `${brief.scrollHeight}px`;
+    };
+    brief?.addEventListener("input", resizeBrief);
+    resizeBrief();
+
+    const email = document.querySelector<HTMLInputElement>("[data-email-input]");
+    const emailHint = document.querySelector<HTMLElement>("[data-email-hint]");
+    const updateEmailState = () => {
+      if (!email || !emailHint) return;
+      const hasValue = email.value.trim().length > 0;
+      const isValid = hasValue && email.validity.valid;
+      email.dataset.validation = isValid ? "valid" : hasValue ? "invalid" : "empty";
+      email.setAttribute("aria-invalid", hasValue && !isValid ? "true" : "false");
+      emailHint.textContent = hasValue && !isValid
+        ? (document.documentElement.lang === "de" ? "Bitte geben Sie eine gültige E-Mail-Adresse ein." : "Enter a valid email address, including @.")
+        : "";
+    };
+    email?.addEventListener("input", updateEmailState);
+    email?.addEventListener("blur", updateEmailState);
+    updateEmailState();
+
     document.querySelector<HTMLFormElement>("[data-contact-form]")?.addEventListener("submit", (event) => {
       const form = event.currentTarget as HTMLFormElement;
-      const interests = form.querySelectorAll<HTMLInputElement>('input[name="interests"]:checked');
-      if (interests.length) return;
+      const selectedInterests = form.querySelectorAll<HTMLInputElement>('input[name="interests"]:checked');
+      if (selectedInterests.length) return;
       event.preventDefault();
       if (!status) return;
       status.hidden = false;
       status.textContent = document.documentElement.lang === "de" ? "Bitte wählen Sie mindestens einen Interessenbereich." : "Choose at least one area of interest.";
       status.focus();
     });
-  </script>}
+  </script>
 </BaseLayout>

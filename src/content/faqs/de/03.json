@@ -2,8 +2,6 @@
   "translationKey": "faq-3",
   "locale": "de",
   "slug": "faq-3",
-  "status": "concept",
-  "indexable": true,
   "question": "Was kann Webpilot vollständig übernehmen?",
   "answer": "Wir können ein Projekt von Positionierung und Creative Direction über Design und Entwicklung bis zu Launch, Akquisition, Messung und Automatisierung begleiten.",
   "order": 3

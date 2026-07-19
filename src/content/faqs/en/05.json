@@ -2,8 +2,6 @@
   "translationKey": "faq-5",
   "locale": "en",
   "slug": "faq-5",
-  "status": "concept",
-  "indexable": true,
   "question": "Who owns the work when the engagement ends?",
   "answer": "You do. Approved designs, source code, content, production accounts, and project documentation are handed over to your team.",
   "order": 5

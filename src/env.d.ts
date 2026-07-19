@@ -2,10 +2,8 @@
 
 interface ImportMetaEnv {
   readonly PUBLIC_SITE_URL?: string;
-  readonly PUBLIC_SITE_MODE?: "preview" | "concept" | "live";
   readonly PUBLIC_TURNSTILE_SITE_KEY?: string;
   readonly PUBLIC_CLOUDFLARE_ANALYTICS_TOKEN?: string;
-  readonly CONTACT_FORM_ENABLED?: string;
   readonly CONTACT_RECIPIENT?: string;
   readonly CONTACT_SENDER?: string;
   readonly LEGAL_NAME?: string;

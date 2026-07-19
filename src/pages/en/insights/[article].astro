@@ -1,7 +1,0 @@
----
-import InsightDetailPage from "@/components/pages/InsightDetailPage.astro";
-import { getInsights } from "@/lib/content";
-export async function getStaticPaths() { return (await getInsights("en")).map((article) => ({ params: { article: article.data.slug }, props: { article } })); }
-const { article } = Astro.props;
----
-<InsightDetailPage locale="en" {article} />

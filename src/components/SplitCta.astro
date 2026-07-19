@@ -1,6 +1,0 @@
----
-import CtaButton from "@/components/CtaButton.astro";
-interface Props { title: string; copy: string; href: string; label: string; }
-const { title, copy, href, label } = Astro.props;
----
-<section class="split-cta"><h2>{title}</h2><div><p>{copy}</p><CtaButton {href}>{label}</CtaButton></div></section>

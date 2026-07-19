@@ -2,8 +2,6 @@
   "translationKey": "faq-3",
   "locale": "en",
   "slug": "faq-3",
-  "status": "concept",
-  "indexable": true,
   "question": "What can Webpilot own end to end?",
   "answer": "We can take a project from positioning and creative direction through design, development, launch, acquisition, measurement, and automation.",
   "order": 3

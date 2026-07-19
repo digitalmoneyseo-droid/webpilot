@@ -1,5 +1,6 @@
 ---
 import { Bot, Megaphone, MonitorSmartphone, SearchCheck } from "@lucide/astro";
+import Icon from "@/components/Icon.astro";
 import Reveal from "@/components/Reveal.astro";
 import type { ServiceEntry } from "@/lib/content";
 import { localizePath, type Locale } from "@/lib/i18n";
@@ -20,7 +21,18 @@ const bySlug = new Map(services.map((service) => [service.data.slug, service]));
       <a class="service-category-main" href={localizePath(category.href, locale)}>
         <CategoryIcon class="service-category-icon" aria-hidden="true" />
         <span class="service-category-copy"><strong>{title}</strong><small>{localizedCategoryDescription(category, locale)}</small></span>
-        <span class="service-category-cta">{exploreLabel}<span aria-hidden="true">↗</span></span>
+        <span class="service-category-cta">
+          <span class="service-category-cta-label">
+            <span class="service-category-cta-label-track">
+              <span>{exploreLabel}</span>
+              <span aria-hidden="true">{exploreLabel}</span>
+            </span>
+          </span>
+          <span class="service-category-cta-arrow-box" aria-hidden="true">
+            <Icon name="arrow-right" class="service-category-cta-arrow service-category-cta-arrow--right" />
+            <Icon name="arrow-up-right" class="service-category-cta-arrow service-category-cta-arrow--up-right" />
+          </span>
+        </span>
       </a>
       {categoryServices.length > 0 && <nav class="service-category-links" aria-label={title}>
         {categoryServices.map((service) => <a href={localizePath(`/services/${service.data.slug}`, locale)}>{service.data.title}<span aria-hidden="true">→</span></a>)}

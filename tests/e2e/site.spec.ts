@@ -30,7 +30,7 @@ test("desktop navigation is always available without a menu trigger", async ({ p
   await page.setViewportSize({ width: 1280, height: 720 });
   await page.goto("/en");
   await expect(page.locator(".desktop-nav")).toBeVisible();
-  await expect(page.locator(".desktop-nav > a")).toHaveCount(4);
+  await expect(page.locator(".desktop-nav > a")).toHaveCount(3);
   await expect(page.locator(".desktop-services-trigger")).toBeVisible();
   await page.locator(".desktop-services").hover();
   await expect(page.locator(".desktop-megamenu")).toBeVisible();
@@ -39,6 +39,29 @@ test("desktop navigation is always available without a menu trigger", async ({ p
   await expect(firstServiceLink).toBeVisible();
   await expect(page.locator(".desktop-megamenu")).toBeVisible();
   await expect(page.locator(".header-menu")).toBeHidden();
+});
+
+test("desktop services disclosure exposes and manages its state", async ({ page }) => {
+  await page.setViewportSize({ width: 1280, height: 720 });
+  await page.goto("/en");
+  const trigger = page.locator(".desktop-services-trigger");
+  const menu = page.locator("#desktop-services-menu");
+
+  await expect(trigger).toHaveAttribute("aria-expanded", "false");
+  await expect(menu).toHaveAttribute("aria-hidden", "true");
+  await trigger.click();
+  await expect(trigger).toHaveAttribute("aria-expanded", "true");
+  await expect(menu).toHaveAttribute("aria-hidden", "false");
+
+  await page.locator("main").click({ position: { x: 10, y: 100 } });
+  await expect(trigger).toHaveAttribute("aria-expanded", "false");
+
+  await trigger.focus();
+  await page.keyboard.press("ArrowDown");
+  await expect(menu.locator("a").first()).toBeFocused();
+  await page.keyboard.press("Escape");
+  await expect(trigger).toHaveAttribute("aria-expanded", "false");
+  await expect(trigger).toBeFocused();
 });
 
 test("FAQ and filters expose accessible state", async ({ page }) => {
@@ -66,10 +89,10 @@ test("FAQ and filters expose accessible state", async ({ page }) => {
   await expect(page.locator('[data-project]:not([hidden])')).toHaveCount(4);
 });
 
-test("concept mode collects no contact data", async ({ page }) => {
+test("contact page presents project enquiry form", async ({ page }) => {
   await page.goto("/en/contact");
-  await expect(page.locator("form")).toHaveCount(0);
-  await expect(page.getByText("The contact form is not active yet.")).toBeVisible();
+  await expect(page.locator("form[data-contact-form]")).toBeVisible();
+  await expect(page.getByRole("button", { name: /Send project brief/ })).toBeVisible();
 });
 
 test("portfolio ribbon loops at narrow viewport widths without overflowing the page", async ({ page }) => {

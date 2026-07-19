@@ -9,10 +9,7 @@ const routes = [
   ["home", "/en/"],
   ["service", "/en/services/seo-ai-search/"],
   ["about", "/en/about/"],
-  ["insights", "/en/insights/"],
-  ["article", "/en/insights/build-grow-automate/"],
   ["contact", "/en/contact/"],
-  ["concept", "/en/concept/"],
   ["privacy", "/en/privacy/"],
 ];
 const viewports = [{ name: "desktop", width: 1440, height: 1000 }, { name: "mobile", width: 390, height: 844 }];

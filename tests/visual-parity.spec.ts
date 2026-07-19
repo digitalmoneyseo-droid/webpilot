@@ -2,7 +2,7 @@ import { expect, test } from "@playwright/test";
 
 const cases = [
   ["home", "/en"], ["work", "/en/work"], ["project", "/en/work/atlas-growth-platform"], ["services", "/en/services"],
-  ["insights", "/en/insights"], ["contact", "/en/contact"], ["concept", "/en/concept"], ["not-found", "/missing-page"],
+  ["contact", "/en/contact"], ["not-found", "/missing-page"],
 ] as const;
 
 for (const [name, route] of cases) {

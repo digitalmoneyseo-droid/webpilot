@@ -2,8 +2,6 @@
   "translationKey": "wave-acquisition",
   "locale": "de",
   "slug": "wave-acquisition",
-  "status": "concept",
-  "indexable": false,
   "order": 8,
   "title": "Multichannel-Akquisitionskampagne",
   "shortTitle": "Wave",

@@ -2,8 +2,6 @@
   "translationKey": "northstar-organic-search",
   "locale": "en",
   "slug": "northstar-organic-search",
-  "status": "concept",
-  "indexable": false,
   "order": 4,
   "title": "Organic Search Transformation",
   "shortTitle": "Northstar",
