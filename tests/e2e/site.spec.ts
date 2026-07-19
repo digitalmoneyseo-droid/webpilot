@@ -91,8 +91,27 @@ test("FAQ and filters expose accessible state", async ({ page }) => {
 
 test("contact page presents project enquiry form", async ({ page }) => {
   await page.goto("/en/contact");
-  await expect(page.locator("form[data-contact-form]")).toBeVisible();
-  await expect(page.getByRole("button", { name: /Send project brief/ })).toBeVisible();
+  const form = page.locator("form[data-contact-form]");
+  const submitButton = page.locator("[data-submit-button]");
+
+  await expect(form).toBeVisible();
+  await page.locator('input[name="name"]').fill("Ada Lovelace");
+  await page.locator('input[name="email"]').fill("ada@example.com");
+  await page.locator('textarea[name="brief"]').fill("A sufficiently detailed project brief.");
+
+  await submitButton.click();
+  await expect(page.locator("[data-form-status]")).toHaveText("Choose at least one area of interest.");
+  await expect(submitButton).toBeEnabled();
+  await expect(submitButton).toHaveAttribute("data-state", "idle");
+
+  await page.locator('input[name="interests"]').first().check({ force: true });
+  await form.evaluate((element) => element.addEventListener("submit", (event) => event.preventDefault()));
+  await submitButton.click();
+
+  await expect(submitButton).toHaveAttribute("data-state", "submitting");
+  await expect(submitButton).toBeDisabled();
+  await expect(submitButton).toHaveAttribute("aria-busy", "true");
+  await expect(submitButton.locator(".form-submit__pending")).toHaveText("Sending…");
 });
 
 test("portfolio ribbon loops at narrow viewport widths without overflowing the page", async ({ page }) => {

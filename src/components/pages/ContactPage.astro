@@ -97,12 +97,18 @@ const budgets = contactBudgets.map(({ id, label }) => [id, label[locale]] as con
         <input type="hidden" name="locale" value={locale} />
         <label class="website-field" aria-hidden="true"><span>Website</span><input name="website" type="text" tabindex="-1" autocomplete="off" /></label>
         <div class="cf-turnstile" data-sitekey={turnstileSiteKey} data-theme="light" data-size="flexible" data-appearance="interaction-only"></div>
-        <button class="form-submit" type="submit">
-          <span class="form-submit__label">
-            <span class="form-submit__label-track">
-              <span>{locale === "de" ? "Anfrage senden" : "Send enquiry"}</span>
-              <span aria-hidden="true">{locale === "de" ? "Anfrage senden" : "Send enquiry"}</span>
+        <button class="form-submit" type="submit" data-submit-button data-state="idle">
+          <span class="form-submit__idle">
+            <span class="form-submit__label">
+              <span class="form-submit__label-track">
+                <span>{locale === "de" ? "Anfrage senden" : "Send enquiry"}</span>
+                <span aria-hidden="true">{locale === "de" ? "Anfrage senden" : "Send enquiry"}</span>
+              </span>
             </span>
+          </span>
+          <span class="form-submit__pending" aria-hidden="true">
+            <span class="form-submit__spinner" aria-hidden="true"></span>
+            <span>{locale === "de" ? "Wird gesendet…" : "Sending…"}</span>
           </span>
           <span class="pill-button__icon" aria-hidden="true">
             <Icon name="arrow-right" class="pill-button__arrow pill-button__arrow--right" />
@@ -155,7 +161,17 @@ const budgets = contactBudgets.map(({ id, label }) => [id, label[locale]] as con
     document.querySelector<HTMLFormElement>("[data-contact-form]")?.addEventListener("submit", (event) => {
       const form = event.currentTarget as HTMLFormElement;
       const selectedInterests = form.querySelectorAll<HTMLInputElement>('input[name="interests"]:checked');
-      if (selectedInterests.length) return;
+      const submitButton = form.querySelector<HTMLButtonElement>("[data-submit-button]");
+      if (selectedInterests.length) {
+        if (submitButton) {
+          submitButton.dataset.state = "submitting";
+          submitButton.disabled = true;
+          submitButton.setAttribute("aria-busy", "true");
+          submitButton.setAttribute("aria-label", document.documentElement.lang === "de" ? "Anfrage wird gesendet" : "Sending enquiry");
+          submitButton.querySelector<HTMLElement>(".form-submit__pending")?.setAttribute("aria-hidden", "false");
+        }
+        return;
+      }
       event.preventDefault();
       if (!status) return;
       status.hidden = false;

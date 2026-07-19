@@ -597,15 +597,12 @@ body {
 .megamenu-list > a:active { scale: .98; }
 .megamenu-list strong { font-size: var(--type-small); line-height: var(--leading-small); font-weight: var(--weight-control); letter-spacing: -.01em; }
 .megamenu-label { display:block; height:1.45em; overflow:hidden; line-height:1.45; }
-.megamenu-label-track { display:flex; height:200%; flex-direction:column; transition:transform 500ms cubic-bezier(.16,1,.3,1); will-change:transform; }
+.megamenu-label-track { display:flex; height:200%; flex-direction:column; transition:transform 500ms cubic-bezier(.16,1,.3,1); }
 .megamenu-label-track > strong { display:flex; flex:0 0 50%; align-items:center; white-space:nowrap; }
 .megamenu-arrow-box { position:relative; width:28px; height:28px; overflow:hidden; border-radius:0; }
 .megamenu-arrow { position:absolute; inset:5px; width:18px; height:18px; transition:opacity 700ms cubic-bezier(.16,1,.3,1),transform 700ms cubic-bezier(.16,1,.3,1); }
 .megamenu-arrow--right { opacity:1; transform:translate(0,0) scale(1); }
 .megamenu-arrow--up-right { opacity:0; transform:translate(-6px,6px) scale(.8); }
-.megamenu-list > a:is(:hover,:focus-visible) .megamenu-label-track { transform:translateY(-50%); }
-.megamenu-list > a:is(:hover,:focus-visible) .megamenu-arrow--right { opacity:0; transform:translate(6px,-6px) scale(.8); }
-.megamenu-list > a:is(:hover,:focus-visible) .megamenu-arrow--up-right { opacity:1; transform:translate(0,0) scale(1); }
 
 .service-card {
   min-height: 24rem;
@@ -642,15 +639,20 @@ body {
 .service-category-copy small { max-width: 34ch; margin-top: var(--space-3); color: color-mix(in oklch, var(--ink) 72%, var(--bg)); font-size: var(--type-body); line-height: var(--leading-body); font-weight: var(--weight-body); }
 .service-category-cta { display: inline-flex; align-items: center; gap: var(--space-2); margin-top: auto; color: var(--ink); font-size: var(--type-small); line-height: var(--leading-small); font-weight: var(--weight-control); }
 .service-category-cta-label { display:block; height:1.45em; overflow:hidden; line-height:1.45; }
-.service-category-cta-label-track { display:flex; height:200%; flex-direction:column; transition:transform 500ms cubic-bezier(.16,1,.3,1); will-change:transform; }
+.service-category-cta-label-track { display:flex; height:200%; flex-direction:column; transition:transform 500ms cubic-bezier(.16,1,.3,1); }
 .service-category-cta-label-track > span { display:flex; flex:0 0 50%; align-items:center; white-space:nowrap; }
 .service-category-cta-arrow-box { position:relative; width:18px; height:18px; flex:none; overflow:hidden; border-radius:0; }
 .service-category-cta-arrow { position:absolute; inset:0; width:18px; height:18px; transition:opacity 700ms cubic-bezier(.16,1,.3,1),transform 700ms cubic-bezier(.16,1,.3,1); }
 .service-category-cta-arrow--right { opacity:1; transform:translate(0,0) scale(1); }
 .service-category-cta-arrow--up-right { opacity:0; transform:translate(-6px,6px) scale(.8); }
-.service-category-main:is(:hover,:focus-visible) .service-category-cta-label-track { transform:translateY(-50%); }
-.service-category-main:is(:hover,:focus-visible) .service-category-cta-arrow--right { opacity:0; transform:translate(6px,-6px) scale(.8); }
-.service-category-main:is(:hover,:focus-visible) .service-category-cta-arrow--up-right { opacity:1; transform:translate(0,0) scale(1); }
+@media (hover: hover) and (pointer: fine) {
+  .megamenu-list > a:hover .megamenu-label-track { transform:translateY(-50%); }
+  .megamenu-list > a:hover .megamenu-arrow--right { opacity:0; transform:translate(6px,-6px) scale(.8); }
+  .megamenu-list > a:hover .megamenu-arrow--up-right { opacity:1; transform:translate(0,0) scale(1); }
+  .service-category-main:hover .service-category-cta-label-track { transform:translateY(-50%); }
+  .service-category-main:hover .service-category-cta-arrow--right { opacity:0; transform:translate(6px,-6px) scale(.8); }
+  .service-category-main:hover .service-category-cta-arrow--up-right { opacity:1; transform:translate(0,0) scale(1); }
+}
 .service-category-links { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); border-top: 1px solid var(--line); }
 .service-category-links a { min-height: 3.25rem; display: flex; align-items: center; justify-content: space-between; gap: var(--space-3); padding: .75rem var(--space-4); border-right: 1px solid var(--line); color: #4e4e4a; font-size: var(--type-small); }
 .service-category-links a:last-child { border-right: 0; }
@@ -964,7 +966,7 @@ body {
   display: flex;
   flex-direction: column;
   min-width: 0;
-  transition: border-color 180ms var(--ease-out), background-color 180ms var(--ease-out), box-shadow 180ms var(--ease-out);
+  transition: border-color 180ms var(--ease-out), background-color 180ms var(--ease-out);
 }
 
 .contact-form .form-field > span,
@@ -1067,12 +1069,13 @@ body {
   padding: 0 10px 0 16px;
   font-size: var(--type-body);
   font-weight: var(--weight-strong);
-  transition: transform 180ms var(--ease-out), scale 100ms ease-out, background-color 180ms var(--ease-out), box-shadow 180ms var(--ease-out);
+  transition: transform 180ms var(--ease-out), scale 100ms var(--ease-out), background-color 180ms var(--ease-out);
 }
 
-.contact-form .form-submit:hover {
-  transform: translateY(-2px);
-  background: #262626;
+.contact-form .form-submit:hover { background: #262626; }
+
+@media (hover: hover) and (pointer: fine) {
+  .contact-form .form-submit:hover { transform:translateY(-2px); }
 }
 
 .contact-form .form-submit:active { scale: .985; }
@@ -1142,7 +1145,7 @@ body {
   border: 1px solid var(--line);
   border-radius: .75rem;
   background: #fff;
-  transition: border-color 180ms var(--ease-out), box-shadow 180ms var(--ease-out);
+  transition: border-color 180ms var(--ease-out);
 }
 
 .contact-form .form-field :is(input, textarea, select):focus {
@@ -1580,4 +1583,77 @@ body {
   .contact-form .form-section { padding-block: var(--space-4); }
   .contact-form .form-options--services label,
   .contact-form .form-options--budget label { flex: 1 1 100%; }
+}
+
+/* Keyboard state changes are instant; pointer interactions keep concise motion. */
+.using-keyboard :is(
+  .menu-overlay,
+  .desktop-megamenu,
+  .desktop-services-trigger svg,
+  .menu-links > a,
+  .menu-services,
+  .menu-services-trigger > svg,
+  .menu-service-list,
+  .menu-service-list a,
+  .faq-toggle svg,
+  .faq-answer > div,
+  .filter-indicator
+) {
+  transition: none !important;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :is(
+    .header-mark,
+    .header-language,
+    .header-menu,
+    .menu-brand,
+    .menu-close,
+    .desktop-nav a,
+    .megamenu-list > a,
+    .service-card,
+    .project-card,
+    .filter-row button,
+    .form-options span,
+    .not-found a
+  ):active {
+    scale: 1;
+  }
+
+  .menu-links a:hover svg,
+  .desktop-services-trigger svg,
+  .project-card:hover,
+  .project-card:hover .round-arrow,
+  .service-card:hover,
+  .menu-links.is-services-open > a,
+  .menu-links.is-services-open .menu-services,
+  .menu-service-list,
+  .menu-service-list a,
+  .contact-form .form-submit:hover {
+    transform: none;
+  }
+
+  .desktop-services-trigger svg,
+  .menu-links > a,
+  .menu-services,
+  .menu-services-trigger > svg,
+  .menu-service-list,
+  .menu-service-list a,
+  .project-card,
+  .round-arrow,
+  .contact-form .form-submit,
+  .contact-form .form-options label > span {
+    transition: color 160ms linear, background-color 160ms linear, opacity 160ms linear;
+  }
+
+  .contact-form .form-submit:active,
+  .contact-form .form-options label:active > span {
+    scale: 1;
+  }
+
+  .contact-form .email-valid-icon,
+  .contact-form input[data-validation="valid"] + .email-valid-icon {
+    transform: translateY(-50%) scale(1);
+    transition: opacity 160ms linear;
+  }
 }

@@ -1,4 +1,8 @@
 export function initNavigation(document: Document = window.document): void {
+  const root = document.documentElement;
+  document.addEventListener("keydown", () => root.classList.add("using-keyboard"), true);
+  document.addEventListener("pointerdown", () => root.classList.remove("using-keyboard"), true);
+
   const openButton = document.querySelector<HTMLButtonElement>(".header-menu");
   const overlay = document.querySelector<HTMLElement>("#site-menu");
   if (!openButton || !overlay) return;

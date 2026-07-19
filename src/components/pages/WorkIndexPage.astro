@@ -58,14 +58,14 @@ const initialCategories: readonly string[] = filters[0].categories;
       };
       let activeTransition: ViewTransitionHandle | null = null;
 
-      const applyFilter = (button: HTMLButtonElement) => {
+      const applyFilter = (button: HTMLButtonElement, animateIndicator = true) => {
         const filterCategories = JSON.parse(button.dataset.categories ?? "[]") as string[];
         buttons.forEach((item) => {
           const active = item === button;
           item.classList.toggle("is-active", active);
           item.setAttribute("aria-pressed", String(active));
         });
-        positionIndicator(button);
+        positionIndicator(button, animateIndicator);
 
         let count = 0;
         projects.forEach((project) => {
@@ -77,12 +77,13 @@ const initialCategories: readonly string[] = filters[0].categories;
         if (announcement) announcement.textContent = `${count} ${document.documentElement.lang === "de" ? "Projekte" : "projects"}`;
       };
 
-      buttons.forEach((button) => button.addEventListener("click", () => {
+      buttons.forEach((button) => button.addEventListener("click", (event) => {
         const viewTransitionDocument = document as ViewTransitionDocument;
-        if (reducedMotion.matches || !viewTransitionDocument.startViewTransition) {
+        const keyboardActivated = event.detail === 0;
+        if (keyboardActivated || reducedMotion.matches || !viewTransitionDocument.startViewTransition) {
           activeTransition?.skipTransition();
           activeTransition = null;
-          applyFilter(button);
+          applyFilter(button, !keyboardActivated);
           return;
         }
 
