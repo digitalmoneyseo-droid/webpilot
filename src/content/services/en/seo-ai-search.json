@@ -6,7 +6,7 @@
   "pillar": "grow",
   "title": "SEO & GEO",
   "eyebrow": "Grow",
-  "summary": "Technical and editorial visibility wherever customers research, compare, and ask for recommendations.",
+  "summary": "Help customers find you when they search, compare, and ask for advice.",
   "problems": [
     "Falling organic visibility",
     "Weak non-brand demand",
@@ -15,17 +15,17 @@
   ],
   "deliverables": [
     "Technical SEO",
-    "Search and entity strategy",
-    "Generative engine optimization",
+    "Search and topic plan",
+    "AI search optimization",
     "Content systems",
     "Structured data",
-    "Authority building"
+    "Trusted links and mentions"
   ],
   "outcomes": [
     "Qualified organic demand",
-    "Stronger answer-engine citations",
-    "Compounding content value",
-    "Lower blended acquisition cost"
+    "More links in AI answers",
+    "Content that keeps adding value",
+    "Lower total cost per customer"
   ],
   "tools": [
     "Ahrefs",

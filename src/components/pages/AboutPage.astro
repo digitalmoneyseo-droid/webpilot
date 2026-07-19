@@ -16,18 +16,18 @@ const principles = locale === "de" ? [
   { title: "Verbunden statt isoliert", copy: "Wir planen Marke, Produkt, Technologie, Akquise, Content, Analytics und KI als ein kommerzielles System." },
   { title: "Nützlich statt theatralisch", copy: "Wir nutzen neue Technologie dort, wo sie Hebelwirkung schafft – nicht nur eine eindrucksvollere Präsentation." },
 ] : [
-  { title: "Senior people do the work", copy: "The people in the room are the people researching, designing, building, and optimizing the system." },
+  { title: "Senior people do the work", copy: "The people you meet research, design, build, and improve the work." },
   { title: "Evidence before opinion", copy: "Taste matters, but customer insight, performance data, and a clear strategic argument keep the work honest." },
-  { title: "Connected over siloed", copy: "We plan brand, product, technology, acquisition, content, analytics, and AI as one commercial system." },
-  { title: "Useful over theatrical", copy: "We use new technology where it creates leverage, not where it merely creates a more impressive presentation." },
+  { title: "Work as one team", copy: "We plan brand, product, tech, marketing, content, data, and AI together." },
+  { title: "Use before show", copy: "We use new tech when it helps the work, not when it only looks good in a pitch." },
 ];
 ---
-<BaseLayout {locale} title={t(locale, "About")} description={locale === "de" ? "Das Senior-Team hinter Webpilot." : "The senior, multidisciplinary team behind Webpilot."}>
+<BaseLayout {locale} title={t(locale, "About")} description={locale === "de" ? "Das erfahrene Team hinter Webpilot." : "The senior team behind Webpilot."}>
   <main id="main-content" class="page-main page-main--about">
-    <EditorialHero eyebrow={locale === "de" ? "Über das Studio" : "About the studio"} index={`03 / ${t(locale, "About")}`} title={locale === "de" ? "Bewusst klein. Breit, wo es zählt." : "Small by design. Broad where it matters."} copy={locale === "de" ? "Webpilot ist ein Senior-Studio für digitales Wachstum und KI – für Unternehmen, die kreative Qualität und kommerzielle Verantwortung zusammenbringen wollen." : "Webpilot is a senior digital growth and AI studio for companies that want creative quality and commercial accountability in the same room."} showMeta={false} />
+    <EditorialHero eyebrow={locale === "de" ? "Über das Studio" : "About the studio"} index={`03 / ${t(locale, "About")}`} title={locale === "de" ? "Bewusst klein. Stark in den wichtigen Feldern." : "Small team. Wide skill set."} copy={locale === "de" ? "Webpilot verbindet klares Design mit messbarem Wachstum und KI." : "Webpilot joins strong design, measured growth, and AI in one senior team."} showMeta={false} />
     <section class="about-manifesto section-pad">
       <div class="manifesto-mark"><span>{locale === "de" ? "Unabhängiges Studio" : "Independent studio"}</span><span>Berlin / Worldwide</span><span>{locale === "de" ? "Nur Senior-Team" : "Senior team only"}</span></div>
-      <div><h2>{locale === "de" ? "Wachstum ist keine Abteilung. Es entsteht aus einem klaren Versprechen, einem nützlichen Produkt, einer sichtbaren Marke und einem lernenden System." : "Growth is not a department. It is the result of a clear promise, a useful product, a visible brand, and a system that learns."}</h2><p>{locale === "de" ? "Deshalb überschreitet unser Team klassische Agenturgrenzen. Dieselben Menschen, die die Geschichte formen, verstehen, wie das Erlebnis gebaut, gefunden, gemessen und verbessert wird." : "That is why our team crosses traditional agency lines. The same people shaping the story understand how the experience is built, discovered, measured, and improved."}</p></div>
+      <div><h2>{locale === "de" ? "Wachstum braucht ein klares Versprechen, ein gutes Produkt, eine sichtbare Marke und stetes Lernen." : "Growth needs a clear promise, a useful product, a visible brand, and steady learning."}</h2><p>{locale === "de" ? "Unser Team deckt mehr als eine Fachrichtung ab. Wer die Geschichte prägt, versteht auch Bau, Vertrieb, Messung und Pflege." : "Our team spans several fields. The people who shape the story also know how to build, sell, measure, and improve it."}</p></div>
     </section>
     <section class="principles section-pad page-section"><SectionHeading eyebrow={locale === "de" ? "Prinzipien" : "Principles"} title={locale === "de" ? "Wie wir arbeiten." : "How we work."} align="center" /><NumberedList items={principles} /></section>
     <section class="about-team section-pad page-section">

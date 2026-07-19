@@ -5,7 +5,7 @@
   "order": 8,
   "title": "Multi-Channel Acquisition Campaign",
   "shortTitle": "Wave",
-  "summary": "A coordinated search, social, and content launch that made every channel reinforce the next.",
+  "summary": "One search, social, and content launch with a shared plan.",
   "categories": [
     "Paid Media",
     "Content",
@@ -14,9 +14,9 @@
   "year": "2025",
   "metric": "−36%",
   "metricLabel": "acquisition cost",
-  "challenge": "Campaigns were managed in channel silos, resulting in inconsistent stories, duplicated effort, and weak learning loops.",
-  "strategy": "Build one campaign architecture with shared messages, modular creative, and a measurement plan spanning the full journey.",
-  "execution": "We produced landing pages, paid search and social programs, creator briefs, nurture content, and executive reporting.",
+  "challenge": "Separate channel plans caused mixed stories, repeat work, and slow learning.",
+  "strategy": "Build one campaign plan with shared messages, flexible ads, and measures for each step.",
+  "execution": "We made landing pages, paid search and social ads, creator briefs, follow-up content, and leader reports.",
   "timeline": "14 weeks",
   "tools": [
     "Google Ads",

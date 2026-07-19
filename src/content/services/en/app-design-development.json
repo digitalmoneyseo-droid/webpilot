@@ -6,16 +6,16 @@
   "pillar": "build",
   "title": "App design & development",
   "eyebrow": "Build",
-  "summary": "Useful web and mobile applications shaped from product strategy through UX, interface design, and production-ready development.",
+  "summary": "Useful web and mobile apps, from product plan and user research to design and launch.",
   "problems": [
     "Unclear product scope",
     "Confusing user workflows",
     "Slow product delivery",
-    "Disconnected design and engineering processes"
+    "Design and engineering teams that work apart"
   ],
   "deliverables": [
     "Product strategy and discovery",
-    "User research and journey mapping",
+    "User research and journey plans",
     "UX/UI design and prototyping",
     "Design systems",
     "Web and mobile app development",
@@ -23,9 +23,9 @@
   ],
   "outcomes": [
     "Faster validation",
-    "A more intuitive product experience",
+    "An easier product to use",
     "Faster releases",
-    "A scalable product foundation"
+    "A product built to grow"
   ],
   "tools": ["Figma", "React", "React Native", "Next.js", "TypeScript", "Rive"]
 }

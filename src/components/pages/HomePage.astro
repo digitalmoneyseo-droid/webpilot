@@ -16,13 +16,36 @@ import { localizedPillarDescription, localizedPillarTitle, servicePillars } from
 
 interface Props { locale: Locale; }
 const { locale } = Astro.props;
+const heroWords = locale === "de"
+  ? [
+      { text: "Wir" },
+      { text: "helfen" },
+      { text: "starken", emphasis: true },
+      { text: "Marken" },
+      { text: "beim" },
+      { text: "Wachstum." },
+    ]
+  : [
+      { text: "We" },
+      { text: "help" },
+      { text: "bold", emphasis: true },
+      { text: "brands" },
+      { text: "grow." },
+    ];
+const heroTitle = heroWords.map(({ text }) => text).join(" ");
+let heroLetterIndex = 0;
+const heroSegments = heroWords.map((word) => {
+  const letters = Array.from(word.text, (text) => ({ text, index: heroLetterIndex++ }));
+  heroLetterIndex += 1;
+  return { ...word, letters };
+});
 const [projects, services, testimonials, faqs] = await Promise.all([getProjects(locale), getServices(locale), getTestimonials(locale), getFaqs(locale)]);
 const benefits = [
-  ["outcome", "Outcome obsessed", "Beautiful work is only the beginning. Every engagement is tied to qualified demand, conversion, pipeline, or efficiency."],
+  ["outcome", "Results first", "Good work must also create demand, win sales, or save time."],
   ["senior", "Senior specialists only", "You work directly with experienced strategists, designers, developers, marketers, and automation specialists."],
-  ["system", "Strategy through execution", "Positioning, creative, technology, acquisition, content, and automation work as one coordinated system."],
-  ["ownership", "One accountable partner", "One senior team owns the strategy, delivery, communication, and performance from end to end."],
-  ["creative-tech", "Creative and technology together", "Brand, content, code, data, and AI are planned together—not managed as disconnected silos."],
+  ["system", "Plan through launch", "One team plans and runs your brand, tech, marketing, content, and automation."],
+  ["ownership", "One responsible partner", "One senior team owns the plan, work, updates, and results from start to end."],
+  ["creative-tech", "Design and tech together", "We plan brand, content, code, data, and AI together."],
 ] as const;
 const processSteps = [
   { icon: ScanSearch, title: "Define", copy: "Goals, users, positioning and scope." },
@@ -33,14 +56,14 @@ const description = t(locale, "Branding, websites, apps, SEO, AI search, content
 ---
 <BaseLayout {locale} {description}>
   <main id="main-content">
-    <section class="hero hero--home"><div class="hero-inner"><h1><span class="shiny-text">{t(locale, "We build growth systems for ambitious brands.")}</span></h1><p>{description}</p><div class="hero-actions"><CtaButton href={localizePath("/contact", locale)}>{t(locale, "Book strategy call")}</CtaButton><CtaButton href={localizePath("/work", locale)} light>{t(locale, "Explore our work")}</CtaButton></div></div></section>
+    <section class="hero hero--home"><div class="hero-inner"><h1 aria-label={heroTitle}><span class="shiny-text" aria-hidden="true">{heroSegments.map((word, wordIndex) => <>{word.emphasis ? <em class="hero-word-group">{word.letters.map((letter) => <span class="hero-letter-mask"><span class="hero-letter" style={`--letter-index:${letter.index}`}>{letter.text}</span></span>)}</em> : <span class="hero-word-group">{word.letters.map((letter) => <span class="hero-letter-mask"><span class="hero-letter" style={`--letter-index:${letter.index}`}>{letter.text}</span></span>)}</span>}{wordIndex < heroSegments.length - 1 && " "}</>)}</span></h1><p class="hero-copy">{description}</p><div class="hero-actions"><CtaButton href={localizePath("/contact", locale)}>{t(locale, "Book strategy call")}</CtaButton><CtaButton href={localizePath("/work", locale)} light>{t(locale, "Explore our work")}</CtaButton></div></div></section>
 
     <section class="work-ribbon" aria-label={t(locale, "Selected work")}><div class="work-ribbon-track"><div class="work-ribbon-group">{projects.map(({ data }) => <ProjectCard project={data} {locale} />)}</div><div class="work-ribbon-group" aria-hidden="true">{projects.map(({ data }) => <ProjectCard project={data} {locale} decorative />)}</div></div></section>
 
     <section class="why-section section-pad"><SectionHeading title={t(locale, "Why Webpilot")} align="center" /><div class="benefit-grid">{benefits.map(([icon, title, copy], index) => <Reveal class={`benefit-card benefit-card-${index + 1}`} delay={index * 50}><div class="benefit-visual"><BenefitIcon name={icon} /></div><h3>{t(locale, title)}</h3><p>{t(locale, copy)}</p></Reveal>)}</div></section>
 
     <section class="service-section section-pad">
-      <SectionHeading eyebrow={t(locale, "One coordinated system")} title={t(locale, "Build. Grow. Automate.")} copy={t(locale, "The studio model is intentionally broad at the edges and tightly connected at the center: your commercial outcome.")} />
+      <SectionHeading eyebrow={t(locale, "One joined team")} title={t(locale, "Build. Grow. Automate.")} copy={t(locale, "We cover many skills but judge all work by one thing: your business result.")} />
       <div class="service-trio">
         {servicePillars.map((pillar) => <article class={`service-card service-card--${pillar.id}`}>
             <ServiceSymbol name={pillar.symbol} />
@@ -53,7 +76,7 @@ const description = t(locale, "Branding, websites, apps, SEO, AI search, content
     <section class="service-category-section section-pad"><SectionHeading eyebrow={locale === "de" ? "Leistungen" : "What we do"} title={locale === "de" ? "Konkrete Expertise. Klar organisiert." : "Concrete expertise. Clearly organised."} copy={locale === "de" ? "Vier Leistungsbereiche, die einzeln funktionieren und gemeinsam stärker werden." : "Four service categories that work independently and become stronger together."} /><ServiceCategoryGrid {services} {locale} compact /></section>
 
     <section class="engagement-section process-section section-pad">
-      <SectionHeading title={t(locale, "From first signal to live system.")} copy={t(locale, "A clear, collaborative process keeps strategy, design, technology, and delivery moving as one.")} />
+      <SectionHeading title={t(locale, "From first idea to launch.")} copy={t(locale, "A clear shared plan keeps design, tech, and delivery in step.")} />
       <ol class="process-list" data-reveal data-mobile-reveal-items>
         {processSteps.map(({ icon: StepIcon, title, copy }, index) => <li class="process-step" style={`--process-delay:${index * 350}ms`}>
           <span class="process-node" aria-hidden="true"></span>

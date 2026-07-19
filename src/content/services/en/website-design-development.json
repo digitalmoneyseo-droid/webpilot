@@ -6,7 +6,7 @@
   "pillar": "build",
   "title": "Website design & development",
   "eyebrow": "Build",
-  "summary": "High-converting marketing and commerce websites designed, written, and engineered around business goals.",
+  "summary": "Marketing and sales websites that help firms meet clear business goals.",
   "problems": [
     "A website that no longer reflects the business",
     "An unclear customer journey",
@@ -14,18 +14,18 @@
     "Slow or difficult publishing"
   ],
   "deliverables": [
-    "Website strategy and information architecture",
+    "Website plan and page structure",
     "UX and UI design",
     "Copywriting and content design",
     "Full-stack and CMS development",
-    "E-commerce implementation",
-    "Analytics, SEO, and performance foundations"
+    "Online shop setup",
+    "Analytics, SEO, and speed setup"
   ],
   "outcomes": [
     "A clearer business story",
-    "Higher conversion confidence",
+    "More sales and leads",
     "Faster publishing",
-    "A scalable, high-performing website"
+    "A fast website built to grow"
   ],
   "tools": ["Figma", "Astro", "Next.js", "Shopify", "Webflow", "WordPress"]
 }

@@ -6,17 +6,17 @@
   "pillar": "build",
   "title": "Branding & identity",
   "eyebrow": "Build",
-  "summary": "Strategy, identity, and creative systems that make ambitious businesses distinctive, trusted, and easier to choose.",
+  "summary": "Clear plans, identities, and design tools that help firms stand out, earn trust, and win work.",
   "problems": [
     "Unclear market positioning",
     "A generic brand identity",
-    "Inconsistent messaging and visual expression",
-    "A brand system that cannot scale"
+    "Mixed messages and design",
+    "Brand rules that cannot grow with the firm"
   ],
   "deliverables": [
     "Brand research and positioning",
     "Brand strategy",
-    "Naming and verbal identity",
+    "Names and brand language",
     "Visual identity",
     "Creative direction",
     "Brand guidelines and templates"
@@ -24,8 +24,8 @@
   "outcomes": [
     "Clearer market position",
     "Stronger recognition",
-    "A more consistent brand experience",
-    "A scalable creative system"
+    "A consistent brand",
+    "Design tools built to grow"
   ],
   "tools": ["Figma", "Adobe Illustrator", "After Effects", "Rive", "Notion", "Framer"]
 }

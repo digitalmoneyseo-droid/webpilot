@@ -5,7 +5,7 @@
   "order": 1,
   "title": "B2B SaaS Growth Platform",
   "shortTitle": "Atlas",
-  "summary": "A sharper product story and a search-led acquisition system for a complex B2B platform.",
+  "summary": "A clear product story and search plan for a complex B2B platform.",
   "categories": [
     "Website",
     "SEO & GEO",
@@ -14,9 +14,9 @@
   "year": "2026",
   "metric": "+184%",
   "metricLabel": "organic traffic",
-  "challenge": "A strong product was hidden behind a fragmented story, slow site, and low-intent search footprint.",
-  "strategy": "Unify positioning, product education, technical search foundations, and demand capture around high-value use cases.",
-  "execution": "We rebuilt the information architecture, designed a modular product site, created an editorial engine, and connected attribution across the funnel.",
+  "challenge": "A mixed story, slow site, and poor search reach hid a strong product.",
+  "strategy": "Unite the market position, product guides, search setup, and lead capture around key uses.",
+  "execution": "We rebuilt the page structure, designed a flexible product site, set up a content plan, and tracked each source of sales.",
   "timeline": "16 weeks",
   "tools": [
     "Figma",

@@ -6,26 +6,26 @@
   "pillar": "grow",
   "title": "Analytics & CRO",
   "eyebrow": "Grow",
-  "summary": "A reliable measurement foundation and an experimentation program focused on business outcomes.",
+  "summary": "Clear data and focused tests that improve business results.",
   "problems": [
     "Conflicting reports",
-    "Unknown funnel friction",
-    "Low experiment velocity",
-    "Activity metrics without decisions"
+    "Unknown barriers to sales",
+    "Slow testing",
+    "Reports that do not guide decisions"
   ],
   "deliverables": [
     "Measurement strategy",
-    "Analytics implementation",
+    "Analytics setup",
     "Conversion research",
     "Experiment design",
     "Dashboards",
-    "Attribution models"
+    "Sales source tracking"
   ],
   "outcomes": [
     "Trusted performance data",
     "Higher conversion rates",
-    "Faster learning cycles",
-    "More confident allocation"
+    "Faster learning",
+    "Clearer budget choices"
   ],
   "tools": [
     "GA4",

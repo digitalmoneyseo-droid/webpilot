@@ -5,7 +5,7 @@
   "order": 5,
   "title": "Social Content Engine",
   "shortTitle": "Orbit",
-  "summary": "A repeatable editorial operating system turning one expert idea into a month of useful content.",
+  "summary": "A clear process that turns one expert idea into a month of useful content.",
   "categories": [
     "Content",
     "Social",
@@ -14,9 +14,9 @@
   "year": "2025",
   "metric": "3.4×",
   "metricLabel": "qualified engagement",
-  "challenge": "Subject-matter experts had plenty to say, but the publishing process was inconsistent and difficult to sustain.",
-  "strategy": "Create a recognizable editorial point of view and a production system that starts with expert conversations.",
-  "execution": "We designed content formats, production workflows, review automations, distribution playbooks, and a measurement dashboard.",
+  "challenge": "Experts had much to say, but the team could not keep a steady publishing plan.",
+  "strategy": "Set a clear editorial view and a production process based on talks with experts.",
+  "execution": "We designed content forms, production steps, review tools, publishing guides, and a results report.",
   "timeline": "12 weeks",
   "tools": [
     "Notion",

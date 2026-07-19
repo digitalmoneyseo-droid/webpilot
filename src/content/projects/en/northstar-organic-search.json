@@ -5,7 +5,7 @@
   "order": 4,
   "title": "Organic Search Transformation",
   "shortTitle": "Northstar",
-  "summary": "A technical, editorial, and authority program built for both search engines and answer engines.",
+  "summary": "A site and content plan for search engines and AI answers.",
   "categories": [
     "SEO & GEO",
     "Content",
@@ -14,9 +14,9 @@
   "year": "2025",
   "metric": "+230%",
   "metricLabel": "AI-search visibility",
-  "challenge": "The brand ranked for its own name but was absent from the questions buyers asked while comparing solutions.",
-  "strategy": "Build topical authority across product, use-case, comparison, and proof content, supported by clean entities and schema.",
-  "execution": "We fixed crawl and rendering issues, rebuilt the content model, published expert-led clusters, and created a citation monitoring system.",
+  "challenge": "Buyers found the brand by name, but not when they compared products or asked key questions.",
+  "strategy": "Publish trusted product, use, comparison, and proof pages with clear topics and page data.",
+  "execution": "We fixed search and page display faults, rebuilt the content plan, published expert guides, and tracked links in AI answers.",
   "timeline": "9 months",
   "tools": [
     "Semrush",

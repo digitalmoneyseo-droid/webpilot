@@ -5,7 +5,7 @@
   "order": 3,
   "title": "AI Customer Support Assistant",
   "shortTitle": "Nora",
-  "summary": "An on-brand support agent that resolves routine questions and gives the team better context.",
+  "summary": "A support agent that answers common questions in the brand's voice and gives staff clear facts.",
   "categories": [
     "AI",
     "Automation",
@@ -14,9 +14,9 @@
   "year": "2026",
   "metric": "−60h",
   "metricLabel": "manual work / month",
-  "challenge": "A lean support team was spending its best hours searching internal documentation and repeating standard replies.",
-  "strategy": "Create a governed knowledge layer with transparent citations, human escalation, and measurable resolution quality.",
-  "execution": "We mapped support intents, prepared the knowledge base, built retrieval and guardrails, and integrated the agent with the help desk.",
+  "challenge": "A small support team spent hours searching internal docs and sending the same replies.",
+  "strategy": "Create a checked source of facts with clear links, staff review, and tracked answer quality.",
+  "execution": "We grouped support needs, cleaned the source files, set reply rules, and linked the agent to the help desk.",
   "timeline": "10 weeks",
   "tools": [
     "OpenAI",

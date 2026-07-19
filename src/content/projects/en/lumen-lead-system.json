@@ -5,7 +5,7 @@
   "order": 6,
   "title": "CRM Lead Qualification System",
   "shortTitle": "Lumen",
-  "summary": "An intelligent revenue workflow that researches, routes, and briefs every serious lead in minutes.",
+  "summary": "A smart sales process that checks, sends, and sums up each strong lead in minutes.",
   "categories": [
     "AI",
     "Automation",
@@ -14,9 +14,9 @@
   "year": "2025",
   "metric": "93%",
   "metricLabel": "faster lead response",
-  "challenge": "High-value inquiries sat in multiple systems while sales spent time researching fit and assembling context manually.",
-  "strategy": "Build a single qualification flow combining enrichment, fit scoring, intent, and human review for sensitive decisions.",
-  "execution": "We connected forms, CRM, enrichment, agent research, scoring, Slack routing, and personalized follow-up drafts.",
+  "challenge": "Strong leads sat across many systems while sales staff checked each one by hand.",
+  "strategy": "Build one review process that adds data, scores fit and intent, and sends key choices to staff.",
+  "execution": "We linked forms, CRM data, AI research, scores, Slack alerts, and tailored reply drafts.",
   "timeline": "8 weeks",
   "tools": [
     "HubSpot",

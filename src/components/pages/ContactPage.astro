@@ -1,6 +1,6 @@
 ---
 import BaseLayout from "@/layouts/BaseLayout.astro";
-import Icon from "@/components/Icon.astro";
+import "@/styles/contact-form.css";
 import { turnstileSiteKey } from "@/lib/site";
 import type { Locale } from "@/lib/i18n";
 import { contactBudgets, localizedCategoryTitle, serviceCategories } from "@/domain/catalog";
@@ -23,12 +23,12 @@ const budgets = contactBudgets.map(({ id, label }) => [id, label[locale]] as con
   <main id="main-content" class="page-main page-main--contact">
     <section class="contact-page">
       <div class="contact-intro">
-        <h1>{locale === "de" ? <>Lassen Sie uns Ihr nächstes Wachstums<wbr />system bauen.</> : "Let’s build your next growth system."}</h1>
-        <p>{locale === "de" ? "Erzählen Sie uns, was Sie aufbauen, wo Wachstum stockt und wie ein starkes Ergebnis aussehen würde." : "Tell us what you are building, where growth is getting stuck, and what a strong outcome would look like."}</p>
+        <h1>{locale === "de" ? <>Lassen Sie uns Ihr Wachstum <wbr />voranbringen.</> : "Let’s help your business grow."}</h1>
+        <p>{locale === "de" ? "Sagen Sie uns, was Sie bauen, was Sie bremst und welches Ziel Sie erreichen wollen." : "Tell us what you are building, what holds it back, and what result you want."}</p>
         <a href="mailto:hello@webpilot.studio">hello@webpilot.studio ↗</a>
       </div>
 
-      <form class="contact-form" action="/api/contact" method="post" enctype="application/x-www-form-urlencoded" data-contact-form>
+      <form class="contact-form" action="/api/contact" method="post" enctype="application/x-www-form-urlencoded" data-contact-form novalidate>
         <header class="contact-form-header">
           <h2>{locale === "de" ? "Ein paar Details genügen." : "A few details are enough."}</h2>
           <p>{locale === "de" ? "Wählen Sie aus, was passt. Mehrere Leistungen und „noch unsicher“ sind völlig in Ordnung." : "Choose whatever fits. Multiple services and “not sure yet” are completely fine."}</p>
@@ -39,17 +39,18 @@ const budgets = contactBudgets.map(({ id, label }) => [id, label[locale]] as con
         <section class="form-section form-section--about" aria-labelledby="contact-details-heading">
           <h3 id="contact-details-heading">{locale === "de" ? "Über Sie" : "About you"}</h3>
           <div class="form-row">
-            <label class="form-field">
-              <span>{locale === "de" ? "Ihr Name" : "Your name"} <em class="required-marker" aria-hidden="true">*</em></span>
-              <input name="name" type="text" autocomplete="name" minlength="2" maxlength="100" required placeholder="Ada Lovelace" />
+            <label class="form-field" data-field="name">
+              <span>{locale === "de" ? "Ihr Name" : "Your name"}</span>
+              <input id="contact-name" name="name" type="text" autocomplete="name" minlength="2" maxlength="100" required placeholder="Ada Lovelace" aria-describedby="name-error" />
+              <small class="field-message" id="name-error" aria-live="polite" data-field-error></small>
             </label>
-            <label class="form-field">
-              <span>{locale === "de" ? "Geschäftliche E-Mail" : "Work email"} <em class="required-marker" aria-hidden="true">*</em></span>
+            <label class="form-field" data-field="email">
+              <span>{locale === "de" ? "Geschäftliche E-Mail" : "Work email"}</span>
               <span class="form-control form-control--email">
-                <input name="email" type="email" autocomplete="email" maxlength="254" required spellcheck="false" placeholder="ada@company.com" aria-describedby="email-hint" data-email-input />
+                <input id="contact-email" name="email" type="email" autocomplete="email" maxlength="254" required spellcheck="false" placeholder="ada@company.com" aria-describedby="email-hint" data-email-input />
                 <span class="email-valid-icon" aria-hidden="true">✓</span>
               </span>
-              <small class="field-message" id="email-hint" aria-live="polite" data-email-hint></small>
+              <small class="field-message" id="email-hint" aria-live="polite" data-email-hint data-field-error></small>
             </label>
           </div>
 
@@ -59,7 +60,7 @@ const budgets = contactBudgets.map(({ id, label }) => [id, label[locale]] as con
           </label>
         </section>
 
-        <fieldset class="form-services form-section">
+        <fieldset class="form-services form-section" data-field="interests">
           <legend>{locale === "de" ? "Wobei können wir helfen?" : "What can we help with?"} <em class="required-marker" aria-hidden="true">*</em><span class="sr-only"> {locale === "de" ? "Pflichtfeld" : "Required"}</span></legend>
           <p class="form-section-note">{locale === "de" ? "Mehrfachauswahl möglich" : "Select all that apply"}</p>
           <div class="form-options form-options--services">
@@ -70,14 +71,19 @@ const budgets = contactBudgets.map(({ id, label }) => [id, label[locale]] as con
               </label>
             ))}
           </div>
+          <small class="field-message" aria-live="polite" data-field-error></small>
         </fieldset>
 
-        <section class="form-section form-section--project" aria-labelledby="project-heading">
+        <section class="form-section form-section--project" aria-labelledby="project-heading" data-field="brief">
           <h3 id="project-heading">{locale === "de" ? "Ihr Projekt" : "Your project"} <em class="required-marker" aria-hidden="true">*</em></h3>
-          <p class="form-section-note form-section-note--project">{locale === "de" ? "Erzählen Sie uns, was Sie aufbauen, was aktuell nicht funktioniert und wie ein gutes Ergebnis aussehen würde." : "Tell us what you are building, what is currently not working, and what a good outcome would look like."}</p>
           <label class="form-field form-field--brief">
             <span class="sr-only">{locale === "de" ? "Projektdetails" : "Project details"}</span>
-            <textarea name="brief" minlength="20" maxlength="4000" required rows="2" placeholder={locale === "de" ? "Projekt, Herausforderung und gewünschtes Ergebnis…" : "Project, challenge, and desired outcome…"}></textarea>
+            <span class="form-input-group">
+              <textarea id="contact-brief" name="brief" minlength="20" maxlength="4000" required rows="6" placeholder={locale === "de" ? "Projekt, Problem und Ziel…" : "Project, problem, and goal…"} aria-describedby="brief-description brief-error"></textarea>
+              <span class="form-character-count" data-character-count>0/4000 {locale === "de" ? "Zeichen" : "characters"}</span>
+            </span>
+            <span class="form-description" id="brief-description">{locale === "de" ? "Beschreiben Sie Ausgangslage, Ziel und was aktuell nicht klappt." : "Include the current situation, desired result, and what does not work."}</span>
+            <small class="field-message" id="brief-error" aria-live="polite" data-field-error></small>
           </label>
         </section>
 
@@ -97,24 +103,16 @@ const budgets = contactBudgets.map(({ id, label }) => [id, label[locale]] as con
         <input type="hidden" name="locale" value={locale} />
         <label class="website-field" aria-hidden="true"><span>Website</span><input name="website" type="text" tabindex="-1" autocomplete="off" /></label>
         <div class="cf-turnstile" data-sitekey={turnstileSiteKey} data-theme="light" data-size="flexible" data-appearance="interaction-only"></div>
-        <button class="form-submit" type="submit" data-submit-button data-state="idle">
-          <span class="form-submit__idle">
-            <span class="form-submit__label">
-              <span class="form-submit__label-track">
-                <span>{locale === "de" ? "Anfrage senden" : "Send enquiry"}</span>
-                <span aria-hidden="true">{locale === "de" ? "Anfrage senden" : "Send enquiry"}</span>
-              </span>
+        <div class="form-actions">
+          <button class="form-reset" type="reset" data-reset-button>{locale === "de" ? "Zurücksetzen" : "Reset"}</button>
+          <button class="form-submit" type="submit" data-submit-button data-state="idle">
+            <span class="form-submit__idle">{locale === "de" ? "Anfrage senden" : "Send enquiry"}</span>
+            <span class="form-submit__pending" aria-hidden="true">
+              <span class="form-submit__spinner" aria-hidden="true"></span>
+              <span>{locale === "de" ? "Wird gesendet…" : "Sending…"}</span>
             </span>
-          </span>
-          <span class="form-submit__pending" aria-hidden="true">
-            <span class="form-submit__spinner" aria-hidden="true"></span>
-            <span>{locale === "de" ? "Wird gesendet…" : "Sending…"}</span>
-          </span>
-          <span class="pill-button__icon" aria-hidden="true">
-            <Icon name="arrow-right" class="pill-button__arrow pill-button__arrow--right" />
-            <Icon name="arrow-up-right" class="pill-button__arrow pill-button__arrow--up-right" />
-          </span>
-        </button>
+          </button>
+        </div>
         <small>{locale === "de" ? "Ihre Angaben werden nur zur Beantwortung der Anfrage verarbeitet und nicht von Webpilot gespeichert." : "Your details are processed only to answer this request and are not stored by Webpilot."}</small>
       </form>
     </section>
@@ -133,36 +131,92 @@ const budgets = contactBudgets.map(({ id, label }) => [id, label[locale]] as con
       status.focus();
     }
 
-    const brief = document.querySelector<HTMLTextAreaElement>('textarea[name="brief"]');
-    const resizeBrief = () => {
-      if (!brief) return;
-      brief.style.height = "auto";
-      brief.style.height = `${brief.scrollHeight}px`;
-    };
-    brief?.addEventListener("input", resizeBrief);
-    resizeBrief();
+    const form = document.querySelector<HTMLFormElement>("[data-contact-form]");
+    const brief = form?.querySelector<HTMLTextAreaElement>('textarea[name="brief"]');
+    const email = form?.querySelector<HTMLInputElement>("[data-email-input]");
+    const characterCount = form?.querySelector<HTMLElement>("[data-character-count]");
+    const de = document.documentElement.lang === "de";
+    const touched = new Set<string>();
 
-    const email = document.querySelector<HTMLInputElement>("[data-email-input]");
-    const emailHint = document.querySelector<HTMLElement>("[data-email-hint]");
-    const updateEmailState = () => {
-      if (!email || !emailHint) return;
-      const hasValue = email.value.trim().length > 0;
-      const isValid = hasValue && email.validity.valid;
-      email.dataset.validation = isValid ? "valid" : hasValue ? "invalid" : "empty";
-      email.setAttribute("aria-invalid", hasValue && !isValid ? "true" : "false");
-      emailHint.textContent = hasValue && !isValid
-        ? (document.documentElement.lang === "de" ? "Bitte geben Sie eine gültige E-Mail-Adresse ein." : "Enter a valid email address, including @.")
-        : "";
-    };
-    email?.addEventListener("input", updateEmailState);
-    email?.addEventListener("blur", updateEmailState);
-    updateEmailState();
+    const messages = {
+      name: de ? "Der Name muss mindestens 2 Zeichen lang sein." : "Name must be at least 2 characters.",
+      email: de ? "Geben Sie eine gültige E-Mail-Adresse ein." : "Enter a valid email address.",
+      interests: de ? "Wählen Sie mindestens einen Bereich aus." : "Choose at least one area of interest.",
+      brief: de ? "Die Projektbeschreibung muss mindestens 20 Zeichen lang sein." : "Project details must be at least 20 characters.",
+    } as const;
 
-    document.querySelector<HTMLFormElement>("[data-contact-form]")?.addEventListener("submit", (event) => {
-      const form = event.currentTarget as HTMLFormElement;
-      const selectedInterests = form.querySelectorAll<HTMLInputElement>('input[name="interests"]:checked');
+    type FieldName = keyof typeof messages;
+
+    const updateCharacterCount = () => {
+      if (!brief || !characterCount) return;
+      characterCount.textContent = `${brief.value.length}/4000 ${de ? "Zeichen" : "characters"}`;
+    };
+
+    const setFieldState = (name: FieldName, invalid: boolean) => {
+      const field = form?.querySelector<HTMLElement>(`[data-field="${name}"]`);
+      if (!field) return;
+      field.dataset.invalid = invalid ? "true" : "false";
+      field.querySelectorAll<HTMLInputElement | HTMLTextAreaElement>("input, textarea").forEach((control) => {
+        control.setAttribute("aria-invalid", invalid ? "true" : "false");
+      });
+      const error = field.querySelector<HTMLElement>("[data-field-error]");
+      if (error) error.textContent = invalid ? messages[name] : "";
+    };
+
+    const validateField = (name: FieldName) => {
+      if (!form) return false;
+      let valid = false;
+      if (name === "name") {
+        valid = (form.elements.namedItem("name") as HTMLInputElement).value.trim().length >= 2;
+      } else if (name === "email") {
+        const value = email?.value.trim() ?? "";
+        valid = value.length > 0 && Boolean(email?.validity.valid);
+        if (email) email.dataset.validation = valid ? "valid" : value ? "invalid" : "empty";
+      } else if (name === "interests") {
+        valid = Boolean(form.querySelector('input[name="interests"]:checked'));
+      } else {
+        valid = (brief?.value.trim().length ?? 0) >= 20;
+      }
+      setFieldState(name, !valid);
+      return valid;
+    };
+
+    (["name", "email", "brief"] as const).forEach((name) => {
+      const control = form?.elements.namedItem(name) as HTMLInputElement | HTMLTextAreaElement | null;
+      control?.addEventListener("blur", () => {
+        touched.add(name);
+        validateField(name);
+      });
+      control?.addEventListener("input", () => {
+        if (name === "brief") updateCharacterCount();
+        if (touched.has(name)) validateField(name);
+      });
+    });
+
+    form?.querySelectorAll<HTMLInputElement>('input[name="interests"]').forEach((control) => {
+      control.addEventListener("change", () => {
+        touched.add("interests");
+        validateField("interests");
+      });
+    });
+
+    form?.addEventListener("reset", () => {
+      window.setTimeout(() => {
+        touched.clear();
+        (["name", "email", "interests", "brief"] as const).forEach((name) => setFieldState(name, false));
+        if (email) email.dataset.validation = "empty";
+        updateCharacterCount();
+      });
+    });
+
+    updateCharacterCount();
+
+    form?.addEventListener("submit", (event) => {
+      const fields = ["name", "email", "interests", "brief"] as const;
+      fields.forEach((name) => touched.add(name));
+      const valid = fields.map(validateField).every(Boolean);
       const submitButton = form.querySelector<HTMLButtonElement>("[data-submit-button]");
-      if (selectedInterests.length) {
+      if (valid) {
         if (submitButton) {
           submitButton.dataset.state = "submitting";
           submitButton.disabled = true;
@@ -173,10 +227,7 @@ const budgets = contactBudgets.map(({ id, label }) => [id, label[locale]] as con
         return;
       }
       event.preventDefault();
-      if (!status) return;
-      status.hidden = false;
-      status.textContent = document.documentElement.lang === "de" ? "Bitte wählen Sie mindestens einen Interessenbereich." : "Choose at least one area of interest.";
-      status.focus();
+      form.querySelector<HTMLElement>('[aria-invalid="true"]')?.focus();
     });
   </script>
 </BaseLayout>
