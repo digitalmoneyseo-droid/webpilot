@@ -7,12 +7,13 @@ import FinalCta from "@/components/FinalCta.astro";
 import ProjectCard from "@/components/ProjectCard.astro";
 import Reveal from "@/components/Reveal.astro";
 import ServiceSymbol from "@/components/ServiceSymbol.astro";
+import ServiceCategoryGrid from "@/components/ServiceCategoryGrid.astro";
 import SectionHeading from "@/components/SectionHeading.astro";
 import TextLink from "@/components/TextLink.astro";
 import { PencilRuler, Rocket, ScanSearch } from "@lucide/astro";
 import { getFaqs, getProjects, getServices, getTestimonials } from "@/lib/content";
 import { localizePath, t, type Locale } from "@/lib/i18n";
-import { localizedPillarDescription, localizedPillarTitle, servicePillars, servicesForPillar } from "@/lib/services";
+import { localizedPillarDescription, localizedPillarTitle, servicePillars } from "@/lib/services";
 
 interface Props { locale: Locale; }
 const { locale } = Astro.props;
@@ -42,22 +43,15 @@ const description = t(locale, "Branding, websites, apps, SEO, AI search, content
     <section class="service-section section-pad">
       <SectionHeading eyebrow={t(locale, "One coordinated system")} title={t(locale, "Build. Grow. Automate.")} copy={t(locale, "The studio model is intentionally broad at the edges and tightly connected at the center: your commercial outcome.")} />
       <div class="service-trio">
-        {servicePillars.map((pillar) => {
-          const pillarServices = servicesForPillar(services, pillar.id);
-          return <a href={`${localizePath("/services", locale)}#${pillar.id}`} class={`service-card service-card--${pillar.id}`}>
+        {servicePillars.map((pillar) => <article class={`service-card service-card--${pillar.id}`}>
             <ServiceSymbol name={pillar.symbol} />
             <h3>{localizedPillarTitle(pillar, locale)}</h3>
             <p>{localizedPillarDescription(pillar, locale)}</p>
-            <div class="service-card-services">
-              <span>{t(locale, "Included services")}</span>
-              <ul>{pillarServices.map((service) => <li>{service.data.title}</li>)}</ul>
-            </div>
-            <b>{t(locale, "Explore services ↗")}</b>
-          </a>;
-        })}
+          </article>)}
       </div>
-      <div class="service-section-footer"><TextLink href={localizePath("/services", locale)}>{t(locale, "View all services")}</TextLink></div>
     </section>
+
+    <section class="service-category-section section-pad"><SectionHeading eyebrow={locale === "de" ? "Leistungen" : "What we do"} title={locale === "de" ? "Konkrete Expertise. Klar organisiert." : "Concrete expertise. Clearly organised."} copy={locale === "de" ? "Vier Leistungsbereiche, die einzeln funktionieren und gemeinsam stärker werden." : "Four service categories that work independently and become stronger together."} /><ServiceCategoryGrid {services} {locale} compact /></section>
 
     <section class="results-section section-pad"><div class="results-intro"><SectionHeading eyebrow={t(locale, "Selected outcomes")} title={t(locale, "Work that earns its place on the dashboard.")} copy={locale === "de" ? "Alle Ergebnisse sind fiktive Konzeptdaten und werden vor einer Live-Veröffentlichung durch verifizierte Kundendaten ersetzt." : "Every result is fictional concept data and will be replaced by verified client reporting before a live release."} /><TextLink href={localizePath("/work", locale)}>{t(locale, "See all case studies")}</TextLink></div><div class="metrics-grid">{projects.slice(0, 4).map(({ data }, index) => <Reveal class="metric-card" delay={index * 70}><span>{locale === "de" ? "Konzept-Ergebnis" : "Concept result"}</span><strong>{data.metric}</strong><h3>{data.metricLabel}</h3><a href={localizePath(`/work/${data.slug}`, locale)}>{data.shortTitle} ↗</a></Reveal>)}</div></section>
 

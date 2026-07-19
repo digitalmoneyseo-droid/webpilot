@@ -6,6 +6,7 @@ import NumberedList from "@/components/NumberedList.astro";
 import SectionHeading from "@/components/SectionHeading.astro";
 import { getTeam } from "@/lib/content";
 import { t, type Locale } from "@/lib/i18n";
+
 interface Props { locale: Locale; }
 const { locale } = Astro.props;
 const team = await getTeam(locale);
@@ -13,7 +14,7 @@ const principles = locale === "de" ? [
   { title: "Senior-Leute machen die Arbeit", copy: "Die Personen im Raum recherchieren, gestalten, bauen und optimieren das System auch selbst." },
   { title: "Belege vor Meinung", copy: "Geschmack zählt, doch Kundenerkenntnisse, Leistungsdaten und eine klare strategische Argumentation halten die Arbeit ehrlich." },
   { title: "Verbunden statt isoliert", copy: "Wir planen Marke, Produkt, Technologie, Akquise, Content, Analytics und KI als ein kommerzielles System." },
-  { title: "Nützlich statt theatralisch", copy: "Wir nutzen neue Technologie dort, wo sie Hebelwirkung schafft — nicht nur eine eindrucksvollere Präsentation." },
+  { title: "Nützlich statt theatralisch", copy: "Wir nutzen neue Technologie dort, wo sie Hebelwirkung schafft – nicht nur eine eindrucksvollere Präsentation." },
 ] : [
   { title: "Senior people do the work", copy: "The people in the room are the people researching, designing, building, and optimizing the system." },
   { title: "Evidence before opinion", copy: "Taste matters, but customer insight, performance data, and a clear strategic argument keep the work honest." },
@@ -22,5 +23,17 @@ const principles = locale === "de" ? [
 ];
 ---
 <BaseLayout {locale} title={t(locale, "About")} description={locale === "de" ? "Das fiktive Senior-Team hinter dem Webpilot-Konzept." : "The fictional senior, multidisciplinary team behind the Webpilot concept."}>
-  <main id="main-content" class="page-main page-main--about"><EditorialHero eyebrow={locale === "de" ? "Über das Studio" : "About the studio"} index={`03 / ${t(locale, "About")}`} title={locale === "de" ? "Bewusst klein. Breit, wo es zählt." : "Small by design. Broad where it matters."} copy={locale === "de" ? "Webpilot ist das Konzept eines Senior-Studios für digitales Wachstum und KI — für Unternehmen, die kreative Qualität und kommerzielle Verantwortung zusammenbringen wollen." : "Webpilot is a concept for a senior digital growth and AI studio for companies that want creative quality and commercial accountability in the same room."} /><section class="about-manifesto section-pad"><div class="manifesto-mark">WEBPILOT</div><div><h2>{locale === "de" ? "Wachstum ist keine Abteilung. Es entsteht aus einem klaren Versprechen, einem nützlichen Produkt, einer sichtbaren Marke und einem lernenden System." : "Growth is not a department. It is the result of a clear promise, a useful product, a visible brand, and a system that learns."}</h2><p>{locale === "de" ? "Deshalb überschreitet unser Konzeptteam klassische Agenturgrenzen. Dieselben Menschen, die die Geschichte formen, verstehen, wie das Erlebnis gebaut, gefunden, gemessen und verbessert wird." : "That is why our concept team crosses traditional agency lines. The same people shaping the story understand how the experience will be built, discovered, measured, and improved."}</p></div></section><section class="principles section-pad page-section"><SectionHeading eyebrow={locale === "de" ? "Prinzipien" : "Principles"} title={locale === "de" ? "Wie wir arbeiten würden." : "How we would work."} /><NumberedList items={principles} /></section><section class="about-team section-pad page-section"><SectionHeading eyebrow={locale === "de" ? "Konzept-Team" : "Concept team"} title={locale === "de" ? "Unterschiedliche Disziplinen. Ein Standard." : "Different disciplines. One standard."} /><div class="team-grid team-grid--large">{team.map(({ data }, index) => <div class="team-card"><div class={`team-portrait portrait-${(index % 5) + 1}`}><span>{data.initials}</span><i></i></div><h3>{data.name}</h3><p>{data.role}</p></div>)}</div></section><section class="location-band"><span>Berlin</span><h2>{locale === "de" ? "Konzipiert für ambitionierte Teams weltweit." : "Designed for ambitious teams worldwide."}</h2><span>52.52° N · 13.40° E</span></section><FinalCta {locale} /></main>
+  <main id="main-content" class="page-main page-main--about">
+    <EditorialHero eyebrow={locale === "de" ? "Über das Studio" : "About the studio"} index={`03 / ${t(locale, "About")}`} title={locale === "de" ? "Bewusst klein. Breit, wo es zählt." : "Small by design. Broad where it matters."} copy={locale === "de" ? "Webpilot ist das Konzept eines Senior-Studios für digitales Wachstum und KI – für Unternehmen, die kreative Qualität und kommerzielle Verantwortung zusammenbringen wollen." : "Webpilot is a concept for a senior digital growth and AI studio for companies that want creative quality and commercial accountability in the same room."} />
+    <section class="about-manifesto section-pad">
+      <div class="manifesto-mark"><span>{locale === "de" ? "Unabhängiges Studio" : "Independent studio"}</span><span>Berlin / Worldwide</span><span>{locale === "de" ? "Nur Senior-Team" : "Senior team only"}</span></div>
+      <div><h2>{locale === "de" ? "Wachstum ist keine Abteilung. Es entsteht aus einem klaren Versprechen, einem nützlichen Produkt, einer sichtbaren Marke und einem lernenden System." : "Growth is not a department. It is the result of a clear promise, a useful product, a visible brand, and a system that learns."}</h2><p>{locale === "de" ? "Deshalb überschreitet unser Konzeptteam klassische Agenturgrenzen. Dieselben Menschen, die die Geschichte formen, verstehen, wie das Erlebnis gebaut, gefunden, gemessen und verbessert wird." : "That is why our concept team crosses traditional agency lines. The same people shaping the story understand how the experience will be built, discovered, measured, and improved."}</p></div>
+    </section>
+    <section class="principles section-pad page-section"><SectionHeading eyebrow={locale === "de" ? "Prinzipien" : "Principles"} title={locale === "de" ? "Wie wir arbeiten würden." : "How we would work."} /><NumberedList items={principles} /></section>
+    <section class="about-team section-pad page-section">
+      <SectionHeading eyebrow={locale === "de" ? "Konzept-Team" : "Concept team"} title={locale === "de" ? "Unterschiedliche Disziplinen. Ein Standard." : "Different disciplines. One standard."} />
+      <div class="team-roster">{team.map(({ data }, index) => <div class="team-roster-row"><span>{String(index + 1).padStart(2, "0")}</span><strong>{data.name}</strong><small>{data.role}</small><b>{data.initials}</b></div>)}</div>
+    </section>
+    <FinalCta {locale} />
+  </main>
 </BaseLayout>

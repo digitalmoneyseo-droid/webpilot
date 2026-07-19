@@ -3,10 +3,10 @@ import { renderContactEmail, validateContactForm, type ContactSubmission } from 
 const MAX_BODY_BYTES = 32_768;
 const API_HEADERS = { "Cache-Control": "no-store", "X-Content-Type-Options": "nosniff" } as const;
 const LEGACY_SERVICE_REDIRECTS: Readonly<Record<string, string>> = {
-  "/services/brand-web-product": "/services#build",
-  "/services/brand-web-product/": "/services#build",
-  "/en/services/brand-web-product": "/en/services#build",
-  "/en/services/brand-web-product/": "/en/services#build",
+  "/services/brand-web-product": "/services/website-design-development",
+  "/services/brand-web-product/": "/services/website-design-development",
+  "/en/services/brand-web-product": "/en/services/website-design-development",
+  "/en/services/brand-web-product/": "/en/services/website-design-development",
 };
 
 interface TurnstileResult { success?: boolean; hostname?: string; "error-codes"?: string[]; }

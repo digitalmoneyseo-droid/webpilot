@@ -7,8 +7,8 @@ export default defineConfig({
   site,
   output: "static",
   redirects: {
-    "/services/brand-web-product": "/services#build",
-    "/en/services/brand-web-product": "/en/services#build",
+    "/services/brand-web-product": "/services/website-design-development",
+    "/en/services/brand-web-product": "/en/services/website-design-development",
   },
   integrations: [mdx()],
   i18n: {

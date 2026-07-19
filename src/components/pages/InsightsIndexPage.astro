@@ -4,10 +4,23 @@ import EditorialHero from "@/components/EditorialHero.astro";
 import FinalCta from "@/components/FinalCta.astro";
 import { getInsights } from "@/lib/content";
 import { formatDate, localizePath, t, type Locale } from "@/lib/i18n";
+
 interface Props { locale: Locale; }
 const { locale } = Astro.props;
 const insights = await getInsights(locale);
 ---
 <BaseLayout {locale} title={t(locale, "Insights")} description={locale === "de" ? "Webpilots Perspektiven auf Marke, digitale Produkte, Wachstum, Daten, KI und Automatisierung." : "Webpilot perspectives on brand, digital products, growth, data, AI, and automation."}>
-  <main id="main-content" class="page-main page-main--insights"><EditorialHero eyebrow={locale === "de" ? "Ideen & Perspektiven" : "Ideas & perspectives"} index={`04 / ${t(locale, "Insights")}`} title={locale === "de" ? "Klares Denken für verbundenes Wachstum." : "Clear thinking for connected growth."} copy={locale === "de" ? "Eigene Perspektiven darauf, wie Marke, digitale Produkte, Nachfrage und intelligente Systeme als Einheit funktionieren können." : "Original perspectives on making brand, digital products, demand, and intelligent systems work as one."} /><section class="insights-grid section-pad page-section">{insights.map(({ data }, index) => <a href={localizePath(`/insights/${data.slug}`, locale)} class={`insight-card insight-card-${(index % 3) + 1}`}><div class="insight-art"><i></i><i></i><b>{data.category}</b></div><div class="insight-meta"><span>{formatDate(locale, data.publishedAt)}</span><span>{data.readMinutes} {locale === "de" ? "Min. Lesezeit" : "min read"}</span></div><h2>{data.title}</h2><p>{data.excerpt}</p><b>{locale === "de" ? "Artikel lesen ↗" : "Read article ↗"}</b></a>)}</section><FinalCta {locale} /></main>
+  <main id="main-content" class="page-main page-main--insights">
+    <EditorialHero eyebrow={locale === "de" ? "Ideen & Perspektiven" : "Ideas & perspectives"} index={`04 / ${t(locale, "Insights")}`} title={locale === "de" ? "Notizen für Entscheidungen, nicht für den Feed." : "Notes for decisions, not the feed."} copy={locale === "de" ? "Konkrete Perspektiven auf Marke, digitale Produkte, Nachfrage und intelligente Systeme – geschrieben, um im Arbeitsalltag nützlich zu sein." : "Practical perspectives on brand, digital products, demand, and intelligent systems—written to be useful in the work."} />
+    <section class="insights-index section-pad page-section">
+      <div class="insights-index-heading"><span>{locale === "de" ? "Aktuelle Notizen" : "Latest notes"}</span><span>{String(insights.length).padStart(2, "0")} {locale === "de" ? "Artikel" : "articles"}</span></div>
+      <div class="insights-list">{insights.map(({ data }, index) => <a href={localizePath(`/insights/${data.slug}`, locale)} class="insight-row">
+        <span class="insight-row-number">{String(index + 1).padStart(2, "0")}</span>
+        <span class="insight-row-meta"><b>{data.category}</b><small>{formatDate(locale, data.publishedAt)} · {data.readMinutes} {locale === "de" ? "Min." : "min"}</small></span>
+        <span class="insight-row-copy"><strong>{data.title}</strong><small>{data.excerpt}</small></span>
+        <span class="insight-row-arrow" aria-hidden="true">↗</span>
+      </a>)}</div>
+    </section>
+    <FinalCta {locale} />
+  </main>
 </BaseLayout>

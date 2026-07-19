@@ -21,8 +21,8 @@ test("navigation traps focus, closes with Escape, and restores focus", async ({ 
   await expect(trigger).toHaveAttribute("aria-expanded", "true");
   await expect(page.locator("#site-menu")).toHaveAttribute("aria-hidden", "false");
   await page.keyboard.press("Escape");
-  await expect(page.locator("#site-menu")).toHaveClass(/is-closing/);
-  await expect(page.locator("#site-menu")).not.toHaveClass(/is-closing/);
+  await expect(page.locator("#site-menu")).toHaveAttribute("aria-hidden", "true");
+  await expect(page.locator("#site-menu")).not.toHaveClass(/is-open/);
   await expect(trigger).toBeFocused();
 });
 
@@ -30,7 +30,10 @@ test("desktop navigation is always available without a menu trigger", async ({ p
   await page.setViewportSize({ width: 1280, height: 720 });
   await page.goto("/en");
   await expect(page.locator(".desktop-nav")).toBeVisible();
-  await expect(page.locator(".desktop-nav a")).toHaveCount(5);
+  await expect(page.locator(".desktop-nav > a")).toHaveCount(4);
+  await expect(page.locator(".desktop-services-trigger")).toBeVisible();
+  await page.locator(".desktop-services").hover();
+  await expect(page.locator(".desktop-megamenu")).toBeVisible();
   await expect(page.locator(".header-menu")).toBeHidden();
 });
 
@@ -79,34 +82,21 @@ test("portfolio ribbon loops at narrow viewport widths without overflowing the p
   }
 });
 
-test("service discovery is grouped into localized Build, Grow, and Automate pillars", async ({ page }) => {
+test("service discovery separates the slogan from concrete service categories", async ({ page }) => {
   await page.goto("/en");
 
   const buildCard = page.locator(".service-card--build");
   const growCard = page.locator(".service-card--grow");
   const automateCard = page.locator(".service-card--automate");
 
-  await expect(buildCard).toHaveAttribute("href", "/en/services#build");
-  await expect(growCard).toHaveAttribute("href", "/en/services#grow");
-  await expect(automateCard).toHaveAttribute("href", "/en/services#automate");
-  await expect(buildCard.locator("li")).toHaveText(["Branding & identity", "Website design & development", "App design & development"]);
-  await expect(growCard.locator("li")).toHaveText(["SEO & AI search", "Content & social", "Paid acquisition", "Analytics & CRO"]);
-  await expect(automateCard.locator("li")).toHaveText(["AI & automation"]);
-
-  await growCard.click();
-  await expect(page).toHaveURL(/\/en\/services#grow$/);
-  await expect(page.locator("#grow")).toBeVisible();
-  await expect(page.locator(".service-pillar")).toHaveCount(3);
-  await expect(page.locator("#build .service-link-grid > a")).toHaveCount(3);
-  await expect(page.locator("#grow .service-link-grid > a")).toHaveCount(4);
-  await expect(page.locator("#automate .service-link-grid > a")).toHaveCount(1);
-  await expect(page.getByText("Optimize", { exact: true })).toHaveCount(0);
-  await expect(page.getByText("Brand, web & product", { exact: true })).toHaveCount(0);
+  await expect(buildCard).not.toHaveAttribute("href", /.+/);
+  await expect(growCard).not.toHaveAttribute("href", /.+/);
+  await expect(automateCard).not.toHaveAttribute("href", /.+/);
+  await expect(page.locator(".service-card-services")).toHaveCount(0);
+  await expect(page.locator(".service-category-section .service-category")).toHaveCount(4);
 
   await page.goto("/services");
-  await expect(page.locator("#build h2")).toHaveText("Aufbauen");
-  await expect(page.locator("#grow h2")).toHaveText("Wachsen");
-  await expect(page.locator("#automate h2")).toHaveText("Automatisieren");
+  await expect(page.locator(".page-main--services")).toHaveCount(0);
 });
 
 test("new Build service routes render and the retired route redirects", async ({ page }) => {
@@ -118,9 +108,9 @@ test("new Build service routes render and the retired route redirects", async ({
   }
 
   await page.goto("/en/services/brand-web-product");
-  await expect(page).toHaveURL(/\/en\/services#build$/);
+  await expect(page).toHaveURL(/\/en\/services\/website-design-development\/?$/);
   await page.goto("/services/brand-web-product");
-  await expect(page).toHaveURL(/\/services#build$/);
+  await expect(page).toHaveURL(/\/services\/website-design-development\/?$/);
 });
 
 test("representative page has no serious accessibility violations", async ({ page }) => {
@@ -129,7 +119,4 @@ test("representative page has no serious accessibility violations", async ({ pag
   const results = await new AxeBuilder({ page }).exclude(".project-visual").analyze();
   expect(results.violations.filter((violation) => ["serious", "critical"].includes(violation.impact ?? ""))).toEqual([]);
 
-  await page.goto("/en/services");
-  const servicesResults = await new AxeBuilder({ page }).analyze();
-  expect(servicesResults.violations.filter((violation) => ["serious", "critical"].includes(violation.impact ?? ""))).toEqual([]);
 });

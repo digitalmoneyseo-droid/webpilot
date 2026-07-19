@@ -1,0 +1,28 @@
+---
+import { Bot, Megaphone, MonitorSmartphone, SearchCheck } from "@lucide/astro";
+import type { ServiceEntry } from "@/lib/content";
+import { localizePath, type Locale } from "@/lib/i18n";
+import { localizedCategoryDescription, localizedCategoryTitle, serviceCategories } from "@/lib/services";
+
+interface Props { locale: Locale; services?: ServiceEntry[]; compact?: boolean; }
+const { locale, services = [], compact = false } = Astro.props;
+const icons = { design: MonitorSmartphone, search: SearchCheck, campaign: Megaphone, automation: Bot };
+const bySlug = new Map(services.map((service) => [service.data.slug, service]));
+---
+<div class:list={["service-category-grid", { "service-category-grid--compact": compact }]}>
+  {serviceCategories.map((category) => {
+    const CategoryIcon = icons[category.icon];
+    const categoryServices = category.services.map((slug) => bySlug.get(slug)).filter(Boolean) as ServiceEntry[];
+    return <article class={`service-category service-category--${category.id}`}>
+      <a class="service-category-main" href={localizePath(category.href, locale)}>
+        <span class="service-category-number">{category.number}</span>
+        <span class="service-category-icon"><CategoryIcon aria-hidden="true" /></span>
+        <span class="service-category-copy"><strong>{localizedCategoryTitle(category, locale)}</strong><small>{localizedCategoryDescription(category, locale)}</small></span>
+        <span class="service-category-arrow" aria-hidden="true">↗</span>
+      </a>
+      {categoryServices.length > 0 && <nav class="service-category-links" aria-label={localizedCategoryTitle(category, locale)}>
+        {categoryServices.map((service) => <a href={localizePath(`/services/${service.data.slug}`, locale)}>{service.data.title}<span aria-hidden="true">→</span></a>)}
+      </nav>}
+    </article>;
+  })}
+</div>
