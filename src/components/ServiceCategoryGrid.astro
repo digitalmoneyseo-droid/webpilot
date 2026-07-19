@@ -1,5 +1,6 @@
 ---
 import { Bot, Megaphone, MonitorSmartphone, SearchCheck } from "@lucide/astro";
+import Reveal from "@/components/Reveal.astro";
 import type { ServiceEntry } from "@/lib/content";
 import { localizePath, type Locale } from "@/lib/i18n";
 import { localizedCategoryDescription, localizedCategoryTitle, serviceCategories } from "@/lib/services";
@@ -10,19 +11,20 @@ const icons = { design: MonitorSmartphone, search: SearchCheck, campaign: Megaph
 const bySlug = new Map(services.map((service) => [service.data.slug, service]));
 ---
 <div class:list={["service-category-grid", { "service-category-grid--compact": compact }]}>
-  {serviceCategories.map((category) => {
+  {serviceCategories.map((category, index) => {
     const CategoryIcon = icons[category.icon];
     const categoryServices = category.services.map((slug) => bySlug.get(slug)).filter(Boolean) as ServiceEntry[];
-    return <article class={`service-category service-category--${category.id}`}>
+    const title = localizedCategoryTitle(category, locale);
+    const exploreLabel = locale === "de" ? `${title} entdecken` : `Explore ${title}`;
+    return <Reveal delay={index * 50}><article class={`service-category service-category--${category.id}`}>
       <a class="service-category-main" href={localizePath(category.href, locale)}>
-        <span class="service-category-number">{category.number}</span>
-        <span class="service-category-icon"><CategoryIcon aria-hidden="true" /></span>
-        <span class="service-category-copy"><strong>{localizedCategoryTitle(category, locale)}</strong><small>{localizedCategoryDescription(category, locale)}</small></span>
-        <span class="service-category-arrow" aria-hidden="true">↗</span>
+        <CategoryIcon class="service-category-icon" aria-hidden="true" />
+        <span class="service-category-copy"><strong>{title}</strong><small>{localizedCategoryDescription(category, locale)}</small></span>
+        <span class="service-category-cta">{exploreLabel}<span aria-hidden="true">↗</span></span>
       </a>
-      {categoryServices.length > 0 && <nav class="service-category-links" aria-label={localizedCategoryTitle(category, locale)}>
+      {categoryServices.length > 0 && <nav class="service-category-links" aria-label={title}>
         {categoryServices.map((service) => <a href={localizePath(`/services/${service.data.slug}`, locale)}>{service.data.title}<span aria-hidden="true">→</span></a>)}
       </nav>}
-    </article>;
+    </article></Reveal>;
   })}
 </div>

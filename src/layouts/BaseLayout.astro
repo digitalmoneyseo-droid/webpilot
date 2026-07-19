@@ -76,15 +76,17 @@ if (operator) schemas.unshift({
       const reveals = [...document.querySelectorAll<HTMLElement>("[data-reveal]")];
       if (reducedMotion || !("IntersectionObserver" in window)) reveals.forEach((element) => element.classList.add("is-visible"));
       else {
-        const observer = new IntersectionObserver((entries) => entries.forEach((entry) => {
+        const reveal = (entries: IntersectionObserverEntry[], observer: IntersectionObserver) => entries.forEach((entry) => {
           if (!entry.isIntersecting) return;
           entry.target.classList.add("is-visible");
           observer.unobserve(entry.target);
-        }), { threshold: 0.12 });
+        });
+        const observer = new IntersectionObserver(reveal, { threshold: 0.12 });
+        const mobileItemObserver = new IntersectionObserver(reveal, { threshold: 1 });
         const mobile = window.matchMedia("(max-width: 900px)").matches;
         reveals.forEach((element) => {
           if (mobile && element.hasAttribute("data-mobile-reveal-items")) {
-            [...element.children].forEach((item) => observer.observe(item));
+            [...element.children].forEach((item) => mobileItemObserver.observe(item));
           } else observer.observe(element);
         });
       }

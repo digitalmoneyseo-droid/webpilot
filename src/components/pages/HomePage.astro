@@ -52,8 +52,6 @@ const description = t(locale, "Branding, websites, apps, SEO, AI search, content
 
     <section class="service-category-section section-pad"><SectionHeading eyebrow={locale === "de" ? "Leistungen" : "What we do"} title={locale === "de" ? "Konkrete Expertise. Klar organisiert." : "Concrete expertise. Clearly organised."} copy={locale === "de" ? "Vier Leistungsbereiche, die einzeln funktionieren und gemeinsam stärker werden." : "Four service categories that work independently and become stronger together."} /><ServiceCategoryGrid {services} {locale} compact /></section>
 
-    <section class="testimonial-section section-pad"><SectionHeading title={t(locale, "Testimonials")} align="center" /><div class="testimonial-grid">{testimonials.slice(0, 3).map(({ data }, index) => <Reveal class="testimonial-card" delay={(index % 3) * 50}><span>{data.brand}</span><blockquote>“{data.quote}”</blockquote><small>{data.attribution}</small><i>{locale === "de" ? "Konzept-Kundenstimme" : "Concept testimonial"}</i></Reveal>)}</div></section>
-
     <section class="engagement-section process-section section-pad">
       <SectionHeading title={t(locale, "From first signal to live system.")} copy={t(locale, "A clear, collaborative process keeps strategy, design, technology, and delivery moving as one.")} />
       <ol class="process-list" data-reveal data-mobile-reveal-items>
@@ -64,6 +62,8 @@ const description = t(locale, "Branding, websites, apps, SEO, AI search, content
         </li>)}
       </ol>
     </section>
+
+    <section class="testimonial-section section-pad"><SectionHeading title={t(locale, "Testimonials")} align="center" /><div class="testimonial-grid">{testimonials.slice(0, 3).map(({ data }, index) => <Reveal class="testimonial-card" delay={(index % 3) * 50}><span>{data.brand}</span><blockquote>“{data.quote}”</blockquote><small>{data.attribution}</small><i>{locale === "de" ? "Konzept-Kundenstimme" : "Concept testimonial"}</i></Reveal>)}</div></section>
 
     <section class="faq-section section-pad"><SectionHeading title="FAQs" align="center" /><div class="faq-layout"><Faq items={faqs} id={`home-faq-${locale}`} /></div></section><FinalCta {locale} />
   </main>
