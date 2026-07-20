@@ -79,7 +79,7 @@ const description = t(locale, "Branding, websites, apps, SEO, AI search, content
       <SectionHeading title={t(locale, "From first idea to launch.")} copy={t(locale, "A clear shared plan keeps design, tech, and delivery in step.")} />
       <ol class="process-list" data-reveal data-mobile-reveal-items>
         {processSteps.map(({ icon: StepIcon, title, copy }, index) => <li class="process-step" style={`--process-delay:${index * 350}ms`}>
-          <span class="process-node" aria-hidden="true"></span>
+          <span class="process-node" aria-hidden="true">{index + 1}</span>
           <div class="process-marker"><StepIcon aria-hidden="true" /></div>
           <div class="process-copy"><h3>{t(locale, title)}</h3><p>{t(locale, copy)}</p></div>
         </li>)}
