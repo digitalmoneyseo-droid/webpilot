@@ -4,12 +4,10 @@ import EditorialHero from "@/components/EditorialHero.astro";
 import FinalCta from "@/components/FinalCta.astro";
 import NumberedList from "@/components/NumberedList.astro";
 import SectionHeading from "@/components/SectionHeading.astro";
-import { getTeam } from "@/lib/content";
 import { t, type Locale } from "@/lib/i18n";
 
 interface Props { locale: Locale; }
 const { locale } = Astro.props;
-const team = await getTeam(locale);
 const principles = locale === "de" ? [
   { title: "Senior-Leute machen die Arbeit", copy: "Die Personen im Raum recherchieren, gestalten, bauen und optimieren das System auch selbst." },
   { title: "Belege vor Meinung", copy: "Geschmack zählt, doch Kundenerkenntnisse, Leistungsdaten und eine klare strategische Argumentation halten die Arbeit ehrlich." },
@@ -30,10 +28,6 @@ const principles = locale === "de" ? [
       <div><h2>{locale === "de" ? "Wachstum braucht ein klares Versprechen, ein gutes Produkt, eine sichtbare Marke und stetes Lernen." : "Growth needs a clear promise, a useful product, a visible brand, and steady learning."}</h2><p>{locale === "de" ? "Unser Team deckt mehr als eine Fachrichtung ab. Wer die Geschichte prägt, versteht auch Bau, Vertrieb, Messung und Pflege." : "Our team spans several fields. The people who shape the story also know how to build, sell, measure, and improve it."}</p></div>
     </section>
     <section class="principles section-pad page-section"><SectionHeading eyebrow={locale === "de" ? "Prinzipien" : "Principles"} title={locale === "de" ? "Wie wir arbeiten." : "How we work."} align="center" /><NumberedList items={principles} /></section>
-    <section class="about-team section-pad page-section">
-      <SectionHeading eyebrow={locale === "de" ? "Team" : "Team"} title={locale === "de" ? "Unterschiedliche Disziplinen. Ein Standard." : "Different disciplines. One standard."} align="center" />
-      <div class="team-roster">{team.map(({ data }, index) => <div class="team-roster-row"><span>{String(index + 1).padStart(2, "0")}</span><strong>{data.name}</strong><small>{data.role}</small><b>{data.initials}</b></div>)}</div>
-    </section>
     <FinalCta {locale} />
   </main>
 </BaseLayout>

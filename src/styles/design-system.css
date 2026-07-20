@@ -451,7 +451,6 @@ body {
 .page-main--about .about-manifesto p { margin: 0; }
 .page-main--about .principles,
 .page-main--about .about-team { padding-block: var(--section-space); }
-.contact-intro { top: 6.5rem; }
 .contact-intro h1 { margin: 0 0 var(--space-4); }
 
 @media (max-width: 900px) {
@@ -465,7 +464,6 @@ body {
 @media (max-width: 600px) {
   .page-main .editorial-hero + .page-section,
   .page-main .editorial-hero + .contact-page { padding-top: var(--section-space-compact); }
-  .page-main--contact .contact-page { padding-top: 6rem; }
   .page-main--about .about-manifesto,
   .page-main--about .principles,
   .page-main--about .about-team,

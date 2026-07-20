@@ -55,6 +55,18 @@ const isActive = (href: string) => {
 <div id="site-menu" class="menu-overlay" aria-hidden="true" inert role="dialog" aria-modal="true" aria-label={t(locale, "Site navigation")}>
   <div class="menu-top">
     <a href={localizePath("/", locale)} class="menu-brand"><BrandMark inverse /></a>
+    <a class="header-language menu-language" href={alternatePath(pathname, otherLocale)} aria-label={locale === "de" ? "Switch to English" : "Auf Deutsch wechseln"}>
+      <span class="header-language__icon-box" aria-hidden="true">
+        <Icon name="translate" class="header-language__icon header-language__icon--out" />
+        <Icon name="translate" class="header-language__icon header-language__icon--in" />
+      </span>
+      <span class="header-language__label">
+        <span class="header-language__label-track">
+          <span class="header-language__row"><span class:list={{ "is-active": locale === "de" }}>DE</span><i>/</i><span class:list={{ "is-active": locale === "en" }}>EN</span></span>
+          <span class="header-language__row" aria-hidden="true"><span class:list={{ "is-active": locale === "de" }}>DE</span><i>/</i><span class:list={{ "is-active": locale === "en" }}>EN</span></span>
+        </span>
+      </span>
+    </a>
     <button type="button" class="menu-close" aria-label={t(locale, "Close navigation")}><Icon name="plus" /></button>
   </div>
   <nav class="menu-links" aria-label={t(locale, "Main navigation")}>
