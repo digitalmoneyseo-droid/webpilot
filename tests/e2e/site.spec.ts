@@ -122,10 +122,42 @@ test("portfolio ribbon loops at narrow viewport widths without overflowing the p
     const firstCard = page.locator(".work-ribbon .project-card").first();
     const bounds = await firstCard.boundingBox();
     expect((bounds?.width ?? 0) + 32).toBeLessThanOrEqual(width + 0.1);
-    await expect(page.locator('.work-ribbon-group[aria-hidden="true"]')).toHaveCSS("display", "flex");
-    await expect(page.locator(".work-ribbon-track")).toHaveCSS("animation-name", "work-ribbon-scroll");
+    await expect(page.locator('.work-ribbon-group[aria-hidden="true"]').first()).toHaveCSS("display", "flex");
+    await expect(page.locator(".work-ribbon-track")).not.toHaveCSS("transform", "none");
     expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBe(width);
   }
+});
+
+test("portfolio ribbon keeps moving and supports drag scrolling", async ({ page }) => {
+  await page.setViewportSize({ width: 390, height: 844 });
+  await page.goto("/en");
+
+  const ribbon = page.locator("[data-work-ribbon]");
+  const track = page.locator(".work-ribbon-track");
+  const card = ribbon.locator(".project-card").first();
+  await expect(ribbon).toHaveCSS("overflow-x", "hidden");
+  await expect(ribbon).toHaveCSS("user-select", "none");
+  const initialTransform = await track.evaluate((element) => element.style.transform);
+
+  const bounds = await card.boundingBox();
+  if (!bounds) throw new Error("Portfolio card is not visible");
+  await page.mouse.move(bounds.x + bounds.width / 2, bounds.y + bounds.height / 2);
+  await page.mouse.down();
+  await page.mouse.move(bounds.x + bounds.width / 2 - 100, bounds.y + bounds.height / 2);
+  await page.mouse.up();
+
+  const leftDragTransform = await track.evaluate((element) => element.style.transform);
+  expect(leftDragTransform).not.toBe(initialTransform);
+
+  await page.mouse.move(bounds.x + bounds.width / 2, bounds.y + bounds.height / 2);
+  await page.mouse.down();
+  await page.mouse.move(bounds.x + bounds.width / 2 + 100, bounds.y + bounds.height / 2);
+  await page.mouse.up();
+  const rightDragTransform = await track.evaluate((element) => element.style.transform);
+  expect(rightDragTransform).not.toBe(leftDragTransform);
+
+  await page.waitForTimeout(100);
+  expect(await track.evaluate((element) => element.style.transform)).not.toBe(rightDragTransform);
 });
 
 test("service discovery separates the slogan from concrete service categories", async ({ page }) => {

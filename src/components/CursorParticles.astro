@@ -1,0 +1,214 @@
+<canvas class="cursor-particles" data-cursor-particles aria-hidden="true"></canvas>
+
+<style>
+  .cursor-particles {
+    position: fixed;
+    inset: 0;
+    z-index: 110;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    mix-blend-mode: normal;
+  }
+
+  @media (prefers-reduced-motion: reduce), (hover: none), (pointer: coarse) {
+    .cursor-particles { display: none; }
+  }
+</style>
+
+<script>
+  type Particle = {
+    x: number;
+    y: number;
+    vx: number;
+    vy: number;
+    size: number;
+    life: number;
+    maxLife: number;
+    color: string;
+  };
+
+  type CursorParticleWindow = Window & {
+    __webpilotCursorParticlesCleanup?: () => void;
+  };
+
+  const particleWindow = window as CursorParticleWindow;
+
+  const initCursorParticles = () => {
+    particleWindow.__webpilotCursorParticlesCleanup?.();
+
+    const canvas = document.querySelector<HTMLCanvasElement>("[data-cursor-particles]");
+    const finePointer = window.matchMedia("(hover: hover) and (pointer: fine)");
+    const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
+    if (!canvas || !finePointer.matches || reducedMotion.matches) return;
+
+    const context = canvas.getContext("2d");
+    if (!context) return;
+
+    const particles: Particle[] = [];
+    const maxParticles = 130;
+    let width = 0;
+    let height = 0;
+    let lastX = 0;
+    let lastY = 0;
+    let lastMoveAt = 0;
+    let hasPosition = false;
+    let animationFrame = 0;
+    let previousFrameAt = performance.now();
+
+    const resize = () => {
+      width = window.innerWidth;
+      height = window.innerHeight;
+      const ratio = Math.min(window.devicePixelRatio || 1, 2);
+      canvas.width = Math.round(width * ratio);
+      canvas.height = Math.round(height * ratio);
+      context.setTransform(ratio, 0, 0, ratio, 0, 0);
+    };
+
+    const rainbowColor = () => `hsla(${Math.floor(Math.random() * 360)}, 88%, 56%, .72)`;
+
+    const addParticle = (x: number, y: number, speed: number, directionX: number, directionY: number) => {
+      if (particles.length >= maxParticles) particles.shift();
+
+      const life = 350 + Math.random() * 320;
+      const sideways = (Math.random() - .5) * (38 + speed * 22);
+      particles.push({
+        x: x + (Math.random() - .5) * 8,
+        y: y + (Math.random() - .5) * 8,
+        vx: -directionX * (8 + Math.random() * 16) - directionY * sideways,
+        vy: -directionY * (6 + Math.random() * 10) + directionX * sideways + 28 + Math.random() * 28,
+        size: 1 + Math.random() * Math.min(2.3, .9 + speed * .4),
+        life,
+        maxLife: life,
+        color: rainbowColor(),
+      });
+    };
+
+    const addBurstParticle = (x: number, y: number, angle: number) => {
+      if (particles.length >= maxParticles) particles.shift();
+
+      const life = 480 + Math.random() * 280;
+      const force = 45 + Math.random() * 60;
+      particles.push({
+        x: x + (Math.random() - .5) * 4,
+        y: y + (Math.random() - .5) * 4,
+        vx: Math.cos(angle) * force,
+        vy: Math.sin(angle) * force,
+        size: 1.4 + Math.random() * 2,
+        life,
+        maxLife: life,
+        color: rainbowColor(),
+      });
+    };
+
+    const startDrawing = (now: number) => {
+      if (animationFrame) return;
+      previousFrameAt = now;
+      animationFrame = window.requestAnimationFrame(draw);
+    };
+
+    const onPointerMove = (event: PointerEvent) => {
+      if (event.pointerType === "touch") return;
+
+      const now = performance.now();
+      if (!hasPosition) {
+        lastX = event.clientX;
+        lastY = event.clientY;
+        lastMoveAt = now;
+        hasPosition = true;
+        return;
+      }
+
+      const deltaX = event.clientX - lastX;
+      const deltaY = event.clientY - lastY;
+      const distance = Math.hypot(deltaX, deltaY);
+      const elapsed = Math.max(8, now - lastMoveAt);
+      const speed = distance / elapsed;
+
+      if (distance > 1 && speed > .05) {
+        const directionX = deltaX / distance;
+        const directionY = deltaY / distance;
+        const speedBoost = Math.min(2.2, .4 + speed * 1.1);
+        const count = Math.min(7, Math.max(1, Math.round((distance / 18) * speedBoost)));
+
+        for (let index = 0; index < count; index += 1) {
+          const progress = (index + Math.random()) / count;
+          addParticle(lastX + deltaX * progress, lastY + deltaY * progress, speed, directionX, directionY);
+        }
+        startDrawing(now);
+      }
+
+      lastX = event.clientX;
+      lastY = event.clientY;
+      lastMoveAt = now;
+    };
+
+    const onPointerLeave = () => { hasPosition = false; };
+
+    const onPointerDown = (event: PointerEvent) => {
+      if (event.pointerType === "touch" || event.button !== 0) return;
+
+      const count = 18;
+      const offset = Math.random() * Math.PI * 2;
+      for (let index = 0; index < count; index += 1) {
+        const angle = offset + (index / count) * Math.PI * 2 + (Math.random() - .5) * .16;
+        addBurstParticle(event.clientX, event.clientY, angle);
+      }
+      startDrawing(performance.now());
+    };
+
+    const draw = (now: number) => {
+      const elapsed = now - previousFrameAt;
+      const delta = Math.min(32, elapsed);
+      previousFrameAt = now;
+      context.clearRect(0, 0, width, height);
+
+      for (let index = particles.length - 1; index >= 0; index -= 1) {
+        const particle = particles[index];
+        if (!particle) continue;
+
+        particle.life -= elapsed;
+        if (particle.life <= 0) {
+          particles.splice(index, 1);
+          continue;
+        }
+
+        const seconds = delta / 1000;
+        particle.vy += 88 * seconds;
+        particle.vx *= Math.pow(.985, delta / 16.67);
+        particle.x += particle.vx * seconds;
+        particle.y += particle.vy * seconds;
+
+        const progress = particle.life / particle.maxLife;
+        context.globalAlpha = Math.min(1, progress * 1.8);
+        context.fillStyle = particle.color;
+        context.beginPath();
+        context.arc(particle.x, particle.y, particle.size * (.55 + progress * .45), 0, Math.PI * 2);
+        context.fill();
+      }
+
+      context.globalAlpha = 1;
+      animationFrame = particles.length ? window.requestAnimationFrame(draw) : 0;
+    };
+
+    resize();
+    window.addEventListener("resize", resize, { passive: true });
+    window.addEventListener("pointermove", onPointerMove, { passive: true });
+    window.addEventListener("pointerdown", onPointerDown, { passive: true });
+    document.documentElement.addEventListener("pointerleave", onPointerLeave);
+
+    particleWindow.__webpilotCursorParticlesCleanup = () => {
+      window.cancelAnimationFrame(animationFrame);
+      window.removeEventListener("resize", resize);
+      window.removeEventListener("pointermove", onPointerMove);
+      window.removeEventListener("pointerdown", onPointerDown);
+      document.documentElement.removeEventListener("pointerleave", onPointerLeave);
+      particles.length = 0;
+      context.clearRect(0, 0, width, height);
+      delete particleWindow.__webpilotCursorParticlesCleanup;
+    };
+  };
+
+  initCursorParticles();
+  document.addEventListener("astro:page-load", initCursorParticles);
+</script>

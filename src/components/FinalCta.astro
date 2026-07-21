@@ -5,7 +5,7 @@ interface Props { locale: Locale; }
 const { locale } = Astro.props;
 ---
 <section class="final-cta flex min-h-96 flex-col items-center justify-center bg-dark px-page py-section text-center text-inverse max-[600px]:min-h-88 max-[600px]:px-4.5">
-  <h2 class="mt-8 mb-4 text-display-sm font-semibold">{locale === "de" ? "Bereit für mehr" : "Ready to"}<br />{locale === "de" ? "Wachstum?" : "grow?"}</h2>
+  <h2 class="mt-8 mb-4 text-display-sm font-semibold">{locale === "de" ? <>Bereit für mehr<br />Wachstum?</> : "Ready to grow?"}</h2>
   <p class="mb-8 max-w-narrow text-body text-dark-muted">{locale === "de" ? "Wir verbinden Marke, Technik, Marketing und KI für messbare Ergebnisse." : "We join brand, tech, marketing, and AI to drive clear results."}</p>
   <CtaButton href={localizePath("/contact", locale)} light>{t(locale, "Book strategy call")}</CtaButton>
 </section>

@@ -1,0 +1,52 @@
+---
+import type { Locale } from "@/lib/i18n";
+interface Item { id: string; title: string; description: string; }
+interface Props { locale: Locale; items: Item[]; }
+const { locale, items } = Astro.props;
+---
+<nav class="section-nav" aria-label={locale === "de" ? "Abschnitte dieser Seite" : "Sections on this page"} data-section-nav>
+  <div class="section-nav__markers">
+    {items.map((item, index) => <a class="section-nav__marker" href={`#${item.id}`} data-section-nav-link data-title={item.title} data-description={item.description} aria-label={item.title} aria-current={index === 0 ? "location" : undefined}><span></span></a>)}
+  </div>
+  <div class="section-nav__card" aria-hidden="true"><strong data-section-nav-title>{items[0]?.title}</strong><span data-section-nav-description>{items[0]?.description}</span></div>
+</nav>
+<script>
+  const initSectionNavigation = () => {
+    document.querySelectorAll<HTMLElement>("[data-section-nav]").forEach((nav) => {
+      if (nav.dataset.initialized === "true") return;
+      nav.dataset.initialized = "true";
+      const controller = new AbortController();
+      const links = [...nav.querySelectorAll<HTMLAnchorElement>("[data-section-nav-link]")];
+      const title = nav.querySelector<HTMLElement>("[data-section-nav-title]");
+      const description = nav.querySelector<HTMLElement>("[data-section-nav-description]");
+      const targets = [".hero--home", ".work-ribbon", ".why-section", ".service-section", ".process-section", ".testimonial-section", ".faq-section"];
+      targets.forEach((selector, index) => { const section = document.querySelector<HTMLElement>(selector); if (section && links[index]) section.id = links[index].hash.slice(1); });
+      const sections = links.map((link) => document.querySelector<HTMLElement>(link.hash)).filter(Boolean) as HTMLElement[];
+      const showItem = (link: HTMLAnchorElement) => { if (title) title.textContent = link.dataset.title ?? ""; if (description) description.textContent = link.dataset.description ?? ""; };
+      const setActive = (section: HTMLElement) => links.forEach((link) => { const active = link.hash === `#${section.id}`; if (active) { link.setAttribute("aria-current", "location"); showItem(link); } else link.removeAttribute("aria-current"); });
+      const restoreActive = () => { const active = links.find((link) => link.hasAttribute("aria-current")); if (active) showItem(active); };
+      links.forEach((link, index) => {
+        link.addEventListener("pointerenter", () => showItem(link));
+        link.addEventListener("focus", () => showItem(link));
+        link.addEventListener("click", () => { const section = sections[index]; if (section) setActive(section); });
+      });
+      nav.addEventListener("pointerleave", restoreActive);
+      nav.addEventListener("focusout", (event) => { if (!nav.contains(event.relatedTarget as Node | null)) restoreActive(); });
+
+      let frame = 0;
+      const updateFromScroll = () => {
+        frame = 0;
+        const readingLine = window.scrollY + window.innerHeight * .35;
+        let current = sections[0];
+        sections.forEach((section) => { if (section.offsetTop <= readingLine) current = section; });
+        if (current) setActive(current);
+      };
+      const scheduleUpdate = () => { if (!frame) frame = requestAnimationFrame(updateFromScroll); };
+      window.addEventListener("scroll", scheduleUpdate, { passive: true, signal: controller.signal });
+      window.addEventListener("resize", scheduleUpdate, { passive: true, signal: controller.signal });
+      document.addEventListener("astro:before-swap", () => controller.abort(), { once: true, signal: controller.signal });
+      updateFromScroll();
+    });
+  };
+  document.addEventListener("astro:page-load", initSectionNavigation);
+</script>

@@ -12,15 +12,15 @@ const isActive = (href: string) => {
 };
 ---
 <header class="site-header fixed top-[22px] left-1/2 z-50 flex w-max items-center gap-2 [transform:translateX(-50%)] max-[900px]:left-[15px] max-[900px]:[transform:none]">
-  <a href={localizePath("/", locale)} class="header-mark inline-flex h-11 w-auto items-center justify-center rounded-[12px] border-0 bg-[rgba(255,255,255,.92)] px-[17px] shadow-surface backdrop-blur-[16px] backdrop-saturate-[140%]" aria-label={t(locale, "Webpilot home")}><BrandMark /></a>
-  <nav class="desktop-nav relative inline-flex h-11 items-center justify-center gap-px rounded-[12px] border-0 bg-[rgba(255,255,255,.92)] p-1 shadow-surface backdrop-blur-[16px] backdrop-saturate-[140%] max-[900px]:hidden" aria-label={t(locale, "Main navigation")}>
+  <a href={localizePath("/", locale)} class="header-mark inline-flex h-11 w-auto items-center justify-center rounded-[12px] border-0 bg-white px-[17px] shadow-surface" aria-label={t(locale, "Webpilot home")}><BrandMark /></a>
+  <nav class="desktop-nav relative inline-flex h-11 items-center justify-center gap-px rounded-[12px] border-0 bg-white p-1 shadow-surface max-[900px]:hidden" aria-label={t(locale, "Main navigation")}>
     <span class="desktop-nav-indicator pointer-events-none absolute top-1 bottom-1 left-0 rounded-lg bg-[#111] opacity-0" aria-hidden="true"></span>
     <a href={localizePath("/work", locale)} class:list={["relative z-1 inline-flex h-9 items-center rounded-lg px-3.5 text-small font-semibold tracking-[-.01em] text-[#696965]", { "is-active": isActive("/work") }]} aria-current={isActive("/work") ? "page" : undefined}>{t(locale, "Work")}</a>
     <div class="desktop-services static h-9">
       <button type="button" class:list={["desktop-services-trigger relative z-1 inline-flex h-9 cursor-pointer list-none items-center gap-[5px] rounded-lg border-0 bg-transparent px-3 text-small font-semibold tracking-[-.01em] text-[#696965]", { "is-active": isActive("/services") }]} aria-haspopup="true" aria-expanded="false" aria-controls="desktop-services-menu"><span>{t(locale, "Services")}</span><Icon name="chevron-down" class="w-3.5" /></button>
-      <div id="desktop-services-menu" class="desktop-megamenu invisible pointer-events-none absolute top-[52px] left-0 w-full rounded-[12px] border border-[rgba(12,12,12,.1)] bg-white p-2 opacity-0 shadow-surface [transform:translateY(-8px)]" aria-hidden="true">
+      <div id="desktop-services-menu" class="desktop-megamenu invisible pointer-events-none absolute top-[52px] left-0 w-full rounded-[12px] border-0 bg-white p-1 opacity-0 shadow-surface [transform:translateY(-8px)]" aria-hidden="true">
         <div class="megamenu-list p-0">
-          {serviceCategories.map((category) => <a class="relative grid min-h-12 grid-cols-[minmax(0,1fr)_auto] items-center gap-3 rounded-sm px-3 py-[.6rem]" href={localizePath(category.href, locale)} aria-label={localizedCategoryTitle(category, locale)}>
+          {serviceCategories.map((category) => <a class="relative grid min-h-11 grid-cols-[minmax(0,1fr)_auto] items-center gap-3 rounded-lg px-3 py-2 text-[#696965]" href={localizePath(category.href, locale)} aria-label={localizedCategoryTitle(category, locale)}>
               <span class="megamenu-label block h-[1.45em] overflow-hidden leading-[1.45]">
                 <span class="megamenu-label-track flex h-[200%] flex-col">
                   <strong class="flex flex-[0_0_50%] items-center whitespace-nowrap text-small font-semibold tracking-[-.01em]">{localizedCategoryTitle(category, locale)}</strong>
@@ -38,7 +38,7 @@ const isActive = (href: string) => {
     <a href={localizePath("/about", locale)} class:list={["relative z-1 inline-flex h-9 items-center rounded-lg px-3.5 text-small font-semibold tracking-[-.01em] text-[#696965]", { "is-active": isActive("/about") }]} aria-current={isActive("/about") ? "page" : undefined}>{t(locale, "About")}</a>
     <a href={localizePath("/contact", locale)} class:list={["relative z-1 inline-flex h-9 items-center rounded-lg px-3.5 text-small font-semibold tracking-[-.01em] text-[#696965]", { "is-active": isActive("/contact") }]} aria-current={isActive("/contact") ? "page" : undefined}>{t(locale, "Contact")}</a>
   </nav>
-  <a class="header-language inline-flex h-11 cursor-pointer items-center justify-center gap-[7px] rounded-[12px] border-0 bg-[rgba(255,255,255,.92)] px-3 text-small tracking-[.02em] text-[#73736f] shadow-surface backdrop-blur-[16px] backdrop-saturate-[140%] max-[900px]:fixed max-[900px]:top-[22px] max-[900px]:right-[65px]" href={alternatePath(pathname, otherLocale)} aria-label={locale === "de" ? "Switch to English" : "Auf Deutsch wechseln"}>
+  <a class="header-language inline-flex h-11 cursor-pointer items-center justify-center gap-[7px] rounded-[12px] border-0 bg-white px-3 text-small tracking-[.02em] text-[#73736f] shadow-surface max-[900px]:fixed max-[900px]:top-[22px] max-[900px]:right-[65px]" href={alternatePath(pathname, otherLocale)} aria-label={locale === "de" ? "Switch to English" : "Auf Deutsch wechseln"}>
     <span class="header-language__icon-box relative h-[19px] w-[19px] flex-none overflow-hidden rounded-none text-[#111]" aria-hidden="true">
       <Icon name="translate" class="header-language__icon header-language__icon--out absolute inset-0 m-0 h-[19px] w-[19px] opacity-100" />
       <Icon name="translate" class="header-language__icon header-language__icon--in absolute inset-0 m-0 h-[19px] w-[19px] opacity-0 [transform:translate(-6px,6px)_scale(.8)]" />
@@ -50,7 +50,7 @@ const isActive = (href: string) => {
       </span>
     </span>
   </a>
-  <button class="header-menu fixed top-[22px] right-[22px] left-auto m-0 inline-flex h-11 w-11 cursor-pointer items-center justify-center rounded-[12px] border-0 bg-[rgba(255,255,255,.92)] p-0 shadow-surface backdrop-blur-[16px] backdrop-saturate-[140%] min-[901px]:hidden max-[900px]:right-[15px] max-[600px]:w-[42px] max-[600px]:[&_span]:hidden" type="button" aria-label={t(locale, "Open navigation")} aria-expanded="false" aria-controls="site-menu"><Icon name="menu" class="w-[17px]" /></button>
+  <button class="header-menu fixed top-[22px] right-[22px] left-auto m-0 inline-flex h-11 w-11 cursor-pointer items-center justify-center rounded-[12px] border-0 bg-white p-0 shadow-surface min-[901px]:hidden max-[900px]:right-[15px] max-[600px]:w-[42px] max-[600px]:[&_span]:hidden" type="button" aria-label={t(locale, "Open navigation")} aria-expanded="false" aria-controls="site-menu"><Icon name="menu" class="w-[17px]" /></button>
 </header>
 
 <div id="site-menu" class="menu-overlay invisible fixed inset-0 z-100 flex flex-col bg-[#101010] px-[clamp(24px,5vw,76px)] pt-6 pb-[34px] text-white opacity-0 [transform:translateY(-12px)] min-[901px]:hidden max-[900px]:overflow-y-auto max-[600px]:px-[18px] max-[600px]:pt-4 max-[600px]:pb-6" aria-hidden="true" inert role="dialog" aria-modal="true" aria-label={t(locale, "Site navigation")}>

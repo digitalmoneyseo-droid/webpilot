@@ -63,7 +63,7 @@ const budgets = contactBudgets.map(({ id, label }) => [id, label[locale]] as con
         <fieldset class="form-services form-section m-0 grid min-w-0 gap-6 border-0 bg-transparent p-0" data-field="interests">
           <legend class="m-0 min-h-0 p-0 text-small font-semibold tracking-normal text-inverse">{locale === "de" ? "Wobei können wir helfen?" : "What can we help with?"} <em class="required-marker text-[.8em] font-normal not-italic text-[var(--form-muted)]" aria-hidden="true">*</em><span class="sr-only"> {locale === "de" ? "Pflichtfeld" : "Required"}</span></legend>
           <p class="form-section-note mt-1 block max-w-[46ch] text-small font-normal tracking-normal text-[var(--form-muted)]">{locale === "de" ? "Mehrfachauswahl möglich" : "Select all that apply"}</p>
-          <div class="form-options form-options--services flex flex-wrap gap-2 rounded-[calc(var(--radius-control,_.5rem)+2px)] border border-transparent p-1">
+          <div class="form-options form-options--services flex flex-wrap gap-2 rounded-[calc(var(--radius-control,_.5rem)+var(--space-1))] border border-transparent p-1">
             {interests.map(([value, label]) => (
               <label class="min-w-0 cursor-pointer">
                 <input class="absolute size-px opacity-0" type="checkbox" name="interests" value={value} />
@@ -90,7 +90,7 @@ const budgets = contactBudgets.map(({ id, label }) => [id, label[locale]] as con
         <fieldset class="form-services form-section form-budget m-0 grid min-w-0 gap-6 border-0 bg-transparent p-0">
           <legend class="m-0 min-h-0 p-0 text-small font-semibold tracking-normal text-inverse">{locale === "de" ? "Mit welchem Budgetrahmen arbeiten Sie?" : "What budget range are you working with?"} <em class="text-[.8em] font-normal not-italic text-[var(--form-muted)]">({locale === "de" ? "optional" : "optional"})</em></legend>
           <p class="form-section-note mt-1 block max-w-[46ch] text-small font-normal tracking-normal text-[var(--form-muted)]">{locale === "de" ? "Eine Auswahl" : "Choose one"}</p>
-          <div class="form-options form-options--budget flex flex-wrap gap-2 rounded-[calc(var(--radius-control,_.5rem)+2px)] border border-transparent p-1">
+          <div class="form-options form-options--budget flex flex-wrap gap-2 rounded-[calc(var(--radius-control,_.5rem)+var(--space-1))] border border-transparent p-1">
             {budgets.map(([value, label]) => (
               <label class="min-w-0 cursor-pointer">
                 <input class="absolute size-px opacity-0" type="radio" name="budget" value={value} />

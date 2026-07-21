@@ -5,6 +5,7 @@ import "@/styles/app.css";
 import { ClientRouter } from "astro:transitions";
 import SiteHeader from "@/components/SiteHeader.astro";
 import SiteFooter from "@/components/SiteFooter.astro";
+import CursorParticles from "@/components/CursorParticles.astro";
 import { getLegalOperator } from "@/config/legal";
 import { absoluteUrl, analyticsEnabled, robotsDirective } from "@/lib/site";
 import { alternatePath, type Locale } from "@/lib/i18n";
@@ -66,6 +67,7 @@ if (operator) schemas.unshift({
   </head>
   <body class="min-h-screen overflow-x-hidden bg-canvas text-ink antialiased">
     <a class="skip-link" href="#main-content">{locale === "de" ? "Zum Inhalt springen" : "Skip to content"}</a>
+    <CursorParticles />
     <SiteHeader {locale} {pathname} />
     <slot />
     {!hideFooter && <SiteFooter {locale} />}
@@ -88,17 +90,26 @@ if (operator) schemas.unshift({
           const mobile = window.matchMedia("(max-width: 900px)").matches;
           const observerOptions = {
             threshold: 0,
-            rootMargin: mobile ? "0px 0px -28%" : "0px 0px -14%",
+            rootMargin: "0px 0px -6%",
+          };
+          const lateRevealObserverOptions = {
+            threshold: 0,
+            rootMargin: "0px 0px -24%",
+          };
+          const mobileItemObserverOptions = {
+            threshold: 0,
+            rootMargin: "0px 0px -24%",
           };
           const observer = new IntersectionObserver(reveal, observerOptions);
-          const mobileItemObserver = new IntersectionObserver(reveal, observerOptions);
-          revealObservers = [observer, mobileItemObserver];
+          const lateRevealObserver = new IntersectionObserver(reveal, lateRevealObserverOptions);
+          const mobileItemObserver = new IntersectionObserver(reveal, mobileItemObserverOptions);
+          revealObservers = [observer, lateRevealObserver, mobileItemObserver];
           reveals.forEach((element) => {
             void element.offsetWidth;
             element.classList.add("is-reveal-armed");
             if (mobile && element.hasAttribute("data-mobile-reveal-items")) {
               [...element.children].forEach((item) => mobileItemObserver.observe(item));
-            } else observer.observe(element);
+            } else (element.hasAttribute("data-reveal-late") ? lateRevealObserver : observer).observe(element);
           });
         }
       };
