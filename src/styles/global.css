@@ -236,7 +236,7 @@ button { color: inherit; }
 
 .skip-link{position:fixed;z-index:1000;left:16px;top:12px;padding:10px 14px;border-radius:999px;background:#111;color:#fff;transform:translateY(-160%)}
 .skip-link:focus{transform:none}
-.section-nav{position:fixed;z-index:40;top:50%;left:12px;display:flex;align-items:center;transform:translateY(-50%)}
+.section-nav{position:fixed;z-index:40;top:clamp(230px,36vh,360px);left:12px;display:flex;align-items:center;transform:translateY(-50%)}
 .section-nav__markers{display:flex;width:50px;flex-direction:column;gap:4px;padding:11px 7px;border:1px solid oklch(1 0 0/.12);border-radius:13px;background:oklch(.14 .004 95/.82);box-shadow:0 8px 24px -12px oklch(0 0 0/.75);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px)}
 .section-nav__marker{display:flex;height:21px;align-items:center;border-radius:2px;outline-offset:3px}
 .section-nav__marker span{display:block;width:23px;height:4px;border-radius:4px;background:#92928e;transform-origin:left;transition:width 240ms var(--ease-out),background-color 180ms ease}
