@@ -1,8 +1,6 @@
 export const locales = ["de", "en"] as const;
 export type Locale = (typeof locales)[number];
 
-export const contentCollectionNames = ["projects", "services", "team", "testimonials", "faqs"] as const;
-
 export const servicePillarIds = ["build", "grow", "automate"] as const;
 export type ServicePillarId = (typeof servicePillarIds)[number];
 

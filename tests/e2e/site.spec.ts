@@ -5,9 +5,9 @@ test("localized routes, metadata, and disclosures are complete", async ({ page }
   await page.goto("/work/atlas-growth-platform");
   await expect(page.locator("html")).toHaveAttribute("lang", "de");
   await expect(page.locator('meta[name="robots"]')).toHaveAttribute("content", /noindex/);
-  await expect(page.getByText("Konzept-Ergebnis")).toBeVisible();
+  await expect(page.getByText("Ergebnis", { exact: true })).toBeVisible();
   await expect(page.locator('link[hreflang="en"]')).toHaveAttribute("href", /\/en\/work\/atlas-growth-platform/);
-  await page.locator(".header-language").click();
+  await page.getByRole("link", { name: "Switch to English" }).click();
   await expect(page).toHaveURL(/\/en\/work\/atlas-growth-platform/);
   await expect(page.locator("html")).toHaveAttribute("lang", "en");
 });
@@ -142,7 +142,8 @@ test("service discovery separates the slogan from concrete service categories", 
   await expect(page.locator(".service-category-section .service-category")).toHaveCount(4);
 
   await page.goto("/services");
-  await expect(page.locator(".page-main--services")).toHaveCount(0);
+  await expect(page.locator(".page-main--services")).toBeVisible();
+  await expect(page.locator(".service-category")).toHaveCount(4);
 });
 
 test("new Build service routes render and the retired route redirects", async ({ page }) => {

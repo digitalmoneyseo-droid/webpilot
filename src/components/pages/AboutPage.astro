@@ -22,12 +22,12 @@ const principles = locale === "de" ? [
 ---
 <BaseLayout {locale} title={t(locale, "About")} description={locale === "de" ? "Das erfahrene Team hinter Webpilot." : "The senior team behind Webpilot."}>
   <main id="main-content" class="page-main page-main--about">
-    <EditorialHero eyebrow={locale === "de" ? "Über das Studio" : "About the studio"} index={`03 / ${t(locale, "About")}`} title={locale === "de" ? "Bewusst klein. Stark in den wichtigen Feldern." : "Small team. Wide skill set."} copy={locale === "de" ? "Webpilot verbindet klares Design mit messbarem Wachstum und KI." : "Webpilot joins strong design, measured growth, and AI in one senior team."} showMeta={false} />
+    <EditorialHero title={locale === "de" ? "Bewusst klein. Stark in den wichtigen Feldern." : "Small team. Wide skill set."} copy={locale === "de" ? "Webpilot verbindet klares Design mit messbarem Wachstum und KI." : "Webpilot joins strong design, measured growth, and AI in one senior team."} />
     <section class="about-manifesto section-pad">
       <div class="manifesto-mark"><span>{locale === "de" ? "Unabhängiges Studio" : "Independent studio"}</span><span>Berlin / Worldwide</span><span>{locale === "de" ? "Nur Senior-Team" : "Senior team only"}</span></div>
       <div><h2>{locale === "de" ? "Wachstum braucht ein klares Versprechen, ein gutes Produkt, eine sichtbare Marke und stetes Lernen." : "Growth needs a clear promise, a useful product, a visible brand, and steady learning."}</h2><p>{locale === "de" ? "Unser Team deckt mehr als eine Fachrichtung ab. Wer die Geschichte prägt, versteht auch Bau, Vertrieb, Messung und Pflege." : "Our team spans several fields. The people who shape the story also know how to build, sell, measure, and improve it."}</p></div>
     </section>
-    <section class="principles section-pad page-section"><SectionHeading eyebrow={locale === "de" ? "Prinzipien" : "Principles"} title={locale === "de" ? "Wie wir arbeiten." : "How we work."} align="center" /><NumberedList items={principles} /></section>
+    <section class="principles section-pad page-section"><SectionHeading title={locale === "de" ? "Wie wir arbeiten." : "How we work."} align="center" /><NumberedList items={principles} /></section>
     <FinalCta {locale} />
   </main>
 </BaseLayout>

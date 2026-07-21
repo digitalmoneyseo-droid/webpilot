@@ -1,5 +1,5 @@
 ---
-interface Props { title: string; eyebrow?: string; copy?: string; align?: "left" | "center"; }
+interface Props { title: string; copy?: string; align?: "left" | "center"; }
 const { title, copy, align = "left" } = Astro.props;
 ---
 <div class:list={["section-heading", { "section-heading--center": align === "center" }]}>

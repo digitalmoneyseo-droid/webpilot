@@ -1,0 +1,12 @@
+@import "tailwindcss/theme.css";
+@import "tailwindcss/utilities.css";
+@import "./global.css";
+@import "./design-system.css";
+
+@theme inline {
+  --color-canvas: var(--bg);
+  --color-ink: var(--ink);
+  --color-muted: var(--muted);
+  --color-accent: var(--accent);
+  --radius-card: var(--radius);
+}

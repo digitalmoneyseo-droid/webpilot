@@ -63,7 +63,7 @@ const description = t(locale, "Branding, websites, apps, SEO, AI search, content
     <section class="why-section section-pad"><SectionHeading title={t(locale, "Why Webpilot")} align="center" /><div class="benefit-grid">{benefits.map(([icon, title, copy], index) => <Reveal class={`benefit-card benefit-card-${index + 1}`} delay={index * 50}><div class="benefit-visual"><BenefitIcon name={icon} /></div><h3>{t(locale, title)}</h3><p>{t(locale, copy)}</p></Reveal>)}</div></section>
 
     <section class="service-section section-pad">
-      <SectionHeading eyebrow={t(locale, "One joined team")} title={t(locale, "Build. Grow. Automate.")} copy={t(locale, "We cover many skills but judge all work by one thing: your business result.")} />
+      <SectionHeading title={t(locale, "Build. Grow. Automate.")} copy={t(locale, "We cover many skills but judge all work by one thing: your business result.")} />
       <div class="service-trio">
         {servicePillars.map((pillar) => <article class={`service-card service-card--${pillar.id}`}>
             <ServiceSymbol name={pillar.symbol} />
@@ -73,7 +73,7 @@ const description = t(locale, "Branding, websites, apps, SEO, AI search, content
       </div>
     </section>
 
-    <section class="service-category-section section-pad"><SectionHeading eyebrow={locale === "de" ? "Leistungen" : "What we do"} title={locale === "de" ? "Konkrete Expertise. Klar organisiert." : "Concrete expertise. Clearly organised."} copy={locale === "de" ? "Vier Leistungsbereiche, die einzeln funktionieren und gemeinsam stärker werden." : "Four service categories that work independently and become stronger together."} /><ServiceCategoryGrid {services} {locale} compact /></section>
+    <section class="service-category-section section-pad"><SectionHeading title={locale === "de" ? "Konkrete Expertise. Klar organisiert." : "Concrete expertise. Clearly organised."} copy={locale === "de" ? "Vier Leistungsbereiche, die einzeln funktionieren und gemeinsam stärker werden." : "Four service categories that work independently and become stronger together."} /><ServiceCategoryGrid {services} {locale} compact /></section>
 
     <section class="engagement-section process-section section-pad">
       <SectionHeading title={t(locale, "From first idea to launch.")} copy={t(locale, "A clear shared plan keeps design, tech, and delivery in step.")} />

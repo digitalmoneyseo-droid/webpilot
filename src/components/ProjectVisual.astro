@@ -1,11 +1,11 @@
 ---
 import type { ProjectEntry } from "@/lib/content";
-interface Props { project: ProjectEntry["data"]; compact?: boolean; }
-const { project, compact = false } = Astro.props;
+interface Props { project: ProjectEntry["data"]; }
+const { project } = Astro.props;
 const bars = [42, 65, 48, 84, 58, 92, 76, 100, 82, 112];
 const contentCards = ["The 5-minute strategy", "One idea, seven formats", "A point of view that travels"];
 ---
-<div class:list={["project-visual", `pv-${project.palette}`, `pv-${project.visual}`, { "is-compact": compact }]} aria-hidden="true">
+<div class:list={["project-visual", `pv-${project.palette}`, `pv-${project.visual}`]} aria-hidden="true">
   <div class="visual-glow"></div>
   {project.visual === "dashboard" && <>
     <div class="mock-window window-main"><div class="mock-chrome"><i></i><i></i><i></i><span></span></div><div class="mock-sidebar"><b>AX</b>{[1,2,3,4].map(() => <i></i>)}</div><div class="dash-content"><span>Growth overview</span><strong>€84,290</strong><div class="chart-bars">{bars.map((height) => <i style={`height:${height}px`}></i>)}</div><div class="dash-cards"><i></i><i></i><i></i></div></div></div>

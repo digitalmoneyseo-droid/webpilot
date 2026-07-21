@@ -214,9 +214,11 @@ const budgets = contactBudgets.map(({ id, label }) => [id, label[locale]] as con
     form?.addEventListener("submit", (event) => {
       const fields = ["name", "email", "interests", "brief"] as const;
       fields.forEach((name) => touched.add(name));
-      const valid = fields.map(validateField).every(Boolean);
+      const validity = fields.map(validateField);
+      const valid = validity.every(Boolean);
       const submitButton = form.querySelector<HTMLButtonElement>("[data-submit-button]");
       if (valid) {
+        if (status) status.hidden = true;
         if (submitButton) {
           submitButton.dataset.state = "submitting";
           submitButton.disabled = true;
@@ -227,6 +229,11 @@ const budgets = contactBudgets.map(({ id, label }) => [id, label[locale]] as con
         return;
       }
       event.preventDefault();
+      const firstInvalid = fields.find((_name, index) => !validity[index]);
+      if (status && firstInvalid) {
+        status.textContent = messages[firstInvalid];
+        status.hidden = false;
+      }
       form.querySelector<HTMLElement>('[aria-invalid="true"]')?.focus();
     });
   </script>

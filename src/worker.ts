@@ -1,4 +1,4 @@
-import { createCloudflareContactPorts } from "./contact/cloudflare-adapters";
+import { createCloudflareContactPorts, type CloudflareContactEnvironment } from "./contact/cloudflare-adapters";
 import { contactResponseHeaders, handleContactRequest } from "./contact/intake";
 
 const LEGACY_SERVICE_REDIRECTS: Readonly<Record<string, string>> = {
@@ -7,6 +7,8 @@ const LEGACY_SERVICE_REDIRECTS: Readonly<Record<string, string>> = {
   "/en/services/brand-web-product": "/en/services/website-design-development",
   "/en/services/brand-web-product/": "/en/services/website-design-development",
 };
+
+type WorkerEnvironment = CloudflareContactEnvironment & { ASSETS: Fetcher };
 
 export default {
   async fetch(request, env): Promise<Response> {
@@ -19,4 +21,4 @@ export default {
     if (url.pathname === "/api/contact") return handleContactRequest(request, createCloudflareContactPorts(env));
     return Response.json({ ok: false, category: "not_found" }, { status: 404, headers: contactResponseHeaders });
   },
-} satisfies ExportedHandler<Env>;
+} satisfies ExportedHandler<WorkerEnvironment>;

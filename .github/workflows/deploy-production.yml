@@ -17,14 +17,17 @@ jobs:
           node-version: 24
           cache: npm
       - run: npm ci
-      - run: npm run deploy:production
+      - run: npm run deploy
         env:
           CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
           PUBLIC_SITE_URL: https://webpilot.studio
           PUBLIC_TURNSTILE_SITE_KEY: ${{ secrets.PUBLIC_TURNSTILE_SITE_KEY }}
           PUBLIC_CLOUDFLARE_ANALYTICS_TOKEN: ${{ secrets.PUBLIC_CLOUDFLARE_ANALYTICS_TOKEN }}
-          CONTACT_FORM_ENABLED: "true"
+          PUBLIC_SANITY_PROJECT_ID: ${{ secrets.PUBLIC_SANITY_PROJECT_ID }}
+          PUBLIC_SANITY_DATASET: production
+          SANITY_API_VERSION: 2026-07-01
+          SANITY_READ_TOKEN: ${{ secrets.SANITY_READ_TOKEN }}
           CONTACT_RECIPIENT: hello@webpilot.studio
           CONTACT_SENDER: website@webpilot.studio
           TURNSTILE_SECRET_KEY: ${{ secrets.TURNSTILE_SECRET_KEY }}

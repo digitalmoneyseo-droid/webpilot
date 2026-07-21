@@ -225,7 +225,7 @@ body {
 
 :is(
   .benefit-card p, .process-copy p, .editorial-hero-grid > p,
-  .services-index-intro p, .contact-intro p
+  .contact-intro p
 ) {
   color: color-mix(in oklch, var(--ink) 72%, var(--bg));
   font-weight: var(--weight-body);
@@ -257,7 +257,6 @@ body {
 .benefit-grid,
 .work-grid,
 .service-trio,
-.metrics-grid,
 .testimonial-grid,
 .related-grid { gap: var(--space-4); }
 .service-trio { align-items: start; }
@@ -266,7 +265,6 @@ body {
 .benefit-card { padding: var(--space-3) var(--space-5) var(--space-6); }
 .benefit-card h3 { margin: var(--space-5) 0 var(--space-2); }
 .service-card,
-.metric-card,
 .testimonial-card,
 .outcome-grid > div { padding: var(--space-5); }
 .service-card h3 { margin-bottom: var(--space-3); }
@@ -282,7 +280,6 @@ body {
 
 .testimonial-card blockquote { margin: auto 0 var(--space-6); }
 
-.engagement-list > div,
 .numbered-list > div {
   gap: var(--space-6);
   padding: var(--space-6) 0;
@@ -427,7 +424,6 @@ body {
 
 .page-main--about .about-manifesto,
 .page-main--about .principles,
-.page-main--about .about-team,
 .page-main--contact .contact-page {
   width: min(100%, calc(var(--layout-max) + (2 * var(--space-6))));
   max-width: none;
@@ -449,8 +445,7 @@ body {
 }
 .page-main--about .about-manifesto h2 { margin: 0 0 var(--space-4); }
 .page-main--about .about-manifesto p { margin: 0; }
-.page-main--about .principles,
-.page-main--about .about-team { padding-block: var(--section-space); }
+.page-main--about .principles { padding-block: var(--section-space); }
 .contact-intro h1 { margin: 0 0 var(--space-4); }
 
 @media (max-width: 900px) {
@@ -466,7 +461,6 @@ body {
   .page-main .editorial-hero + .contact-page { padding-top: var(--section-space-compact); }
   .page-main--about .about-manifesto,
   .page-main--about .principles,
-  .page-main--about .about-team,
   .page-main--contact .contact-page { padding-inline: var(--space-5); }
 }
 
@@ -600,7 +594,6 @@ body {
   flex-direction: column;
   justify-content: flex-end;
 }
-.editorial-meta { width: 100%; display: flex; justify-content: space-between; gap: var(--space-4); padding-bottom: var(--space-3); border-bottom: 1px solid var(--line); color: var(--muted); font: .72rem/1.4 var(--font-mono); text-transform: uppercase; letter-spacing: .05em; }
 .editorial-hero-grid { display: flex; flex-direction: column; align-items: center; gap: var(--space-4); text-align: center; }
 .editorial-hero h1 { max-width: 22ch; margin: 0 auto; text-wrap: balance; }
 .editorial-hero > p { max-width: none; }
@@ -617,12 +610,6 @@ body {
 .manifesto-mark { display: flex; flex-direction: column; justify-content: flex-end; gap: 0; color: #fff; font: .74rem/1.4 var(--font-mono); letter-spacing: .04em; text-transform: uppercase; }
 .manifesto-mark span { padding: var(--space-3) 0; border-top: 1px solid #333; }
 .page-main--about .about-manifesto h2 { max-width: 22ch; }
-.team-roster { border-top: 1px solid var(--ink); }
-.team-roster-row { min-height: 5rem; display: grid; grid-template-columns: 3rem minmax(12rem, 1fr) minmax(12rem, 1fr) 3rem; align-items: center; gap: var(--space-5); border-bottom: 1px solid var(--line); }
-.team-roster-row > span { color: var(--muted); font: .72rem/1.4 var(--font-mono); }
-.team-roster-row strong { font-size: var(--type-heading-sm); }
-.team-roster-row small { color: var(--muted); font-size: var(--type-small); }
-.team-roster-row b { justify-self: end; font: .8rem/1 var(--font-mono); }
 
 .contact-intro h1 { max-width: 22ch; margin-inline: auto; overflow-wrap: normal; text-wrap: balance; }
 .contact-intro p { max-width: 48rem; margin-inline: auto; text-wrap: balance; }
@@ -703,8 +690,6 @@ html[lang="en"] .hero--home h1 {
   .menu-services.is-open .menu-service-list a:nth-child(4) { transition-delay: 135ms; }
   .editorial-hero-grid { grid-template-columns: 1fr; gap: var(--space-5); }
   .service-category-links { grid-template-columns: 1fr 1fr; }
-  .team-roster-row { grid-template-columns: 2.5rem minmax(0,1fr) 3rem; }
-  .team-roster-row small { grid-column: 2; padding-bottom: var(--space-3); }
 }
 
 @media (max-width: 600px) {
@@ -713,7 +698,6 @@ html[lang="en"] .hero--home h1 {
   .menu-links > a, .menu-services-trigger { grid-template-columns: 2rem minmax(0,1fr) 1.5rem; font-size: 2rem; }
   .menu-service-list > div { padding-inline: 2rem 1.5rem; }
   .editorial-hero { min-height: 0; padding-top: 6.5rem; padding-bottom: var(--space-7); }
-  .editorial-meta { font-size: .62rem; }
   .editorial-hero-grid { padding-top: 0; }
   .service-card, .service-card:last-child { min-height: 22rem; }
   .service-card p { font-size: var(--type-body); }
@@ -728,7 +712,6 @@ html[lang="en"] .hero--home h1 {
   .service-category-links a:last-child { border-bottom: 0; }
   .page-main--about .about-manifesto { gap: var(--space-7); }
   .manifesto-mark { order: 2; }
-  .team-roster-row { min-height: 5.5rem; grid-template-columns: 2rem minmax(0,1fr) 2.5rem; gap: var(--space-3); }
   .tag-cloud, .outcome-grid { grid-template-columns: 1fr; }
   .numbered-list > div { grid-template-columns: 2.5rem 1fr; }
   .numbered-list p { grid-column: 2; }

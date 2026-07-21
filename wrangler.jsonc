@@ -3,7 +3,6 @@
   "name": "webpilot",
   "main": "src/worker.ts",
   "compatibility_date": "2026-07-18",
-  "compatibility_flags": ["nodejs_compat"],
   "assets": {
     "directory": "./dist",
     "binding": "ASSETS",
@@ -12,7 +11,6 @@
   },
   "vars": {
     "PUBLIC_SITE_URL": "https://webpilot.studio",
-    "PUBLIC_TURNSTILE_SITE_KEY": "REPLACE_WITH_PRODUCTION_SITE_KEY",
     "CONTACT_RECIPIENT": "hello@webpilot.studio",
     "CONTACT_SENDER": "website@webpilot.studio"
   },

@@ -1,8 +1,7 @@
 ---
-interface Props { eyebrow: string; title: string; copy?: string; index?: string; showMeta?: boolean; }
-const { eyebrow, title, copy, index, showMeta = false } = Astro.props;
+interface Props { title: string; copy?: string; }
+const { title, copy } = Astro.props;
 ---
 <section class="editorial-hero">
-  {showMeta && <div class="editorial-meta"><span>{index}</span><span>{eyebrow}</span></div>}
   <div class="editorial-hero-grid"><h1>{title}</h1>{copy && <p>{copy}</p>}</div>
 </section>

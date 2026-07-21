@@ -2,7 +2,7 @@
   "extends": "./tsconfig.json",
   "compilerOptions": {
     "lib": ["ES2023", "WebWorker"],
-    "types": ["@cloudflare/workers-types", "./worker-configuration.d.ts"]
+    "types": ["@cloudflare/workers-types"]
   },
-  "include": ["src/worker.ts", "src/contact/**/*.ts", "src/domain/catalog.ts", "worker-configuration.d.ts"]
+  "include": ["src/worker.ts", "src/contact/**/*.ts", "src/domain/catalog.ts"]
 }

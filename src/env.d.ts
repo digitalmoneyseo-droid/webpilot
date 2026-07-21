@@ -4,6 +4,10 @@ interface ImportMetaEnv {
   readonly PUBLIC_SITE_URL?: string;
   readonly PUBLIC_TURNSTILE_SITE_KEY?: string;
   readonly PUBLIC_CLOUDFLARE_ANALYTICS_TOKEN?: string;
+  readonly PUBLIC_SANITY_PROJECT_ID?: string;
+  readonly PUBLIC_SANITY_DATASET?: string;
+  readonly SANITY_API_VERSION?: string;
+  readonly SANITY_READ_TOKEN?: string;
   readonly CONTACT_RECIPIENT?: string;
   readonly CONTACT_SENDER?: string;
   readonly LEGAL_NAME?: string;

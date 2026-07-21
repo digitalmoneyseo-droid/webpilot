@@ -6,7 +6,7 @@ const escapeXml = (value: string) => value.replaceAll("&", "&amp;").replaceAll("
 
 export const GET: APIRoute = async () => {
   const routes = new Set<string>();
-  ["/", "/work", "/about", "/contact", "/privacy", "/imprint", "/en", "/en/work", "/en/about", "/en/contact", "/en/privacy", "/en/imprint"].forEach((route) => routes.add(route));
+  ["/", "/work", "/services", "/about", "/contact", "/privacy", "/imprint", "/en", "/en/work", "/en/services", "/en/about", "/en/contact", "/en/privacy", "/en/imprint"].forEach((route) => routes.add(route));
   for (const locale of ["de", "en"] as const) {
     const prefix = locale === "de" ? "" : "/en";
     const [projects, services] = await Promise.all([getProjects(locale), getServices(locale)]);

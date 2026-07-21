@@ -9,6 +9,6 @@
     },
     "types": ["astro/client"]
   },
-  "include": [".astro/types.d.ts", "src/**/*", "tests/**/*", "astro.config.mjs"],
-  "exclude": ["dist", "legacy-next-src", "node_modules", "src/worker.ts"]
+  "include": [".astro/types.d.ts", "src/**/*", "tests/**/*", "astro.config.mjs", "sanity.config.ts", "sanity.cli.ts", "sanity/**/*"],
+  "exclude": ["dist", "node_modules", "src/worker.ts"]
 }
