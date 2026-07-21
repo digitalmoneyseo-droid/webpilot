@@ -164,7 +164,7 @@ button { color: inherit; }
 .window-main { width: 74%; height: 74%; left: 13%; top: 15%; display:flex; }
 .mock-sidebar { width: 52px; background:#111; color:#fff; padding: 14px; display:flex; flex-direction:column; gap:17px; align-items:center; }
 .mock-sidebar b { font-size:10px; margin-bottom:12px; }.mock-sidebar i { width:13px;height:13px;border-radius:4px;background:#3c3c3c; }
-.dash-content { padding: 22px; flex:1; position:relative; }.dash-content > span { font-size:11px;color:#777; }.dash-content > strong { display:block;font-size:26px;margin:5px 0; }
+.dash-content { padding: 22px; flex:1; position:relative; }.dash-content > span { font-size:11px;color:#707070; }.dash-content > strong { display:block;font-size:26px;margin:5px 0; }
 .chart-bars { height: 130px; display:flex; align-items:flex-end; gap:5px; padding:18px 0 10px; }.chart-bars i { flex:1;max-height:100%;background:#7b5cff;border-radius:4px 4px 1px 1px; }
 .dash-cards { display:flex;gap:8px; }.dash-cards i { height:45px;flex:1;background:#f0f0f0;border-radius:8px; }
 .floating-stat { position:absolute;right:5%;top:20%;background:#111;color:#fff;border-radius:13px;padding:11px 14px;box-shadow:0 15px 30px #5d43a855; }.floating-stat span{display:block;font-size:8px;color:#aaa}.floating-stat b{font-size:15px}
