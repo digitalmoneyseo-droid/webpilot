@@ -2,7 +2,9 @@
 /coverage
 /test-results
 /playwright-report
+/.playwright-cli/
 /.playwright-mcp/
+/output/
 /.astro/
 /dist/
 /.wrangler/
