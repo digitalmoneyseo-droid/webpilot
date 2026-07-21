@@ -1,3 +1,5 @@
+import { navigate } from "astro:transitions/client";
+
 export function initNavigation(document: Document = window.document): void {
   const root = document.documentElement;
   document.addEventListener("keydown", () => root.classList.add("using-keyboard"), true);
@@ -18,16 +20,34 @@ export function initNavigation(document: Document = window.document): void {
   const desktopServiceTrigger = document.querySelector<HTMLButtonElement>(".desktop-services-trigger");
   const desktopServiceMenu = document.querySelector<HTMLElement>(".desktop-megamenu");
   const desktopServiceLinks = [...(desktopServiceMenu?.querySelectorAll<HTMLAnchorElement>("a") ?? [])];
+  const desktopNav = document.querySelector<HTMLElement>(".desktop-nav");
+  const desktopNavIndicator = desktopNav?.querySelector<HTMLElement>(".desktop-nav-indicator");
+  const desktopNavItems = [...(desktopNav?.querySelectorAll<HTMLElement>(":scope > a, .desktop-services-trigger") ?? [])];
   const background = [...document.querySelectorAll<HTMLElement>("body > main, body > footer")];
   const mobileMenu = window.matchMedia("(max-width: 900px)");
   let returnFocus: HTMLElement | null = null;
   let closeTimer: number | undefined;
+  let servicesTimer: number | undefined;
   let desktopServicesPinned = false;
+
+  const positionDesktopNavIndicator = (item: HTMLElement, animate = true) => {
+    if (!desktopNavIndicator) return;
+    desktopNavIndicator.style.setProperty("--nav-x", `${item.offsetLeft}px`);
+    desktopNavIndicator.style.setProperty("--nav-width", `${item.offsetWidth}px`);
+    if (animate) desktopNavIndicator.classList.add("is-ready");
+  };
+  const activeDesktopNavItem = desktopNavItems.find((item) => item.classList.contains("is-active"));
+  if (activeDesktopNavItem) {
+    requestAnimationFrame(() => {
+      positionDesktopNavIndicator(activeDesktopNavItem, false);
+      requestAnimationFrame(() => desktopNavIndicator?.classList.add("is-ready"));
+    });
+  }
 
   overlay.setAttribute("aria-modal", String(mobileMenu.matches));
 
   const focusable = () => [...overlay.querySelectorAll<HTMLElement>('a[href], button:not([disabled]), [tabindex]:not([tabindex="-1"])')];
-  const setServicesExpanded = (expanded: boolean) => {
+  const applyServicesExpanded = (expanded: boolean) => {
     serviceTrigger?.setAttribute("aria-expanded", String(expanded));
     serviceList?.setAttribute("aria-hidden", String(!expanded));
     serviceTrigger?.closest(".menu-services")?.classList.toggle("is-open", expanded);
@@ -35,6 +55,19 @@ export function initNavigation(document: Document = window.document): void {
     const menuOpen = overlay.classList.contains("is-open");
     primaryMenuLinks.forEach((link) => link.tabIndex = menuOpen && !expanded ? 0 : -1);
     serviceLinks.forEach((link) => link.tabIndex = menuOpen && expanded ? 0 : -1);
+  };
+  const setServicesExpanded = (expanded: boolean, animate = false) => {
+    window.clearTimeout(servicesTimer);
+    if (!animate || window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      menuLinksContainer?.classList.remove("is-services-switching");
+      applyServicesExpanded(expanded);
+      return;
+    }
+    menuLinksContainer?.classList.add("is-services-switching");
+    servicesTimer = window.setTimeout(() => {
+      applyServicesExpanded(expanded);
+      requestAnimationFrame(() => menuLinksContainer?.classList.remove("is-services-switching"));
+    }, 140);
   };
   const setDesktopServicesExpanded = (expanded: boolean, pinned = desktopServicesPinned) => {
     desktopServicesPinned = expanded && pinned;
@@ -73,7 +106,7 @@ export function initNavigation(document: Document = window.document): void {
 
   openButton.addEventListener("click", () => setOpen(true));
   closeButton?.addEventListener("click", () => setOpen(false));
-  serviceTrigger?.addEventListener("click", () => setServicesExpanded(serviceTrigger.getAttribute("aria-expanded") !== "true"));
+  serviceTrigger?.addEventListener("click", () => setServicesExpanded(serviceTrigger.getAttribute("aria-expanded") !== "true", true));
   desktopServices?.addEventListener("pointerenter", () => setDesktopServicesExpanded(true));
   desktopServices?.addEventListener("pointerleave", () => {
     if (!desktopServicesPinned && !desktopServices.contains(document.activeElement)) setDesktopServicesExpanded(false, false);
@@ -86,6 +119,21 @@ export function initNavigation(document: Document = window.document): void {
   desktopServiceTrigger?.addEventListener("click", () => {
     if (desktopServicesPinned) setDesktopServicesExpanded(false, false);
     else setDesktopServicesExpanded(true, true);
+  });
+  desktopNav?.querySelectorAll<HTMLAnchorElement>(":scope > a").forEach((link) => {
+    link.addEventListener("pointerdown", (event) => {
+      if (event.button !== 0) return;
+      desktopNavItems.forEach((item) => item.classList.toggle("is-active", item === link));
+      positionDesktopNavIndicator(link);
+    });
+    link.addEventListener("click", (event) => {
+      if (event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey || link.target) return;
+      const destination = new URL(link.href, window.location.href);
+      if (destination.href === window.location.href) return;
+      event.preventDefault();
+      const delay = window.matchMedia("(prefers-reduced-motion: reduce)").matches ? 0 : 280;
+      window.setTimeout(() => void navigate(destination.href), delay);
+    });
   });
   desktopServiceTrigger?.addEventListener("keydown", (event) => {
     if (event.key !== "ArrowDown") return;

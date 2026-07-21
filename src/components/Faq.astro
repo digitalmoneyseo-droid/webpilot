@@ -1,5 +1,6 @@
 ---
 import Icon from "@/components/Icon.astro";
+import Reveal from "@/components/Reveal.astro";
 interface FaqItem { data: { question: string; answer: string } }
 interface Props { items: FaqItem[]; compact?: boolean; id?: string; }
 const { items, compact = false, id = "faq" } = Astro.props;
@@ -8,15 +9,18 @@ const instanceId = id;
 <div class:list={["faq-list m-0 grid w-full gap-3", { "faq-list--compact": compact }]} data-faq>
   {items.map((item, index) => {
     const itemId = `${instanceId}-${index}`;
-    return <div class="faq-item overflow-hidden rounded-card bg-surface shadow-surface">
+    return <Reveal class="faq-item overflow-hidden rounded-card bg-surface shadow-surface" delay={index * 50}>
       <button class="grid min-h-14 w-full cursor-pointer grid-cols-[1fr_24px] items-center gap-3 rounded-[max(0px,calc(var(--radius)-var(--space-4)))] border-0 bg-transparent px-5 py-4 text-left" id={`${itemId}-button`} type="button" aria-expanded="false" aria-controls={`${itemId}-answer`}><span class="faq-question text-body-lg leading-[1.35] font-semibold tracking-[-.01em] max-[600px]:text-base">{item.data.question}</span><span class="faq-toggle grid size-6 place-items-center justify-self-end [&_svg]:w-4.5"><Icon name="plus" /></span></button>
       <div id={`${itemId}-answer`} class="faq-answer" role="region" aria-labelledby={`${itemId}-button`} aria-hidden="true"><div><p class="m-0 max-w-reading px-5 pb-5 text-body text-muted">{item.data.answer}</p></div></div>
-    </div>;
+    </Reveal>;
   })}
 </div>
 <script>
-  document.querySelectorAll<HTMLElement>("[data-faq]").forEach((list) => {
-    list.querySelectorAll<HTMLElement>(".faq-item").forEach((item) => {
+  const initFaqs = () => {
+    document.querySelectorAll<HTMLElement>("[data-faq]").forEach((list) => {
+      if (list.dataset.initialized === "true") return;
+      list.dataset.initialized = "true";
+      list.querySelectorAll<HTMLElement>(".faq-item").forEach((item) => {
       const button = item.querySelector<HTMLButtonElement>("button");
       const answer = item.querySelector<HTMLElement>(".faq-answer");
 
@@ -41,6 +45,9 @@ const instanceId = id;
 
         setExpanded(!open);
       });
+      });
     });
-  });
+  };
+  initFaqs();
+  document.addEventListener("astro:page-load", initFaqs);
 </script>

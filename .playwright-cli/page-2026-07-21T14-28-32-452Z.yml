@@ -1,0 +1,563 @@
+- generic [active] [ref=e1]:
+  - link "Skip to content" [ref=e2] [cursor=pointer]:
+    - /url: "#main-content"
+  - banner [ref=e3]:
+    - link "Webpilot home" [ref=e4] [cursor=pointer]:
+      - /url: /en
+      - generic [ref=e5]:
+        - generic [ref=e6]: Webpilot
+        - generic [ref=e7]:
+          - generic [ref=e9]:
+            - generic [ref=e10]: W
+            - generic [ref=e11]: W
+          - generic [ref=e13]:
+            - generic [ref=e14]: e
+            - generic [ref=e15]: e
+          - generic [ref=e17]:
+            - generic [ref=e18]: b
+            - generic [ref=e19]: b
+          - generic [ref=e21]:
+            - generic [ref=e22]: p
+            - generic [ref=e23]: p
+          - generic [ref=e25]:
+            - generic [ref=e26]: i
+            - generic [ref=e27]: i
+          - generic [ref=e29]:
+            - generic [ref=e30]: l
+            - generic [ref=e31]: l
+          - generic [ref=e33]:
+            - generic [ref=e34]: o
+            - generic [ref=e35]: o
+          - generic [ref=e37]:
+            - generic [ref=e38]: t
+            - generic [ref=e39]: t
+    - navigation "Main navigation" [ref=e40]:
+      - link "Work" [ref=e41] [cursor=pointer]:
+        - /url: /en/work
+      - button "Services" [ref=e43] [cursor=pointer]
+      - link "About" [ref=e47] [cursor=pointer]:
+        - /url: /en/about
+      - link "Contact" [ref=e48] [cursor=pointer]:
+        - /url: /en/contact
+    - link "Auf Deutsch wechseln" [ref=e49] [cursor=pointer]:
+      - /url: /
+      - generic [ref=e56]:
+        - generic [ref=e57]:
+          - generic [ref=e58]: DE
+          - generic [ref=e59]: /
+          - generic [ref=e60]: EN
+        - generic [ref=e61]:
+          - generic [ref=e62]: DE
+          - generic [ref=e63]: /
+          - generic [ref=e64]: EN
+  - main [ref=e65]:
+    - generic [ref=e67]:
+      - heading "We help bold brands grow." [level=1] [ref=e68]:
+        - generic [ref=e69]:
+          - generic [ref=e70]:
+            - generic [ref=e71]: W
+            - generic [ref=e73]: e
+          - generic [ref=e75]:
+            - generic [ref=e76]: h
+            - generic [ref=e78]: e
+            - generic [ref=e80]: l
+            - generic [ref=e82]: p
+          - emphasis [ref=e84]:
+            - generic [ref=e85]: b
+            - generic [ref=e87]: o
+            - generic [ref=e89]: l
+            - generic [ref=e91]: d
+          - generic [ref=e93]:
+            - generic [ref=e94]: b
+            - generic [ref=e96]: r
+            - generic [ref=e98]: a
+            - generic [ref=e100]: "n"
+            - generic [ref=e102]: d
+            - generic [ref=e104]: s
+          - generic [ref=e106]:
+            - generic [ref=e107]: g
+            - generic [ref=e109]: r
+            - generic [ref=e111]: o
+            - generic [ref=e113]: w
+            - generic [ref=e115]: .
+      - paragraph [ref=e117]: Branding, websites, apps, SEO, AI search, content, paid acquisition, analytics, and intelligent automation—all delivered by one senior team.
+      - generic [ref=e118]:
+        - link "Book strategy call" [ref=e119] [cursor=pointer]:
+          - /url: /en/contact
+          - generic [ref=e121]:
+            - generic [ref=e122]: Book strategy call
+            - generic [ref=e123]: Book strategy call
+        - link "Explore our work" [ref=e129] [cursor=pointer]:
+          - /url: /en/work
+          - generic [ref=e131]:
+            - generic [ref=e132]: Explore our work
+            - generic [ref=e133]: Explore our work
+    - region "Selected work" [ref=e139]:
+      - generic [ref=e140]:
+        - generic [ref=e141]:
+          - link "Website 2026" [ref=e142] [cursor=pointer]:
+            - /url: /en/work/atlas-growth-platform
+            - generic [ref=e143]:
+              - generic [ref=e144]: Website
+              - generic [ref=e145]: "2026"
+            - generic [ref=e146]:
+              - generic [ref=e148]:
+                - generic [ref=e154]: AX
+                - generic [ref=e160]:
+                  - text: Growth overview
+                  - strong [ref=e161]: €84,290
+              - generic [ref=e177]:
+                - generic [ref=e178]: Qualified demand
+                - text: +38.2%
+          - link "Brand 2026" [ref=e179] [cursor=pointer]:
+            - /url: /en/work/kindred-commerce
+            - generic [ref=e180]:
+              - generic [ref=e181]: Brand
+              - generic [ref=e182]: "2026"
+            - generic [ref=e183]:
+              - generic [ref=e185]: KINDRED
+              - generic [ref=e190]:
+                - generic [ref=e196]:
+                  - text: Kindred
+                  - generic [ref=e197]: Bag (2)
+                - generic [ref=e198]:
+                  - generic [ref=e200]: Daily ritual set
+                  - generic [ref=e201]: €48
+          - link "AI 2026" [ref=e202] [cursor=pointer]:
+            - /url: /en/work/nora-support-ai
+            - generic [ref=e203]:
+              - generic [ref=e204]: AI
+              - generic [ref=e205]: "2026"
+            - generic [ref=e206]:
+              - generic [ref=e211]:
+                - generic [ref=e217]:
+                  - generic [ref=e218]: Nora
+                  - generic [ref=e219]: Online
+                - generic [ref=e220]: Can I change my delivery date?
+                - generic [ref=e221]: Absolutely. I found your order and the available dates.
+                - generic [ref=e222]:
+                  - generic [ref=e223]: Tue 14
+                  - generic [ref=e224]: Wed 15
+                  - generic [ref=e225]: Fri 17
+              - generic [ref=e226]: Answer grounded in 3 sources
+          - link "SEO & GEO 2025" [ref=e227] [cursor=pointer]:
+            - /url: /en/work/northstar-organic-search
+            - generic [ref=e228]:
+              - generic [ref=e229]: SEO & GEO
+              - generic [ref=e230]: "2025"
+            - generic [ref=e231]:
+              - generic [ref=e233]: Be the answer.
+              - generic [ref=e236]:
+                - generic [ref=e242]:
+                  - text: best platform for distributed finance teams
+                  - generic [ref=e243]: ↗
+                - generic [ref=e244]:
+                  - generic [ref=e245]: Northstar
+                  - text: is frequently recommended for its flexible reporting…
+              - generic [ref=e249]:
+                - generic [ref=e250]: AI visibility
+                - strong [ref=e251]: 72%
+                - generic [ref=e252]: +18.4 this month
+          - link "Content 2025" [ref=e253] [cursor=pointer]:
+            - /url: /en/work/orbit-content-engine
+            - generic [ref=e254]:
+              - generic [ref=e255]: Content
+              - generic [ref=e256]: "2025"
+            - generic [ref=e257]:
+              - generic [ref=e259]: SIGNAL / STORY / SYSTEM /
+              - generic [ref=e260]:
+                - generic [ref=e261]:
+                  - generic [ref=e262]: "01"
+                  - generic [ref=e263]: The 5-minute strategy
+                  - generic [ref=e264]: ↗
+                - generic [ref=e265]:
+                  - generic [ref=e266]: "02"
+                  - generic [ref=e267]: One idea, seven formats
+                  - generic [ref=e268]: ↗
+                - generic [ref=e269]:
+                  - generic [ref=e270]: "03"
+                  - generic [ref=e271]: A point of view that travels
+                  - generic [ref=e272]: ↗
+          - link "AI 2025" [ref=e274] [cursor=pointer]:
+            - /url: /en/work/lumen-lead-system
+            - generic [ref=e275]:
+              - generic [ref=e276]: AI
+              - generic [ref=e277]: "2025"
+            - generic [ref=e278]:
+              - generic [ref=e311]:
+                - generic [ref=e317]:
+                  - generic [ref=e318]: AE
+                  - generic [ref=e319]:
+                    - generic [ref=e320]: Arden Electric
+                    - generic [ref=e321]: Enterprise lead
+                  - strong [ref=e322]: "92"
+                - generic [ref=e323]:
+                  - generic [ref=e324]: Strong ICP fit
+                  - generic [ref=e325]: High intent
+                - generic [ref=e326]:
+                  - generic [ref=e327]: Research complete
+                  - generic [ref=e328]: 3 relevant signals found
+              - generic [ref=e329]: Routed to enterprise · 00:38
+          - link "Brand 2025" [ref=e330] [cursor=pointer]:
+            - /url: /en/work/form-technology-rebrand
+            - generic [ref=e331]:
+              - generic [ref=e332]: Brand
+              - generic [ref=e333]: "2025"
+            - generic [ref=e334]:
+              - generic [ref=e336]: F
+              - generic [ref=e337]: FORM FOLLOWS IMPACT
+              - generic [ref=e340]: Technology, made tangible.
+          - link "Paid Media 2025" [ref=e341] [cursor=pointer]:
+            - /url: /en/work/wave-acquisition
+            - generic [ref=e342]:
+              - generic [ref=e343]: Paid Media
+              - generic [ref=e344]: "2025"
+            - generic [ref=e345]:
+              - generic [ref=e347]: W
+              - generic [ref=e358]:
+                - generic [ref=e359]:
+                  - generic [ref=e360]: Pipeline
+                  - generic [ref=e361]: €1.2m
+                - generic [ref=e362]:
+                  - generic [ref=e363]: CAC
+                  - generic [ref=e364]: −36%
+                - generic [ref=e365]:
+                  - generic [ref=e366]: ROAS
+                  - generic [ref=e367]: 4.8×
+              - generic [ref=e374]:
+                - generic [ref=e375]: Search
+                - generic [ref=e376]: Social
+                - generic [ref=e377]: Content
+        - generic [ref=e378]:
+          - link [ref=e379] [cursor=pointer]:
+            - /url: /en/work/atlas-growth-platform
+            - generic [ref=e380]:
+              - generic [ref=e381]: Website
+              - generic [ref=e382]: "2026"
+            - generic [ref=e383]:
+              - generic [ref=e385]:
+                - generic [ref=e391]: AX
+                - generic [ref=e397]:
+                  - text: Growth overview
+                  - strong [ref=e398]: €84,290
+              - generic [ref=e414]:
+                - generic [ref=e415]: Qualified demand
+                - text: +38.2%
+          - link [ref=e416] [cursor=pointer]:
+            - /url: /en/work/kindred-commerce
+            - generic [ref=e417]:
+              - generic [ref=e418]: Brand
+              - generic [ref=e419]: "2026"
+            - generic [ref=e420]:
+              - generic [ref=e422]: KINDRED
+              - generic [ref=e427]:
+                - generic [ref=e433]:
+                  - text: Kindred
+                  - generic [ref=e434]: Bag (2)
+                - generic [ref=e435]:
+                  - generic [ref=e437]: Daily ritual set
+                  - generic [ref=e438]: €48
+          - link [ref=e439] [cursor=pointer]:
+            - /url: /en/work/nora-support-ai
+            - generic [ref=e440]:
+              - generic [ref=e441]: AI
+              - generic [ref=e442]: "2026"
+            - generic [ref=e443]:
+              - generic [ref=e448]:
+                - generic [ref=e454]:
+                  - generic [ref=e455]: Nora
+                  - generic [ref=e456]: Online
+                - generic [ref=e457]: Can I change my delivery date?
+                - generic [ref=e458]: Absolutely. I found your order and the available dates.
+                - generic [ref=e459]:
+                  - generic [ref=e460]: Tue 14
+                  - generic [ref=e461]: Wed 15
+                  - generic [ref=e462]: Fri 17
+              - generic [ref=e463]: Answer grounded in 3 sources
+          - link [ref=e464] [cursor=pointer]:
+            - /url: /en/work/northstar-organic-search
+            - generic [ref=e465]:
+              - generic [ref=e466]: SEO & GEO
+              - generic [ref=e467]: "2025"
+            - generic [ref=e468]:
+              - generic [ref=e470]: Be the answer.
+              - generic [ref=e473]:
+                - generic [ref=e479]:
+                  - text: best platform for distributed finance teams
+                  - generic [ref=e480]: ↗
+                - generic [ref=e481]:
+                  - generic [ref=e482]: Northstar
+                  - text: is frequently recommended for its flexible reporting…
+              - generic [ref=e486]:
+                - generic [ref=e487]: AI visibility
+                - strong [ref=e488]: 72%
+                - generic [ref=e489]: +18.4 this month
+          - link [ref=e490] [cursor=pointer]:
+            - /url: /en/work/orbit-content-engine
+            - generic [ref=e491]:
+              - generic [ref=e492]: Content
+              - generic [ref=e493]: "2025"
+            - generic [ref=e494]:
+              - generic [ref=e496]: SIGNAL / STORY / SYSTEM /
+              - generic [ref=e497]:
+                - generic [ref=e498]:
+                  - generic [ref=e499]: "01"
+                  - generic [ref=e500]: The 5-minute strategy
+                  - generic [ref=e501]: ↗
+                - generic [ref=e502]:
+                  - generic [ref=e503]: "02"
+                  - generic [ref=e504]: One idea, seven formats
+                  - generic [ref=e505]: ↗
+                - generic [ref=e506]:
+                  - generic [ref=e507]: "03"
+                  - generic [ref=e508]: A point of view that travels
+                  - generic [ref=e509]: ↗
+          - link [ref=e511] [cursor=pointer]:
+            - /url: /en/work/lumen-lead-system
+            - generic [ref=e512]:
+              - generic [ref=e513]: AI
+              - generic [ref=e514]: "2025"
+            - generic [ref=e515]:
+              - generic [ref=e548]:
+                - generic [ref=e554]:
+                  - generic [ref=e555]: AE
+                  - generic [ref=e556]:
+                    - generic [ref=e557]: Arden Electric
+                    - generic [ref=e558]: Enterprise lead
+                  - strong [ref=e559]: "92"
+                - generic [ref=e560]:
+                  - generic [ref=e561]: Strong ICP fit
+                  - generic [ref=e562]: High intent
+                - generic [ref=e563]:
+                  - generic [ref=e564]: Research complete
+                  - generic [ref=e565]: 3 relevant signals found
+              - generic [ref=e566]: Routed to enterprise · 00:38
+          - link [ref=e567] [cursor=pointer]:
+            - /url: /en/work/form-technology-rebrand
+            - generic [ref=e568]:
+              - generic [ref=e569]: Brand
+              - generic [ref=e570]: "2025"
+            - generic [ref=e571]:
+              - generic [ref=e573]: F
+              - generic [ref=e574]: FORM FOLLOWS IMPACT
+              - generic [ref=e577]: Technology, made tangible.
+          - link [ref=e578] [cursor=pointer]:
+            - /url: /en/work/wave-acquisition
+            - generic [ref=e579]:
+              - generic [ref=e580]: Paid Media
+              - generic [ref=e581]: "2025"
+            - generic [ref=e582]:
+              - generic [ref=e584]: W
+              - generic [ref=e595]:
+                - generic [ref=e596]:
+                  - generic [ref=e597]: Pipeline
+                  - generic [ref=e598]: €1.2m
+                - generic [ref=e599]:
+                  - generic [ref=e600]: CAC
+                  - generic [ref=e601]: −36%
+                - generic [ref=e602]:
+                  - generic [ref=e603]: ROAS
+                  - generic [ref=e604]: 4.8×
+              - generic [ref=e611]:
+                - generic [ref=e612]: Search
+                - generic [ref=e613]: Social
+                - generic [ref=e614]: Content
+    - generic [ref=e615]:
+      - heading "Why Webpilot" [level=2] [ref=e617]
+      - generic [ref=e618]:
+        - generic [ref=e619]:
+          - heading "Results first" [level=3] [ref=e625]
+          - paragraph [ref=e626]: Good work must also create demand, win sales, or save time.
+        - generic [ref=e627]:
+          - heading "Senior specialists only" [level=3] [ref=e632]
+          - paragraph [ref=e633]: You work directly with experienced strategists, designers, developers, marketers, and automation specialists.
+        - generic [ref=e634]:
+          - heading "Plan through launch" [level=3] [ref=e643]
+          - paragraph [ref=e644]: One team plans and runs your brand, tech, marketing, content, and automation.
+        - generic [ref=e645]:
+          - heading "One responsible partner" [level=3] [ref=e652]
+          - paragraph [ref=e653]: One senior team owns the plan, work, updates, and results from start to end.
+        - generic [ref=e654]:
+          - heading "Design and tech together" [level=3] [ref=e659]
+          - paragraph [ref=e660]: We plan brand, content, code, data, and AI together.
+    - generic [ref=e661]:
+      - generic [ref=e662]:
+        - heading "Build. Grow. Automate." [level=2] [ref=e663]
+        - paragraph [ref=e664]: "We cover many skills but judge all work by one thing: your business result."
+      - generic [ref=e665]:
+        - article [ref=e666]:
+          - heading "Build" [level=3] [ref=e672]
+          - paragraph [ref=e673]: Make the right thing with clarity, care, and the confidence to put it into the world.
+        - article [ref=e674]:
+          - heading "Grow" [level=3] [ref=e680]
+          - paragraph [ref=e681]: Turn useful work into durable attention, demand, and momentum that compounds.
+        - article [ref=e682]:
+          - heading "Automate" [level=3] [ref=e690]
+          - paragraph [ref=e691]: Remove repetitive work without removing human judgment, context, or control.
+    - generic [ref=e692]:
+      - generic [ref=e693]:
+        - heading "Concrete expertise. Clearly organised." [level=2] [ref=e694]
+        - paragraph [ref=e695]: Four service categories that work independently and become stronger together.
+      - generic [ref=e696]:
+        - article [ref=e698]:
+          - link "Web & app design Distinctive websites and digital products, designed and engineered around a clear business goal. Explore Web & app design" [ref=e699] [cursor=pointer]:
+            - /url: /en/services/website-design-development
+            - generic [ref=e703]:
+              - strong [ref=e704]: Web & app design
+              - generic [ref=e705]: Distinctive websites and digital products, designed and engineered around a clear business goal.
+            - generic [ref=e708]:
+              - generic [ref=e709]: Explore Web & app design
+              - generic [ref=e710]: Explore Web & app design
+        - article [ref=e717]:
+          - link "SEO & GEO Technical and editorial visibility across search engines, answer engines, and AI recommendations. Explore SEO & GEO" [ref=e718] [cursor=pointer]:
+            - /url: /en/services/seo-ai-search
+            - generic [ref=e723]:
+              - strong [ref=e724]: SEO & GEO
+              - generic [ref=e725]: Technical and editorial visibility across search engines, answer engines, and AI recommendations.
+            - generic [ref=e728]:
+              - generic [ref=e729]: Explore SEO & GEO
+              - generic [ref=e730]: Explore SEO & GEO
+        - article [ref=e737]:
+          - link "Paid advertising campaigns Strategy, creative, landing pages, and measurement for accountable paid acquisition. Explore Paid advertising campaigns" [ref=e738] [cursor=pointer]:
+            - /url: /en/services/paid-acquisition
+            - generic [ref=e742]:
+              - strong [ref=e743]: Paid advertising campaigns
+              - generic [ref=e744]: Strategy, creative, landing pages, and measurement for accountable paid acquisition.
+            - generic [ref=e747]:
+              - generic [ref=e748]: Explore Paid advertising campaigns
+              - generic [ref=e749]: Explore Paid advertising campaigns
+        - article [ref=e756]:
+          - link "AI & automation Useful agents and connected workflows that save time while keeping people in control. Explore AI & automation" [ref=e757] [cursor=pointer]:
+            - /url: /en/services/ai-automation
+            - generic [ref=e761]:
+              - strong [ref=e762]: AI & automation
+              - generic [ref=e763]: Useful agents and connected workflows that save time while keeping people in control.
+            - generic [ref=e766]:
+              - generic [ref=e767]: Explore AI & automation
+              - generic [ref=e768]: Explore AI & automation
+    - generic [ref=e774]:
+      - generic [ref=e775]:
+        - heading "From first idea to launch." [level=2] [ref=e776]
+        - paragraph [ref=e777]: A clear shared plan keeps design, tech, and delivery in step.
+      - list [ref=e778]:
+        - listitem [ref=e779]:
+          - generic [ref=e780]: "1"
+          - generic [ref=e789]:
+            - heading "Define" [level=3] [ref=e790]
+            - paragraph [ref=e791]: Goals, users, positioning and scope.
+        - listitem [ref=e792]:
+          - generic [ref=e793]: "2"
+          - generic [ref=e802]:
+            - heading "Create" [level=3] [ref=e803]
+            - paragraph [ref=e804]: Design, build and integrate.
+        - listitem [ref=e805]:
+          - generic [ref=e806]: "3"
+          - generic [ref=e813]:
+            - heading "Launch and improve" [level=3] [ref=e814]
+            - paragraph [ref=e815]: Test, release and optimise.
+    - generic [ref=e816]:
+      - heading "Testimonials" [level=2] [ref=e818]
+      - generic [ref=e819]:
+        - generic [ref=e820]:
+          - generic [ref=e821]: NORTH/CO
+          - blockquote [ref=e822]: “The team joined our website, search plan, paid ads, and CRM tools in one clear growth plan.”
+          - generic [ref=e823]: Camille R. · VP Growth
+          - generic [ref=e824]: Client testimonial
+        - generic [ref=e825]:
+          - generic [ref=e826]: MORROW
+          - blockquote [ref=e827]: “They made a complex product easy to grasp. The new story made each sales talk clear and gave marketing a sound plan.”
+          - generic [ref=e828]: Ben A. · Co-founder
+          - generic [ref=e829]: Client testimonial
+        - generic [ref=e830]:
+          - generic [ref=e831]: ARC LABS
+          - blockquote [ref=e832]: “Our support agent now handles the repetitive work with care and gives the team better context when a person needs to step in.”
+          - generic [ref=e833]: Sonia K. · COO
+          - generic [ref=e834]: Client testimonial
+    - generic [ref=e835]:
+      - heading "FAQs" [level=2] [ref=e837]
+      - generic [ref=e839]:
+        - generic [ref=e840]:
+          - button "Why work with Webpilot instead of a traditional agency?" [ref=e841] [cursor=pointer]
+          - paragraph [ref=e846]: One senior team handles planning, design, development, growth, and AI. You do not need to guide junior staff or manage many firms.
+        - generic [ref=e847]:
+          - button "Who will work on our project?" [ref=e848] [cursor=pointer]
+          - paragraph [ref=e853]: The specialists you meet do the work. Your main team stays with you from the first session through launch and later updates.
+        - generic [ref=e854]:
+          - button "What can Webpilot run from start to end?" [ref=e855] [cursor=pointer]
+          - paragraph [ref=e860]: We can set your market position, lead the design, build and launch the product, win customers, track results, and automate tasks.
+        - generic [ref=e861]:
+          - button "How do we work together?" [ref=e862] [cursor=pointer]
+          - paragraph [ref=e867]: We agree on the goal, choose the right senior team, and share each week's choices, work, and next steps.
+        - generic [ref=e868]:
+          - button "Who owns the work when the project ends?" [ref=e869] [cursor=pointer]
+          - paragraph [ref=e874]: You do. We give your team all approved designs, source code, content, live accounts, and project notes.
+    - generic [ref=e875]:
+      - heading "Ready to grow?" [level=2] [ref=e876]: Ready togrow?
+      - paragraph [ref=e877]: We join brand, tech, marketing, and AI to drive clear results.
+      - link "Book strategy call" [ref=e878] [cursor=pointer]:
+        - /url: /en/contact
+        - generic [ref=e880]:
+          - generic [ref=e881]: Book strategy call
+          - generic [ref=e882]: Book strategy call
+  - contentinfo [ref=e888]:
+    - generic [ref=e889]:
+      - link "Webpilot" [ref=e890] [cursor=pointer]:
+        - /url: /en
+        - generic [ref=e891]:
+          - generic [ref=e892]: Webpilot
+          - generic [ref=e893]:
+            - generic [ref=e895]:
+              - generic [ref=e896]: W
+              - generic [ref=e897]: W
+            - generic [ref=e899]:
+              - generic [ref=e900]: e
+              - generic [ref=e901]: e
+            - generic [ref=e903]:
+              - generic [ref=e904]: b
+              - generic [ref=e905]: b
+            - generic [ref=e907]:
+              - generic [ref=e908]: p
+              - generic [ref=e909]: p
+            - generic [ref=e911]:
+              - generic [ref=e912]: i
+              - generic [ref=e913]: i
+            - generic [ref=e915]:
+              - generic [ref=e916]: l
+              - generic [ref=e917]: l
+            - generic [ref=e919]:
+              - generic [ref=e920]: o
+              - generic [ref=e921]: o
+            - generic [ref=e923]:
+              - generic [ref=e924]: t
+              - generic [ref=e925]: t
+      - generic [ref=e926]:
+        - generic [ref=e927]:
+          - generic [ref=e928]: Explore
+          - link "Work" [ref=e929] [cursor=pointer]:
+            - /url: /en/work
+          - link "Services" [ref=e930] [cursor=pointer]:
+            - /url: /en/services
+          - link "About" [ref=e931] [cursor=pointer]:
+            - /url: /en/about
+        - generic [ref=e932]:
+          - generic [ref=e933]: Connect
+          - link "Contact" [ref=e934] [cursor=pointer]:
+            - /url: /en/contact
+          - link "Email" [ref=e935] [cursor=pointer]:
+            - /url: mailto:hello@webpilot.studio
+        - generic [ref=e936]:
+          - generic [ref=e937]: Legal
+          - link "Privacy" [ref=e938] [cursor=pointer]:
+            - /url: /en/privacy
+          - link "Imprint" [ref=e939] [cursor=pointer]:
+            - /url: /en/imprint
+    - generic [ref=e940]:
+      - generic [ref=e941]: © 2026 Webpilot Studio
+      - link "hello@webpilot.studio" [ref=e942] [cursor=pointer]:
+        - /url: mailto:hello@webpilot.studio
+      - generic [ref=e943]: Based in Germany · Operating worldwide
+  - generic [ref=e946]:
+    - button [ref=e947]
+    - button [ref=e953]
+    - button [ref=e957]
+    - button [ref=e962]

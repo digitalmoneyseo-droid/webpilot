@@ -11,17 +11,17 @@ const { locale, services = [], compact = false } = Astro.props;
 const icons = { design: MonitorSmartphone, search: SearchCheck, campaign: Megaphone, automation: Bot };
 const bySlug = new Map(services.map((service) => [service.data.slug, service]));
 ---
-<div class:list={["service-category-grid mx-auto grid max-w-[62rem] grid-cols-2 gap-4 max-[600px]:grid-cols-1 [&>.reveal]:flex [&>.reveal>.service-category]:flex-1", { "service-category-grid--compact": compact }]}>
+<div class:list={["service-category-grid mx-auto grid max-w-[54rem] grid-cols-2 gap-4 max-[600px]:grid-cols-1 [&>.reveal]:flex [&>.reveal>.service-category]:flex-1", { "service-category-grid--compact": compact }]}>
   {serviceCategories.map((category, index) => {
     const CategoryIcon = icons[category.icon];
     const categoryServices = category.services.map((slug) => bySlug.get(slug)).filter(Boolean) as ServiceEntry[];
     const title = localizedCategoryTitle(category, locale);
     const exploreLabel = locale === "de" ? `${title} entdecken` : `Explore ${title}`;
     return <Reveal delay={index * 50}><article class={`service-category service-category--${category.id} flex flex-col overflow-hidden rounded-card bg-surface shadow-surface`}>
-      <a class="service-category-main relative flex min-h-48 flex-1 flex-col items-start gap-5 p-6 [.service-category-grid--compact_&]:min-h-34 max-[600px]:min-h-0 max-[600px]:gap-3 max-[600px]:p-5" href={localizePath(category.href, locale)}>
-        <CategoryIcon class="service-category-icon absolute right-6 bottom-6 size-10.5 [stroke-width:1.25] max-[600px]:right-5 max-[600px]:bottom-5" aria-hidden="true" />
-        <span class="service-category-copy"><strong class="block text-heading-md font-semibold">{title}</strong><small class="mt-3 block max-w-[34ch] text-body font-normal text-[color-mix(in_oklch,var(--ink)_72%,var(--bg))]">{localizedCategoryDescription(category, locale)}</small></span>
-        <span class="service-category-cta mt-auto inline-flex items-center gap-2 text-small font-semibold text-ink">
+      <a class="service-category-main relative flex min-h-48 flex-1 flex-col items-start p-6 [.service-category-grid--compact_&]:min-h-34 max-[600px]:min-h-0 max-[600px]:p-5" href={localizePath(category.href, locale)}>
+        <CategoryIcon class="service-category-icon size-[42px] [stroke-width:1.7]" aria-hidden="true" />
+        <span class="service-category-copy pt-7"><strong class="block text-heading-sm font-semibold">{title}</strong><small class="mt-2 block max-w-[34ch] text-body leading-body font-normal text-muted">{localizedCategoryDescription(category, locale)}</small></span>
+        <span class="service-category-cta mt-5 inline-flex items-center gap-2 text-small font-semibold text-ink">
           <span class="service-category-cta-label block h-[1.45em] overflow-hidden leading-[1.45]">
             <span class="service-category-cta-label-track flex h-[200%] flex-col">
               <span class="flex basis-1/2 items-center whitespace-nowrap">{exploreLabel}</span>

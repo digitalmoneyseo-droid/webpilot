@@ -120,6 +120,7 @@ const budgets = contactBudgets.map(({ id, label }) => [id, label[locale]] as con
 
   <script is:inline src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
   <script>
+    document.addEventListener("astro:page-load", () => {
     const status = document.querySelector<HTMLElement>("[data-form-status]");
     const state = new URLSearchParams(window.location.search).get("status");
     if (status && state) {
@@ -235,6 +236,7 @@ const budgets = contactBudgets.map(({ id, label }) => [id, label[locale]] as con
         status.hidden = false;
       }
       form.querySelector<HTMLElement>('[aria-invalid="true"]')?.focus();
+    });
     });
   </script>
 </BaseLayout>

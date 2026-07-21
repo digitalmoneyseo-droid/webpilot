@@ -2,6 +2,7 @@
 import "@fontsource/bebas-neue/latin-400.css";
 import "@fontsource/playfair-display/latin-700-italic.css";
 import "@/styles/app.css";
+import { ClientRouter } from "astro:transitions";
 import SiteHeader from "@/components/SiteHeader.astro";
 import SiteFooter from "@/components/SiteFooter.astro";
 import { getLegalOperator } from "@/config/legal";
@@ -59,6 +60,7 @@ if (operator) schemas.unshift({
     <meta name="twitter:description" content={description} />
     <meta name="twitter:image" content={absoluteUrl(image)} />
     <title>{pageTitle}</title>
+    <ClientRouter />
     <script>document.documentElement.classList.add("reveal-ready");</script>
     {schemas.map((schema) => <script is:inline type="application/ld+json" set:html={JSON.stringify(schema)}></script>)}
   </head>
@@ -68,24 +70,44 @@ if (operator) schemas.unshift({
     <slot />
     {!hideFooter && <SiteFooter {locale} />}
     <script>
-      const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-      const reveals = [...document.querySelectorAll<HTMLElement>("[data-reveal]")];
-      if (reducedMotion || !("IntersectionObserver" in window)) reveals.forEach((element) => element.classList.add("is-visible"));
-      else {
-        const reveal = (entries: IntersectionObserverEntry[], observer: IntersectionObserver) => entries.forEach((entry) => {
-          if (!entry.isIntersecting) return;
-          entry.target.classList.add("is-visible");
-          observer.unobserve(entry.target);
-        });
-        const observer = new IntersectionObserver(reveal, { threshold: 1 });
-        const mobileItemObserver = new IntersectionObserver(reveal, { threshold: 1 });
-        const mobile = window.matchMedia("(max-width: 900px)").matches;
-        reveals.forEach((element) => {
-          if (mobile && element.hasAttribute("data-mobile-reveal-items")) {
-            [...element.children].forEach((item) => mobileItemObserver.observe(item));
-          } else observer.observe(element);
-        });
-      }
+      const initializedReveals = new WeakSet<Element>();
+      let revealObservers: IntersectionObserver[] = [];
+      const initReveals = () => {
+        document.documentElement.classList.add("reveal-ready");
+        const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+        const reveals = [...document.querySelectorAll<HTMLElement>("[data-reveal]")]
+          .filter((element) => !initializedReveals.has(element));
+        reveals.forEach((element) => initializedReveals.add(element));
+        if (reducedMotion || !("IntersectionObserver" in window)) reveals.forEach((element) => element.classList.add("is-visible"));
+        else {
+          const reveal = (entries: IntersectionObserverEntry[], observer: IntersectionObserver) => entries.forEach((entry) => {
+            if (!entry.isIntersecting) return;
+            entry.target.classList.add("is-visible");
+            observer.unobserve(entry.target);
+          });
+          const mobile = window.matchMedia("(max-width: 900px)").matches;
+          const observerOptions = {
+            threshold: 0,
+            rootMargin: mobile ? "0px 0px -28%" : "0px 0px -14%",
+          };
+          const observer = new IntersectionObserver(reveal, observerOptions);
+          const mobileItemObserver = new IntersectionObserver(reveal, observerOptions);
+          revealObservers = [observer, mobileItemObserver];
+          reveals.forEach((element) => {
+            void element.offsetWidth;
+            element.classList.add("is-reveal-armed");
+            if (mobile && element.hasAttribute("data-mobile-reveal-items")) {
+              [...element.children].forEach((item) => mobileItemObserver.observe(item));
+            } else observer.observe(element);
+          });
+        }
+      };
+      initReveals();
+      document.addEventListener("astro:before-swap", () => {
+        revealObservers.forEach((observer) => observer.disconnect());
+        revealObservers = [];
+      });
+      document.addEventListener("astro:page-load", initReveals);
     </script>
     {analyticsEnabled && analyticsToken && <script is:inline defer src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon={JSON.stringify({ token: analyticsToken })}></script>}
   </body>
