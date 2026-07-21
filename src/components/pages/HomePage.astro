@@ -152,9 +152,11 @@ const sectionNavigation = locale === "de" ? [
     };
 
     const finishDrag = () => {
+      const shouldSuppressClick = dragged;
       if (pointerId !== null && ribbon.hasPointerCapture(pointerId)) ribbon.releasePointerCapture(pointerId);
       pointerId = null;
       ribbon.classList.remove("is-dragging");
+      if (shouldSuppressClick) setTimeout(() => { dragged = false; }, 0);
     };
 
     ribbon.addEventListener("pointerdown", (event) => {
@@ -162,13 +164,13 @@ const sectionNavigation = locale === "de" ? [
       pointerId = event.pointerId;
       lastPointerX = event.clientX;
       dragged = false;
-      ribbon.setPointerCapture(event.pointerId);
     });
 
     ribbon.addEventListener("pointermove", (event) => {
       if (event.pointerId !== pointerId) return;
       const distance = event.clientX - lastPointerX;
       if (!dragged && Math.abs(distance) < 3) return;
+      if (!dragged) ribbon.setPointerCapture(event.pointerId);
       dragged = true;
       ribbon.classList.add("is-dragging");
       offset += distance;

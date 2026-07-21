@@ -104,7 +104,9 @@ test("contact page presents project enquiry form", async ({ page }) => {
   await expect(submitButton).toBeEnabled();
   await expect(submitButton).toHaveAttribute("data-state", "idle");
 
-  await page.locator('input[name="interests"]').first().check({ force: true });
+  const firstInterest = page.locator('input[name="interests"]').first();
+  await firstInterest.locator("..").click();
+  await expect(firstInterest).toBeChecked();
   await form.evaluate((element) => element.addEventListener("submit", (event) => event.preventDefault()));
   await submitButton.click();
 
@@ -158,6 +160,11 @@ test("portfolio ribbon keeps moving and supports drag scrolling", async ({ page 
 
   await page.waitForTimeout(100);
   expect(await track.evaluate((element) => element.style.transform)).not.toBe(rightDragTransform);
+
+  await page.emulateMedia({ reducedMotion: "reduce" });
+  await page.waitForTimeout(100);
+  await card.click();
+  await expect(page).toHaveURL(/\/en\/work\//);
 });
 
 test("service discovery separates the slogan from concrete service categories", async ({ page }) => {
