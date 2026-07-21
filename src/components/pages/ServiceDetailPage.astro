@@ -108,19 +108,19 @@ const process =
     <EditorialHero
       title={s.title}
       copy={s.summary}
-    /><section class="service-detail-intro section-pad">
+    /><section class="service-detail-intro grid grid-cols-[1.15fr_.85fr] items-start gap-20 px-page py-section max-[900px]:grid-cols-1 max-[900px]:gap-12">
       <div class="service-statement">
-        <span>{locale === "de" ? "Was wir lösen" : "What we solve"}</span><h2>
+        <span class="font-[var(--font-mono)] text-caption uppercase">{locale === "de" ? "Was wir lösen" : "What we solve"}</span><h2 class="my-6 text-heading-lg font-semibold">
           {
             locale === "de"
               ? "Jeden Schritt klarer, schneller und wertvoller machen."
               : "Make each step clearer, faster, and more useful."
           }
         </h2>
-      </div><div class="tag-cloud">
-        {s.problems.map((problem) => <span>{problem}</span>)}
+      </div><div class="tag-cloud grid content-start grid-cols-2 gap-2 border-t border-ink max-[600px]:grid-cols-1">
+        {s.problems.map((problem) => <span class="flex min-h-18 items-center rounded-none border-b border-line bg-transparent p-3 text-caption">{problem}</span>)}
       </div>
-    </section><section class="deliverables section-pad">
+    </section><section class="deliverables bg-dark px-page py-section text-inverse [&_.eyebrow]:bg-[#272727]">
       <SectionHeading
         title={locale === "de" ? "Was Sie erhalten." : "What you get."}
         align="center"
@@ -133,40 +133,40 @@ const process =
               : `Senior ${title.toLowerCase()} work, matched to your team, customers, and goals from day one.`,
         }))}
       />
-    </section><section class="process-section section-pad">
+    </section><section class="process-section bg-surface px-page py-section">
       <SectionHeading
         title={locale === "de"
           ? "Klare Schritte. Sorgfältige Arbeit."
           : "Clear steps. Careful work."}
         align="center"
       /><NumberedList items={process} />
-    </section><section class="outcomes-section section-pad">
+    </section><section class="outcomes-section px-page py-section">
       <SectionHeading
         title={locale === "de"
           ? "Das wollen wir erreichen."
           : "What we aim to change."}
         align="center"
-      /><div class="outcome-grid">
+       /><div class="outcome-grid grid grid-cols-2 gap-3 max-[600px]:grid-cols-1">
         {
           s.outcomes.map((outcome, index) => (
-            <div>
+            <div class="flex min-h-36 flex-col justify-between rounded-card bg-surface p-6 shadow-surface">
               <>
-                <span>0{index + 1}</span>
-                <h3>{outcome}</h3>
+                <span class="font-[var(--font-mono)] text-caption text-[#888]">0{index + 1}</span>
+                <h3 class="text-heading-sm font-semibold">{outcome}</h3>
               </>
             </div>
           ))
         }
       </div>
-    </section><section class="case-tools service-tools">
-      <span>{locale === "de" ? "Relevante Tools" : "Relevant tools"}</span><div>
-        {s.tools.map((tool) => <i>{tool}</i>)}
+    </section><section class="case-tools service-tools mx-auto mt-0 grid max-w-layout grid-cols-[200px_1fr] border-b border-line py-section-compact max-[900px]:mx-page max-[600px]:grid-cols-1 max-[600px]:gap-6">
+      <span class="font-[var(--font-mono)] text-caption uppercase">{locale === "de" ? "Relevante Tools" : "Relevant tools"}</span><div class="flex flex-wrap gap-2">
+        {s.tools.map((tool) => <i class="rounded-card border border-[#ccc] px-[13px] py-[9px] text-caption not-italic">{tool}</i>)}
       </div>
     </section><RelatedWork
       title={locale === "de" ? "Passende Arbeiten" : "Related work"}
       {projects}
       {locale}
-    /><section class="faq-section section-pad">
+    /><section class="faq-section bg-canvas px-page py-section [&>.section-heading]:mx-auto [&>.section-heading]:text-center">
       <SectionHeading
         title={locale === "de" ? "Fragen zur Leistung" : "Service FAQs"}
         align="center"

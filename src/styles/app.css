@@ -1,12 +1,65 @@
 @import "tailwindcss/theme.css";
-@import "tailwindcss/utilities.css";
 @import "./global.css";
 @import "./design-system.css";
+@import "tailwindcss/utilities.css";
 
 @theme inline {
   --color-canvas: var(--bg);
   --color-ink: var(--ink);
   --color-muted: var(--muted);
+  --color-line: var(--line);
+  --color-surface: var(--surface);
+  --color-surface-subtle: var(--surface-subtle);
+  --color-inverse: var(--inverse);
+  --color-dark: var(--dark);
+  --color-dark-muted: var(--dark-muted);
   --color-accent: var(--accent);
+  --color-focus: var(--focus);
+  --color-error: var(--error);
+
   --radius-card: var(--radius);
+  --radius-control: 0.5rem;
+  --radius-shell: 0.875rem;
+
+  --shadow-surface: var(--shadow-surface);
+  --shadow-surface-hover: var(--shadow-surface-hover);
+  --shadow-dark-surface: var(--shadow-dark-surface);
+
+  --text-caption: var(--type-caption);
+  --text-caption--line-height: var(--leading-caption);
+  --text-caption--letter-spacing: var(--tracking-caption);
+  --text-small: var(--type-small);
+  --text-small--line-height: var(--leading-small);
+  --text-small--letter-spacing: var(--tracking-small);
+  --text-body: var(--type-body);
+  --text-body--line-height: var(--leading-body);
+  --text-body-lg: var(--type-body-lg);
+  --text-body-lg--line-height: var(--leading-body);
+  --text-lead: var(--type-lead);
+  --text-lead--line-height: var(--leading-body);
+  --text-heading-sm: var(--type-heading-sm);
+  --text-heading-sm--line-height: var(--leading-heading-sm);
+  --text-heading-sm--letter-spacing: var(--tracking-heading-sm);
+  --text-heading-md: var(--type-heading-md);
+  --text-heading-md--line-height: var(--leading-heading-md);
+  --text-heading-md--letter-spacing: var(--tracking-heading-md);
+  --text-heading-lg: var(--type-heading-lg);
+  --text-heading-lg--line-height: var(--leading-heading-lg);
+  --text-heading-lg--letter-spacing: var(--tracking-heading-lg);
+  --text-display-sm: var(--type-display-sm);
+  --text-display-sm--line-height: var(--leading-display-sm);
+  --text-display-sm--letter-spacing: var(--tracking-display-sm);
+  --text-display-lg: var(--type-display-lg);
+  --text-display-lg--line-height: var(--leading-display-lg);
+  --text-display-lg--letter-spacing: var(--tracking-display-lg);
+
+  --spacing-page: var(--page-gutter);
+  --spacing-section: var(--section-space);
+  --spacing-section-compact: var(--section-space-compact);
+  --spacing-heading-gap: var(--section-heading-gap);
+
+  --container-layout: var(--layout-max);
+  --container-reading: var(--measure-reading);
+  --container-narrow: var(--measure-narrow);
+  --container-hero: var(--measure-hero);
 }

@@ -3,15 +3,15 @@ import Icon from "@/components/Icon.astro";
 interface Props { href: string; light?: boolean; external?: boolean; class?: string; }
 const { href, light = false, external = false, class: extraClass } = Astro.props;
 ---
-<a class:list={["pill-button", extraClass, { "pill-button--light": light }]} href={href} target={external ? "_blank" : undefined} rel={external ? "noreferrer" : undefined}>
-  <span class="pill-button__label">
-    <span class="pill-button__label-track">
-      <span class="pill-button__label-copy"><slot /></span>
-      <span class="pill-button__label-copy" aria-hidden="true"><slot /></span>
+<a class:list={["pill-button inline-flex min-h-[52px] items-center gap-3.5 rounded-[12px] py-0 pr-2.5 pl-4 text-small font-[650] shadow-dark-surface", extraClass, { "pill-button--light bg-white text-[#111]": light, "bg-[#111] text-white": !light }]} href={href} target={external ? "_blank" : undefined} rel={external ? "noreferrer" : undefined}>
+  <span class="pill-button__label block h-[1.45em] overflow-hidden leading-[1.45]">
+    <span class="pill-button__label-track flex h-[200%] flex-col">
+      <span class="pill-button__label-copy flex flex-[0_0_50%] items-center whitespace-nowrap"><slot /></span>
+      <span class="pill-button__label-copy flex flex-[0_0_50%] items-center whitespace-nowrap" aria-hidden="true"><slot /></span>
     </span>
   </span>
-  <span class="pill-button__icon" aria-hidden="true">
-    <Icon name="arrow-right" class="pill-button__arrow pill-button__arrow--right" />
-    <Icon name="arrow-up-right" class="pill-button__arrow pill-button__arrow--up-right" />
+  <span class="pill-button__icon relative h-7 w-7 flex-none overflow-hidden rounded-[2px] bg-white text-[#111]" aria-hidden="true">
+    <Icon name="arrow-right" class="pill-button__arrow pill-button__arrow--right absolute inset-[5px] h-[18px] w-[18px] rounded-none bg-transparent p-0 opacity-100" />
+    <Icon name="arrow-up-right" class="pill-button__arrow pill-button__arrow--up-right absolute inset-[5px] h-[18px] w-[18px] rounded-none bg-transparent p-0 opacity-0 [transform:translate(-6px,6px)_scale(.8)]" />
   </span>
 </a>

@@ -3,12 +3,12 @@ interface Props { inverse?: boolean; }
 const { inverse = false } = Astro.props;
 const letters = [..."Webpilot"];
 ---
-<span class:list={["brand-wordmark", { "brand-wordmark--inverse": inverse }]}>
+<span class:list={["brand-wordmark inline-flex whitespace-nowrap font-['Bebas_Neue',Impact,sans-serif] text-[1.7rem] leading-none font-normal", { "brand-wordmark--inverse text-white": inverse }]}>
   <span class="sr-only">Webpilot</span>
-  <span class="brand-wordmark__letters" aria-hidden="true">
+  <span class="brand-wordmark__letters flex gap-[.035em]" aria-hidden="true">
     {letters.map((letter, index) => (
-      <span class="brand-wordmark__letter" style={`--letter-index:${index};--letter-reverse:${letters.length - index - 1}`}>
-        <span class="brand-wordmark__track"><span>{letter}</span><span>{letter}</span></span>
+      <span class="brand-wordmark__letter block h-[1em] overflow-hidden" style={`--letter-index:${index};--letter-reverse:${letters.length - index - 1}`}>
+        <span class="brand-wordmark__track flex h-[2em] translate-y-0 flex-col"><span class="block h-[1em] flex-none leading-none">{letter}</span><span class="block h-[1em] flex-none leading-none">{letter}</span></span>
       </span>
     ))}
   </span>

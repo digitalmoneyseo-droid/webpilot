@@ -2,4 +2,4 @@
 interface Props { items: { title: string; copy: string }[]; }
 const { items } = Astro.props;
 ---
-<div class="numbered-list">{items.map((item, index) => <div><span>{String(index + 1).padStart(2, "0")}</span><h3>{item.title}</h3><p>{item.copy}</p></div>)}</div>
+<div class="numbered-list border-t border-current">{items.map((item, index) => <div class="grid grid-cols-[5rem_minmax(14rem,.7fr)_minmax(0,1fr)] gap-8 border-b border-current/20 py-8 max-[900px]:gap-6 max-[600px]:grid-cols-[2.5rem_1fr] max-[600px]:gap-4"><span class="font-mono text-caption opacity-55">{String(index + 1).padStart(2, "0")}</span><h3 class="m-0 text-heading-sm font-semibold">{item.title}</h3><p class="m-0 text-body opacity-65 max-[600px]:col-start-2">{item.copy}</p></div>)}</div>

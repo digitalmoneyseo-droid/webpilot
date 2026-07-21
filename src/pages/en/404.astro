@@ -2,5 +2,5 @@
 import BaseLayout from "@/layouts/BaseLayout.astro";
 ---
 <BaseLayout locale="en" title="404" description="The requested page could not be found." indexable={false}>
-  <main id="main-content" class="not-found"><span>404</span><h1>That signal got lost.</h1><p>The page you’re looking for does not exist or has moved.</p><a href="/en">Back to the studio</a></main>
+  <main id="main-content" class="not-found flex min-h-screen flex-col items-center justify-center px-page py-section text-center"><span class="font-mono text-caption">404</span><h1 class="m-6 text-display-sm font-semibold">That signal got lost.</h1><p class="text-body leading-body text-[#777]">The page you’re looking for does not exist or has moved.</p><a class="mt-6 min-h-11 rounded-xl bg-[#111] px-[17px] py-3 text-small text-white" href="/en">Back to the studio</a></main>
 </BaseLayout>

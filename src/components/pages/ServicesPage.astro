@@ -17,7 +17,7 @@ const description = locale === "de"
 <BaseLayout {locale} title={t(locale, "Services")} {description}>
   <main id="main-content" class="page-main page-main--services">
     <EditorialHero title={locale === "de" ? "Spezialisten für jede Wachstumsphase." : "Specialists for every stage of growth."} copy={locale === "de" ? "Acht konkrete Leistungen, verbunden durch eine klare Strategie und ein verantwortliches Team." : "Eight concrete services, connected by one clear strategy and one accountable team."} />
-    <section class="service-category-section section-pad page-section">
+    <section class="service-category-section page-section bg-canvas px-page py-section [&>.section-heading]:mx-auto [&>.section-heading]:text-center [&>.section-heading_p]:mx-auto">
       <SectionHeading title={locale === "de" ? "Was wir für Sie tun." : "What we can do for you."} copy={locale === "de" ? "Starten Sie mit einem Bereich oder verbinden Sie mehrere zu einem gemeinsamen System." : "Start with one area or connect several into one joined system."} align="center" />
       <ServiceCategoryGrid {services} {locale} />
     </section>

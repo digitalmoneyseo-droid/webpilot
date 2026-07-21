@@ -11,31 +11,31 @@ const { locale, services = [], compact = false } = Astro.props;
 const icons = { design: MonitorSmartphone, search: SearchCheck, campaign: Megaphone, automation: Bot };
 const bySlug = new Map(services.map((service) => [service.data.slug, service]));
 ---
-<div class:list={["service-category-grid", { "service-category-grid--compact": compact }]}>
+<div class:list={["service-category-grid mx-auto grid max-w-[62rem] grid-cols-2 gap-4 max-[600px]:grid-cols-1 [&>.reveal]:flex [&>.reveal>.service-category]:flex-1", { "service-category-grid--compact": compact }]}>
   {serviceCategories.map((category, index) => {
     const CategoryIcon = icons[category.icon];
     const categoryServices = category.services.map((slug) => bySlug.get(slug)).filter(Boolean) as ServiceEntry[];
     const title = localizedCategoryTitle(category, locale);
     const exploreLabel = locale === "de" ? `${title} entdecken` : `Explore ${title}`;
-    return <Reveal delay={index * 50}><article class={`service-category service-category--${category.id}`}>
-      <a class="service-category-main" href={localizePath(category.href, locale)}>
-        <CategoryIcon class="service-category-icon" aria-hidden="true" />
-        <span class="service-category-copy"><strong>{title}</strong><small>{localizedCategoryDescription(category, locale)}</small></span>
-        <span class="service-category-cta">
-          <span class="service-category-cta-label">
-            <span class="service-category-cta-label-track">
-              <span>{exploreLabel}</span>
-              <span aria-hidden="true">{exploreLabel}</span>
+    return <Reveal delay={index * 50}><article class={`service-category service-category--${category.id} flex flex-col overflow-hidden rounded-card bg-surface shadow-surface`}>
+      <a class="service-category-main relative flex min-h-48 flex-1 flex-col items-start gap-5 p-6 [.service-category-grid--compact_&]:min-h-34 max-[600px]:min-h-0 max-[600px]:gap-3 max-[600px]:p-5" href={localizePath(category.href, locale)}>
+        <CategoryIcon class="service-category-icon absolute right-6 bottom-6 size-10.5 [stroke-width:1.25] max-[600px]:right-5 max-[600px]:bottom-5" aria-hidden="true" />
+        <span class="service-category-copy"><strong class="block text-heading-md font-semibold">{title}</strong><small class="mt-3 block max-w-[34ch] text-body font-normal text-[color-mix(in_oklch,var(--ink)_72%,var(--bg))]">{localizedCategoryDescription(category, locale)}</small></span>
+        <span class="service-category-cta mt-auto inline-flex items-center gap-2 text-small font-semibold text-ink">
+          <span class="service-category-cta-label block h-[1.45em] overflow-hidden leading-[1.45]">
+            <span class="service-category-cta-label-track flex h-[200%] flex-col">
+              <span class="flex basis-1/2 items-center whitespace-nowrap">{exploreLabel}</span>
+              <span class="flex basis-1/2 items-center whitespace-nowrap" aria-hidden="true">{exploreLabel}</span>
             </span>
           </span>
-          <span class="service-category-cta-arrow-box" aria-hidden="true">
-            <Icon name="arrow-right" class="service-category-cta-arrow service-category-cta-arrow--right" />
-            <Icon name="arrow-up-right" class="service-category-cta-arrow service-category-cta-arrow--up-right" />
+          <span class="service-category-cta-arrow-box relative size-4.5 flex-none overflow-hidden rounded-none" aria-hidden="true">
+            <Icon name="arrow-right" class="service-category-cta-arrow service-category-cta-arrow--right absolute inset-0 size-4.5" />
+            <Icon name="arrow-up-right" class="service-category-cta-arrow service-category-cta-arrow--up-right absolute inset-0 size-4.5" />
           </span>
         </span>
       </a>
-      {categoryServices.length > 0 && <nav class="service-category-links" aria-label={title}>
-        {categoryServices.map((service) => <a href={localizePath(`/services/${service.data.slug}`, locale)}>{service.data.title}<span aria-hidden="true">→</span></a>)}
+      {categoryServices.length > 0 && <nav class="service-category-links grid grid-cols-3 border-t border-line [.service-category-grid--compact_&]:hidden max-[900px]:grid-cols-2 max-[600px]:grid-cols-1" aria-label={title}>
+        {categoryServices.map((service) => <a class="flex min-h-13 items-center justify-between gap-3 border-r border-line px-4 py-3 text-small text-[#4e4e4a] last:border-r-0 hover:bg-white/58 hover:text-ink max-[600px]:border-r-0 max-[600px]:border-b max-[600px]:last:border-b-0" href={localizePath(`/services/${service.data.slug}`, locale)}>{service.data.title}<span aria-hidden="true">→</span></a>)}
       </nav>}
     </article></Reveal>;
   })}

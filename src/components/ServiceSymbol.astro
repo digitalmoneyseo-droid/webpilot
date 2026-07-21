@@ -8,7 +8,7 @@ interface Props {
 const { name } = Astro.props;
 ---
 
-<div class={`service-symbol symbol-${name}`} aria-hidden="true">
+<div class={`service-symbol symbol-${name} relative mt-3 -mx-2.5 mb-8 grid h-44 place-items-center max-[600px]:h-36`} aria-hidden="true">
   <span></span><span></span>
   {name === "build" && <PanelsTopLeft />}
   {name === "grow" && <ChartNoAxesCombined />}
