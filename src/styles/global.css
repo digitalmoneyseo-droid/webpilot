@@ -1,7 +1,7 @@
 :root {
   --font-system: "Inter", system-ui, sans-serif;
   --font-sans: var(--font-system);
-  --font-display-accent: "Instrument Serif", Georgia, serif;
+  --font-display-accent: "Playfair Display", Georgia, serif;
   --font-mono: var(--font-sans);
   /* Warm stone neutrals and a single emerald accent keep the interface calm
      while giving interactive and editorial moments a recognizable voice. */

@@ -199,7 +199,7 @@ test("new Build service routes render and the retired route redirects", async ({
   await expect(page).toHaveURL(/\/services\/website-design-development\/?$/);
 });
 
-test("typography roles use the discrete Inter and Instrument Serif system", async ({ page }) => {
+test("typography roles use the discrete Inter and Playfair Display system", async ({ page }) => {
   await page.setViewportSize({ width: 1440, height: 1000 });
   await page.goto("/en");
 
@@ -219,7 +219,7 @@ test("typography roles use the discrete Inter and Instrument Serif system", asyn
   await expect(hero).toHaveCSS("font-family", /Inter/);
 
   const heroAccent = hero.locator("em");
-  await expect(heroAccent).toHaveCSS("font-family", /Instrument Serif/);
+  await expect(heroAccent).toHaveCSS("font-family", /Playfair Display/);
   await expect(heroAccent).toHaveCSS("font-style", "italic");
   await expect(heroAccent).toHaveCSS("font-weight", "700");
   await expect(heroAccent).toHaveCSS("color", "rgb(59, 130, 246)");

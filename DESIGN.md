@@ -4,7 +4,7 @@ This file is the durable reference for future UI changes. Reuse the existing tok
 
 ## Direction
 
-Webpilot uses a restrained, editorial product aesthetic: warm neutral surfaces, compact controls, strong typographic hierarchy, and one expressive hero accent. Keep ordinary UI quiet so the blue Instrument Serif word remains the homepage signature.
+Webpilot uses a restrained, editorial product aesthetic: warm neutral surfaces, compact controls, strong typographic hierarchy, and one expressive hero accent. Keep ordinary UI quiet so the blue Playfair Display word remains the homepage signature.
 
 Do not redesign colors, spacing, radii, typography, or motion incidentally while adding a feature. Extend the system only when an existing role cannot express a recurring need.
 
@@ -12,8 +12,8 @@ Do not redesign colors, spacing, radii, typography, or motion incidentally while
 
 - Inter is the sole family for navigation, controls, content, labels, numbers, and the visible `WEBPILOT` wordmark.
 - Use Inter weights 400, 500, and 600. Avoid unsupported bold or extra-bold UI weights.
-- Instrument Serif is reserved for the existing emphasized word in the homepage H1.
-- The hero accent uses the real Instrument Serif italic face, synthesized weight 700, `-0.03em` tracking, and `--wave-blue` (`#3b82f6`). Instrument Serif provides no native bold weight, so do not add a nonexistent 700 font import.
+- Playfair Display is reserved for the existing emphasized word in the homepage H1.
+- The hero accent uses Playfair Display's native 700 italic face, `-0.03em` tracking, and `--wave-blue` (`#3b82f6`). Do not simulate weight with font synthesis, text strokes, or shadows.
 - Use tabular numerals with Inter when columns of numbers must align. Do not introduce a UI monospace face.
 - Typography inside `ProjectVisual.astro` and related simulated interfaces is illustrative artwork and is exempt.
 
