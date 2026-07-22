@@ -1,17 +1,17 @@
 ---
 import BrandMark from "@/components/BrandMark.astro";
-import { localizePath, t, type Locale } from "@/lib/i18n";
+import { localizePath, studioLocation, t, type Locale } from "@/lib/i18n";
 interface Props { locale: Locale; }
 const { locale } = Astro.props;
 ---
 <footer class="site-footer bg-dark px-page pt-section pb-8 text-inverse">
   <div class="footer-main flex min-h-40 justify-between gap-12 max-[600px]:block">
-    <a href={localizePath("/", locale)} class="footer-brand inline-flex min-h-11 items-center text-body-lg [&_.brand-wordmark]:text-[2rem]"><BrandMark /></a>
+    <a href={localizePath("/", locale)} class="footer-brand inline-flex min-h-11 items-center [&_.brand-wordmark]:text-heading-md"><BrandMark /></a>
     <div class="footer-links flex gap-20 max-[600px]:mt-16 max-[600px]:grid max-[600px]:grid-cols-2 max-[600px]:gap-x-6 max-[600px]:gap-y-12">
       <div class="flex min-w-25 flex-col gap-2"><span class="mb-3 text-caption text-[#929292]">{t(locale, "Explore")}</span><a class="text-small" href={localizePath("/work", locale)}>{t(locale, "Work")}</a><a class="text-small" href={localizePath("/services", locale)}>{t(locale, "Services")}</a><a class="text-small" href={localizePath("/about", locale)}>{t(locale, "About")}</a></div>
       <div class="flex min-w-25 flex-col gap-2"><span class="mb-3 text-caption text-[#929292]">{t(locale, "Connect")}</span><a class="text-small" href={localizePath("/contact", locale)}>{t(locale, "Contact")}</a><a class="text-small" href="mailto:hello@webpilot.studio">{t(locale, "Email")}</a></div>
       <div class="flex min-w-25 flex-col gap-2"><span class="mb-3 text-caption text-[#929292]">{locale === "de" ? "Rechtliches" : "Legal"}</span><a class="text-small" href={localizePath("/privacy", locale)}>{locale === "de" ? "Datenschutz" : "Privacy"}</a><a class="text-small" href={localizePath("/imprint", locale)}>{locale === "de" ? "Impressum" : "Imprint"}</a></div>
     </div>
   </div>
-  <div class="footer-legal flex justify-between border-t border-[#292929] pt-6 text-caption text-[#929292] max-[600px]:flex-col max-[600px]:gap-2"><span>© 2026 Webpilot Studio</span><a href="mailto:hello@webpilot.studio">hello@webpilot.studio</a><span>{locale === "de" ? "Sitz in Deutschland · Weltweit tätig" : "Based in Germany · Operating worldwide"}</span></div>
+  <div class="footer-legal flex justify-between border-t border-[#292929] pt-6 text-caption text-[#929292] max-[600px]:mt-12 max-[600px]:flex-col max-[600px]:gap-2"><span>© 2026 Webpilot Studio</span><a href="mailto:hello@webpilot.studio">hello@webpilot.studio</a><span>{studioLocation(locale)}</span></div>
 </footer>

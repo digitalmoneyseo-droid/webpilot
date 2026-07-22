@@ -1,36 +1,40 @@
 :root {
-  /* Compact, role-based scale. Each step stays visibly distinct. */
-  --font-size-100: 0.75rem;  /* 12px */
-  --font-size-200: 0.875rem; /* 14px */
-  --font-size-300: 1rem;     /* 16px */
-  --font-size-400: 1.125rem; /* 18px */
-  --font-size-500: clamp(1.1875rem, 0.2vw + 1.14rem, 1.25rem);/* 19–20px */
-  --font-size-600: clamp(1.375rem, 0.35vw + 1.28rem, 1.5rem); /* 22–24px */
-  --font-size-700: clamp(1.75rem, 0.6vw + 1.62rem, 2rem);     /* 28–32px */
-  --font-size-800: clamp(2.25rem, 1vw + 2rem, 2.75rem);      /* 36–44px */
-  --font-size-900: clamp(2.75rem, 1vw + 2.5rem, 3.25rem);    /* 44–52px */
+  /* Discrete role-based scale. Portfolio artwork remains intentionally exempt. */
+  --font-size-12: 0.75rem;
+  --font-size-14: 0.875rem;
+  --font-size-16: 1rem;
+  --font-size-18: 1.125rem;
+  --font-size-20: 1.25rem;
+  --font-size-24: 1.5rem;
+  --font-size-32: 2rem;
+  --font-size-40: 2.5rem;
+  --font-size-64: 4rem;
 
   /* Semantic roles: visual hierarchy is independent of HTML heading level. */
-  --type-caption: var(--font-size-100);
-  --type-helper: 0.8125rem;
-  --type-small: var(--font-size-200);
-  --type-body: var(--font-size-300);
-  --type-body-lg: var(--font-size-400);
-  --type-lead: clamp(1.125rem, 0.3vw + 1.05rem, 1.25rem);
-  --type-heading-sm: var(--font-size-500);
-  --type-heading-md: var(--font-size-600);
-  --type-heading-lg: var(--font-size-700);
-  --type-display-sm: var(--font-size-800);
-  --type-display-lg: var(--font-size-900);
+  --type-caption: var(--font-size-12);
+  --type-helper: var(--font-size-14);
+  --type-small: var(--font-size-14);
+  --type-control: var(--font-size-14);
+  --type-label: var(--font-size-12);
+  --type-body: var(--font-size-16);
+  --type-body-lg: var(--font-size-18);
+  --type-lead: var(--font-size-20);
+  --type-heading-sm: var(--font-size-24);
+  --type-heading-md: var(--font-size-32);
+  --type-heading-lg: var(--font-size-40);
+  --type-display-sm: var(--font-size-40);
+  --type-display-lg: var(--font-size-64);
 
-  --leading-caption: 1.45;
-  --leading-small: 1.45;
-  --leading-body: 1.55;
-  --leading-heading-sm: 1.28;
-  --leading-heading-md: 1.18;
-  --leading-heading-lg: 1.08;
-  --leading-display-sm: 1.04;
-  --leading-display-lg: 1;
+  --leading-caption: 1.4;
+  --leading-small: 1.5;
+  --leading-control: 1.2;
+  --leading-label: 1.4;
+  --leading-body: 1.6;
+  --leading-heading-sm: 1.3;
+  --leading-heading-md: 1.3;
+  --leading-heading-lg: 1.3;
+  --leading-display-sm: 1.2;
+  --leading-display-lg: 1.05;
 
   --font-weight-regular: 400;
   --font-weight-medium: 500;
@@ -43,13 +47,14 @@
   --weight-strong: var(--font-weight-bold);
 
   --tracking-caption: 0.01em;
-  --tracking-small: -0.005em;
-  --tracking-label: 0.045em;
-  --tracking-heading-sm: -0.012em;
+  --tracking-small: 0;
+  --tracking-control: 0.02em;
+  --tracking-label: 0.08em;
+  --tracking-heading-sm: -0.01em;
   --tracking-heading-md: -0.015em;
-  --tracking-heading-lg: -0.02em;
-  --tracking-display-sm: -0.025em;
-  --tracking-display-lg: -0.035em;
+  --tracking-heading-lg: -0.015em;
+  --tracking-display-sm: -0.015em;
+  --tracking-display-lg: -0.02em;
 
   --measure-reading: 68ch;
   --measure-narrow: 54ch;
@@ -111,9 +116,9 @@ body {
 }
 
 .service-card h3 {
-  font-size: var(--type-heading-md);
-  line-height: var(--leading-heading-md);
-  letter-spacing: var(--tracking-heading-md);
+  font-size: var(--type-heading-sm);
+  line-height: var(--leading-heading-sm);
+  letter-spacing: var(--tracking-heading-sm);
   font-weight: var(--weight-heading);
 }
 
@@ -128,12 +133,16 @@ body {
 
 @media (max-width: 600px) {
   :root {
+    --type-lead: var(--font-size-18);
+    --type-heading-sm: var(--font-size-20);
+    --type-heading-md: var(--font-size-24);
+    --type-heading-lg: var(--font-size-32);
+    --type-display-sm: var(--font-size-32);
+    --type-display-lg: var(--font-size-40);
     --page-gutter: 1.125rem;
     --section-space: 2.5rem;
     --section-space-compact: var(--section-space);
     --section-heading-gap: 2rem;
-    --leading-display-sm: 1.05;
-    --leading-display-lg: 1.03;
   }
 
 }
@@ -165,13 +174,15 @@ body {
 
 .service-card::before { height: 62%; opacity: .72; }
 .service-card p { min-height: 0; max-width: 34ch; font-size: var(--type-body); color: #d0d0cb; font-weight: var(--weight-body); }
-.service-card h3 { margin-top: auto; font-size: var(--type-heading-md); line-height: var(--leading-heading-md); letter-spacing: var(--tracking-heading-md); }
+.service-card h3 { margin-top: 0; font-size: var(--type-heading-sm); line-height: var(--leading-heading-sm); letter-spacing: var(--tracking-heading-sm); }
 .service-card:hover { transform: none; background: #151515; box-shadow: var(--shadow-dark-surface); }
 .service-category-section > .section-heading { margin-inline: auto; text-align: center; }
 .service-category-section > .section-heading p { margin-inline: auto; }
 .engagement-section.process-section > .section-heading { margin-inline: auto; text-align: center; }
 .engagement-section.process-section > .section-heading p { margin-inline: auto; }
-.service-category-cta-label-track { transition:transform 500ms cubic-bezier(.16,1,.3,1); }
+.service-category-cta-label { display:block; height:calc(1.2em + 4px); overflow:hidden; }
+.service-category-cta-label-track { display:flex; height:calc(2.4em + 8px); flex-direction:column; transition:transform 500ms cubic-bezier(.16,1,.3,1); }
+.service-category-cta-label-track > span { display:flex; flex:0 0 calc(1.2em + 4px); align-items:center; white-space:nowrap; }
 .service-category-cta-arrow { transition:opacity 700ms cubic-bezier(.16,1,.3,1),transform 700ms cubic-bezier(.16,1,.3,1); }
 .service-category-cta-arrow--right { opacity:1; transform:translate(0,0) scale(1); }
 .service-category-cta-arrow--up-right { opacity:0; transform:translate(-6px,6px) scale(.8); }
@@ -179,9 +190,9 @@ body {
   .megamenu-list > a:hover .megamenu-label-track { transform:translateY(-50%); }
   .megamenu-list > a:hover .megamenu-arrow--right { opacity:0; transform:translate(6px,-6px) scale(.8); }
   .megamenu-list > a:hover .megamenu-arrow--up-right { opacity:1; transform:translate(0,0) scale(1); }
-  .service-category-main:hover .service-category-cta-label-track { transform:translateY(-50%); }
-  .service-category-main:hover .service-category-cta-arrow--right { opacity:0; transform:translate(6px,-6px) scale(.8); }
-  .service-category-main:hover .service-category-cta-arrow--up-right { opacity:1; transform:translate(0,0) scale(1); }
+  .service-category-main:is(:hover,:focus-visible) .service-category-cta-label-track { transform:translateY(calc(-1.2em - 4px)); }
+  .service-category-main:is(:hover,:focus-visible) .service-category-cta-arrow--right { opacity:0; transform:translate(6px,-6px) scale(.8); }
+  .service-category-main:is(:hover,:focus-visible) .service-category-cta-arrow--up-right { opacity:1; transform:translate(0,0) scale(1); }
 }
 html[lang="en"] .hero--home h1 {
   max-width: none;

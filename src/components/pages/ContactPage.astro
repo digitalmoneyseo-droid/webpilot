@@ -23,51 +23,51 @@ const budgets = contactBudgets.map(({ id, label }) => [id, label[locale]] as con
   <main id="main-content" class="page-main page-main--contact">
     <section class="contact-page mx-auto flex min-h-[42rem] w-[min(100%,calc(var(--layout-max)+2*var(--space-6)))] max-w-none flex-col items-center gap-12 px-8 pt-[var(--page-title-top)] pb-section max-[900px]:grid-cols-1 max-[900px]:gap-6 max-[900px]:pt-28 max-[600px]:gap-5 max-[600px]:px-0 max-[600px]:pt-24 max-[600px]:pb-0">
       <div class="contact-intro w-full max-w-3xl min-w-0 text-center max-[900px]:static">
-        <h1 class="mx-auto mb-4 w-[min(100%,48rem)] max-w-3xl text-display-lg font-bold text-balance [overflow-wrap:normal]">{locale === "de" ? <>Lassen Sie uns Ihr Wachstum <wbr />voranbringen.</> : "Let’s help your business grow."}</h1>
+        <h1 class="mx-auto mb-4 w-[min(100%,48rem)] max-w-3xl text-display-sm font-semibold text-balance [overflow-wrap:normal]">{locale === "de" ? <>Lassen Sie uns Ihr Wachstum <wbr />voranbringen.</> : "Let’s help your business grow."}</h1>
         <p class="mx-auto max-w-3xl text-lead font-medium text-[color-mix(in_oklch,var(--ink)_78%,var(--bg))] text-balance">{locale === "de" ? "Sagen Sie uns, was Sie bauen, was Sie bremst und welches Ziel Sie erreichen wollen." : "Tell us what you are building, what holds it back, and what result you want."}</p>
         <a href="mailto:hello@webpilot.studio">hello@webpilot.studio ↗</a>
       </div>
 
       <form class="contact-form m-0 grid w-full max-w-160 min-w-0 gap-6 rounded-shell border border-[#303030] bg-[var(--form-background)] p-6 text-inverse shadow-none [--form-background:var(--dark)] [--form-border:color-mix(in_oklch,var(--dark)_72%,var(--inverse))] [--form-control:color-mix(in_oklch,var(--dark)_88%,var(--inverse))] [--form-error:var(--error)] [--form-muted:var(--dark-muted)] max-[900px]:justify-self-center max-[600px]:max-w-none max-[600px]:gap-5 max-[600px]:rounded-none max-[600px]:px-5 max-[600px]:py-6" action="/api/contact" method="post" enctype="application/x-www-form-urlencoded" data-contact-form novalidate>
         <header class="contact-form-header m-0 grid gap-1 border-0 p-0">
-          <h2 class="m-0 text-small font-semibold tracking-normal text-inverse">{locale === "de" ? "Ein paar Details genügen." : "A few details are enough."}</h2>
+          <h2 class="m-0 text-control font-medium text-inverse">{locale === "de" ? "Ein paar Details genügen." : "A few details are enough."}</h2>
           <p class="m-0 max-w-none text-small text-[var(--form-muted)]">{locale === "de" ? "Wählen Sie aus, was passt. Mehrere Leistungen und „noch unsicher“ sind völlig in Ordnung." : "Choose whatever fits. Multiple services and “not sure yet” are completely fine."}</p>
         </header>
 
         <div class="form-status m-0 rounded-control border border-[var(--form-border)] bg-[var(--form-control)] p-[13px] text-inverse" role="status" aria-live="polite" tabindex="-1" data-form-status hidden></div>
 
         <section class="form-section form-section--about m-0 grid min-w-0 gap-6 border-0 bg-transparent p-0" aria-labelledby="contact-details-heading">
-          <h3 class="m-0 min-h-0 p-0 text-small font-semibold tracking-normal text-inverse" id="contact-details-heading">{locale === "de" ? "Über Sie" : "About you"}</h3>
+          <h3 class="m-0 min-h-0 p-0 text-control font-medium text-inverse" id="contact-details-heading">{locale === "de" ? "Über Sie" : "About you"}</h3>
           <div class="form-row m-0 grid min-w-0 grid-cols-2 gap-6 border-0 bg-transparent p-0 max-[600px]:grid-cols-1">
             <label class="form-field m-0 grid min-w-0 gap-2 border-0 bg-transparent p-0" data-field="name">
-              <span class="block min-h-0 m-0 p-0 text-small font-semibold tracking-normal text-inverse">{locale === "de" ? "Ihr Name" : "Your name"}</span>
+              <span class="block min-h-0 m-0 p-0 text-control font-medium text-inverse">{locale === "de" ? "Ihr Name" : "Your name"}</span>
               <input class="m-0 min-h-9 w-full min-w-0 rounded-control border border-[var(--form-border)] bg-[var(--form-control)] px-3 py-2 text-small font-normal tracking-normal text-inverse shadow-[0_1px_2px_rgb(0_0_0/18%)] outline-0 [transition:border-color_150ms_ease,box-shadow_150ms_ease]" id="contact-name" name="name" type="text" autocomplete="name" minlength="2" maxlength="100" required placeholder="Ada Lovelace" aria-describedby="name-error" />
               <small class="field-message m-0 min-h-0 text-small font-normal text-[var(--form-error)]" id="name-error" aria-live="polite" data-field-error></small>
             </label>
             <label class="form-field m-0 grid min-w-0 gap-2 border-0 bg-transparent p-0" data-field="email">
-              <span class="block min-h-0 m-0 p-0 text-small font-semibold tracking-normal text-inverse">{locale === "de" ? "Geschäftliche E-Mail" : "Work email"}</span>
+              <span class="block min-h-0 m-0 p-0 text-control font-medium text-inverse">{locale === "de" ? "Geschäftliche E-Mail" : "Work email"}</span>
               <span class="form-control form-control--email relative m-0 block min-w-0">
                 <input class="m-0 min-h-9 w-full min-w-0 rounded-control border border-[var(--form-border)] bg-[var(--form-control)] py-2 pr-11 pl-3 text-small font-normal tracking-normal text-inverse shadow-[0_1px_2px_rgb(0_0_0/18%)] outline-0 [transition:border-color_150ms_ease,box-shadow_150ms_ease]" id="contact-email" name="email" type="email" autocomplete="email" maxlength="254" required spellcheck="false" placeholder="ada@company.com" aria-describedby="email-hint" data-email-input />
-                <span class="email-valid-icon absolute top-1/2 right-3 grid size-[1.15rem] place-items-center rounded-full bg-inverse text-[.65rem] font-extrabold text-dark" aria-hidden="true">✓</span>
+                <span class="email-valid-icon absolute top-1/2 right-3 grid size-[1.15rem] place-items-center rounded-full bg-inverse text-caption font-semibold text-dark" aria-hidden="true">✓</span>
               </span>
               <small class="field-message m-0 min-h-0 text-small font-normal text-[var(--form-error)]" id="email-hint" aria-live="polite" data-email-hint data-field-error></small>
             </label>
           </div>
 
           <label class="form-field m-0 grid min-w-0 gap-2 border-0 bg-transparent p-0">
-            <span class="block min-h-0 m-0 p-0 text-small font-semibold tracking-normal text-inverse">{locale === "de" ? "Unternehmen" : "Company"} <em>({locale === "de" ? "optional" : "optional"})</em></span>
+            <span class="block min-h-0 m-0 p-0 text-control font-medium text-inverse">{locale === "de" ? "Unternehmen" : "Company"} <em>({locale === "de" ? "optional" : "optional"})</em></span>
             <input class="m-0 min-h-9 w-full min-w-0 rounded-control border border-[var(--form-border)] bg-[var(--form-control)] px-3 py-2 text-small font-normal tracking-normal text-inverse shadow-[0_1px_2px_rgb(0_0_0/18%)] outline-0 [transition:border-color_150ms_ease,box-shadow_150ms_ease]" name="company" type="text" autocomplete="organization" maxlength="120" placeholder={locale === "de" ? "Unternehmensname" : "Company name"} />
           </label>
         </section>
 
         <fieldset class="form-services form-section m-0 grid min-w-0 gap-6 border-0 bg-transparent p-0" data-field="interests">
-          <legend class="m-0 min-h-0 p-0 text-small font-semibold tracking-normal text-inverse">{locale === "de" ? "Wobei können wir helfen?" : "What can we help with?"} <em class="required-marker text-[.8em] font-normal not-italic text-[var(--form-muted)]" aria-hidden="true">*</em><span class="sr-only"> {locale === "de" ? "Pflichtfeld" : "Required"}</span></legend>
+          <legend class="m-0 min-h-0 p-0 text-control font-medium text-inverse">{locale === "de" ? "Wobei können wir helfen?" : "What can we help with?"} <em class="required-marker text-[.8em] font-normal not-italic text-[var(--form-muted)]" aria-hidden="true">*</em><span class="sr-only"> {locale === "de" ? "Pflichtfeld" : "Required"}</span></legend>
           <p class="form-section-note mt-1 block max-w-[46ch] text-small font-normal tracking-normal text-[var(--form-muted)]">{locale === "de" ? "Mehrfachauswahl möglich" : "Select all that apply"}</p>
           <div class="form-options form-options--services flex flex-wrap gap-2 rounded-[calc(var(--radius-control,_.5rem)+var(--space-1))] border border-transparent p-1">
             {interests.map(([value, label]) => (
               <label class="min-w-0 cursor-pointer">
                 <input class="absolute size-px opacity-0" type="checkbox" name="interests" value={value} />
-                <span class="inline-flex min-h-9 items-center gap-2 rounded-control border border-[var(--form-border)] bg-[var(--form-control)] px-3 py-2 text-[var(--type-helper)] leading-[var(--leading-small)] text-inverse [transition:border-color_150ms_ease,background-color_150ms_ease]"><b>{label}</b></span>
+                <span class="inline-flex min-h-9 items-center gap-2 rounded-control border border-[var(--form-border)] bg-[var(--form-control)] px-3 py-2 text-control text-inverse [transition:border-color_150ms_ease,background-color_150ms_ease]"><b class="font-medium">{label}</b></span>
               </label>
             ))}
           </div>
@@ -75,7 +75,7 @@ const budgets = contactBudgets.map(({ id, label }) => [id, label[locale]] as con
         </fieldset>
 
         <section class="form-section form-section--project m-0 grid min-w-0 gap-6 border-0 bg-transparent p-0" aria-labelledby="project-heading" data-field="brief">
-          <h3 class="m-0 min-h-0 p-0 text-small font-semibold tracking-normal text-inverse" id="project-heading">{locale === "de" ? "Ihr Projekt" : "Your project"} <em class="required-marker text-[.8em] font-normal not-italic text-[var(--form-muted)]" aria-hidden="true">*</em></h3>
+          <h3 class="m-0 min-h-0 p-0 text-control font-medium text-inverse" id="project-heading">{locale === "de" ? "Ihr Projekt" : "Your project"} <em class="required-marker text-[.8em] font-normal not-italic text-[var(--form-muted)]" aria-hidden="true">*</em></h3>
           <label class="form-field form-field--brief m-0 grid min-w-0 gap-2 border-0 bg-transparent p-0">
             <span class="sr-only">{locale === "de" ? "Projektdetails" : "Project details"}</span>
             <span class="form-input-group relative m-0 block min-w-0">
@@ -88,13 +88,13 @@ const budgets = contactBudgets.map(({ id, label }) => [id, label[locale]] as con
         </section>
 
         <fieldset class="form-services form-section form-budget m-0 grid min-w-0 gap-6 border-0 bg-transparent p-0">
-          <legend class="m-0 min-h-0 p-0 text-small font-semibold tracking-normal text-inverse">{locale === "de" ? "Mit welchem Budgetrahmen arbeiten Sie?" : "What budget range are you working with?"} <em class="text-[.8em] font-normal not-italic text-[var(--form-muted)]">({locale === "de" ? "optional" : "optional"})</em></legend>
+          <legend class="m-0 min-h-0 p-0 text-control font-medium text-inverse">{locale === "de" ? "Mit welchem Budgetrahmen arbeiten Sie?" : "What budget range are you working with?"} <em class="text-[.8em] font-normal not-italic text-[var(--form-muted)]">({locale === "de" ? "optional" : "optional"})</em></legend>
           <p class="form-section-note mt-1 block max-w-[46ch] text-small font-normal tracking-normal text-[var(--form-muted)]">{locale === "de" ? "Eine Auswahl" : "Choose one"}</p>
           <div class="form-options form-options--budget flex flex-wrap gap-2 rounded-[calc(var(--radius-control,_.5rem)+var(--space-1))] border border-transparent p-1">
             {budgets.map(([value, label]) => (
               <label class="min-w-0 cursor-pointer">
                 <input class="absolute size-px opacity-0" type="radio" name="budget" value={value} />
-                <span class="inline-flex min-h-9 items-center gap-2 rounded-control border border-[var(--form-border)] bg-[var(--form-control)] px-3 py-2 text-[var(--type-helper)] leading-[var(--leading-small)] text-inverse [transition:border-color_150ms_ease,background-color_150ms_ease]"><b>{label}</b></span>
+                <span class="inline-flex min-h-9 items-center gap-2 rounded-control border border-[var(--form-border)] bg-[var(--form-control)] px-3 py-2 text-control text-inverse [transition:border-color_150ms_ease,background-color_150ms_ease]"><b class="font-medium">{label}</b></span>
               </label>
             ))}
           </div>
@@ -104,8 +104,8 @@ const budgets = contactBudgets.map(({ id, label }) => [id, label[locale]] as con
         <label class="website-field" aria-hidden="true"><span>Website</span><input name="website" type="text" tabindex="-1" autocomplete="off" /></label>
         <div class="cf-turnstile m-0 grayscale" data-sitekey={turnstileSiteKey} data-theme="light" data-size="flexible" data-appearance="interaction-only"></div>
         <div class="form-actions flex items-stretch gap-3">
-          <button class="form-reset m-0 inline-flex min-h-9 h-auto w-auto flex-1 cursor-pointer items-center justify-center whitespace-nowrap rounded-control border border-[var(--form-border)] bg-[var(--form-control)] px-4 py-[.45rem] text-small font-semibold leading-tight text-inverse [transition:background-color_150ms_ease,border-color_150ms_ease,transform_150ms_var(--ease-out)]" type="reset" data-reset-button>{locale === "de" ? "Zurücksetzen" : "Reset"}</button>
-          <button class="form-submit m-0 inline-flex min-h-9 h-auto w-auto flex-1 cursor-pointer items-center justify-center whitespace-nowrap rounded-control border border-surface-subtle bg-inverse px-4 py-[.45rem] text-small font-semibold leading-tight text-dark [transition:background-color_150ms_ease,border-color_150ms_ease,transform_150ms_var(--ease-out)]" type="submit" data-submit-button data-state="idle">
+          <button class="form-reset m-0 inline-flex min-h-9 h-auto w-auto flex-1 cursor-pointer items-center justify-center whitespace-nowrap rounded-control border border-[var(--form-border)] bg-[var(--form-control)] px-4 py-[.45rem] text-control font-medium text-inverse [transition:background-color_150ms_ease,border-color_150ms_ease,transform_150ms_var(--ease-out)]" type="reset" data-reset-button>{locale === "de" ? "Zurücksetzen" : "Reset"}</button>
+          <button class="form-submit m-0 inline-flex min-h-9 h-auto w-auto flex-1 cursor-pointer items-center justify-center whitespace-nowrap rounded-control border border-surface-subtle bg-inverse px-4 py-[.45rem] text-control font-medium text-dark [transition:background-color_150ms_ease,border-color_150ms_ease,transform_150ms_var(--ease-out)]" type="submit" data-submit-button data-state="idle">
             <span class="form-submit__idle block">{locale === "de" ? "Anfrage senden" : "Send enquiry"}</span>
             <span class="form-submit__pending absolute inset-y-0 left-4 flex items-center gap-2 text-inherit" aria-hidden="true">
               <span class="form-submit__spinner size-3.5 flex-none rounded-full border-2 border-[rgb(23_23_23/28%)] border-t-[#171717]" aria-hidden="true"></span>

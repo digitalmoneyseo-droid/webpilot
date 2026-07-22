@@ -11,7 +11,7 @@ const instanceId = id;
     {items.map((item, index) => {
       const itemId = `${instanceId}-${index}`;
       return <div class="faq-item overflow-hidden rounded-card bg-surface shadow-surface">
-        <button class="grid min-h-14 w-full cursor-pointer grid-cols-[1fr_24px] items-center gap-3 rounded-card border-0 bg-transparent px-5 py-4 text-left" id={`${itemId}-button`} type="button" aria-expanded="false" aria-controls={`${itemId}-answer`}><span class="faq-question text-body-lg leading-[1.35] font-semibold tracking-[-.01em] max-[600px]:text-base">{item.data.question}</span><span class="faq-toggle grid size-6 place-items-center justify-self-end [&_svg]:w-4.5"><Icon name="plus" /></span></button>
+        <button class="grid min-h-14 w-full cursor-pointer grid-cols-[1fr_24px] items-center gap-3 rounded-card border-0 bg-transparent px-5 py-4 text-left" id={`${itemId}-button`} type="button" aria-expanded="false" aria-controls={`${itemId}-answer`}><span class="faq-question text-body-lg font-semibold">{item.data.question}</span><span class="faq-toggle grid size-6 place-items-center justify-self-end [&_svg]:w-4.5"><Icon name="plus" /></span></button>
         <div id={`${itemId}-answer`} class="faq-answer" role="region" aria-labelledby={`${itemId}-button`} aria-hidden="true"><div><p class="m-0 max-w-reading px-5 pb-5 text-body text-muted">{item.data.answer}</p></div></div>
       </div>;
     })}

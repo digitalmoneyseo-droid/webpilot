@@ -7,6 +7,10 @@ export function t(locale: Locale, english: string): string {
   return (dictionaries[locale] as Readonly<Record<string, string>>)[english] ?? english;
 }
 
+export function studioLocation(locale: Locale): string {
+  return locale === "de" ? "Sitz in Deutschland · Weltweit tätig" : "Based in Germany · Operating worldwide";
+}
+
 export function localizePath(path: string, locale: Locale): string {
   const normalized = path.startsWith("/") ? path : `/${path}`;
   if (locale === "de") return normalized;

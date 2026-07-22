@@ -110,7 +110,7 @@ const process =
       copy={s.summary}
     /><section class="service-detail-intro grid grid-cols-[1.15fr_.85fr] items-start gap-20 px-page py-section max-[900px]:grid-cols-1 max-[900px]:gap-12">
       <div class="service-statement">
-        <span class="font-[var(--font-mono)] text-caption uppercase">{locale === "de" ? "Was wir lösen" : "What we solve"}</span><h2 class="my-6 text-heading-lg font-semibold">
+        <span class="text-label font-medium uppercase">{locale === "de" ? "Was wir lösen" : "What we solve"}</span><h2 class="my-6 text-heading-lg font-semibold">
           {
             locale === "de"
               ? "Jeden Schritt klarer, schneller und wertvoller machen."
@@ -151,7 +151,7 @@ const process =
           s.outcomes.map((outcome, index) => (
             <div class="flex min-h-36 flex-col justify-between rounded-card bg-surface p-6 shadow-surface">
               <>
-                <span class="font-[var(--font-mono)] text-caption text-[#888]">0{index + 1}</span>
+                <span class="text-caption tabular-nums text-[#888]">0{index + 1}</span>
                 <h3 class="text-heading-sm font-semibold">{outcome}</h3>
               </>
             </div>
@@ -159,7 +159,7 @@ const process =
         }
       </div>
     </section><section class="case-tools service-tools mx-auto mt-0 grid max-w-layout grid-cols-[200px_1fr] border-b border-line py-section-compact max-[900px]:mx-page max-[600px]:grid-cols-1 max-[600px]:gap-6">
-      <span class="font-[var(--font-mono)] text-caption uppercase">{locale === "de" ? "Relevante Tools" : "Relevant tools"}</span><div class="flex flex-wrap gap-2">
+      <span class="text-label font-medium uppercase">{locale === "de" ? "Relevante Tools" : "Relevant tools"}</span><div class="flex flex-wrap gap-2">
         {s.tools.map((tool) => <i class="rounded-card border border-[#ccc] px-[13px] py-[9px] text-caption not-italic">{tool}</i>)}
       </div>
     </section><RelatedWork
