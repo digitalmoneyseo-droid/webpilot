@@ -75,7 +75,7 @@ const sectionNavigation = locale === "de" ? [
 <BaseLayout {locale} {description}>
   <main id="main-content">
     <SectionNavigation {locale} items={sectionNavigation} />
-    <section class="hero hero--home grid min-h-[34rem] grid-cols-1 [place-items:start_center] px-page pt-32 pb-16 max-[600px]:min-h-0 max-[600px]:px-[18px] max-[600px]:pt-[6.5rem] max-[600px]:pb-12">
+    <section class="hero hero--home grid grid-cols-1 [place-items:start_center] px-page pt-32 pb-section max-[600px]:px-[18px] max-[600px]:pt-[6.5rem]">
       <div class="hero-inner flex w-full min-w-0 max-w-[58rem] flex-col items-center text-center">
         <h1 class="mt-6 mb-6 w-full max-w-hero text-display-lg font-semibold max-[600px]:max-w-full" aria-label={heroTitle}>
           <span class="shiny-text inline-block" aria-hidden="true">{heroSegments.map((word, wordIndex) => <>{word.emphasis ? <em class="hero-word-group inline-block whitespace-nowrap">{word.letters.map((letter) => <span class="hero-letter-mask inline-block align-bottom"><span class="hero-letter inline-block" style={`--letter-index:${letter.index}`}>{letter.text}</span></span>)}</em> : <span class="hero-word-group inline-block whitespace-nowrap">{word.letters.map((letter) => <span class="hero-letter-mask inline-block align-bottom"><span class="hero-letter inline-block" style={`--letter-index:${letter.index}`}>{letter.text}</span></span>)}</span>}{wordIndex < heroSegments.length - 1 && " "}</>)}</span>
@@ -85,19 +85,21 @@ const sectionNavigation = locale === "de" ? [
       </div>
     </section>
 
-    <section class="work-ribbon overflow-hidden px-6 pt-2 pb-[54px] max-[900px]:px-0 max-[600px]:px-0 max-[600px]:pt-2 max-[600px]:pb-[38px]" aria-label={t(locale, "Selected work")} data-work-ribbon><div class="work-ribbon-track flex w-max will-change-transform"><div class="work-ribbon-group flex flex-none">{projects.map(({ data }) => <ProjectCard project={data} {locale} />)}</div><div class="work-ribbon-group flex flex-none" aria-hidden="true">{projects.map(({ data }) => <ProjectCard project={data} {locale} decorative />)}</div></div></section>
+    <section class="work-ribbon overflow-hidden px-6 max-[900px]:px-0" aria-label={t(locale, "Selected work")} data-work-ribbon><div class="work-ribbon-track flex w-max will-change-transform"><div class="work-ribbon-group flex flex-none">{projects.map(({ data }) => <ProjectCard project={data} {locale} />)}</div><div class="work-ribbon-group flex flex-none" aria-hidden="true">{projects.map(({ data }) => <ProjectCard project={data} {locale} decorative />)}</div></div></section>
 
-    <section class="why-section px-page pt-[90px] pb-section"><SectionHeading title={t(locale, "Why Webpilot")} align="center" /><div class="benefit-grid grid grid-cols-6 gap-4 max-[900px]:grid-cols-2 max-[600px]:grid-cols-1">{benefits.map(([icon, title, copy], index) => <Reveal class={`benefit-card benefit-card-${index + 1} col-span-2 px-6 pt-3 pb-6 text-center max-[900px]:col-auto`} delay={index * 50}><div class="benefit-visual grid place-items-center text-ink [&_svg]:size-[42px]"><BenefitIcon name={icon} /></div><h3 class="mt-6 mb-2 text-heading-sm font-semibold">{t(locale, title)}</h3><p class="m-0 text-body leading-body text-muted">{t(locale, copy)}</p></Reveal>)}</div></section>
+    <section class="why-section px-page py-section"><SectionHeading title={t(locale, "Why Webpilot")} align="center" /><div class="benefit-grid grid grid-cols-6 gap-4 max-[900px]:grid-cols-2 max-[600px]:grid-cols-1">{benefits.map(([icon, title, copy], index) => <Reveal class={`benefit-card benefit-card-${index + 1} col-span-2 px-6 pt-3 pb-6 text-center max-[900px]:col-auto`} delay={index * 50}><div class="benefit-visual grid place-items-center text-ink [&_svg]:size-[42px]"><BenefitIcon name={icon} /></div><h3 class="mt-6 mb-2 text-heading-sm font-semibold">{t(locale, title)}</h3><p class="m-0 text-body leading-body text-muted">{t(locale, copy)}</p></Reveal>)}</div></section>
 
     <section class="service-section bg-dark px-page py-section text-inverse">
       <SectionHeading title={t(locale, "Build. Grow. Automate.")} copy={t(locale, "We cover many skills but judge all work by one thing: your business result.")} />
       <div class="service-trio grid grid-cols-3 gap-4 max-[900px]:grid-cols-2 max-[600px]:grid-cols-1" data-reveal data-reveal-late data-mobile-reveal-items>
         {servicePillars.map((pillar, index) => <div class="service-drop-card" style={`--service-drop-delay:${index * 110}ms`}>
-          <article class={`service-card service-card--${pillar.id} relative flex min-h-96 flex-col overflow-hidden rounded-card border-0 bg-[#151515] p-6 shadow-dark-surface max-[600px]:min-h-[22rem]`}>
+          <div class="service-drop-card__reveal">
+            <article class={`service-card service-card--${pillar.id} relative flex min-h-96 flex-col overflow-hidden rounded-card border-0 bg-[#151515] p-6 shadow-dark-surface max-[600px]:min-h-[22rem]`}>
               <ServiceSymbol name={pillar.symbol} />
               <h3>{localizedPillarTitle(pillar, locale)}</h3>
               <p>{localizedPillarDescription(pillar, locale)}</p>
             </article>
+          </div>
           </div>)}
       </div>
     </section>
