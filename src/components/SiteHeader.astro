@@ -14,7 +14,7 @@ const isActive = (href: string) => {
 <header class="site-header fixed top-[22px] left-1/2 z-50 flex w-max items-center gap-2 [transform:translateX(-50%)] max-[900px]:left-[15px] max-[900px]:[transform:none]">
   <a href={localizePath("/", locale)} class="header-mark inline-flex h-11 w-auto items-center justify-center rounded-[12px] border-0 bg-white px-[17px] shadow-surface" aria-label={t(locale, "Webpilot home")}><BrandMark /></a>
   <nav class="desktop-nav relative inline-flex h-11 items-center justify-center gap-px rounded-[12px] border-0 bg-white p-1 shadow-surface max-[900px]:hidden" aria-label={t(locale, "Main navigation")}>
-    <span class="desktop-nav-indicator pointer-events-none absolute top-1 bottom-1 left-0 rounded-lg bg-[#111] opacity-0" aria-hidden="true"></span>
+    <span class="desktop-nav-indicator pointer-events-none absolute top-1 bottom-1 left-0 rounded-lg bg-[#f1f1ee] opacity-0" aria-hidden="true"></span>
     <a href={localizePath("/work", locale)} class:list={["relative z-1 inline-flex h-9 items-center rounded-lg px-3.5 text-control font-medium text-[#696965]", { "is-active": isActive("/work") }]} aria-current={isActive("/work") ? "page" : undefined}>{t(locale, "Work")}</a>
     <div class="desktop-services static h-9">
       <button type="button" class:list={["desktop-services-trigger relative z-1 inline-flex h-9 cursor-pointer list-none items-center gap-[5px] rounded-lg border-0 bg-transparent px-3 text-control font-medium text-[#696965]", { "is-active": isActive("/services") }]} aria-haspopup="true" aria-expanded="false" aria-controls="desktop-services-menu"><span>{t(locale, "Services")}</span><Icon name="chevron-down" class="w-3.5" /></button>

@@ -31,22 +31,18 @@ export function initNavigation(document: Document = window.document): () => void
   let closeTimer: number | undefined;
   let servicesTimer: number | undefined;
   let navigationTimer: number | undefined;
-  let indicatorFrame = 0;
-  let indicatorReadyFrame = 0;
   let desktopServicesPinned = false;
 
   const positionDesktopNavIndicator = (item: HTMLElement, animate = true) => {
     if (!desktopNavIndicator) return;
     desktopNavIndicator.style.setProperty("--nav-x", `${item.offsetLeft}px`);
-    desktopNavIndicator.style.setProperty("--nav-scale", String(item.offsetWidth / 100));
+    desktopNavIndicator.style.setProperty("--nav-scale", String(item.offsetWidth / 64));
     if (animate) desktopNavIndicator.classList.add("is-ready");
   };
   const activeDesktopNavItem = desktopNavItems.find((item) => item.classList.contains("is-active"));
   if (activeDesktopNavItem) {
-    indicatorFrame = requestAnimationFrame(() => {
-      positionDesktopNavIndicator(activeDesktopNavItem, false);
-      indicatorReadyFrame = requestAnimationFrame(() => desktopNavIndicator?.classList.add("is-ready"));
-    });
+    positionDesktopNavIndicator(activeDesktopNavItem, false);
+    desktopNavIndicator?.classList.add("is-ready");
   }
 
   overlay.setAttribute("aria-modal", String(mobileMenu.matches));
@@ -178,8 +174,6 @@ export function initNavigation(document: Document = window.document): () => void
     window.clearTimeout(closeTimer);
     window.clearTimeout(servicesTimer);
     window.clearTimeout(navigationTimer);
-    cancelAnimationFrame(indicatorFrame);
-    cancelAnimationFrame(indicatorReadyFrame);
     background.forEach((element) => element.inert = false);
     document.body.style.overflow = "";
   };

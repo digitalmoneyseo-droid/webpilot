@@ -148,11 +148,10 @@ body {
 }
 
 .desktop-services-trigger {
-  transition: color 180ms var(--ease-out), background-color 180ms var(--ease-out);
+  transition: color 180ms var(--ease-out);
 }
-.desktop-services-trigger:hover { color: #111; background: #f1f1ee; }
-.desktop-services-trigger.is-active { color: #fff; background: #111; }
-.desktop-services-trigger.is-active:hover { background: #111; }
+.desktop-services-trigger:hover { color: #111; }
+.desktop-services-trigger.is-active { color: #111; }
 .desktop-services-trigger svg { transition: transform 220ms var(--ease-out); }
 .desktop-services.is-open .desktop-services-trigger svg { transform: rotate(180deg); }
 .desktop-megamenu {

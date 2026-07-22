@@ -49,8 +49,9 @@ test("clicked desktop navigation labels remain visible while the indicator moves
   await workLink.dispatchEvent("pointerdown", { button: 0, pointerType: "mouse" });
 
   await expect(workLink).toHaveClass(/is-active/);
-  await expect(workLink).toHaveCSS("color", "rgb(255, 255, 255)");
-  await expect(workLink).toHaveCSS("background-color", "rgb(17, 17, 17)");
+  await expect(workLink).toHaveCSS("color", "rgb(17, 17, 17)");
+  await expect(workLink).toHaveCSS("background-color", "rgba(0, 0, 0, 0)");
+  await expect(page.locator(".desktop-nav-indicator")).toHaveCSS("background-color", "rgb(241, 241, 238)");
   await expect(page.locator("[data-cursor-particles]")).toHaveCSS("z-index", "30");
   await expect(page.locator(".site-header")).toHaveCSS("z-index", "50");
 });
@@ -117,9 +118,11 @@ test("FAQ and filters expose accessible state", async ({ page }) => {
   await page.goto("/en/work");
   const automateFilter = page.getByRole("button", { name: "Automate", exact: true });
   await automateFilter.click();
+  expect(await page.locator(".work-grid").evaluate((grid) => grid.getAnimations().length)).toBeGreaterThan(0);
   await expect(automateFilter).toHaveAttribute("aria-pressed", "true");
   await expect(page.locator('[data-project]:not([hidden])')).toHaveCount(3);
   await expect(page.locator("[data-result-count]")).toContainText("3 projects");
+  expect(await page.locator("[data-project]").evaluateAll((projects) => projects.every((project) => (project as HTMLElement).style.viewTransitionName === ""))).toBe(true);
   const buildFilter = page.getByRole("button", { name: "Build", exact: true });
   await buildFilter.click();
   await expect(buildFilter).toHaveAttribute("aria-pressed", "true");

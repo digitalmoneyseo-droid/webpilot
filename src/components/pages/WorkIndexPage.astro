@@ -22,81 +22,99 @@ const filters = [
 <section class="work-index px-page py-section" data-portfolio><div class="filter-row relative mx-auto mb-8 flex h-11 w-fit gap-px rounded-xl bg-surface p-1 shadow-surface" role="group" aria-label={locale === "de" ? "Projekte nach Leistung filtern" : "Filter projects by service"}><span class="filter-indicator pointer-events-none absolute inset-y-1 left-0 z-0 rounded-lg bg-[#f1f1ee]" aria-hidden="true"></span>{filters.map((filter, index) => <button type="button" class:list={["relative z-1 h-9 min-h-9 cursor-pointer rounded-lg border-0 bg-transparent px-3.5 text-control font-medium text-[#696965]", { "is-active": index === 0 }]} data-filter={filter.id} data-categories={JSON.stringify(filter.categories)} aria-pressed={index === 0 ? "true" : "false"}>{t(locale, filter.id)}</button>)}</div><p class="sr-only" aria-live="polite" data-result-count>{projects.length} {locale === "de" ? "Projekte" : "projects"}</p><div class="work-grid grid grid-cols-2 gap-4 max-[900px]:grid-cols-1 max-[600px]:[&_.project-card]:min-h-[430px] max-[600px]:[&_.project-visual]:min-h-[330px]">{projects.map(({ data }) => <ProjectCard project={data} {locale} filterable filterCategories={filterCategories(data.categories)} />)}</div></section><FinalCta {locale} />
   </main>
   <script>
-    document.addEventListener("astro:page-load", () => {
-    document.querySelectorAll<HTMLElement>("[data-portfolio]").forEach((portfolio) => {
-      const buttons = [...portfolio.querySelectorAll<HTMLButtonElement>("[data-filter]")];
-      const projects = [...portfolio.querySelectorAll<HTMLElement>("[data-project]")];
-      const announcement = portfolio.querySelector<HTMLElement>("[data-result-count]");
-      const indicator = portfolio.querySelector<HTMLElement>(".filter-indicator");
+    let cleanupPortfolio: (() => void) | undefined;
 
-      const positionIndicator = (button: HTMLButtonElement, animate = true) => {
-        if (!indicator) return;
-        indicator.style.setProperty("--filter-x", `${button.offsetLeft}px`);
-        indicator.style.setProperty("--filter-scale", String(button.offsetWidth / 64));
-        if (animate) indicator.classList.add("is-ready");
-        else {
-          indicator.classList.remove("is-ready");
-          requestAnimationFrame(() => indicator.classList.add("is-ready"));
+    const initializePortfolio = () => {
+      cleanupPortfolio?.();
+      const controller = new AbortController();
+      const resizeObservers: ResizeObserver[] = [];
+      const runningAnimations = new Set<Animation>();
+      let indicatorFrame = 0;
+
+      document.querySelectorAll<HTMLElement>("[data-portfolio]").forEach((portfolio) => {
+        const buttons = [...portfolio.querySelectorAll<HTMLButtonElement>("[data-filter]")];
+        const projects = [...portfolio.querySelectorAll<HTMLElement>("[data-project]")];
+        const grid = portfolio.querySelector<HTMLElement>(".work-grid");
+        const announcement = portfolio.querySelector<HTMLElement>("[data-result-count]");
+        const indicator = portfolio.querySelector<HTMLElement>(".filter-indicator");
+        const filterRow = portfolio.querySelector<HTMLElement>(".filter-row");
+
+        const positionIndicator = (button: HTMLButtonElement, animate = true) => {
+          if (!indicator) return;
+          indicator.style.setProperty("--filter-x", `${button.offsetLeft}px`);
+          indicator.style.setProperty("--filter-scale", String(button.offsetWidth / 64));
+          if (animate) indicator.classList.add("is-ready");
+          else {
+            indicator.classList.remove("is-ready");
+            cancelAnimationFrame(indicatorFrame);
+            indicatorFrame = requestAnimationFrame(() => indicator.classList.add("is-ready"));
+          }
+        };
+
+        if (buttons[0]) positionIndicator(buttons[0], false);
+        if (filterRow) {
+          const filterResizeObserver = new ResizeObserver(() => {
+            const activeButton = buttons.find((item) => item.classList.contains("is-active"));
+            if (activeButton) positionIndicator(activeButton, false);
+          });
+          filterResizeObserver.observe(filterRow);
+          resizeObservers.push(filterResizeObserver);
         }
-      };
 
-      if (buttons[0]) {
-        positionIndicator(buttons[0], false);
-      }
-      const filterResizeObserver = new ResizeObserver(() => {
-        const activeButton = buttons.find((item) => item.classList.contains("is-active"));
-        if (activeButton) positionIndicator(activeButton, false);
-      });
-      filterResizeObserver.observe(portfolio.querySelector<HTMLElement>(".filter-row")!);
+        const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
+        let gridAnimation: Animation | null = null;
 
-      projects.forEach((project, index) => {
-        project.style.viewTransitionName = `portfolio-card-${index}`;
-      });
+        const applyFilter = (button: HTMLButtonElement, animateIndicator = true) => {
+          const filterCategories = JSON.parse(button.dataset.categories ?? "[]") as string[];
+          buttons.forEach((item) => {
+            const active = item === button;
+            item.classList.toggle("is-active", active);
+            item.setAttribute("aria-pressed", String(active));
+          });
+          positionIndicator(button, animateIndicator);
 
-      const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
-      type ViewTransitionHandle = { finished: Promise<void>; skipTransition: () => void };
-      type ViewTransitionDocument = Document & {
-        startViewTransition?: (update: () => void) => ViewTransitionHandle;
-      };
-      let activeTransition: ViewTransitionHandle | null = null;
+          let count = 0;
+          projects.forEach((project) => {
+            const categories = JSON.parse(project.dataset.categories ?? "[]") as string[];
+            const visible = categories.some((category) => filterCategories.includes(category));
+            project.hidden = !visible;
+            if (visible) count += 1;
+          });
+          if (announcement) announcement.textContent = `${count} ${document.documentElement.lang === "de" ? "Projekte" : "projects"}`;
+        };
 
-      const applyFilter = (button: HTMLButtonElement, animateIndicator = true) => {
-        const filterCategories = JSON.parse(button.dataset.categories ?? "[]") as string[];
-        buttons.forEach((item) => {
-          const active = item === button;
-          item.classList.toggle("is-active", active);
-          item.setAttribute("aria-pressed", String(active));
-        });
-        positionIndicator(button, animateIndicator);
-
-        let count = 0;
-        projects.forEach((project) => {
-          const categories = JSON.parse(project.dataset.categories ?? "[]") as string[];
-          const visible = categories.some((category) => filterCategories.includes(category));
-          project.hidden = !visible;
-          if (visible) count += 1;
-        });
-        if (announcement) announcement.textContent = `${count} ${document.documentElement.lang === "de" ? "Projekte" : "projects"}`;
-      };
-
-      buttons.forEach((button) => button.addEventListener("click", (event) => {
-        const viewTransitionDocument = document as ViewTransitionDocument;
-        const keyboardActivated = event.detail === 0;
-        if (keyboardActivated || reducedMotion.matches || !viewTransitionDocument.startViewTransition) {
-          activeTransition?.skipTransition();
-          activeTransition = null;
+        buttons.forEach((button) => button.addEventListener("click", (event) => {
+          const keyboardActivated = event.detail === 0;
+          gridAnimation?.cancel();
           applyFilter(button, !keyboardActivated);
-          return;
-        }
+          if (keyboardActivated || reducedMotion.matches || !grid) return;
 
-        activeTransition?.skipTransition();
-        const transition = viewTransitionDocument.startViewTransition(() => applyFilter(button));
-        activeTransition = transition;
-        void transition.finished.finally(() => {
-          if (activeTransition === transition) activeTransition = null;
-        });
-      }));
-    });
-    });
+          const animation = grid.animate(
+            [
+              { opacity: 0.84, transform: "translateY(6px)" },
+              { opacity: 1, transform: "translateY(0)" },
+            ],
+            { duration: 360, easing: "cubic-bezier(0.23, 1, 0.32, 1)" },
+          );
+          gridAnimation = animation;
+          runningAnimations.add(animation);
+          void animation.finished.catch(() => undefined).finally(() => {
+            runningAnimations.delete(animation);
+            if (gridAnimation === animation) gridAnimation = null;
+          });
+        }, { signal: controller.signal }));
+      });
+
+      cleanupPortfolio = () => {
+        controller.abort();
+        cancelAnimationFrame(indicatorFrame);
+        resizeObservers.forEach((observer) => observer.disconnect());
+        runningAnimations.forEach((animation) => animation.cancel());
+        runningAnimations.clear();
+      };
+    };
+
+    document.addEventListener("astro:page-load", initializePortfolio);
+    document.addEventListener("astro:before-swap", () => cleanupPortfolio?.());
   </script>
 </BaseLayout>
