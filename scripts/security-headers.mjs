@@ -44,6 +44,7 @@ await writeFile(path.join(dist, "_headers"), `/*
   Permissions-Policy: camera=(), microphone=(), geolocation=(), payment=(), usb=()
   X-Frame-Options: DENY
   Cross-Origin-Opener-Policy: same-origin
+  Strict-Transport-Security: max-age=31536000
 
 /_astro/*
   Cache-Control: public, max-age=31536000, immutable

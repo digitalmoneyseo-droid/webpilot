@@ -1,6 +1,6 @@
 import { createClient } from "@sanity/client";
 import { z } from "astro/zod";
-import { locales, servicePillarIds } from "@/domain/catalog";
+import { locales, serviceCategories, servicePillarIds } from "@/domain/catalog";
 import type { Locale } from "@/lib/i18n";
 
 const localizedFields = {
@@ -71,6 +71,7 @@ function fallbackCollection<TName extends CollectionName>(name: TName, locale: L
 
 function validateCollection<TName extends CollectionName>(name: TName, locale: Locale, entries: ContentEntry<CollectionData<TName>>[]) {
   if (!entries.length) throw new Error(`No published ${name} found for locale ${locale}.`);
+  if (entries.some(({ data }) => data.locale !== locale)) throw new Error(`Mismatched locale in ${name} for locale ${locale}.`);
   for (const field of ["slug", "order", "translationKey"] as const) {
     const values = entries.map(({ data }) => data[field]);
     if (new Set(values).size !== values.length) throw new Error(`Duplicate ${field} in ${name} for locale ${locale}.`);
@@ -91,10 +92,56 @@ async function localizedCollection<TName extends CollectionName>(name: TName, lo
   return validateCollection(name, locale, entries);
 }
 
-export const getProjects = (locale: Locale) => localizedCollection("projects", locale);
-export const getServices = (locale: Locale) => localizedCollection("services", locale);
-export const getTestimonials = (locale: Locale) => localizedCollection("testimonials", locale);
-export const getFaqs = (locale: Locale) => localizedCollection("faqs", locale);
+function validateLocalizedPairs<TName extends CollectionName>(
+  name: TName,
+  collections: Record<Locale, ContentEntry<CollectionData<TName>>[]>,
+) {
+  const germanByKey = new Map(collections.de.map((entry) => [entry.data.translationKey, entry]));
+  const englishByKey = new Map(collections.en.map((entry) => [entry.data.translationKey, entry]));
+  const allKeys = new Set([...germanByKey.keys(), ...englishByKey.keys()]);
+  for (const translationKey of allKeys) {
+    const german = germanByKey.get(translationKey);
+    const english = englishByKey.get(translationKey);
+    if (!german || !english) throw new Error(`Missing ${name} translation pair for translationKey "${translationKey}".`);
+    if (german.data.slug !== english.data.slug) {
+      throw new Error(`Mismatched slug in ${name} translation pair "${translationKey}": "${german.data.slug}" vs "${english.data.slug}".`);
+    }
+  }
+  return collections;
+}
+
+function validateServiceCatalogReferences(collections: Record<Locale, ContentEntry<Service>[]>) {
+  for (const locale of locales) {
+    const slugs = new Set(collections[locale].map(({ data }) => data.slug));
+    for (const category of serviceCategories) {
+      const categorySlug = category.href.split("/").filter(Boolean).at(-1);
+      const references = [...category.services, ...(categorySlug ? [categorySlug] : [])];
+      for (const slug of references) {
+        if (!slugs.has(slug)) throw new Error(`Unknown service catalog reference "${slug}" in category "${category.id}" for locale ${locale}.`);
+      }
+    }
+  }
+  return collections;
+}
+
+async function pairedCollection<TName extends CollectionName>(name: TName) {
+  const [de, en] = await Promise.all([localizedCollection(name, "de"), localizedCollection(name, "en")]);
+  const collections = validateLocalizedPairs(name, { de, en });
+  if (name === "services") validateServiceCatalogReferences(collections as Record<Locale, ContentEntry<Service>[]>);
+  return collections;
+}
+
+const collectionPromises = {
+  projects: pairedCollection("projects"),
+  services: pairedCollection("services"),
+  testimonials: pairedCollection("testimonials"),
+  faqs: pairedCollection("faqs"),
+};
+
+export const getProjects = async (locale: Locale) => (await collectionPromises.projects)[locale];
+export const getServices = async (locale: Locale) => (await collectionPromises.services)[locale];
+export const getTestimonials = async (locale: Locale) => (await collectionPromises.testimonials)[locale];
+export const getFaqs = async (locale: Locale) => (await collectionPromises.faqs)[locale];
 
 export async function getProject(locale: Locale, slug: string) {
   return (await getProjects(locale)).find((entry) => entry.data.slug === slug);

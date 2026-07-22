@@ -149,7 +149,11 @@ export async function handleContactRequest(request: Request, ports: ContactIntak
   if (request.headers.get("Origin") !== ports.expectedOrigin) return fail(403, "origin");
 
   const remoteIp = request.headers.get("CF-Connecting-IP");
-  if (!(await ports.rateLimit(remoteIp ?? "unknown"))) return fail(429, "rate_limit");
+  try {
+    if (!(await ports.rateLimit(remoteIp ?? "unknown"))) return fail(429, "rate_limit");
+  } catch {
+    return fail(503, "rate_limit_provider");
+  }
 
   let rawBody: string;
   try { rawBody = await readBoundedBody(request); }

@@ -14,7 +14,11 @@ const bySlug = new Map(services.map((service) => [service.data.slug, service]));
 <div class:list={["service-category-grid mx-auto grid max-w-[54rem] grid-cols-2 gap-4 max-[600px]:grid-cols-1 [&>.reveal]:flex [&>.reveal>.service-category]:flex-1", { "service-category-grid--compact": compact }]}>
   {serviceCategories.map((category, index) => {
     const CategoryIcon = icons[category.icon];
-    const categoryServices = category.services.map((slug) => bySlug.get(slug)).filter(Boolean) as ServiceEntry[];
+    const categoryServices = category.services.map((slug) => {
+      const service = bySlug.get(slug);
+      if (!service) throw new Error(`Missing service catalog reference "${slug}" for locale ${locale}.`);
+      return service;
+    });
     const title = localizedCategoryTitle(category, locale);
     const exploreLabel = locale === "de" ? `${title} entdecken` : `Explore ${title}`;
     return <Reveal delay={index * 50}><article class={`service-category service-category--${category.id} flex flex-col overflow-hidden rounded-card bg-surface shadow-surface`}>

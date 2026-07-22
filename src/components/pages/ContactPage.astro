@@ -2,7 +2,7 @@
 import BaseLayout from "@/layouts/BaseLayout.astro";
 import "@/styles/contact-form.css";
 import { turnstileSiteKey } from "@/lib/site";
-import type { Locale } from "@/lib/i18n";
+import { localizePath, type Locale } from "@/lib/i18n";
 import { contactBudgets, localizedCategoryTitle, serviceCategories } from "@/domain/catalog";
 
 interface Props { locale: Locale; }
@@ -104,7 +104,6 @@ const budgets = contactBudgets.map(({ id, label }) => [id, label[locale]] as con
         <label class="website-field" aria-hidden="true"><span>Website</span><input name="website" type="text" tabindex="-1" autocomplete="off" /></label>
         <div class="cf-turnstile m-0 grayscale" data-sitekey={turnstileSiteKey} data-theme="light" data-size="flexible" data-appearance="interaction-only"></div>
         <div class="form-actions flex items-stretch gap-3">
-          <button class="form-reset m-0 inline-flex min-h-9 h-auto w-auto flex-1 cursor-pointer items-center justify-center whitespace-nowrap rounded-control border border-[var(--form-border)] bg-[var(--form-control)] px-4 py-[.45rem] text-control font-medium text-inverse [transition:background-color_150ms_ease,border-color_150ms_ease,transform_150ms_var(--ease-out)]" type="reset" data-reset-button>{locale === "de" ? "Zurücksetzen" : "Reset"}</button>
           <button class="form-submit m-0 inline-flex min-h-9 h-auto w-auto flex-1 cursor-pointer items-center justify-center whitespace-nowrap rounded-control border border-surface-subtle bg-inverse px-4 py-[.45rem] text-control font-medium text-dark [transition:background-color_150ms_ease,border-color_150ms_ease,transform_150ms_var(--ease-out)]" type="submit" data-submit-button data-state="idle">
             <span class="form-submit__idle block">{locale === "de" ? "Anfrage senden" : "Send enquiry"}</span>
             <span class="form-submit__pending absolute inset-y-0 left-4 flex items-center gap-2 text-inherit" aria-hidden="true">
@@ -113,7 +112,7 @@ const budgets = contactBudgets.map(({ id, label }) => [id, label[locale]] as con
             </span>
           </button>
         </div>
-        <small class="mt-[-.25rem] text-caption text-[var(--form-muted)]">{locale === "de" ? "Ihre Angaben werden nur zur Beantwortung der Anfrage verarbeitet und nicht von Webpilot gespeichert." : "Your details are processed only to answer this request and are not stored by Webpilot."}</small>
+        <small class="mt-[-.25rem] text-caption text-[var(--form-muted)]">{locale === "de" ? <>Nicht in der Website-Datenbank gespeichert; per E-Mail zugestellt und gemäß unserer <a href={localizePath("/privacy", locale)}>Datenschutzerklärung</a> aufbewahrt.</> : <>Not stored in the website database; delivered by email and retained according to our <a href={localizePath("/privacy", locale)}>privacy notice</a>.</>}</small>
       </form>
     </section>
   </main>
@@ -121,6 +120,9 @@ const budgets = contactBudgets.map(({ id, label }) => [id, label[locale]] as con
   <script is:inline src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
   <script>
     document.addEventListener("astro:page-load", () => {
+    const controller = new AbortController();
+    const { signal } = controller;
+    document.addEventListener("astro:before-swap", () => controller.abort(), { once: true, signal });
     const status = document.querySelector<HTMLElement>("[data-form-status]");
     const state = new URLSearchParams(window.location.search).get("status");
     if (status && state) {
@@ -187,56 +189,94 @@ const budgets = contactBudgets.map(({ id, label }) => [id, label[locale]] as con
       control?.addEventListener("blur", () => {
         touched.add(name);
         validateField(name);
-      });
+      }, { signal });
       control?.addEventListener("input", () => {
         if (name === "brief") updateCharacterCount();
         if (touched.has(name)) validateField(name);
-      });
+      }, { signal });
     });
 
     form?.querySelectorAll<HTMLInputElement>('input[name="interests"]').forEach((control) => {
       control.addEventListener("change", () => {
         touched.add("interests");
         validateField("interests");
-      });
-    });
-
-    form?.addEventListener("reset", () => {
-      window.setTimeout(() => {
-        touched.clear();
-        (["name", "email", "interests", "brief"] as const).forEach((name) => setFieldState(name, false));
-        if (email) email.dataset.validation = "empty";
-        updateCharacterCount();
-      });
+      }, { signal });
     });
 
     updateCharacterCount();
 
-    form?.addEventListener("submit", (event) => {
+    form?.addEventListener("submit", async (event) => {
+      event.preventDefault();
       const fields = ["name", "email", "interests", "brief"] as const;
       fields.forEach((name) => touched.add(name));
       const validity = fields.map(validateField);
       const valid = validity.every(Boolean);
       const submitButton = form.querySelector<HTMLButtonElement>("[data-submit-button]");
-      if (valid) {
-        if (status) status.hidden = true;
-        if (submitButton) {
-          submitButton.dataset.state = "submitting";
-          submitButton.disabled = true;
-          submitButton.setAttribute("aria-busy", "true");
-          submitButton.setAttribute("aria-label", document.documentElement.lang === "de" ? "Anfrage wird gesendet" : "Sending enquiry");
-          submitButton.querySelector<HTMLElement>(".form-submit__pending")?.setAttribute("aria-hidden", "false");
+      if (!valid) {
+        const firstInvalid = fields.find((_name, index) => !validity[index]);
+        if (status && firstInvalid) {
+          status.textContent = messages[firstInvalid];
+          status.hidden = false;
         }
+        form.querySelector<HTMLElement>('[aria-invalid="true"]')?.focus();
         return;
       }
-      event.preventDefault();
-      const firstInvalid = fields.find((_name, index) => !validity[index]);
-      if (status && firstInvalid) {
-        status.textContent = messages[firstInvalid];
-        status.hidden = false;
+
+      if (status) status.hidden = true;
+      if (submitButton) {
+        submitButton.dataset.state = "submitting";
+        submitButton.disabled = true;
+        submitButton.setAttribute("aria-busy", "true");
+        submitButton.setAttribute("aria-label", de ? "Anfrage wird gesendet" : "Sending enquiry");
+        submitButton.querySelector<HTMLElement>(".form-submit__pending")?.setAttribute("aria-hidden", "false");
       }
-      form.querySelector<HTMLElement>('[aria-invalid="true"]')?.focus();
-    });
+
+      const body = new URLSearchParams();
+      new FormData(form).forEach((value, key) => {
+        if (typeof value === "string") body.append(key, value);
+      });
+
+      try {
+        const response = await fetch(form.action, {
+          method: "POST",
+          headers: { Accept: "application/json", "Content-Type": "application/x-www-form-urlencoded;charset=UTF-8" },
+          body,
+          signal,
+        });
+        const result = await response.json().catch(() => null) as { ok?: boolean } | null;
+        if (!response.ok || !result?.ok) throw new Error("contact_request_failed");
+        form.reset();
+        (window as Window & { turnstile?: { reset?: () => void } }).turnstile?.reset?.();
+        touched.clear();
+        fields.forEach((name) => setFieldState(name, false));
+        if (email) email.dataset.validation = "empty";
+        updateCharacterCount();
+        if (status) {
+          status.textContent = de ? "Danke — Ihre Anfrage wurde gesendet." : "Thank you — your request was sent.";
+          status.hidden = false;
+          status.focus();
+        }
+        history.replaceState({}, "", window.location.pathname);
+      } catch (error) {
+        if (error instanceof DOMException && error.name === "AbortError") return;
+        if (status) {
+          status.textContent = de
+            ? "Die Anfrage konnte nicht gesendet werden. Ihre Eingaben bleiben erhalten. Bitte versuchen Sie es erneut oder schreiben Sie uns per E-Mail."
+            : "The request could not be sent. Your entries are still here. Try again or email us instead.";
+          status.hidden = false;
+          status.focus();
+        }
+        (window as Window & { turnstile?: { reset?: () => void } }).turnstile?.reset?.();
+      } finally {
+        if (submitButton) {
+          submitButton.dataset.state = "idle";
+          submitButton.disabled = false;
+          submitButton.removeAttribute("aria-busy");
+          submitButton.removeAttribute("aria-label");
+          submitButton.querySelector<HTMLElement>(".form-submit__pending")?.setAttribute("aria-hidden", "true");
+        }
+      }
+    }, { signal });
     });
   </script>
 </BaseLayout>

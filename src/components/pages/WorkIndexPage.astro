@@ -32,7 +32,7 @@ const filters = [
       const positionIndicator = (button: HTMLButtonElement, animate = true) => {
         if (!indicator) return;
         indicator.style.setProperty("--filter-x", `${button.offsetLeft}px`);
-        indicator.style.setProperty("--filter-width", `${button.offsetWidth}px`);
+        indicator.style.setProperty("--filter-scale", String(button.offsetWidth / 64));
         if (animate) indicator.classList.add("is-ready");
         else {
           indicator.classList.remove("is-ready");

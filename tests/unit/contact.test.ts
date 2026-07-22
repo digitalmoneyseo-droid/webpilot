@@ -71,6 +71,7 @@ describe("contact intake", () => {
 
   it.each([
     ["rate limit", intakePorts({ rateLimit: async () => false }), 429, "rate_limit"],
+    ["rate-limit provider", intakePorts({ rateLimit: async () => { throw new Error("offline"); } }), 503, "rate_limit_provider"],
     ["Turnstile provider", intakePorts({ verifyTurnstile: async () => { throw new Error("offline"); } }), 502, "turnstile_provider"],
     ["email provider", intakePorts({ sendEmail: async () => undefined }), 502, "email_provider"],
   ])("maps %s failure", async (_name, ports, status, category) => {

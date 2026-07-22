@@ -1,13 +1,15 @@
 import { navigate } from "astro:transitions/client";
 
-export function initNavigation(document: Document = window.document): void {
+export function initNavigation(document: Document = window.document): () => void {
+  const controller = new AbortController();
+  const { signal } = controller;
   const root = document.documentElement;
-  document.addEventListener("keydown", () => root.classList.add("using-keyboard"), true);
-  document.addEventListener("pointerdown", () => root.classList.remove("using-keyboard"), true);
+  document.addEventListener("keydown", () => root.classList.add("using-keyboard"), { capture: true, signal });
+  document.addEventListener("pointerdown", () => root.classList.remove("using-keyboard"), { capture: true, signal });
 
   const openButton = document.querySelector<HTMLButtonElement>(".header-menu");
   const overlay = document.querySelector<HTMLElement>("#site-menu");
-  if (!openButton || !overlay) return;
+  if (!openButton || !overlay) return () => controller.abort();
 
   const closeButton = overlay.querySelector<HTMLButtonElement>(".menu-close");
   const menuLinksContainer = overlay.querySelector<HTMLElement>(".menu-links");
@@ -28,19 +30,22 @@ export function initNavigation(document: Document = window.document): void {
   let returnFocus: HTMLElement | null = null;
   let closeTimer: number | undefined;
   let servicesTimer: number | undefined;
+  let navigationTimer: number | undefined;
+  let indicatorFrame = 0;
+  let indicatorReadyFrame = 0;
   let desktopServicesPinned = false;
 
   const positionDesktopNavIndicator = (item: HTMLElement, animate = true) => {
     if (!desktopNavIndicator) return;
     desktopNavIndicator.style.setProperty("--nav-x", `${item.offsetLeft}px`);
-    desktopNavIndicator.style.setProperty("--nav-width", `${item.offsetWidth}px`);
+    desktopNavIndicator.style.setProperty("--nav-scale", String(item.offsetWidth / 100));
     if (animate) desktopNavIndicator.classList.add("is-ready");
   };
   const activeDesktopNavItem = desktopNavItems.find((item) => item.classList.contains("is-active"));
   if (activeDesktopNavItem) {
-    requestAnimationFrame(() => {
+    indicatorFrame = requestAnimationFrame(() => {
       positionDesktopNavIndicator(activeDesktopNavItem, false);
-      requestAnimationFrame(() => desktopNavIndicator?.classList.add("is-ready"));
+      indicatorReadyFrame = requestAnimationFrame(() => desktopNavIndicator?.classList.add("is-ready"));
     });
   }
 
@@ -104,53 +109,53 @@ export function initNavigation(document: Document = window.document): void {
     }
   };
 
-  openButton.addEventListener("click", () => setOpen(true));
-  closeButton?.addEventListener("click", () => setOpen(false));
-  serviceTrigger?.addEventListener("click", () => setServicesExpanded(serviceTrigger.getAttribute("aria-expanded") !== "true", true));
-  desktopServices?.addEventListener("pointerenter", () => setDesktopServicesExpanded(true));
+  openButton.addEventListener("click", () => setOpen(true), { signal });
+  closeButton?.addEventListener("click", () => setOpen(false), { signal });
+  serviceTrigger?.addEventListener("click", () => setServicesExpanded(serviceTrigger.getAttribute("aria-expanded") !== "true", true), { signal });
+  desktopServices?.addEventListener("pointerenter", () => setDesktopServicesExpanded(true), { signal });
   desktopServices?.addEventListener("pointerleave", () => {
     if (!desktopServicesPinned && !desktopServices.contains(document.activeElement)) setDesktopServicesExpanded(false, false);
-  });
-  desktopServices?.addEventListener("focusin", () => setDesktopServicesExpanded(true));
+  }, { signal });
+  desktopServices?.addEventListener("focusin", () => setDesktopServicesExpanded(true), { signal });
   desktopServices?.addEventListener("focusout", (event) => {
     const next = event.relatedTarget;
     if (!desktopServicesPinned && (!(next instanceof Node) || !desktopServices.contains(next))) setDesktopServicesExpanded(false, false);
-  });
+  }, { signal });
   desktopServiceTrigger?.addEventListener("click", () => {
     if (desktopServicesPinned) setDesktopServicesExpanded(false, false);
     else setDesktopServicesExpanded(true, true);
-  });
+  }, { signal });
   desktopNav?.querySelectorAll<HTMLAnchorElement>(":scope > a").forEach((link) => {
     link.addEventListener("pointerdown", (event) => {
       if (event.button !== 0) return;
       desktopNavItems.forEach((item) => item.classList.toggle("is-active", item === link));
       positionDesktopNavIndicator(link);
-    });
+    }, { signal });
     link.addEventListener("click", (event) => {
       if (event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey || link.target) return;
       const destination = new URL(link.href, window.location.href);
       if (destination.href === window.location.href) return;
       event.preventDefault();
       const delay = window.matchMedia("(prefers-reduced-motion: reduce)").matches ? 0 : 280;
-      window.setTimeout(() => void navigate(destination.href), delay);
-    });
+      navigationTimer = window.setTimeout(() => void navigate(destination.href), delay);
+    }, { signal });
   });
   desktopServiceTrigger?.addEventListener("keydown", (event) => {
     if (event.key !== "ArrowDown") return;
     event.preventDefault();
     setDesktopServicesExpanded(true, true);
     desktopServiceLinks[0]?.focus();
-  });
-  menuLinks.forEach((link) => link.addEventListener("click", () => setOpen(false)));
+  }, { signal });
+  menuLinks.forEach((link) => link.addEventListener("click", () => setOpen(false), { signal }));
   document.addEventListener("pointerdown", (event) => {
     if (event.target instanceof Node && !desktopServices?.contains(event.target)) setDesktopServicesExpanded(false, false);
     if (!overlay.classList.contains("is-open") || mobileMenu.matches) return;
     if (event.target instanceof Node && !overlay.contains(event.target) && !openButton.contains(event.target)) setOpen(false);
-  });
+  }, { signal });
   mobileMenu.addEventListener("change", () => {
     if (overlay.classList.contains("is-open")) setOpen(false);
     else overlay.setAttribute("aria-modal", String(mobileMenu.matches));
-  });
+  }, { signal });
   document.addEventListener("keydown", (event) => {
     if (event.key === "Escape" && desktopServiceTrigger?.getAttribute("aria-expanded") === "true") {
       desktopServiceTrigger.focus();
@@ -166,5 +171,16 @@ export function initNavigation(document: Document = window.document): void {
     if (!first || !last) return;
     if (event.shiftKey && document.activeElement === first) { event.preventDefault(); last.focus(); }
     else if (!event.shiftKey && document.activeElement === last) { event.preventDefault(); first.focus(); }
-  });
+  }, { signal });
+
+  return () => {
+    controller.abort();
+    window.clearTimeout(closeTimer);
+    window.clearTimeout(servicesTimer);
+    window.clearTimeout(navigationTimer);
+    cancelAnimationFrame(indicatorFrame);
+    cancelAnimationFrame(indicatorReadyFrame);
+    background.forEach((element) => element.inert = false);
+    document.body.style.overflow = "";
+  };
 }

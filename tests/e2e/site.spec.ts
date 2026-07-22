@@ -41,6 +41,41 @@ test("desktop navigation is always available without a menu trigger", async ({ p
   await expect(page.locator(".header-menu")).toBeHidden();
 });
 
+test("clicked desktop navigation labels remain visible while the indicator moves", async ({ page }) => {
+  await page.setViewportSize({ width: 1280, height: 720 });
+  await page.goto("/en");
+  const workLink = page.locator('.desktop-nav > a[href="/en/work"]');
+
+  await workLink.dispatchEvent("pointerdown", { button: 0, pointerType: "mouse" });
+
+  await expect(workLink).toHaveClass(/is-active/);
+  await expect(workLink).toHaveCSS("color", "rgb(255, 255, 255)");
+  await expect(workLink).toHaveCSS("background-color", "rgb(17, 17, 17)");
+  await expect(page.locator("[data-cursor-particles]")).toHaveCSS("z-index", "30");
+  await expect(page.locator(".site-header")).toHaveCSS("z-index", "50");
+});
+
+test("page transitions leave the application chrome untouched", async ({ page }) => {
+  await page.setViewportSize({ width: 1280, height: 720 });
+  await page.goto("/en");
+
+  const transitionStyles = await page.evaluate(() => ({
+    main: getComputedStyle(document.querySelector("main")!).viewTransitionName,
+    rootOld: getComputedStyle(document.documentElement, "::view-transition-old(root)").animationName,
+    rootNew: getComputedStyle(document.documentElement, "::view-transition-new(root)").animationName,
+    contentOld: getComputedStyle(document.documentElement, "::view-transition-old(page-content)").animationName,
+    contentNew: getComputedStyle(document.documentElement, "::view-transition-new(page-content)").animationName,
+  }));
+
+  expect(transitionStyles).toEqual({
+    main: "page-content",
+    rootOld: "none",
+    rootNew: "none",
+    contentOld: "page-content-out",
+    contentNew: "page-content-in",
+  });
+});
+
 test("desktop services disclosure exposes and manages its state", async ({ page }) => {
   await page.setViewportSize({ width: 1280, height: 720 });
   await page.goto("/en");
@@ -71,10 +106,12 @@ test("FAQ and filters expose accessible state", async ({ page }) => {
   const secondFaq = page.locator("[data-faq] button").nth(1);
   const secondAnswer = page.locator("[data-faq] .faq-answer").nth(1);
   await expect(secondAnswer).toHaveAttribute("aria-hidden", "true");
-  await expect(secondAnswer).toHaveCSS("transition-property", "grid-template-rows");
+  await expect(secondAnswer).toHaveCSS("display", "none");
   await secondFaq.click();
   await expect(secondFaq).toHaveAttribute("aria-expanded", "true");
   await expect(secondAnswer).toHaveAttribute("aria-hidden", "false");
+  await expect(secondAnswer).toHaveCSS("display", "block");
+  await expect(secondAnswer.locator(":scope > div")).toHaveCSS("transition-property", "opacity, transform");
   await expect(firstFaq).toHaveAttribute("aria-expanded", "false");
   await expect(firstAnswer).toHaveAttribute("aria-hidden", "true");
   await page.goto("/en/work");
@@ -90,6 +127,16 @@ test("FAQ and filters expose accessible state", async ({ page }) => {
 });
 
 test("contact page presents project enquiry form", async ({ page }) => {
+  let attempts = 0;
+  await page.route("**/api/contact", async (route) => {
+    attempts += 1;
+    const success = attempts > 1;
+    await route.fulfill({
+      status: success ? 200 : 503,
+      contentType: "application/json",
+      body: JSON.stringify({ ok: success, category: success ? "success" : "rate_limit_provider" }),
+    });
+  });
   await page.goto("/en/contact");
   const form = page.locator("form[data-contact-form]");
   const submitButton = page.locator("[data-submit-button]");
@@ -107,13 +154,22 @@ test("contact page presents project enquiry form", async ({ page }) => {
   const firstInterest = page.locator('input[name="interests"]').first();
   await firstInterest.locator("..").click();
   await expect(firstInterest).toBeChecked();
-  await form.evaluate((element) => element.addEventListener("submit", (event) => event.preventDefault()));
+  await form.evaluate((element) => {
+    const token = document.createElement("input");
+    token.type = "hidden";
+    token.name = "cf-turnstile-response";
+    token.value = "test-token";
+    element.append(token);
+  });
   await submitButton.click();
+  await expect(page.locator("[data-form-status]")).toContainText("Your entries are still here");
+  await expect(page.locator('input[name="name"]')).toHaveValue("Ada Lovelace");
+  await expect(submitButton).toBeEnabled();
+  await expect(submitButton).toHaveAttribute("data-state", "idle");
 
-  await expect(submitButton).toHaveAttribute("data-state", "submitting");
-  await expect(submitButton).toBeDisabled();
-  await expect(submitButton).toHaveAttribute("aria-busy", "true");
-  await expect(submitButton.locator(".form-submit__pending")).toHaveText("Sending…");
+  await submitButton.click();
+  await expect(page.locator("[data-form-status]")).toHaveText("Thank you — your request was sent.");
+  await expect(page.locator('input[name="name"]')).toHaveValue("");
 });
 
 test("portfolio ribbon loops at narrow viewport widths without overflowing the page", async ({ page }) => {
@@ -169,15 +225,7 @@ test("portfolio ribbon keeps moving and supports drag scrolling", async ({ page 
 
 test("service discovery separates the slogan from concrete service categories", async ({ page }) => {
   await page.goto("/en");
-
-  const buildCard = page.locator(".service-card--build");
-  const growCard = page.locator(".service-card--grow");
-  const automateCard = page.locator(".service-card--automate");
-
-  await expect(buildCard).not.toHaveAttribute("href", /.+/);
-  await expect(growCard).not.toHaveAttribute("href", /.+/);
-  await expect(automateCard).not.toHaveAttribute("href", /.+/);
-  await expect(page.locator(".service-card-services")).toHaveCount(0);
+  await expect(page.locator(".service-trio")).toHaveCount(0);
   await expect(page.locator(".service-category-section .service-category")).toHaveCount(4);
 
   await page.goto("/services");
@@ -254,11 +302,6 @@ test("service headings align and category CTAs stay contained", async ({ page })
 
   for (const path of ["/", "/en"]) {
     await page.goto(path);
-    const headings = page.locator(".service-trio .service-card h3");
-    await expect(headings).toHaveCount(3);
-    const headingTops = await headings.evaluateAll((elements) => elements.map((element) => element.getBoundingClientRect().top));
-    expect(Math.max(...headingTops) - Math.min(...headingTops)).toBeLessThanOrEqual(1);
-
     for (const main of await page.locator(".service-category-main").all()) {
       const contained = await main.evaluate((element) => {
         const card = element.closest(".service-category")?.getBoundingClientRect();

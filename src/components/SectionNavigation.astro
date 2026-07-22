@@ -19,19 +19,17 @@ const { locale, items } = Astro.props;
       const links = [...nav.querySelectorAll<HTMLAnchorElement>("[data-section-nav-link]")];
       const title = nav.querySelector<HTMLElement>("[data-section-nav-title]");
       const description = nav.querySelector<HTMLElement>("[data-section-nav-description]");
-      const targets = [".hero--home", ".work-ribbon", ".why-section", ".service-section", ".process-section", ".testimonial-section", ".faq-section"];
-      targets.forEach((selector, index) => { const section = document.querySelector<HTMLElement>(selector); if (section && links[index]) section.id = links[index].hash.slice(1); });
       const sections = links.map((link) => document.querySelector<HTMLElement>(link.hash)).filter(Boolean) as HTMLElement[];
       const showItem = (link: HTMLAnchorElement) => { if (title) title.textContent = link.dataset.title ?? ""; if (description) description.textContent = link.dataset.description ?? ""; };
       const setActive = (section: HTMLElement) => links.forEach((link) => { const active = link.hash === `#${section.id}`; if (active) { link.setAttribute("aria-current", "location"); showItem(link); } else link.removeAttribute("aria-current"); });
       const restoreActive = () => { const active = links.find((link) => link.hasAttribute("aria-current")); if (active) showItem(active); };
       links.forEach((link, index) => {
-        link.addEventListener("pointerenter", () => showItem(link));
-        link.addEventListener("focus", () => showItem(link));
-        link.addEventListener("click", () => { const section = sections[index]; if (section) setActive(section); });
+        link.addEventListener("pointerenter", () => showItem(link), { signal: controller.signal });
+        link.addEventListener("focus", () => showItem(link), { signal: controller.signal });
+        link.addEventListener("click", () => { const section = sections[index]; if (section) setActive(section); }, { signal: controller.signal });
       });
-      nav.addEventListener("pointerleave", restoreActive);
-      nav.addEventListener("focusout", (event) => { if (!nav.contains(event.relatedTarget as Node | null)) restoreActive(); });
+      nav.addEventListener("pointerleave", restoreActive, { signal: controller.signal });
+      nav.addEventListener("focusout", (event) => { if (!nav.contains(event.relatedTarget as Node | null)) restoreActive(); }, { signal: controller.signal });
 
       let frame = 0;
       const updateFromScroll = () => {
