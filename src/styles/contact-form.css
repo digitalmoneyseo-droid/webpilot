@@ -73,8 +73,8 @@
   border-color: var(--dark);
   background: var(--dark);
   color: var(--inverse);
-  font-size: .65rem;
-  font-weight: 800;
+  font-size: var(--type-caption);
+  font-weight: var(--weight-heading);
 }
 
 .contact-form .form-options--budget input:checked + span::before {

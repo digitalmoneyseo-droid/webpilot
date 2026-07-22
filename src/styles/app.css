@@ -31,6 +31,12 @@
   --text-small: var(--type-small);
   --text-small--line-height: var(--leading-small);
   --text-small--letter-spacing: var(--tracking-small);
+  --text-control: var(--type-control);
+  --text-control--line-height: var(--leading-control);
+  --text-control--letter-spacing: var(--tracking-control);
+  --text-label: var(--type-label);
+  --text-label--line-height: var(--leading-label);
+  --text-label--letter-spacing: var(--tracking-label);
   --text-body: var(--type-body);
   --text-body--line-height: var(--leading-body);
   --text-body-lg: var(--type-body-lg);

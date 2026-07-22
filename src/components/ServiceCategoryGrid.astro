@@ -18,14 +18,14 @@ const bySlug = new Map(services.map((service) => [service.data.slug, service]));
     const title = localizedCategoryTitle(category, locale);
     const exploreLabel = locale === "de" ? `${title} entdecken` : `Explore ${title}`;
     return <Reveal delay={index * 50}><article class={`service-category service-category--${category.id} flex flex-col overflow-hidden rounded-card bg-surface shadow-surface`}>
-      <a class="service-category-main relative flex min-h-48 flex-1 flex-col items-start p-6 [.service-category-grid--compact_&]:min-h-34 max-[600px]:min-h-0 max-[600px]:p-5" href={localizePath(category.href, locale)}>
+      <a class="service-category-main relative flex min-h-48 grow shrink-0 flex-col items-start p-6 [.service-category-grid--compact_&]:min-h-34 max-[600px]:min-h-0 max-[600px]:p-5" href={localizePath(category.href, locale)}>
         <CategoryIcon class="service-category-icon size-[42px] [stroke-width:1.7]" aria-hidden="true" />
         <span class="service-category-copy pt-7"><strong class="block text-heading-sm font-semibold">{title}</strong><small class="mt-2 block max-w-[34ch] text-body leading-body font-normal text-muted">{localizedCategoryDescription(category, locale)}</small></span>
-        <span class="service-category-cta mt-5 inline-flex items-center gap-2 text-small font-semibold text-ink">
-          <span class="service-category-cta-label block h-[1.45em] overflow-hidden leading-[1.45]">
-            <span class="service-category-cta-label-track flex h-[200%] flex-col">
-              <span class="flex basis-1/2 items-center whitespace-nowrap">{exploreLabel}</span>
-              <span class="flex basis-1/2 items-center whitespace-nowrap" aria-hidden="true">{exploreLabel}</span>
+        <span class="service-category-cta mt-auto inline-flex items-center gap-2 pt-5 text-control font-medium text-ink">
+          <span class="service-category-cta-label">
+            <span class="service-category-cta-label-track">
+              <span>{exploreLabel}</span>
+              <span aria-hidden="true">{exploreLabel}</span>
             </span>
           </span>
           <span class="service-category-cta-arrow-box relative size-4.5 flex-none overflow-hidden rounded-none" aria-hidden="true">

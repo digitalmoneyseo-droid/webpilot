@@ -1,9 +1,9 @@
 ---
 interface Props { inverse?: boolean; }
 const { inverse = false } = Astro.props;
-const letters = [..."Webpilot"];
+const letters = [..."WEBPILOT"];
 ---
-<span class:list={["brand-wordmark inline-flex whitespace-nowrap font-['Bebas_Neue',Impact,sans-serif] text-[1.7rem] leading-none font-normal", { "brand-wordmark--inverse text-white": inverse }]}>
+<span class:list={["brand-wordmark inline-flex whitespace-nowrap font-sans text-heading-sm leading-none font-semibold", { "brand-wordmark--inverse text-white": inverse }]}>
   <span class="sr-only">Webpilot</span>
   <span class="brand-wordmark__letters flex gap-[.035em]" aria-hidden="true">
     {letters.map((letter, index) => (

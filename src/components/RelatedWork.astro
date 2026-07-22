@@ -6,4 +6,4 @@ import type { Locale } from "@/lib/i18n";
 interface Props { title: string; projects: ProjectEntry[]; locale: Locale; }
 const { title, projects, locale } = Astro.props;
 ---
-<section class="related-work px-page py-section"><SectionHeading title={title} align="center" /><div class="related-grid grid grid-cols-3 gap-4 max-[900px]:grid-cols-2 max-[600px]:grid-cols-1 [&_.project-card]:min-h-[430px] [&_.project-card-copy]:min-h-[95px] [&_.project-card-copy_h3]:text-base [&_.project-visual]:min-h-[330px]">{projects.map((project) => <ProjectCard project={project.data} locale={locale} />)}</div></section>
+<section class="related-work px-page py-section"><SectionHeading title={title} align="center" /><div class="related-grid grid grid-cols-3 gap-4 max-[900px]:grid-cols-2 max-[600px]:grid-cols-1 [&_.project-card]:min-h-[430px] [&_.project-card-copy]:min-h-[95px] [&_.project-visual]:min-h-[330px]">{projects.map((project) => <ProjectCard project={project.data} locale={locale} />)}</div></section>

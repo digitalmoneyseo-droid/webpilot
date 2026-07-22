@@ -104,7 +104,9 @@ test("contact page presents project enquiry form", async ({ page }) => {
   await expect(submitButton).toBeEnabled();
   await expect(submitButton).toHaveAttribute("data-state", "idle");
 
-  await page.locator('input[name="interests"]').first().check({ force: true });
+  const firstInterest = page.locator('input[name="interests"]').first();
+  await firstInterest.locator("..").click();
+  await expect(firstInterest).toBeChecked();
   await form.evaluate((element) => element.addEventListener("submit", (event) => event.preventDefault()));
   await submitButton.click();
 
@@ -158,6 +160,11 @@ test("portfolio ribbon keeps moving and supports drag scrolling", async ({ page 
 
   await page.waitForTimeout(100);
   expect(await track.evaluate((element) => element.style.transform)).not.toBe(rightDragTransform);
+
+  await page.emulateMedia({ reducedMotion: "reduce" });
+  await page.waitForTimeout(100);
+  await card.click();
+  await expect(page).toHaveURL(/\/en\/work\//);
 });
 
 test("service discovery separates the slogan from concrete service categories", async ({ page }) => {
@@ -190,6 +197,124 @@ test("new Build service routes render and the retired route redirects", async ({
   await expect(page).toHaveURL(/\/en\/services\/website-design-development\/?$/);
   await page.goto("/services/brand-web-product");
   await expect(page).toHaveURL(/\/services\/website-design-development\/?$/);
+});
+
+test("typography roles use the discrete Inter and Instrument Serif system", async ({ page }) => {
+  await page.setViewportSize({ width: 1440, height: 1000 });
+  await page.goto("/en");
+
+  const wordmark = page.locator(".header-mark .brand-wordmark");
+  const visibleWordmark = await wordmark.locator(".brand-wordmark__letter").evaluateAll((letters) =>
+    letters.map((letter) => letter.querySelector(".brand-wordmark__track > span")?.textContent ?? "").join(""),
+  );
+  expect(visibleWordmark).toBe("WEBPILOT");
+  await expect(wordmark).toHaveCSS("font-family", /Inter/);
+  await expect(wordmark).toHaveCSS("font-weight", "600");
+
+  const hero = page.locator(".hero--home h1");
+  await expect(hero).toHaveCSS("font-size", "64px");
+  await expect(hero).toHaveCSS("line-height", "67.2px");
+  await expect(hero).toHaveCSS("letter-spacing", "-1.28px");
+  await expect(hero).toHaveCSS("font-weight", "600");
+  await expect(hero).toHaveCSS("font-family", /Inter/);
+
+  const heroAccent = hero.locator("em");
+  await expect(heroAccent).toHaveCSS("font-family", /Instrument Serif/);
+  await expect(heroAccent).toHaveCSS("font-style", "italic");
+  await expect(heroAccent).toHaveCSS("font-weight", "700");
+  await expect(heroAccent).toHaveCSS("color", "rgb(59, 130, 246)");
+  await expect(heroAccent).toHaveCSS("letter-spacing", "-1.92px");
+
+  await expect(page.locator(".why-section h2")).toHaveCSS("font-size", "40px");
+  await expect(page.locator(".why-section h2")).toHaveCSS("line-height", "52px");
+  await expect(page.locator(".benefit-card h3").first()).toHaveCSS("font-size", "24px");
+  await expect(page.locator(".benefit-card h3").first()).toHaveCSS("line-height", "31.2px");
+  await expect(page.locator(".benefit-card p").first()).toHaveCSS("font-size", "16px");
+  await expect(page.locator(".benefit-card p").first()).toHaveCSS("line-height", "25.6px");
+  await expect(page.locator(".pill-button").first()).toHaveCSS("font-size", "14px");
+  await expect(page.locator(".pill-button").first()).toHaveCSS("line-height", "16.8px");
+  await expect(page.locator(".pill-button").first()).toHaveCSS("letter-spacing", "0.28px");
+
+  await page.setViewportSize({ width: 390, height: 844 });
+  await page.reload();
+  await expect(page.locator(".hero--home h1")).toHaveCSS("font-size", "40px");
+  await expect(page.locator(".why-section h2")).toHaveCSS("font-size", "32px");
+  await expect(page.locator(".benefit-card h3").first()).toHaveCSS("font-size", "20px");
+
+  await page.goto("/en/about");
+  const label = page.locator(".manifesto-mark");
+  await expect(label).toHaveCSS("font-size", "12px");
+  await expect(label).toHaveCSS("line-height", "16.8px");
+  await expect(label).toHaveCSS("letter-spacing", "0.96px");
+});
+
+test("service headings align and category CTAs stay contained", async ({ page }) => {
+  await page.emulateMedia({ reducedMotion: "reduce" });
+  await page.setViewportSize({ width: 1440, height: 1000 });
+
+  for (const path of ["/", "/en"]) {
+    await page.goto(path);
+    const headings = page.locator(".service-trio .service-card h3");
+    await expect(headings).toHaveCount(3);
+    const headingTops = await headings.evaluateAll((elements) => elements.map((element) => element.getBoundingClientRect().top));
+    expect(Math.max(...headingTops) - Math.min(...headingTops)).toBeLessThanOrEqual(1);
+
+    for (const main of await page.locator(".service-category-main").all()) {
+      const contained = await main.evaluate((element) => {
+        const card = element.closest(".service-category")?.getBoundingClientRect();
+        const label = element.querySelector(".service-category-cta-label")?.getBoundingClientRect();
+        if (!card || !label) return false;
+        return label.top >= card.top && label.right <= card.right && label.bottom <= card.bottom && label.left >= card.left;
+      });
+      expect(contained).toBe(true);
+    }
+  }
+
+  await page.setViewportSize({ width: 390, height: 844 });
+  await page.goto("/");
+  for (const main of await page.locator(".service-category-main").all()) {
+    const contained = await main.evaluate((element) => {
+      const card = element.closest(".service-category")?.getBoundingClientRect();
+      const label = element.querySelector(".service-category-cta-label")?.getBoundingClientRect();
+      if (!card || !label) return false;
+      return label.top >= card.top && label.right <= card.right && label.bottom <= card.bottom && label.left >= card.left;
+    });
+    expect(contained).toBe(true);
+  }
+});
+
+test("service category text roll works for hover, focus, and reduced motion", async ({ page }) => {
+  await page.setViewportSize({ width: 1440, height: 1000 });
+  await page.goto("/");
+  const main = page.locator(".service-category-main").first();
+  const track = main.locator(".service-category-cta-label-track");
+  const outgoingArrow = main.locator(".service-category-cta-arrow--right");
+  const incomingArrow = main.locator(".service-category-cta-arrow--up-right");
+
+  const translation = () => track.evaluate((element) => {
+    const transform = getComputedStyle(element).transform;
+    return transform === "none" ? 0 : new DOMMatrixReadOnly(transform).m42;
+  });
+  const rowHeight = await track.evaluate((element) => Number.parseFloat(getComputedStyle(element).fontSize) * 1.2 + 4);
+
+  await main.hover();
+  await expect.poll(translation).toBeCloseTo(-rowHeight, 1);
+  await expect(outgoingArrow).toHaveCSS("opacity", "0");
+  await expect(incomingArrow).toHaveCSS("opacity", "1");
+
+  await page.mouse.move(0, 0);
+  await main.focus();
+  await expect.poll(translation).toBeCloseTo(-rowHeight, 1);
+  await expect(outgoingArrow).toHaveCSS("opacity", "0");
+  await expect(incomingArrow).toHaveCSS("opacity", "1");
+
+  await page.emulateMedia({ reducedMotion: "reduce" });
+  await page.reload();
+  const reducedMain = page.locator(".service-category-main").first();
+  await reducedMain.focus();
+  await expect(reducedMain.locator(".service-category-cta-label-track")).toHaveCSS("transform", "none");
+  await expect(reducedMain.locator(".service-category-cta-arrow--right")).toHaveCSS("opacity", "1");
+  await expect(reducedMain.locator(".service-category-cta-arrow--up-right")).toHaveCSS("opacity", "0");
 });
 
 test("representative page has no serious accessibility violations", async ({ page }) => {
