@@ -8,7 +8,7 @@ import type { Locale } from "@/lib/i18n";
 interface Props { locale: Locale; project: ProjectEntry; related: ProjectEntry[]; }
 const { locale, project, related } = Astro.props;
 const p = project.data;
-const structuredData = [{ "@context": "https://schema.org", "@type": "BreadcrumbList", itemListElement: [{ "@type": "ListItem", position: 1, name: locale === "de" ? "Arbeiten" : "Work", item: locale === "de" ? "/work" : "/en/work" }, { "@type": "ListItem", position: 2, name: p.title }] }];
+const structuredData = [{ "@context": "https://schema.org", "@type": "BreadcrumbList", itemListElement: [{ "@type": "ListItem", position: 1, name: locale === "de" ? "Unsere Arbeiten" : "Our work", item: locale === "de" ? "/work" : "/en/work" }, { "@type": "ListItem", position: 2, name: p.title }] }];
 ---
 <BaseLayout {locale} title={p.title} description={p.summary} indexable={false} article {structuredData}>
   <main id="main-content">

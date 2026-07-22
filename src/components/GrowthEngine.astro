@@ -1,0 +1,78 @@
+---
+import { ChartNoAxesCombined, Megaphone, MonitorSmartphone, Waypoints } from "@lucide/astro";
+import CtaButton from "@/components/CtaButton.astro";
+import Reveal from "@/components/Reveal.astro";
+import { localizePath, type Locale } from "@/lib/i18n";
+
+interface Props { locale: Locale; }
+const { locale } = Astro.props;
+const components = locale === "de" ? [
+  {
+    icon: Megaphone,
+    id: "demand",
+    title: "Nachfrage schaffen",
+    copy: "SEO, GEO, Content und bezahlte Werbung helfen den richtigen Kunden, dein Unternehmen zu entdecken.",
+  },
+  {
+    icon: MonitorSmartphone,
+    id: "conversion",
+    title: "Aufmerksamkeit konvertieren",
+    copy: "Websites, Landingpages und digitale Erlebnisse machen aus Interesse qualifizierte Leads und Kunden.",
+  },
+  {
+    icon: Waypoints,
+    id: "journey",
+    title: "Die Customer Journey verbinden",
+    copy: "CRM, Automatisierung und intelligente Workflows bringen Leads ohne unnötige Handarbeit voran.",
+  },
+  {
+    icon: ChartNoAxesCombined,
+    id: "measurement",
+    title: "Messen und verbessern",
+    copy: "Analytics, Attribution, Tests und Reporting zeigen, was funktioniert und wo wir als Nächstes optimieren.",
+  },
+] as const : [
+  {
+    icon: Megaphone,
+    id: "demand",
+    title: "Create demand",
+    copy: "SEO, GEO, content, and paid advertising help the right customers discover your business.",
+  },
+  {
+    icon: MonitorSmartphone,
+    id: "conversion",
+    title: "Convert attention",
+    copy: "Websites, landing pages, and digital experiences turn interest into qualified leads and customers.",
+  },
+  {
+    icon: Waypoints,
+    id: "journey",
+    title: "Connect the journey",
+    copy: "CRM, automation, and intelligent workflows move leads forward without unnecessary manual work.",
+  },
+  {
+    icon: ChartNoAxesCombined,
+    id: "measurement",
+    title: "Measure and improve",
+    copy: "Analytics, attribution, testing, and reporting show what works and where to optimize next.",
+  },
+] as const;
+---
+<div class="growth-engine-shell mx-auto max-w-[58rem]">
+  <div class="service-category-grid growth-engine-grid mx-auto grid max-w-[54rem] grid-cols-2 gap-4 max-[600px]:grid-cols-1 [&>.reveal]:flex [&>.reveal>.service-category]:flex-1">
+    {components.map(({ icon: ComponentIcon, id, title, copy }, index) => <Reveal delay={index * 50}>
+      <article class={`service-category growth-engine-component growth-engine-component--${id} flex flex-col overflow-hidden rounded-card bg-surface shadow-surface`}>
+        <div class="service-category-main relative flex min-h-48 grow shrink-0 flex-col items-start p-6 max-[600px]:min-h-0 max-[600px]:p-5">
+          <ComponentIcon class="service-category-icon size-[42px] [stroke-width:1.7]" aria-hidden="true" />
+          <div class="service-category-copy pt-7">
+            <h4 class="m-0 text-heading-sm font-semibold">{title}</h4>
+            <p class="mt-2 max-w-[34ch] text-body leading-body font-normal text-muted">{copy}</p>
+          </div>
+        </div>
+      </article>
+    </Reveal>)}
+  </div>
+  <Reveal class="growth-engine-action flex justify-center px-4 pt-8 pb-4 max-[600px]:px-2 max-[600px]:pt-6 max-[600px]:pb-3">
+    <CtaButton href={localizePath("/contact", locale)}>{locale === "de" ? "Wachstumsmaschine aufbauen" : "Build your growth engine"}</CtaButton>
+  </Reveal>
+</div>

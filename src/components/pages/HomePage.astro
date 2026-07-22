@@ -4,32 +4,29 @@ import BenefitIcon from "@/components/BenefitIcon.astro";
 import CtaButton from "@/components/CtaButton.astro";
 import Faq from "@/components/Faq.astro";
 import FinalCta from "@/components/FinalCta.astro";
+import GrowthEngine from "@/components/GrowthEngine.astro";
 import ProjectCard from "@/components/ProjectCard.astro";
 import Reveal from "@/components/Reveal.astro";
-import ServiceCategoryGrid from "@/components/ServiceCategoryGrid.astro";
 import SectionHeading from "@/components/SectionHeading.astro";
 import SectionNavigation from "@/components/SectionNavigation.astro";
-import { PencilRuler, Rocket, ScanSearch } from "@lucide/astro";
-import { getFaqs, getProjects, getServices, getTestimonials } from "@/lib/content";
+import { PencilRuler, RefreshCw, ScanSearch } from "@lucide/astro";
+import { getFaqs, getProjects } from "@/lib/content";
 import { localizePath, t, type Locale } from "@/lib/i18n";
 
 interface Props { locale: Locale; }
 const { locale } = Astro.props;
 const heroWords = locale === "de"
   ? [
-      { text: "Wir" },
-      { text: "helfen" },
-      { text: "starken", emphasis: true },
-      { text: "Marken" },
-      { text: "beim" },
+      { text: "Entwickelt" },
+      { text: "für" },
+      { text: "profitables", emphasis: true },
       { text: "Wachstum." },
     ]
   : [
-      { text: "We" },
-      { text: "help" },
-      { text: "bold", emphasis: true },
-      { text: "brands" },
-      { text: "grow." },
+      { text: "Engineered" },
+      { text: "for" },
+      { text: "profitable", emphasis: true },
+      { text: "growth." },
     ];
 const heroTitle = heroWords.map(({ text }) => text).join(" ");
 let heroLetterIndex = 0;
@@ -38,45 +35,55 @@ const heroSegments = heroWords.map((word) => {
   heroLetterIndex += 1;
   return { ...word, letters };
 });
-const [projects, services, testimonials, faqs] = await Promise.all([getProjects(locale), getServices(locale), getTestimonials(locale), getFaqs(locale)]);
-const benefits = [
-  ["outcome", "Results first", "Good work must also create demand, win sales, or save time."],
-  ["senior", "Senior specialists only", "You work directly with experienced strategists, designers, developers, marketers, and automation specialists."],
-  ["system", "Plan through launch", "One team plans and runs your brand, tech, marketing, content, and automation."],
-  ["ownership", "One responsible partner", "One senior team owns the plan, work, updates, and results from start to end."],
-  ["creative-tech", "Design and tech together", "We plan brand, content, code, data, and AI together."],
+const finalHeroLetterIndex = heroSegments[heroSegments.length - 1]?.letters.slice(-1)[0]?.index ?? 0;
+const heroHighlightDelay = 320 + (finalHeroLetterIndex * 16);
+const [projects, faqs] = await Promise.all([getProjects(locale), getFaqs(locale)]);
+const testimonials: { data: { brand: string; quote: string; attribution: string } }[] = [];
+const benefits = locale === "de" ? [
+  ["ownership", "Ein verantwortlicher Partner", "Strategie, Umsetzung, Technologie und Performance werden gemeinsam gesteuert – ohne mehrere Agenturen oder Dienstleister koordinieren zu müssen."],
+  ["outcome", "An deinen Prioritäten ausgerichtet", "Wir konzentrieren uns auf die Chancen und Engpässe, die für dein Unternehmen am wichtigsten sind, statt dir eine feste Leistungsliste aufzuzwingen."],
+  ["outcomes", "Klare Entscheidungen, sichtbarer Fortschritt", "Du weißt jederzeit, woran wir arbeiten, warum es wichtig ist und was uns die Daten zeigen."],
+] as const : [
+  ["ownership", "One accountable partner", "Strategy, execution, technology, and performance are managed together—without coordinating multiple agencies or suppliers."],
+  ["outcome", "Built around your priorities", "We focus on the opportunities and bottlenecks that matter most to your business, rather than forcing a fixed list of services."],
+  ["outcomes", "Clear decisions, visible progress", "You always know what we are working on, why it matters, and what the data is telling us."],
 ] as const;
 const processSteps = [
-  { icon: ScanSearch, title: "Define", copy: "Goals, users, positioning and scope." },
-  { icon: PencilRuler, title: "Create", copy: "Design, build and integrate." },
-  { icon: Rocket, title: "Launch and improve", copy: "Test, release and optimise." },
+  { icon: ScanSearch, title: "Understand", copy: "We clarify your goals, audience, current performance, priorities, and constraints." },
+  { icon: PencilRuler, title: "Build", copy: "We design, create, connect, and launch the experiences, channels, and systems needed." },
+  { icon: RefreshCw, title: "Improve", copy: "We review performance, identify opportunities, and refine the work over time." },
 ] as const;
-const description = t(locale, "Branding, websites, apps, SEO, AI search, content, paid acquisition, analytics, and intelligent automation—all delivered by one senior team.");
+const description = locale === "de"
+  ? "Wir vernetzen alle Teile deines digitalen Wachstumssystems, um qualifizierte Leads zu gewinnen, mehr Kunden zu überzeugen und profitabel zu skalieren."
+  : "We connect every part of your digital growth system to generate qualified leads, convert more customers, and scale profitably.";
 const sectionNavigation = locale === "de" ? [
   { id: "intro", title: "Start", description: "Was wir bauen, wie wir arbeiten und woran wir Erfolg messen." },
   { id: "work", title: "Ausgewählte Arbeiten", description: "Digitale Produkte und Wachstumssysteme aus unserer Praxis." },
   { id: "why", title: "Warum Webpilot", description: "Ein erfahrenes Team, verantwortlich vom Plan bis zum Ergebnis." },
-  { id: "services", title: "Leistungen", description: "Marke, Technologie und Wachstum als ein verbundenes System." },
-  { id: "process", title: "Unser Prozess", description: "Von der ersten Idee bis zum Launch in drei klaren Schritten." },
+  { id: "services", title: "Wachstumsmaschine", description: "Nachfrage, Conversion, Daten und Automatisierung in einem vernetzten System." },
+  { id: "process", title: "Unser Prozess", description: "Ein klarer Prozess in drei Phasen mit eindeutigen Prioritäten von Anfang an." },
   { id: "testimonials", title: "Kundenstimmen", description: "Was unsere Partner über die Zusammenarbeit sagen." },
   { id: "faq", title: "Häufige Fragen", description: "Kurze Antworten zu Ablauf, Zusammenarbeit und Projekten." },
 ] : [
   { id: "intro", title: "Introduction", description: "What we build, how we work, and how we measure success." },
   { id: "work", title: "Selected work", description: "Digital products and growth systems from our studio." },
   { id: "why", title: "Why Webpilot", description: "One senior team, accountable from plan through outcome." },
-  { id: "services", title: "Services", description: "Brand, technology, and growth designed as one connected system." },
-  { id: "process", title: "Our process", description: "From first idea to launch in three clear steps." },
+  { id: "services", title: "Growth Engine", description: "Demand, conversion, data, and automation in one connected system." },
+  { id: "process", title: "Our process", description: "A straightforward three-stage process with clear priorities from the beginning." },
   { id: "testimonials", title: "Testimonials", description: "What our partners say about working with us." },
   { id: "faq", title: "Common questions", description: "Quick answers about projects, process, and working together." },
 ];
+const visibleSectionNavigation = sectionNavigation.filter(({ id }) => id !== "testimonials");
+const sectionOrder = ["intro", "work", "services", "why", "process", "faq"];
+visibleSectionNavigation.sort((a, b) => sectionOrder.indexOf(a.id) - sectionOrder.indexOf(b.id));
 ---
 <BaseLayout {locale} {description}>
-  <main id="main-content">
-    <SectionNavigation {locale} items={sectionNavigation} />
+  <main id="main-content" class="home-page">
+    <SectionNavigation {locale} items={visibleSectionNavigation} />
     <section id="intro" class="hero hero--home grid grid-cols-1 [place-items:start_center] px-page pt-32 pb-section max-[600px]:px-[18px] max-[600px]:pt-[6.5rem]">
       <div class="hero-inner flex w-full min-w-0 max-w-[58rem] flex-col items-center text-center">
         <h1 class="mt-6 mb-6 w-full max-w-hero text-display-lg font-semibold max-[600px]:max-w-full" aria-label={heroTitle}>
-          <span class="shiny-text inline-block" aria-hidden="true">{heroSegments.map((word, wordIndex) => <>{word.emphasis ? <em class="hero-word-group inline-block whitespace-nowrap">{word.letters.map((letter) => <span class="hero-letter-mask inline-block align-bottom"><span class="hero-letter inline-block" style={`--letter-index:${letter.index}`}>{letter.text}</span></span>)}</em> : <span class="hero-word-group inline-block whitespace-nowrap">{word.letters.map((letter) => <span class="hero-letter-mask inline-block align-bottom"><span class="hero-letter inline-block" style={`--letter-index:${letter.index}`}>{letter.text}</span></span>)}</span>}{wordIndex < heroSegments.length - 1 && " "}</>)}</span>
+          <span class="shiny-text inline-block" aria-hidden="true">{heroSegments.map((word, wordIndex) => <>{word.emphasis ? <em class="hero-word-group inline-block whitespace-nowrap" style={`--hero-highlight-delay:${heroHighlightDelay}ms`}>{word.letters.map((letter) => <span class="hero-letter-mask inline-block align-bottom"><span class="hero-letter inline-block" style={`--letter-index:${letter.index}`}>{letter.text}</span></span>)}</em> : <span class="hero-word-group inline-block whitespace-nowrap">{word.letters.map((letter) => <span class="hero-letter-mask inline-block align-bottom"><span class="hero-letter inline-block" style={`--letter-index:${letter.index}`}>{letter.text}</span></span>)}</span>}{wordIndex < heroSegments.length - 1 && " "}{wordIndex === 1 && <br aria-hidden="true" />}</>)}</span>
         </h1>
         <p class="hero-copy m-0 w-full max-w-narrow text-lead max-[600px]:max-w-[350px]">{description}</p>
         <div class="hero-actions mt-8 flex gap-3 max-[600px]:w-[min(270px,100%)] max-[600px]:flex-col max-[600px]:items-stretch max-[600px]:justify-center"><CtaButton href={localizePath("/contact", locale)}>{t(locale, "Book strategy call")}</CtaButton><CtaButton href={localizePath("/work", locale)} light>{t(locale, "Explore our work")}</CtaButton></div>
@@ -87,10 +94,10 @@ const sectionNavigation = locale === "de" ? [
 
     <section id="why" class="why-section px-page py-section"><SectionHeading title={t(locale, "Why Webpilot")} align="center" /><div class="benefit-grid grid grid-cols-6 gap-4 max-[900px]:grid-cols-2 max-[600px]:grid-cols-1">{benefits.map(([icon, title, copy], index) => <Reveal class={`benefit-card benefit-card-${index + 1} col-span-2 px-6 pt-3 pb-6 text-center max-[900px]:col-auto`} delay={index * 50}><div class="benefit-visual grid place-items-center text-ink [&_svg]:size-[42px]"><BenefitIcon name={icon} /></div><h3 class="mt-6 mb-2 text-heading-sm font-semibold">{t(locale, title)}</h3><p class="m-0 text-body leading-body text-muted">{t(locale, copy)}</p></Reveal>)}</div></section>
 
-    <section id="services" class="service-category-section px-page py-section"><SectionHeading title={locale === "de" ? "Konkrete Expertise. Klar organisiert." : "Concrete expertise. Clearly organised."} copy={locale === "de" ? "Vier Leistungsbereiche, die einzeln funktionieren und gemeinsam stärker werden." : "Four service categories that work independently and become stronger together."} /><ServiceCategoryGrid {services} {locale} compact /></section>
+    <section id="services" class="service-category-section px-page py-section"><SectionHeading title={locale === "de" ? "Ein vernetztes System für profitables Wachstum." : "One connected system for profitable growth."} copy={locale === "de" ? "Wir verbinden Nachfragegenerierung, Conversion, CRM, Automatisierung und Analytics, damit dein digitales Wachstum als Ganzes funktioniert." : "We connect demand generation, conversion, CRM, automation, and analytics so every part of your digital growth works together."} /><GrowthEngine {locale} /></section>
 
     <section id="process" class="engagement-section process-section px-page py-section">
-      <SectionHeading title={t(locale, "From first idea to launch.")} copy={t(locale, "A clear shared plan keeps design, tech, and delivery in step.")} />
+      <SectionHeading title={t(locale, "How the work moves forward")} copy={t(locale, "A straightforward three-stage process with clear priorities from the beginning.")} />
       <ol class="process-list mx-auto my-0 grid w-full max-w-[62rem] list-none grid-cols-3 items-stretch gap-4 px-0 pt-[52px] max-[900px]:grid-cols-1 max-[900px]:gap-[52px] max-[900px]:pt-0 max-[900px]:pr-[18px] max-[900px]:pl-14" data-reveal data-mobile-reveal-items>
         {processSteps.map(({ icon: StepIcon, title, copy }, index) => <li class="process-step relative min-h-0 rounded-card bg-surface p-6 shadow-surface" style={`--process-delay:${index * 350}ms`}>
           <span class="process-node absolute -top-[52px] left-[calc(50%_-_19px)] z-2 grid size-[38px] place-items-center rounded-full bg-[#111] text-caption font-semibold tabular-nums text-white max-[900px]:top-3.5 max-[900px]:-left-[57px]" aria-hidden="true">{index + 1}</span>

@@ -20,7 +20,7 @@ const principles = locale === "de" ? [
   { title: "Use before show", copy: "We use new tech when it helps the work, not when it only looks good in a pitch." },
 ];
 ---
-<BaseLayout {locale} title={t(locale, "About")} description={locale === "de" ? "Das erfahrene Team hinter Webpilot." : "The senior team behind Webpilot."}>
+<BaseLayout {locale} title={t(locale, "About us")} description={locale === "de" ? "Das erfahrene Team hinter Webpilot." : "The senior team behind Webpilot."}>
   <main id="main-content" class="page-main page-main--about">
     <EditorialHero title={locale === "de" ? "Bewusst klein. Stark in den wichtigen Feldern." : "Small team. Wide skill set."} copy={locale === "de" ? "Webpilot verbindet klares Design mit messbarem Wachstum und KI." : "Webpilot joins strong design, measured growth, and AI in one senior team."} />
     <section class="about-manifesto mx-auto grid w-[min(100%,calc(var(--layout-max)+(2*var(--space-6))))] max-w-none grid-cols-[minmax(0,.85fr)_minmax(0,1.15fr)] items-stretch gap-12 bg-[#111] px-8 py-section text-white max-[900px]:grid-cols-1 max-[900px]:gap-6 max-[600px]:gap-12 max-[600px]:px-6">

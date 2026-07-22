@@ -1,7 +1,7 @@
 ---
-import { BadgeCheck, Blend, Handshake, Target, Waypoints } from "@lucide/astro";
+import { BadgeCheck, Blend, ChartNoAxesCombined, Handshake, Network, RefreshCw, Target, Waypoints } from "@lucide/astro";
 
-interface Props { name: "outcome" | "senior" | "system" | "ownership" | "creative-tech"; }
+interface Props { name: "outcome" | "senior" | "system" | "ownership" | "creative-tech" | "connected" | "outcomes" | "optimized"; }
 
 const { name } = Astro.props;
 // Maintained source icons from Lucide: https://lucide.dev/icons/
@@ -11,6 +11,9 @@ const icons = {
   system: Waypoints,
   ownership: Handshake,
   "creative-tech": Blend,
+  connected: Network,
+  outcomes: ChartNoAxesCombined,
+  optimized: RefreshCw,
 };
 const BenefitIcon = icons[name];
 ---

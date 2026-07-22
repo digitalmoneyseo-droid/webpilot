@@ -107,11 +107,12 @@ test("FAQ and filters expose accessible state", async ({ page }) => {
   const secondFaq = page.locator("[data-faq] button").nth(1);
   const secondAnswer = page.locator("[data-faq] .faq-answer").nth(1);
   await expect(secondAnswer).toHaveAttribute("aria-hidden", "true");
-  await expect(secondAnswer).toHaveCSS("display", "none");
+  await expect(secondAnswer).toHaveCSS("display", "grid");
+  await expect(secondAnswer).toHaveCSS("transition-property", "grid-template-rows");
   await secondFaq.click();
   await expect(secondFaq).toHaveAttribute("aria-expanded", "true");
   await expect(secondAnswer).toHaveAttribute("aria-hidden", "false");
-  await expect(secondAnswer).toHaveCSS("display", "block");
+  await expect.poll(() => secondAnswer.evaluate((answer) => getComputedStyle(answer).gridTemplateRows)).not.toBe("0px");
   await expect(secondAnswer.locator(":scope > div")).toHaveCSS("transition-property", "opacity, transform");
   await expect(firstFaq).toHaveAttribute("aria-expanded", "false");
   await expect(firstAnswer).toHaveAttribute("aria-hidden", "true");
@@ -226,10 +227,19 @@ test("portfolio ribbon keeps moving and supports drag scrolling", async ({ page 
   await expect(page).toHaveURL(/\/en\/work\//);
 });
 
-test("service discovery separates the slogan from concrete service categories", async ({ page }) => {
-  await page.goto("/en");
-  await expect(page.locator(".service-trio")).toHaveCount(0);
-  await expect(page.locator(".service-category-section .service-category")).toHaveCount(4);
+test("the homepage presents one growth engine with four connected components", async ({ page }) => {
+  for (const homepage of [
+    { path: "/", heading: "Ein vernetztes System für profitables Wachstum.", cta: "Wachstumsmaschine aufbauen", href: "/contact" },
+    { path: "/en", heading: "One connected system for profitable growth.", cta: "Build your growth engine", href: "/en/contact" },
+  ]) {
+    await page.goto(homepage.path);
+    await expect(page.locator(".service-trio")).toHaveCount(0);
+    await expect(page.locator(".service-category-section h2")).toHaveText(homepage.heading);
+    await expect(page.locator(".growth-engine-intro")).toHaveCount(0);
+    await expect(page.locator(".growth-engine-component")).toHaveCount(4);
+    await expect(page.locator(".growth-engine-component a")).toHaveCount(0);
+    await expect(page.getByRole("link", { name: homepage.cta, exact: true })).toHaveAttribute("href", homepage.href);
+  }
 
   await page.goto("/services");
   await expect(page.locator(".page-main--services")).toBeVisible();
@@ -250,7 +260,7 @@ test("new Build service routes render and the retired route redirects", async ({
   await expect(page).toHaveURL(/\/services\/website-design-development\/?$/);
 });
 
-test("typography roles use the discrete Inter and Playfair Display system", async ({ page }) => {
+test("typography roles use the discrete Inter system", async ({ page }) => {
   await page.setViewportSize({ width: 1440, height: 1000 });
   await page.goto("/en");
 
@@ -270,7 +280,7 @@ test("typography roles use the discrete Inter and Playfair Display system", asyn
   await expect(hero).toHaveCSS("font-family", /Inter/);
 
   const heroAccent = hero.locator("em");
-  await expect(heroAccent).toHaveCSS("font-family", /Playfair Display/);
+  await expect(heroAccent).toHaveCSS("font-family", /Inter/);
   await expect(heroAccent).toHaveCSS("font-style", "italic");
   await expect(heroAccent).toHaveCSS("font-weight", "700");
   await expect(heroAccent).toHaveCSS("color", "rgb(59, 130, 246)");
@@ -305,7 +315,7 @@ test("service headings align and category CTAs stay contained", async ({ page })
 
   for (const path of ["/", "/en"]) {
     await page.goto(path);
-    for (const main of await page.locator(".service-category-main").all()) {
+    for (const main of await page.locator(".service-category-main:has(.service-category-cta-label)").all()) {
       const contained = await main.evaluate((element) => {
         const card = element.closest(".service-category")?.getBoundingClientRect();
         const label = element.querySelector(".service-category-cta-label")?.getBoundingClientRect();
