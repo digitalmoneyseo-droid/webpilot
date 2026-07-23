@@ -1,12 +1,12 @@
 ---
-import { BadgeCheck, Blend, ChartNoAxesCombined, Handshake, Network, RefreshCw, Target, Waypoints } from "@lucide/astro";
+import { BadgeCheck, Blend, ChartNoAxesCombined, Handshake, Network, RefreshCw, SlidersHorizontal, Waypoints } from "@lucide/astro";
 
 interface Props { name: "outcome" | "senior" | "system" | "ownership" | "creative-tech" | "connected" | "outcomes" | "optimized"; }
 
 const { name } = Astro.props;
 // Maintained source icons from Lucide: https://lucide.dev/icons/
 const icons = {
-  outcome: Target,
+  outcome: SlidersHorizontal,
   senior: BadgeCheck,
   system: Waypoints,
   ownership: Handshake,

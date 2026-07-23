@@ -9,7 +9,7 @@ import ProjectCard from "@/components/ProjectCard.astro";
 import Reveal from "@/components/Reveal.astro";
 import SectionHeading from "@/components/SectionHeading.astro";
 import SectionNavigation from "@/components/SectionNavigation.astro";
-import { PencilRuler, RefreshCw, ScanSearch } from "@lucide/astro";
+import { ListOrdered, PackageCheck, Target } from "@lucide/astro";
 import { getFaqs, getProjects } from "@/lib/content";
 import { localizePath, t, type Locale } from "@/lib/i18n";
 
@@ -49,9 +49,9 @@ const benefits = locale === "de" ? [
   ["outcomes", "Clear decisions, visible progress", "You always know what we are working on, why it matters, and what the data is telling us."],
 ] as const;
 const processSteps = [
-  { icon: ScanSearch, title: "Understand", copy: "We clarify your goals, audience, current performance, priorities, and constraints." },
-  { icon: PencilRuler, title: "Build", copy: "We design, create, connect, and launch the experiences, channels, and systems needed." },
-  { icon: RefreshCw, title: "Improve", copy: "We review performance, identify opportunities, and refine the work over time." },
+  { icon: Target, title: "Align", copy: "We agree on your goals, current challenges, success measures, and commercial priorities." },
+  { icon: ListOrdered, title: "Prioritise", copy: "We identify the most valuable opportunities and turn them into a practical, sequenced roadmap." },
+  { icon: PackageCheck, title: "Deliver", copy: "We work in focused cycles, share progress clearly, and adjust direction as new evidence emerges." },
 ] as const;
 const description = locale === "de"
   ? "Wir vernetzen alle Teile deines digitalen Wachstumssystems, um qualifizierte Leads zu gewinnen, mehr Kunden zu überzeugen und profitabel zu skalieren."
