@@ -39,7 +39,7 @@ const bySlug = new Map(services.map((service) => [service.data.slug, service]));
         </span>
       </a>
       {categoryServices.length > 0 && <nav class="service-category-links grid grid-cols-3 border-t border-line [.service-category-grid--compact_&]:hidden max-[900px]:grid-cols-2 max-[600px]:grid-cols-1" aria-label={title}>
-        {categoryServices.map((service) => <a class="flex min-h-13 items-center justify-between gap-3 border-r border-line px-4 py-3 text-small text-[#4e4e4a] last:border-r-0 hover:bg-white/58 hover:text-ink max-[600px]:border-r-0 max-[600px]:border-b max-[600px]:last:border-b-0" href={localizePath(`/services/${service.data.slug}`, locale)}>{service.data.title}<span aria-hidden="true">→</span></a>)}
+        {categoryServices.map((service) => <a class="flex min-h-13 items-center justify-between gap-3 border-r border-line px-4 py-3 text-small text-muted last:border-r-0 hover:bg-white/58 hover:text-ink max-[600px]:border-r-0 max-[600px]:border-b max-[600px]:last:border-b-0" href={localizePath(`/services/${service.data.slug}`, locale)}>{service.data.title}<span aria-hidden="true">→</span></a>)}
       </nav>}
     </article></Reveal>;
   })}

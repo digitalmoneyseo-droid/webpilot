@@ -72,6 +72,31 @@
   --space-9: 5rem;
   --space-10: 7.5rem;
 
+  /* Token layers: primitives live in global.css, these roles are the public UI API. */
+  --space-page: var(--page-gutter);
+  --space-section: var(--section-space);
+  --space-heading: var(--section-heading-gap);
+  --space-control-x: var(--control-padding-x);
+  --space-control-y: var(--input-padding-y);
+  --space-card: var(--card-padding);
+
+  --text-primary: var(--ink);
+  --text-secondary: var(--muted);
+  --surface-default: var(--bg);
+  --surface-raised: var(--surface);
+  --surface-inverse: var(--dark);
+  --border-default: var(--border-subtle);
+  --border-emphasis: var(--border-strong);
+  --interactive-primary: var(--accent);
+  --interactive-focus: var(--focus);
+
+  /* Component roles prevent repeated ad-hoc dimensions in templates. */
+  --component-card-radius: var(--radius-card);
+  --component-control-radius: var(--radius-control);
+  --component-action-radius: var(--radius-pill);
+  --component-control-height: var(--control-height-md);
+  --component-action-height: var(--control-height-lg);
+
   --layout-max: 77.5rem;
   --page-gutter: max(1.125rem, calc((100vw - var(--layout-max)) / 2));
   --section-space: clamp(2.5rem, 3vw, 3rem);

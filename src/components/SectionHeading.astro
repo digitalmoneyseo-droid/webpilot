@@ -3,6 +3,6 @@ interface Props { title: string; copy?: string; align?: "left" | "center"; }
 const { title, copy, align = "left" } = Astro.props;
 ---
 <div class:list={["section-heading mb-heading-gap max-w-[45rem]", { "mx-auto text-center": align === "center" }]}>
-  <h2 class="m-0 mt-3 text-heading-lg font-semibold">{title}</h2>
-  {copy && <p class:list={["mt-4 max-w-narrow text-body text-muted", { "mx-auto": align === "center" }]}>{copy}</p>}
+  <h2 class="m-0 mt-[var(--space-3)] text-heading-lg font-semibold">{title}</h2>
+  {copy && <p class:list={["mt-[var(--space-4)] max-w-narrow text-body text-muted", { "mx-auto": align === "center" }]}>{copy}</p>}
 </div>

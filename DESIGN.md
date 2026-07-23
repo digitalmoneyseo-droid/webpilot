@@ -2,6 +2,8 @@
 
 This file is the durable reference for future UI changes. Reuse the existing tokens and semantic roles before introducing local values. The implementation in `src/styles/design-system.css`, `src/styles/global.css`, and `src/styles/app.css` remains the source of truth if this guide and the code diverge.
 
+The token contract has three layers: primitive values (`--primitive-*` and `--ds-*`) are defined in `global.css`, semantic roles (`--text-*`, `--surface-*`, `--border-*`, and `--interactive-*`) are defined in `design-system.css`, and component contracts (`--component-*`, `--control-*`, and `--card-*`) are the layer shared components should consume directly.
+
 ## Direction
 
 Webpilot uses a restrained, editorial product aesthetic: warm neutral surfaces, compact controls, strong typographic hierarchy, and one expressive hero accent. Keep ordinary UI quiet so the blue italic Inter word with its yellow animated highlight remains the homepage signature.
@@ -57,6 +59,9 @@ Color should communicate hierarchy or state. Do not add decorative accent colors
 - Use the 4/8/12/16/24/32/48/64/80/120 spacing tokens in `design-system.css`.
 - Use the shared page gutter, section spacing, and layout maximum instead of isolated page values.
 - Pills use a fully rounded radius; cards use the established card radius for their context.
+- Use `--radius-pill`, `--radius-control`, `--radius-card`, and `--radius-shell` for shape roles. Do not introduce a new recurring radius value in a component.
+- Use `--control-height-*`, `--control-padding-x`, `--control-icon-size`, and `--card-padding` for recurring component dimensions.
+- Use semantic color utilities such as `text-primary`, `text-secondary`, `surface-default`, `surface-raised`, `border-default`, and `interactive-focus` when available.
 - For nested rounded surfaces, preserve the geometric relationship: `inner radius = outer radius - padding`. If the result is zero or negative, the inner surface should not be rounded.
 - Keep standard copy within the documented reading measures and verify both German and English wrapping.
 

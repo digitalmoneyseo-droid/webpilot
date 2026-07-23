@@ -1,4 +1,12 @@
 :root {
+  /* Primitive palette. Keep raw values here; components consume semantic roles below. */
+  --primitive-white: oklch(0.995 0.003 95);
+  --primitive-ink: oklch(0.18 0.012 95);
+  --primitive-dark: oklch(0.18 0.006 95);
+  --primitive-focus: oklch(0.49 0.19 258);
+  --primitive-error: oklch(0.64 0.22 24);
+  --primitive-accent: oklch(0.57 0.145 152);
+
   --font-system: "Inter", system-ui, sans-serif;
   --font-sans: var(--font-system);
   --font-display-accent: "Playfair Display", Georgia, serif;
@@ -6,23 +14,45 @@
   /* Warm stone neutrals and a single emerald accent keep the interface calm
      while giving interactive and editorial moments a recognizable voice. */
   --bg: oklch(0.955 0.006 95);
-  --ink: oklch(0.18 0.012 95);
+  --ink: var(--primitive-ink);
   --muted: oklch(0.46 0.012 95);
   --line: oklch(0.18 0.012 95 / 0.13);
-  --white: oklch(0.995 0.003 95);
+  --white: var(--primitive-white);
   --surface: var(--white);
   --surface-subtle: oklch(0.93 0.006 95);
   --inverse: var(--white);
-  --dark: oklch(0.18 0.006 95);
+  --dark: var(--primitive-dark);
   --dark-muted: oklch(0.72 0.006 95);
-  --error: oklch(0.64 0.22 24);
-  --accent: oklch(0.57 0.145 152);
+  --error: var(--primitive-error);
+  --accent: var(--primitive-accent);
   --accent-strong: oklch(0.43 0.12 152);
   --accent-soft: oklch(0.91 0.055 145);
   --accent-soft-strong: oklch(0.86 0.085 145);
-  --focus: oklch(0.49 0.19 258);
+  --focus: var(--primitive-focus);
   --wave-blue: #3b82f6;
-  --radius: 12px;
+  /* Shape scale: pills for actions, one shared card radius, smaller controls. */
+  --ds-radius-pill: 999px;
+  --ds-radius-card: 12px;
+  --ds-radius-control: 8px;
+  --ds-radius-shell: 14px;
+  --radius-pill: var(--ds-radius-pill);
+  --radius-card: var(--ds-radius-card);
+  --radius-control: var(--ds-radius-control);
+  --radius-shell: var(--ds-radius-shell);
+  --radius: var(--radius-card);
+  --border-width-thin: 1px;
+  --border-subtle: var(--line);
+  --border-strong: color-mix(in oklch, var(--ink) 24%, transparent);
+
+  /* Component contracts. Shared components should consume these, not invent sizes. */
+  --control-height-sm: 36px;
+  --control-height-md: 40px;
+  --control-height-lg: 52px;
+  --control-padding-x: 16px;
+  --control-icon-size: 32px;
+  --card-padding: 24px;
+  --input-padding-x: 12px;
+  --input-padding-y: 8px;
   --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
   --ease-in-out: cubic-bezier(0.77, 0, 0.175, 1);
   --shadow-surface:

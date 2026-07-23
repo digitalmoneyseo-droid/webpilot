@@ -17,9 +17,10 @@
   --color-focus: var(--focus);
   --color-error: var(--error);
 
-  --radius-card: var(--radius);
-  --radius-control: 0.5rem;
-  --radius-shell: 0.875rem;
+  --radius-pill: var(--ds-radius-pill);
+  --radius-card: var(--ds-radius-card);
+  --radius-control: var(--ds-radius-control);
+  --radius-shell: var(--ds-radius-shell);
 
   --shadow-surface: var(--shadow-surface);
   --shadow-surface-hover: var(--shadow-surface-hover);
@@ -63,6 +64,10 @@
   --spacing-section: var(--section-space);
   --spacing-section-compact: var(--section-space-compact);
   --spacing-heading-gap: var(--section-heading-gap);
+
+  --spacing-card-padding: var(--card-padding);
+  --spacing-control-x: var(--control-padding-x);
+  --spacing-control-y: var(--input-padding-y);
 
   --container-layout: var(--layout-max);
   --container-reading: var(--measure-reading);
