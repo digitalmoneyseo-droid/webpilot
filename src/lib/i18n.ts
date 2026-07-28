@@ -1,0 +1,29 @@
+import { dictionaries } from "../../../src/i18n/translations";
+
+export const locales = ["de", "en"] as const;
+export type Locale = (typeof locales)[number];
+
+export function t(locale: Locale, english: string): string {
+  return (dictionaries[locale] as Readonly<Record<string, string>>)[english] ?? english;
+}
+
+export function studioLocation(locale: Locale): string {
+  return locale === "de" ? "Sitz in Deutschland · Weltweit tätig" : "Based in Germany · Operating worldwide";
+}
+
+export function localizePath(path: string, locale: Locale): string {
+  const normalized = path.startsWith("/") ? path : `/${path}`;
+  if (locale === "de") return normalized;
+  return normalized === "/" ? "/en" : `/en${normalized}`;
+}
+
+export function basePath(pathname: string): string {
+  if (pathname === "/en" || pathname === "/en/") return "/";
+  return pathname.startsWith("/en/") ? pathname.slice(3) : pathname;
+}
+
+export function alternatePath(pathname: string, locale: Locale): string {
+  const rawBase = basePath(pathname);
+  const base = rawBase.length > 1 ? rawBase.replace(/\/$/, "") : rawBase;
+  return localizePath(base, locale);
+}
