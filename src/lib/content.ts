@@ -40,7 +40,7 @@ export interface ContentEntry<T> {
 export type ProjectEntry = ContentEntry<Project>;
 
 function readCollection<T>(collection: "projects" | "faqs", locale: Locale): ContentEntry<T>[] {
-  const directory = path.resolve(process.cwd(), "..", "src", "content", collection, locale);
+  const directory = path.resolve(process.cwd(), "src", "content", collection, locale);
   return fs.readdirSync(directory)
     .filter((file) => file.endsWith(".json"))
     .map((file) => ({

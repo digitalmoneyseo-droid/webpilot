@@ -1,0 +1,30 @@
+{
+  "translationKey": "lumen-lead-system",
+  "locale": "en",
+  "slug": "lumen-lead-system",
+  "order": 6,
+  "title": "CRM Lead Qualification System",
+  "shortTitle": "Lumen",
+  "summary": "A smart sales process that checks, sends, and sums up each strong lead in minutes.",
+  "categories": [
+    "AI",
+    "Automation",
+    "Growth"
+  ],
+  "year": "2025",
+  "metric": "93%",
+  "metricLabel": "faster lead response",
+  "challenge": "Strong leads sat across many systems while sales staff checked each one by hand.",
+  "strategy": "Build one review process that adds data, scores fit and intent, and sends key choices to staff.",
+  "execution": "We linked forms, CRM data, AI research, scores, Slack alerts, and tailored reply drafts.",
+  "timeline": "8 weeks",
+  "tools": [
+    "HubSpot",
+    "OpenAI",
+    "Clay",
+    "n8n",
+    "Slack"
+  ],
+  "palette": "yellow",
+  "visual": "crm"
+}

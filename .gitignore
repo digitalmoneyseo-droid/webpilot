@@ -2,3 +2,4 @@
 node_modules/
 next-dev.*.log
 next-start.*.log
+*.tsbuildinfo

@@ -1,0 +1,30 @@
+{
+  "translationKey": "orbit-content-engine",
+  "locale": "en",
+  "slug": "orbit-content-engine",
+  "order": 5,
+  "title": "Social Content Program",
+  "shortTitle": "Orbit",
+  "summary": "A clear process that turns one expert idea into a month of useful content.",
+  "categories": [
+    "Content",
+    "Social",
+    "Automation"
+  ],
+  "year": "2025",
+  "metric": "3.4×",
+  "metricLabel": "qualified engagement",
+  "challenge": "Experts had much to say, but the team could not keep a steady publishing plan.",
+  "strategy": "Set a clear editorial view and a production process based on talks with experts.",
+  "execution": "We designed content forms, production steps, review tools, publishing guides, and a results report.",
+  "timeline": "12 weeks",
+  "tools": [
+    "Notion",
+    "Figma",
+    "Claude",
+    "Make",
+    "LinkedIn"
+  ],
+  "palette": "ink",
+  "visual": "content"
+}
