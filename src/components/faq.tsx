@@ -20,7 +20,7 @@ export function Faq({ items, id = "faq" }: { items: { data: { question: string; 
               </button>
             </h3>
             <CollapsePanel id={`${itemId}-answer`} labelledBy={`${itemId}-button`} expanded={expanded}>
-              <p className="m-0 max-w-reading px-2 pb-6 text-body text-[var(--ds-gray-900)]">{item.data.answer}</p>
+              <p className="m-0 max-w-reading px-2 pb-6 text-body text-muted">{item.data.answer}</p>
             </CollapsePanel>
           </div>;
         })}

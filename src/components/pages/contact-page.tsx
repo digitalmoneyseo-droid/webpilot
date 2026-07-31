@@ -1,13 +1,13 @@
 import { ContactForm } from "@/components/contact-form";
 import { EditorialHero } from "@/components/editorial-hero";
-import type { Locale } from "@/lib/i18n";
+import { t, type Locale } from "@/lib/i18n";
 
 export function ContactPage({ locale }: { locale: Locale }) {
   return (
     <main id="main-content">
       <EditorialHero
-        title={locale === "de" ? "Planen wir deinen nächsten Schritt." : "Let’s plan your next move."}
-        copy={locale === "de" ? "Erzähl uns, woran du arbeitest, wo es gerade stockt und wie ein gutes Ergebnis aussehen würde." : "Tell us what you are building, where progress is getting stuck, and what a strong outcome would look like."}
+        title={t(locale, "contact.title")}
+        copy={t(locale, "contact.copy")}
       />
       <section className="px-page pb-section">
         <div className="reveal mx-auto max-w-[50rem] rounded-card bg-black p-[clamp(1.25rem,5vw,3rem)] text-white shadow-[var(--ds-shadow-border-medium)]" data-reveal>

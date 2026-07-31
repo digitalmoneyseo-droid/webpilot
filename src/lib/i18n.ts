@@ -1,14 +1,14 @@
-import { dictionaries } from "../i18n/translations";
+import { dictionaries, type MessageKey } from "../i18n/translations";
 
 export const locales = ["de", "en"] as const;
 export type Locale = (typeof locales)[number];
 
-export function t(locale: Locale, english: string): string {
-  return (dictionaries[locale] as Readonly<Record<string, string>>)[english] ?? english;
+export function t(locale: Locale, key: MessageKey): string {
+  return dictionaries[locale][key];
 }
 
 export function studioLocation(locale: Locale): string {
-  return locale === "de" ? "Sitz in Deutschland · Weltweit tätig" : "Based in Germany · Operating worldwide";
+  return t(locale, "footer.location");
 }
 
 export function localizePath(path: string, locale: Locale): string {

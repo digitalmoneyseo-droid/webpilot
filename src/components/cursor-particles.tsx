@@ -25,7 +25,7 @@ export function CursorParticles() {
     const add = (x: number, y: number, vx: number, vy: number, burst = false) => {
       if (particles.length >= 130) particles.shift();
       const life = (burst ? 480 : 350) + Math.random() * 300;
-      particles.push({ x, y, vx, vy, size: 1 + Math.random() * 2.2, life, maxLife: life, color: `hsla(${Math.floor(Math.random() * 360)},88%,56%,.72)` });
+      particles.push({ x, y, vx, vy, size: 1 + Math.random() * 2.2, life, maxLife: life, color: `hsla(${204 + Math.random() * 24}, 96%, ${50 + Math.random() * 20}%, .72)` });
     };
     const draw = (now: number) => {
       const elapsed = now - previous; const delta = Math.min(32, elapsed); previous = now;

@@ -67,7 +67,6 @@
   --radius-control: var(--ds-radius-control);
   --radius-shell: var(--ds-radius-shell);
   --border-subtle: var(--line);
-  --border-strong: var(--ds-gray-alpha-300);
 
   --control-height-sm: 32px;
   --control-height-md: 36px;

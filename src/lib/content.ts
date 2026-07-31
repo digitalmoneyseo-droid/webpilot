@@ -39,7 +39,7 @@ export interface ContentEntry<T> {
 
 export type ProjectEntry = ContentEntry<Project>;
 
-function readCollection<T>(collection: "projects" | "faqs", locale: Locale): ContentEntry<T>[] {
+function readCollection<T>(collection: "projects" | "faqs" | "faq-solutions", locale: Locale): ContentEntry<T>[] {
   const directory = path.resolve(process.cwd(), "src", "content", collection, locale);
   return fs.readdirSync(directory)
     .filter((file) => file.endsWith(".json"))
@@ -56,4 +56,8 @@ export function getProjects(locale: Locale): ProjectEntry[] {
 
 export function getFaqs(locale: Locale): ContentEntry<Faq>[] {
   return readCollection<Faq>("faqs", locale);
+}
+
+export function getSolutionFaqs(locale: Locale): ContentEntry<Faq>[] {
+  return readCollection<Faq>("faq-solutions", locale);
 }

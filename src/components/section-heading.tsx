@@ -2,7 +2,7 @@ export function SectionHeading({ title, copy, align = "left" }: { title: string;
   return (
     <div className={`reveal mb-heading-gap max-w-[45rem] ${align === "center" ? "mx-auto text-center" : ""}`} data-reveal>
       <h2 className="m-0 mt-[var(--space-3)] text-heading-lg">{title}</h2>
-      {copy && <p className={`mt-[var(--space-4)] max-w-narrow text-body-lg text-[var(--ds-gray-900)] ${align === "center" ? "mx-auto" : ""}`}>{copy}</p>}
+      {copy && <p className={`mt-[var(--space-4)] max-w-narrow text-body-lg text-muted ${align === "center" ? "mx-auto" : ""}`}>{copy}</p>}
     </div>
   );
 }
