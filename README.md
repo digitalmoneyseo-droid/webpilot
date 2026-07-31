@@ -9,4 +9,4 @@ pnpm --filter webpilot-next build
 
 The app reads the existing bilingual project and FAQ JSON from `../src/content` and reuses the existing design-system styles and public assets.
 
-The contact form performs client-side validation only. Its submission handler is intentionally marked as a placeholder and does not send or store data.
+The contact form validates the three essential fields and opens a prefilled message in the visitor's email client. The site itself does not send or store form data.

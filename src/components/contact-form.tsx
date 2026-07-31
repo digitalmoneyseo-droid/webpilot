@@ -1,72 +1,155 @@
 "use client";
 
-import { Check, LoaderCircle, Send } from "lucide-react";
-import { FormEvent, useState } from "react";
+import { ArrowUpRight } from "lucide-react";
+import { type FormEvent, useState } from "react";
 import type { Locale } from "@/lib/i18n";
 
-const interests = [
-  { id: "foundation", en: "Foundation — brand, websites, apps & products", de: "Fundament – Marke, Websites, Apps & Produkte" },
-  { id: "optimization", en: "Optimization — SEO, conversion, AI & automation", de: "Optimierung – SEO, Conversion, KI & Automatisierung" },
-  { id: "campaigns", en: "Campaigns — paid acquisition", de: "Kampagnen – bezahlte Akquise" },
-  { id: "partnership", en: "Partnership — integrated work", de: "Partnerschaft – integrierte Zusammenarbeit" },
-] as const;
-const budgets = [
-  { id: "under-5k", en: "Under €5k", de: "Unter €5k" },
-  { id: "5-15k", en: "€5k–€15k", de: "€5k–€15k" },
-  { id: "15-30k", en: "€15k–€30k", de: "€15k–€30k" },
-  { id: "30k-plus", en: "€30k+", de: "€30k+" },
-  { id: "not-sure", en: "Not sure yet", de: "Noch unsicher" },
-] as const;
+type FieldName = "name" | "email" | "message";
+type Errors = Partial<Record<FieldName, string>>;
 
-type Errors = Partial<Record<"name" | "email" | "interests" | "message" | "budget", string>>;
+const fieldControlClass = "w-full rounded-control border border-[#424242] bg-transparent px-4 text-white outline-none transition-[border-color,box-shadow] duration-150 placeholder:text-[#b7b7bd] focus:border-[#737373] focus:shadow-[0_0_0_3px_rgb(255_255_255/8%)] aria-invalid:border-error aria-invalid:shadow-[0_0_0_1px_var(--error)] motion-reduce:transition-none";
 
 export function ContactForm({ locale }: { locale: Locale }) {
   const [errors, setErrors] = useState<Errors>({});
-  const [state, setState] = useState<"idle" | "submitting" | "sent">("idle");
+  const [emailOpened, setEmailOpened] = useState(false);
   const copy = locale === "de" ? {
-    name: "Dein Name", email: "Geschäftliche E-Mail", company: "Unternehmen", interests: "Wobei können wir helfen?", message: "Was möchtest du erreichen?", placeholder: "Etwas Kontext, die wichtigste Rahmenbedingung und wie Erfolg für dich aussieht …", budget: "Voraussichtliches Budget", submit: "Projektanfrage senden", pending: "Wird vorbereitet …", success: "Danke. Die Platzhalter-Übermittlung wurde erfolgreich validiert.", required: "Bitte fülle dieses Feld aus.", emailError: "Bitte gib eine gültige E-Mail-Adresse ein.", interestError: "Bitte wähle mindestens einen Bereich.", messageError: "Bitte gib uns mindestens 20 Zeichen Kontext.",
+    name: "Dein Name",
+    email: "Geschäftliche E-Mail",
+    message: "Was möchtest du erreichen?",
+    placeholder: "Etwas Kontext, die wichtigste Rahmenbedingung und wie Erfolg für dich aussieht …",
+    submit: "In E-Mail fortfahren",
+    required: "Bitte fülle dieses Feld aus.",
+    emailError: "Bitte gib eine gültige E-Mail-Adresse ein.",
+    messageError: "Bitte gib uns mindestens 20 Zeichen Kontext.",
+    note: "Beim Absenden öffnet sich dein E-Mail-Programm. Es werden keine Formulardaten auf dieser Website gespeichert.",
+    opened: "Dein E-Mail-Programm sollte jetzt geöffnet sein. Prüfe die Nachricht und sende sie ab, wenn alles passt.",
+    subject: "Projektanfrage",
+    bodyName: "Name",
+    bodyEmail: "E-Mail",
+    bodyMessage: "Projekt und Ziel",
   } : {
-    name: "Your name", email: "Work email", company: "Company", interests: "What can we help with?", message: "What are you trying to achieve?", placeholder: "A little context, the important constraint, and what success looks like…", budget: "Indicative investment", submit: "Send project brief", pending: "Preparing…", success: "Thank you. The placeholder submission validated successfully.", required: "Please complete this field.", emailError: "Please enter a valid email address.", interestError: "Please select at least one area.", messageError: "Please give us at least 20 characters of context.",
+    name: "Your name",
+    email: "Work email",
+    message: "What are you trying to achieve?",
+    placeholder: "A little context, the important constraint, and what success looks like…",
+    submit: "Continue in email",
+    required: "Please complete this field.",
+    emailError: "Please enter a valid email address.",
+    messageError: "Please give us at least 20 characters of context.",
+    note: "Submitting opens your email app. No form data is stored on this website.",
+    opened: "Your email app should now be open. Review the message and send it when everything looks right.",
+    subject: "Project inquiry",
+    bodyName: "Name",
+    bodyEmail: "Email",
+    bodyMessage: "Project and goal",
   };
 
-  async function onSubmit(event: FormEvent<HTMLFormElement>) {
+  function clearError(field: FieldName) {
+    setErrors((current) => current[field] ? { ...current, [field]: undefined } : current);
+    setEmailOpened(false);
+  }
+
+  function onSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
     const form = event.currentTarget;
     const data = new FormData(form);
-    const nextErrors: Errors = {};
-    if (!String(data.get("name") ?? "").trim()) nextErrors.name = copy.required;
+    const name = String(data.get("name") ?? "").trim();
     const email = String(data.get("email") ?? "").trim();
+    const message = String(data.get("message") ?? "").trim();
+    const nextErrors: Errors = {};
+
+    if (!name) nextErrors.name = copy.required;
     if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) nextErrors.email = copy.emailError;
-    if (!data.getAll("interests").length) nextErrors.interests = copy.interestError;
-    if (String(data.get("message") ?? "").trim().length < 20) nextErrors.message = copy.messageError;
-    if (!data.get("budget")) nextErrors.budget = copy.required;
+    if (message.length < 20) nextErrors.message = copy.messageError;
+
     setErrors(nextErrors);
     if (Object.keys(nextErrors).length) {
-      requestAnimationFrame(() => form.querySelector<HTMLElement>("[aria-invalid='true']")?.focus());
+      const firstInvalidField = Object.keys(nextErrors)[0] as FieldName;
+      (form.elements.namedItem(firstInvalidField) as HTMLElement | null)?.focus();
       return;
     }
-    setState("submitting");
-    // PLACEHOLDER SUBMISSION HANDLER: replace with the real delivery service in a later phase.
-    await new Promise((resolve) => window.setTimeout(resolve, 500));
-    setState("sent");
-    form.reset();
+
+    const subject = `${copy.subject} — ${name}`;
+    const body = [
+      `${copy.bodyName}: ${name}`,
+      `${copy.bodyEmail}: ${email}`,
+      "",
+      `${copy.bodyMessage}:`,
+      message,
+    ].join("\n");
+
+    setEmailOpened(true);
+    window.location.assign(`mailto:hello@webpilot.studio?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`);
   }
 
-  return <form className="contact-form grid gap-7" noValidate onSubmit={onSubmit}>
-    <div className="grid grid-cols-2 gap-4 max-[600px]:grid-cols-1">
-      <Field label={copy.name} error={errors.name}><input className="min-h-14 w-full rounded-control border border-[#424242] bg-transparent px-4 text-white" name="name" autoComplete="name" aria-invalid={Boolean(errors.name)} /></Field>
-      <Field label={copy.email} error={errors.email}><div className="relative"><input className="min-h-14 w-full rounded-control border border-[#424242] bg-transparent px-4 pr-11 text-white" type="email" name="email" autoComplete="email" aria-invalid={Boolean(errors.email)} /><Check className="email-valid-icon absolute top-1/2 right-4 size-4 text-emerald-400" /></div></Field>
-    </div>
-    <Field label={copy.company}><input className="min-h-14 w-full rounded-control border border-[#424242] bg-transparent px-4 text-white" name="company" autoComplete="organization" /></Field>
-    <fieldset data-invalid={Boolean(errors.interests)} aria-invalid={Boolean(errors.interests)}><legend className="mb-3 text-small font-medium">{copy.interests}</legend><div className="form-options form-options--services grid grid-cols-2 gap-2 max-[600px]:grid-cols-1">{interests.map((interest) => <label key={interest.id}><input className="sr-only" type="checkbox" name="interests" value={interest.id} /><span className="flex min-h-13 cursor-pointer items-center gap-2.5 rounded-control border border-[#424242] px-3 text-small">{interest[locale]}</span></label>)}</div>{errors.interests && <p className="field-message mt-2 text-small text-error">{errors.interests}</p>}</fieldset>
-    <Field label={copy.message} error={errors.message}><textarea className="min-h-40 w-full resize-y rounded-control border border-[#424242] bg-transparent p-4 text-white" name="message" placeholder={copy.placeholder} aria-invalid={Boolean(errors.message)} /></Field>
-    <fieldset data-invalid={Boolean(errors.budget)} aria-invalid={Boolean(errors.budget)}><legend className="mb-3 text-small font-medium">{copy.budget}</legend><div className="form-options form-options--budget flex flex-wrap gap-2">{budgets.map((budget) => <label key={budget.id}><input className="sr-only" type="radio" name="budget" value={budget.id} /><span className="flex min-h-11 cursor-pointer items-center gap-2.5 rounded-pill border border-[#424242] px-4 text-small">{budget[locale]}</span></label>)}</div>{errors.budget && <p className="field-message mt-2 text-small text-error">{errors.budget}</p>}</fieldset>
-    <button className="form-submit relative inline-flex min-h-14 items-center justify-center gap-2 overflow-hidden rounded-pill bg-white px-6 font-medium text-ink" type="submit" disabled={state === "submitting"} data-state={state}><span className="form-submit__idle inline-flex items-center gap-2">{copy.submit}<Send className="size-4" /></span><span className="form-submit__pending absolute inline-flex items-center gap-2"><LoaderCircle className="form-submit__spinner size-4" />{copy.pending}</span></button>
-    <p className="min-h-6 text-center text-small text-[#a8a8a2]" role="status">{state === "sent" ? copy.success : locale === "de" ? "Demo-Formular: Es werden noch keine Daten versendet oder gespeichert." : "Demo form: no data is sent or stored yet."}</p>
-  </form>;
+  return (
+    <form className="grid gap-6" noValidate onSubmit={onSubmit}>
+      <div className="grid grid-cols-2 gap-4 max-[600px]:grid-cols-1">
+        <Field id="contact-name" label={copy.name} error={errors.name}>
+          <input
+            id="contact-name"
+            className={`min-h-14 ${fieldControlClass}`}
+            name="name"
+            autoComplete="name"
+            required
+            aria-invalid={Boolean(errors.name)}
+            aria-describedby={errors.name ? "contact-name-error" : undefined}
+            onChange={() => clearError("name")}
+          />
+        </Field>
+        <Field id="contact-email" label={copy.email} error={errors.email}>
+          <input
+            id="contact-email"
+            className={`min-h-14 ${fieldControlClass}`}
+            type="email"
+            name="email"
+            autoComplete="email"
+            inputMode="email"
+            spellCheck={false}
+            required
+            aria-invalid={Boolean(errors.email)}
+            aria-describedby={errors.email ? "contact-email-error" : undefined}
+            onChange={() => clearError("email")}
+          />
+        </Field>
+      </div>
+
+      <Field id="contact-message" label={copy.message} error={errors.message}>
+        <textarea
+          id="contact-message"
+          className={`min-h-44 resize-y p-4 ${fieldControlClass}`}
+          name="message"
+          autoComplete="off"
+          placeholder={copy.placeholder}
+          minLength={20}
+          required
+          aria-invalid={Boolean(errors.message)}
+          aria-describedby={errors.message ? "contact-message-error" : "contact-form-note"}
+          onChange={() => clearError("message")}
+        />
+      </Field>
+
+      <button
+        className="inline-flex min-h-14 items-center justify-center gap-2 rounded-pill bg-white px-6 text-control text-ink transition-[background-color,scale] duration-150 hover:bg-[#e5e5e5] active:scale-[.97] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white motion-reduce:transition-none motion-reduce:active:scale-100 max-[600px]:w-full"
+        type="submit"
+      >
+        {copy.submit}
+        <ArrowUpRight className="size-4" aria-hidden="true" />
+      </button>
+
+      <p id="contact-form-note" className="m-0 text-center text-small text-[#b7b7bd]" role="status" aria-live="polite">
+        {emailOpened ? copy.opened : copy.note}
+      </p>
+    </form>
+  );
 }
 
-function Field({ label, error, children }: { label: string; error?: string; children: React.ReactNode }) {
-  const id = label.toLowerCase().replace(/\W+/g, "-");
-  return <label className="form-field grid gap-2"><span className="text-small font-medium">{label}</span>{children}{error && <span id={`${id}-error`} className="field-message text-small text-error">{error}</span>}</label>;
+function Field({ id, label, error, children }: { id: string; label: string; error?: string; children: React.ReactNode }) {
+  return (
+    <div className="grid gap-2">
+      <label className={`text-small font-medium ${error ? "text-error" : "text-white"}`} htmlFor={id}>{label}</label>
+      {children}
+      {error ? <span id={`${id}-error`} className="text-small text-error" role="alert">{error}</span> : null}
+    </div>
+  );
 }

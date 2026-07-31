@@ -1,12 +1,18 @@
-export function BrandMark({ inverse = false }: { inverse?: boolean }) {
+export function BrandMark({
+  inverse = false,
+  size = "default",
+}: {
+  inverse?: boolean;
+  size?: "default" | "large";
+}) {
   const letters = [..."WEBPILOT"];
   return (
-    <span className={`brand-wordmark inline-flex whitespace-nowrap font-sans text-heading-sm leading-none font-semibold ${inverse ? "brand-wordmark--inverse text-white" : ""}`}>
+    <span className={`inline-flex whitespace-nowrap font-sans leading-none font-[650] tracking-[-.025em] ${size === "large" ? "text-heading-md" : "text-[16px]"} ${inverse ? "text-white" : ""}`}>
       <span className="sr-only">Webpilot</span>
-      <span className="brand-wordmark__letters flex gap-[.035em]" aria-hidden="true">
+      <span className="flex gap-[.035em]" aria-hidden="true">
         {letters.map((letter, index) => (
-          <span className="brand-wordmark__letter block h-[1em] overflow-hidden" style={{ "--letter-index": index, "--letter-reverse": letters.length - index - 1 } as React.CSSProperties} key={`${letter}-${index}`}>
-            <span className="brand-wordmark__track flex h-[2em] translate-y-0 flex-col">
+          <span className="block h-[1em] overflow-hidden" style={{ "--letter-index": index, "--letter-reverse": letters.length - index - 1 } as React.CSSProperties} key={`${letter}-${index}`}>
+            <span className="flex h-[2em] translate-y-0 flex-col transition-transform duration-[220ms] ease-[cubic-bezier(.16,1,.3,1)] [transition-delay:calc(var(--letter-reverse)*18ms)] group-hover/brand:-translate-y-1/2 group-hover/brand:[transition-delay:calc(var(--letter-index)*35ms)] motion-reduce:transform-none motion-reduce:transition-none">
               <span className="block h-[1em] flex-none leading-none">{letter}</span>
               <span className="block h-[1em] flex-none leading-none">{letter}</span>
             </span>
