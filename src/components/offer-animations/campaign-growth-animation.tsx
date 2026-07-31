@@ -1,6 +1,5 @@
 "use client";
 
-import { ArrowUpRight } from "lucide-react";
 import { animate, motion, useInView, useMotionValue, useReducedMotion, useTransform } from "motion/react";
 import { useEffect, useMemo, useRef } from "react";
 import type { Locale } from "@/lib/i18n";
@@ -48,23 +47,22 @@ export function CampaignGrowthAnimation({ locale }: { locale: Locale }) {
         <div className="min-w-0">
           <strong className="flex min-w-[3.4ch] items-baseline font-mono text-[clamp(1.8rem,4vw,2.7rem)] leading-none font-medium tracking-[-.06em] tabular-nums text-[var(--ds-gray-1000)]">
             <motion.span>{displayCount}</motion.span>
+            <motion.span
+              className="ml-2 shrink-0 text-[clamp(.95rem,1.9vw,1.3rem)] tracking-[-.01em] text-[#19a55d]"
+              initial={false}
+              animate={{ opacity: active ? 1 : 0, transform: active ? "translate3d(0, 0, 0)" : "translate3d(0, 4px, 0)" }}
+              transition={{ delay: noMotion ? 0 : 1.1, duration: noMotion ? 0 : 0.3, ease: OFFER_EASE_OUT }}
+            >
+              +67%
+            </motion.span>
           </strong>
-          <span className="mt-1.5 block text-[clamp(.58rem,1vw,.72rem)] font-medium text-[var(--ds-gray-700)]">
+          <span className="mt-2 block text-[clamp(.8rem,1.3vw,1rem)] font-medium text-[var(--ds-gray-700)]">
             {locale === "de" ? "neue qualifizierte Anfragen" : "new qualified inquiries"}
           </span>
         </div>
-        <motion.span
-          className="flex shrink-0 items-center gap-1 rounded-full bg-[var(--ds-blue-100)] px-2.5 py-1 text-[clamp(.52rem,.85vw,.62rem)] font-medium text-[var(--ds-blue-800)]"
-          initial={false}
-          animate={{ opacity: active ? 1 : 0, transform: active ? "translate3d(0, 0, 0)" : "translate3d(0, 4px, 0)" }}
-          transition={{ delay: noMotion ? 0 : 1.1, duration: noMotion ? 0 : 0.24, ease: OFFER_EASE_OUT }}
-        >
-          <ArrowUpRight className="size-3.5" strokeWidth={1.8} />
-          {locale === "de" ? "Aufwärtstrend" : "Upward trend"}
-        </motion.span>
       </div>
 
-      <div className="relative min-h-0 overflow-hidden rounded-xl bg-[var(--ds-gray-100)] p-3 shadow-[inset_0_0_0_1px_var(--ds-gray-alpha-200)] max-[430px]:p-2">
+      <div className="relative min-h-0">
         <svg
           className="size-full overflow-visible"
           viewBox="0 0 420 230"
@@ -78,19 +76,6 @@ export function CampaignGrowthAnimation({ locale }: { locale: Locale }) {
               <stop offset="100%" stopColor="var(--ds-blue-700)" stopOpacity="0" />
             </linearGradient>
           </defs>
-
-          {[36, 82, 128, 174, 220].map((y) => (
-            <line
-              key={y}
-              x1="12"
-              x2="408"
-              y1={y}
-              y2={y}
-              stroke="var(--ds-gray-alpha-200)"
-              strokeWidth="1"
-              vectorEffect="non-scaling-stroke"
-            />
-          ))}
 
           <motion.path
             d={GRAPH_AREA}
@@ -124,12 +109,6 @@ export function CampaignGrowthAnimation({ locale }: { locale: Locale }) {
             transition={{ delay: noMotion ? 0 : 1.35, duration: noMotion ? 0 : 0.2 }}
           />
         </svg>
-        <div className="pointer-events-none absolute inset-x-4 bottom-2 flex justify-between font-mono text-[.48rem] text-[var(--ds-gray-700)] max-[430px]:inset-x-3">
-          <span>01</span>
-          <span>04</span>
-          <span>08</span>
-          <span>12</span>
-        </div>
       </div>
     </div>
   );
