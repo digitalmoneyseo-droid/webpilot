@@ -76,7 +76,7 @@ test.describe("work browsing", () => {
     await pauseToggle.focus();
     await page.keyboard.press("Enter");
     await expect(pauseToggle).toHaveAttribute("aria-pressed", "true");
-    await expect(pauseToggle).toHaveAttribute("aria-label", "Arbeiten fortsetzen");
+    await expect(pauseToggle).toHaveAttribute("aria-label", "Portfolio fortsetzen");
     await page.keyboard.press("Enter");
     await expect(pauseToggle).toHaveAttribute("aria-pressed", "false");
     await clickPauseToggle();
