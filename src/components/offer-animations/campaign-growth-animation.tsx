@@ -45,17 +45,18 @@ export function CampaignGrowthAnimation({ locale }: { locale: Locale }) {
     <div ref={containerRef} className="grid h-full min-h-0 w-full grid-rows-[auto_1fr] gap-3">
       <div className="flex min-w-0 items-start justify-between gap-4">
         <div className="min-w-0">
-          <strong className="flex min-w-[3.4ch] items-baseline font-mono text-[clamp(1.8rem,4vw,2.7rem)] leading-none font-medium tracking-[-.06em] tabular-nums text-[var(--ds-gray-1000)]">
-            <motion.span>{displayCount}</motion.span>
+          <div className="font-mono font-medium tracking-[-.06em] tabular-nums text-[var(--ds-gray-1000)] leading-none">
+            <motion.span className="text-[clamp(1.8rem,4vw,2.7rem)]" style={{ verticalAlign: "bottom" }}>{displayCount}</motion.span>
             <motion.span
-              className="ml-2 shrink-0 text-[clamp(.95rem,1.9vw,1.3rem)] tracking-[-.01em] text-[#19a55d]"
+              className="ml-2 text-[clamp(.95rem,1.9vw,1.3rem)] tracking-[-.01em] text-[#19a55d]"
+              style={{ verticalAlign: "bottom" }}
               initial={false}
               animate={{ opacity: active ? 1 : 0, transform: active ? "translate3d(0, 0, 0)" : "translate3d(0, 4px, 0)" }}
               transition={{ delay: noMotion ? 0 : 1.1, duration: noMotion ? 0 : 0.3, ease: OFFER_EASE_OUT }}
             >
               +67%
             </motion.span>
-          </strong>
+          </div>
           <span className="mt-2 block text-[clamp(.8rem,1.3vw,1rem)] font-medium text-[var(--ds-gray-700)]">
             {locale === "de" ? "neue qualifizierte Anfragen" : "new qualified inquiries"}
           </span>
@@ -65,7 +66,7 @@ export function CampaignGrowthAnimation({ locale }: { locale: Locale }) {
       <div className="relative min-h-0">
         <svg
           className="size-full overflow-visible"
-          viewBox="0 0 420 230"
+          viewBox="0 0 410 226"
           preserveAspectRatio="xMidYMid meet"
           focusable="false"
           aria-hidden="true"
@@ -91,7 +92,6 @@ export function CampaignGrowthAnimation({ locale }: { locale: Locale }) {
             strokeLinecap="round"
             strokeLinejoin="round"
             strokeWidth="3"
-            vectorEffect="non-scaling-stroke"
             initial={false}
             animate={{ opacity: active ? 1 : 0.35, pathLength: active ? 1 : 0 }}
             transition={{ delay: noMotion ? 0 : 0.12, duration: noMotion ? 0 : 1.5, ease: OFFER_EASE_OUT }}
@@ -103,7 +103,6 @@ export function CampaignGrowthAnimation({ locale }: { locale: Locale }) {
             fill="var(--ds-background-100)"
             stroke="var(--ds-blue-700)"
             strokeWidth="3"
-            vectorEffect="non-scaling-stroke"
             initial={false}
             animate={{ opacity: active ? 1 : 0 }}
             transition={{ delay: noMotion ? 0 : 1.35, duration: noMotion ? 0 : 0.2 }}
