@@ -2,21 +2,20 @@
 
 import { animate, motion, useInView, useMotionValue, useReducedMotion, useTransform } from "motion/react";
 import { useEffect, useMemo, useRef } from "react";
+import type { CampaignAnimationCopy } from "@/i18n/offers";
 import type { Locale } from "@/lib/i18n";
 import { OFFER_EASE_OUT, OFFER_VIEWPORT } from "@/components/offer-animations/motion-tokens";
-import { offersContent } from "@/i18n/offers";
 
 const FINAL_INQUIRIES = 286;
 const GRAPH_LINE = "M 12 207 C 31 194 44 181 64 188 C 82 194 97 164 116 153 C 135 142 149 161 169 140 C 189 118 202 126 221 111 C 241 95 252 107 272 83 C 292 59 306 76 326 52 C 346 29 361 44 380 27 C 393 16 402 19 408 12";
 const GRAPH_AREA = `${GRAPH_LINE} L 408 224 L 12 224 Z`;
 
-export function CampaignGrowthAnimation({ locale }: { locale: Locale }) {
+export function CampaignGrowthAnimation({ locale, copy }: { locale: Locale; copy: CampaignAnimationCopy }) {
   const containerRef = useRef<HTMLDivElement>(null);
   const isInView = useInView(containerRef, OFFER_VIEWPORT);
   const prefersReducedMotion = useReducedMotion();
   const noMotion = Boolean(prefersReducedMotion);
   const active = noMotion || isInView;
-  const copy = offersContent[locale].campaignAnimation;
   const count = useMotionValue(FINAL_INQUIRIES);
   const formatter = useMemo(
     () => new Intl.NumberFormat(locale === "de" ? "de-DE" : "en-US"),

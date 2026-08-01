@@ -23,7 +23,7 @@ export function AboutPage({ locale }: { locale: Locale }) {
         </span>
       </EditorialHero>
 
-      <section className="border-y border-line bg-white px-page py-section">
+      <section className="border-y border-line bg-canvas px-page py-section">
         <div className="mx-auto grid max-w-[70rem] grid-cols-[minmax(15rem,.78fr)_minmax(0,1.22fr)] gap-x-[clamp(3rem,8vw,8rem)] gap-y-8 max-[800px]:grid-cols-1">
           <Reveal>
             <h2 className="m-0 max-w-[12ch] text-heading-lg">{t(locale, "about.pov")}</h2>

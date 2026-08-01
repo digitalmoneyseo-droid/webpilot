@@ -72,7 +72,7 @@ export function SiteHeader({ locale, pathname }: { locale: Locale; pathname: str
   }, [open]);
 
   const navItems = [
-    { href: "/work", label: t(locale, "nav.work") },
+    { href: "/portfolio", label: t(locale, "nav.portfolio") },
     { href: "/solutions", label: t(locale, "nav.solutions") },
     { href: "/about", label: t(locale, "nav.about") },
     { href: "/contact", label: t(locale, "nav.contact") },

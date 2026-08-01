@@ -38,7 +38,7 @@ export function SolutionsPage({ locale }: { locale: Locale }) {
         </Reveal>
         <p className="reveal mx-auto mt-6 flex w-fit max-w-4xl items-start gap-3 rounded-control border-0 bg-[var(--ds-blue-100)] px-4 py-3 text-small text-[var(--ds-gray-900)] shadow-[inset_0_0_0_1px_var(--ds-blue-300)]" data-reveal><Info className="mt-0.5 size-4 shrink-0 text-[var(--wave-blue)]" aria-hidden="true" /><span>{copy.note}</span></p>
       </section>
-      <section className="bg-white px-page py-section"><SectionHeading title={copy.faqHeading} align="center" /><div className="mx-auto max-w-[820px]"><Faq items={faqs} id={`solutions-${locale}`} /></div></section>
+      <section className="bg-canvas px-page py-section"><SectionHeading title={copy.faqHeading} align="center" /><div className="mx-auto max-w-[820px]"><Faq items={faqs} id={`solutions-${locale}`} /></div></section>
       <section className="bg-dark px-page py-section text-center text-inverse [&_:is(h1,h2,h3,h4)]:text-white"><Reveal><h2 className="mx-auto max-w-[18ch] text-display-sm">{copy.closing[0]}</h2><p className="mx-auto mt-6 mb-7 max-w-[35rem] text-cta-copy text-dark-muted">{copy.closing[1]}</p><CtaButton href={contact} light>{copy.closing[2]}</CtaButton></Reveal></section>
     </main>
   );

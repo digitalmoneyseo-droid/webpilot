@@ -1,43 +1,53 @@
 import type { Locale } from "@/lib/i18n";
 
+export type OfferId = "foundation" | "optimization" | "campaign" | "partnership";
+
 export type OfferCopy = {
+  id: OfferId;
   title: string;
   intro: string;
   rows: readonly [label: string, copy: string][];
   cta: string;
 };
 
+export type FoundationAnimationCopy = {
+  title: string;
+  assembling: string;
+  ready: string;
+  modules: readonly { label: string; detail: string }[];
+};
+
+export type OptimizationAnimationCopy = {
+  query: string;
+  resultLabel: string;
+  rankLabel: string;
+  topRankedLabel: string;
+  winnerDescription: string;
+  descriptions: readonly string[];
+};
+
+export type CampaignAnimationCopy = { metricLabel: string };
+
+export type PartnershipAnimationCopy = {
+  title: string;
+  status: string;
+  workstreams: readonly string[];
+  stages: readonly string[];
+};
+
 export type OffersCopy = {
   offers: readonly OfferCopy[];
-  foundationAnimation: {
-    title: string;
-    assembling: string;
-    ready: string;
-    modules: readonly { label: string; detail: string }[];
-  };
-  optimizationAnimation: {
-    query: string;
-    resultLabel: string;
-    rankLabel: string;
-    topRankedLabel: string;
-    winnerDescription: string;
-    descriptions: readonly string[];
-  };
-  campaignAnimation: {
-    metricLabel: string;
-  };
-  partnershipAnimation: {
-    title: string;
-    status: string;
-    workstreams: readonly string[];
-    stages: readonly string[];
-  };
+  foundationAnimation: FoundationAnimationCopy;
+  optimizationAnimation: OptimizationAnimationCopy;
+  campaignAnimation: CampaignAnimationCopy;
+  partnershipAnimation: PartnershipAnimationCopy;
 };
 
 export const offersContent = {
   de: {
     offers: [
       {
+        id: "foundation",
         title: "Fundament",
         intro: "Baue oder erneuere die digitale Grundlage, mit der dein Unternehmen sichtbar wird, verkauft und arbeitet.",
         rows: [
@@ -48,6 +58,7 @@ export const offersContent = {
         cta: "Fundament entdecken",
       },
       {
+        id: "optimization",
         title: "Optimierung",
         intro: "Verbessere bestehende Websites, Produkte, Sichtbarkeit und Abläufe Monat für Monat.",
         rows: [
@@ -58,6 +69,7 @@ export const offersContent = {
         cta: "Optimierung entdecken",
       },
       {
+        id: "campaign",
         title: "Kampagne",
         intro: "Verwandle bezahlte Reichweite mit messbaren Kampagnen und klaren Conversion-Pfaden in qualifizierte Anfragen.",
         rows: [
@@ -68,6 +80,7 @@ export const offersContent = {
         cta: "Kampagne entdecken",
       },
       {
+        id: "partnership",
         title: "Integrierte Partnerschaft",
         intro: "Fundament, Optimierung und Kampagne werden über eine gemeinsame Roadmap koordiniert.",
         rows: [
@@ -108,6 +121,7 @@ export const offersContent = {
   en: {
     offers: [
       {
+        id: "foundation",
         title: "Foundation",
         intro: "Build or replace the digital foundation your business needs to get noticed, sell, and operate.",
         rows: [
@@ -118,6 +132,7 @@ export const offersContent = {
         cta: "Explore Foundation",
       },
       {
+        id: "optimization",
         title: "Optimization",
         intro: "Improve existing websites, products, visibility, and workflows month by month.",
         rows: [
@@ -128,6 +143,7 @@ export const offersContent = {
         cta: "Explore Optimization",
       },
       {
+        id: "campaign",
         title: "Campaign",
         intro: "Turn paid reach into qualified inquiries with measurable campaigns and clear conversion paths.",
         rows: [
@@ -138,6 +154,7 @@ export const offersContent = {
         cta: "Explore Campaign",
       },
       {
+        id: "partnership",
         title: "Integrated Partnership",
         intro: "Foundation, Optimization, and Campaign are coordinated through one shared roadmap.",
         rows: [

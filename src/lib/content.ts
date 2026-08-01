@@ -1,36 +1,14 @@
-import fs from "node:fs";
-import path from "node:path";
+import "server-only";
 import type { Locale } from "@/lib/i18n";
-import { parseFaq, parseProject, type Faq, type Project } from "@/lib/content-schema";
+import { loadContentRepository, type Faq, type Project } from "@/lib/content-core.mjs";
 
-export type { Faq, Project } from "@/lib/content-schema";
+export type { Faq, Project } from "@/lib/content-core.mjs";
 
-export interface ContentEntry<T> {
-  id: string;
-  data: T;
-}
-
+export interface ContentEntry<T> { id: string; data: T }
 export type ProjectEntry = ContentEntry<Project>;
 
-function readCollection<T>(collection: "projects" | "faqs" | "faq-solutions", locale: Locale, parse: (value: unknown, source: string) => T): ContentEntry<T>[] {
-  const directory = path.resolve(process.cwd(), "src", "content", collection, locale);
-  return fs.readdirSync(directory)
-    .filter((file) => file.endsWith(".json"))
-    .map((file) => ({
-      id: file.replace(/\.json$/, ""),
-      data: parse(JSON.parse(fs.readFileSync(path.join(directory, file), "utf8")) as unknown, path.join(collection, locale, file)),
-    }))
-    .sort((a, b) => ((a.data as { order: number }).order - (b.data as { order: number }).order));
-}
+const content = loadContentRepository(process.cwd());
 
-export function getProjects(locale: Locale): ProjectEntry[] {
-  return readCollection("projects", locale, parseProject);
-}
-
-export function getFaqs(locale: Locale): ContentEntry<Faq>[] {
-  return readCollection("faqs", locale, parseFaq);
-}
-
-export function getSolutionFaqs(locale: Locale): ContentEntry<Faq>[] {
-  return readCollection("faq-solutions", locale, parseFaq);
-}
+export function getProjects(locale: Locale): ProjectEntry[] { return content.projects[locale]; }
+export function getFaqs(locale: Locale): ContentEntry<Faq>[] { return content.faqs[locale]; }
+export function getSolutionFaqs(locale: Locale): ContentEntry<Faq>[] { return content.solutionFaqs[locale]; }

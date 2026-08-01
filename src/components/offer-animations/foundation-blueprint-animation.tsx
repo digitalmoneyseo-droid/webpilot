@@ -3,9 +3,8 @@
 import { Boxes, Check, MonitorSmartphone, Palette, Workflow } from "lucide-react";
 import { motion, useInView, useReducedMotion } from "motion/react";
 import { useRef } from "react";
-import type { Locale } from "@/lib/i18n";
 import { OFFER_EASE_OUT, OFFER_VIEWPORT } from "@/components/offer-animations/motion-tokens";
-import { offersContent } from "@/i18n/offers";
+import type { FoundationAnimationCopy } from "@/i18n/offers";
 
 const connectorPaths = [
   "M 138 67 C 164 67 168 102 200 125",
@@ -22,14 +21,12 @@ const moduleTransforms = [
 ];
 const moduleIcons = [Palette, MonitorSmartphone, Boxes, Workflow] as const;
 
-export function FoundationBlueprintAnimation({ locale }: { locale: Locale }) {
+export function FoundationBlueprintAnimation({ copy }: { copy: FoundationAnimationCopy }) {
   const containerRef = useRef<HTMLDivElement>(null);
   const isInView = useInView(containerRef, OFFER_VIEWPORT);
   const prefersReducedMotion = useReducedMotion();
   const noMotion = Boolean(prefersReducedMotion);
   const active = noMotion || isInView;
-  const copy = offersContent[locale].foundationAnimation;
-
   return (
     <motion.div
       ref={containerRef}

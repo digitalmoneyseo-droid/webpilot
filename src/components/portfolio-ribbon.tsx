@@ -1,26 +1,18 @@
 "use client";
 
-import { Pause, Play } from "lucide-react";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 import { ProjectCard } from "@/components/project-card";
 import type { ProjectEntry } from "@/lib/content";
-import { t, type Locale } from "@/lib/i18n";
+import type { Locale } from "@/lib/i18n";
 
 const DRAG_THRESHOLD = 9;
 const CLICK_SUPPRESSION_MS = 350;
+const DRAG_RESUME_DELAY_MS = 900;
 
-export function WorkRibbon({ projects, locale, label }: { projects: ProjectEntry[]; locale: Locale; label: string }) {
+export function PortfolioRibbon({ projects, locale, label }: { projects: ProjectEntry[]; locale: Locale; label: string }) {
   const ribbonRef = useRef<HTMLElement>(null);
   const trackRef = useRef<HTMLDivElement>(null);
   const groupRef = useRef<HTMLDivElement>(null);
-  const [manualPaused, setManualPaused] = useState(false);
-  const manualPausedRef = useRef(manualPaused);
-  const syncPlaybackRef = useRef<(() => void) | null>(null);
-
-  useEffect(() => {
-    manualPausedRef.current = manualPaused;
-    syncPlaybackRef.current?.();
-  }, [manualPaused]);
 
   useEffect(() => {
     const ribbon = ribbonRef.current;
@@ -41,6 +33,9 @@ export function WorkRibbon({ projects, locale, label }: { projects: ProjectEntry
     let frame = 0;
     let previous = performance.now();
     let suppressClickUntil = 0;
+    let resumeTimeout: number | null = null;
+    let resumeAfterDragPending = false;
+    let allowPlaybackAfterDrag = false;
     const reduced = window.matchMedia("(prefers-reduced-motion: reduce)");
 
     const measure = () => {
@@ -60,7 +55,14 @@ export function WorkRibbon({ projects, locale, label }: { projects: ProjectEntry
       }
     };
 
-    const shouldPause = () => reduced.matches || manualPausedRef.current || hovering || focusWithin || activePointerId !== null || dragging || !inViewport;
+    const clearResumeTimeout = () => {
+      if (resumeTimeout !== null) {
+        window.clearTimeout(resumeTimeout);
+        resumeTimeout = null;
+      }
+    };
+
+    const shouldPause = () => reduced.matches || (hovering && !allowPlaybackAfterDrag) || (focusWithin && !allowPlaybackAfterDrag) || activePointerId !== null || dragging || resumeAfterDragPending || !inViewport;
 
     const animate = (time: number) => {
       if (shouldPause()) {
@@ -83,7 +85,18 @@ export function WorkRibbon({ projects, locale, label }: { projects: ProjectEntry
       if (shouldPause()) stop();
       else start();
     };
-    syncPlaybackRef.current = syncPlayback;
+
+    const scheduleResumeAfterDrag = () => {
+      clearResumeTimeout();
+      resumeAfterDragPending = true;
+      allowPlaybackAfterDrag = true;
+      stop();
+      resumeTimeout = window.setTimeout(() => {
+        resumeTimeout = null;
+        resumeAfterDragPending = false;
+        syncPlayback();
+      }, DRAG_RESUME_DELAY_MS);
+    };
 
     const releasePointer = (pointerId: number) => {
       const target = captureTarget ?? ribbon;
@@ -103,13 +116,16 @@ export function WorkRibbon({ projects, locale, label }: { projects: ProjectEntry
       ribbon.classList.remove("is-dragging");
       if (!canceled && wasDragging) suppressClickUntil = performance.now() + CLICK_SUPPRESSION_MS;
       releasePointer(event.pointerId);
-      syncPlayback();
+      if (wasDragging) scheduleResumeAfterDrag();
+      else syncPlayback();
     };
 
     const down = (event: PointerEvent) => {
       if (event.pointerType === "mouse" && event.button !== 0) return;
-      if (event.target instanceof Element && event.target.closest("[data-ribbon-toggle]")) return;
       if (activePointerId !== null) return;
+      clearResumeTimeout();
+      resumeAfterDragPending = false;
+      allowPlaybackAfterDrag = false;
       activePointerId = event.pointerId;
       captureTarget = event.target instanceof Element ? event.target : ribbon;
       startX = event.clientX;
@@ -144,26 +160,30 @@ export function WorkRibbon({ projects, locale, label }: { projects: ProjectEntry
 
     const click = (event: MouseEvent) => {
       if (suppressClickUntil <= performance.now()) return;
-      if (!(event.target instanceof Element) || event.target.closest("[data-ribbon-toggle]") || !event.target.closest("a")) return;
+      if (!(event.target instanceof Element) || !event.target.closest("a")) return;
       suppressClickUntil = 0;
       event.preventDefault();
       event.stopPropagation();
     };
 
     const onPointerEnter = () => {
+      allowPlaybackAfterDrag = false;
       hovering = true;
       syncPlayback();
     };
     const onPointerLeave = () => {
+      allowPlaybackAfterDrag = false;
       hovering = false;
       syncPlayback();
     };
     const onFocusIn = () => {
+      allowPlaybackAfterDrag = false;
       focusWithin = true;
       syncPlayback();
     };
     const onFocusOut = (event: FocusEvent) => {
       focusWithin = event.relatedTarget instanceof Node && ribbon.contains(event.relatedTarget);
+      if (!focusWithin) allowPlaybackAfterDrag = false;
       syncPlayback();
     };
     const onReducedMotionChange = () => syncPlayback();
@@ -195,7 +215,7 @@ export function WorkRibbon({ projects, locale, label }: { projects: ProjectEntry
 
     return () => {
       stop();
-      syncPlaybackRef.current = null;
+      clearResumeTimeout();
       observer.disconnect();
       visibility.disconnect();
       ribbon.classList.remove("is-dragging");
@@ -214,26 +234,9 @@ export function WorkRibbon({ projects, locale, label }: { projects: ProjectEntry
     };
   }, []);
 
-  const toggleManualPause = () => {
-    setManualPaused((current) => !current);
-  };
-
   return (
-    <section ref={ribbonRef} className="work-ribbon cursor-grab touch-pan-y overflow-hidden px-6 py-2 select-none [&.is-dragging]:cursor-grabbing [&_.project-visual]:min-h-0 motion-reduce:overflow-x-auto" aria-label={label}>
-      <div className="mb-2 flex justify-end">
-        <button
-          type="button"
-          data-ribbon-toggle
-          className="inline-flex min-h-11 items-center gap-2 rounded-pill border border-line bg-white px-3.5 text-small text-muted shadow-surface transition-[background-color,color,scale] duration-150 hover:bg-[var(--ds-gray-100)] hover:text-ink active:scale-[.97] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ink motion-reduce:transition-none motion-reduce:active:scale-100"
-          aria-label={t(locale, manualPaused ? "home.resumeWork" : "home.pauseWork")}
-          aria-pressed={manualPaused}
-          onClick={toggleManualPause}
-        >
-          {manualPaused ? <Play className="size-3.5" aria-hidden="true" /> : <Pause className="size-3.5" aria-hidden="true" />}
-          {t(locale, manualPaused ? "home.resumeWork" : "home.pauseWork")}
-        </button>
-      </div>
-      <div ref={trackRef} className="flex w-max gap-[27px] will-change-transform max-[900px]:gap-3.5 max-[600px]:gap-2.5">
+    <section ref={ribbonRef} className="portfolio-ribbon cursor-grab touch-pan-y overflow-hidden px-6 py-2 select-none [&.is-dragging]:cursor-grabbing [&_.project-visual]:min-h-0 motion-reduce:overflow-x-auto" aria-label={label}>
+      <div ref={trackRef} data-ribbon-track className="flex w-max gap-[27px] will-change-transform max-[900px]:gap-3.5 max-[600px]:gap-2.5">
         <div ref={groupRef} className="flex flex-none gap-[27px] max-[900px]:gap-3.5 max-[600px]:gap-2.5">{projects.map(({ data }) => <ProjectCard project={data} locale={locale} key={data.slug} />)}</div>
         <div className="flex flex-none gap-[27px] max-[900px]:gap-3.5 max-[600px]:gap-2.5" aria-hidden="true">{projects.map(({ data }) => <ProjectCard project={data} locale={locale} decorative key={data.slug} />)}</div>
       </div>

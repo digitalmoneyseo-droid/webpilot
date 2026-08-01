@@ -40,7 +40,7 @@
   --font-mono-system: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, monospace;
   --font-mono: var(--font-mono-system);
 
-  --bg: var(--ds-background-100);
+  --bg: #FAF9F6;
   --surface: var(--ds-background-100);
   --surface-subtle: var(--ds-background-200);
   --ink: var(--ds-gray-1000);
@@ -148,12 +148,12 @@
 }
 
 html {
-  background: var(--ds-background-100);
+  background: var(--bg);
   -webkit-tap-highlight-color: #00000014;
 }
 
 body {
-  background: var(--ds-background-100);
+  background: var(--bg);
   font-family: var(--font-sans);
   font-feature-settings: "ss01", "ss02";
   font-size: 1rem;

@@ -3,9 +3,8 @@
 import { Check } from "lucide-react";
 import { motion, useInView, useReducedMotion } from "motion/react";
 import { useRef } from "react";
-import type { Locale } from "@/lib/i18n";
 import { OFFER_EASE_IN_OUT, OFFER_EASE_OUT, OFFER_VIEWPORT } from "@/components/offer-animations/motion-tokens";
-import { offersContent } from "@/i18n/offers";
+import type { PartnershipAnimationCopy } from "@/i18n/offers";
 
 const workstreamColors = ["var(--ds-blue-700)", "#6b7280", "var(--ds-gray-1000)"];
 const labelTransforms = [
@@ -14,13 +13,12 @@ const labelTransforms = [
   "translate3d(-8px, 0, 0)",
 ];
 
-export function PartnershipRoadmapAnimation({ locale }: { locale: Locale }) {
+export function PartnershipRoadmapAnimation({ copy }: { copy: PartnershipAnimationCopy }) {
   const containerRef = useRef<HTMLDivElement>(null);
   const isInView = useInView(containerRef, OFFER_VIEWPORT);
   const prefersReducedMotion = useReducedMotion();
   const noMotion = Boolean(prefersReducedMotion);
   const active = noMotion || isInView;
-  const copy = offersContent[locale].partnershipAnimation;
   const { workstreams, stages } = copy;
 
   return (
