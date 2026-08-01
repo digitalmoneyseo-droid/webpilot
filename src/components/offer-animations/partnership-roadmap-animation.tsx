@@ -5,6 +5,7 @@ import { motion, useInView, useReducedMotion } from "motion/react";
 import { useRef } from "react";
 import type { Locale } from "@/lib/i18n";
 import { OFFER_EASE_IN_OUT, OFFER_EASE_OUT, OFFER_VIEWPORT } from "@/components/offer-animations/motion-tokens";
+import { offersContent } from "@/i18n/offers";
 
 const workstreamColors = ["var(--ds-blue-700)", "#6b7280", "var(--ds-gray-1000)"];
 const labelTransforms = [
@@ -19,8 +20,8 @@ export function PartnershipRoadmapAnimation({ locale }: { locale: Locale }) {
   const prefersReducedMotion = useReducedMotion();
   const noMotion = Boolean(prefersReducedMotion);
   const active = noMotion || isInView;
-  const workstreams = locale === "de" ? ["Fundament", "Optimierung", "Kampagne"] : ["Foundation", "Optimization", "Campaign"];
-  const stages = locale === "de" ? ["Strategie", "Umsetzung", "Lernen"] : ["Strategy", "Delivery", "Learning"];
+  const copy = offersContent[locale].partnershipAnimation;
+  const { workstreams, stages } = copy;
 
   return (
     <motion.div
@@ -31,7 +32,7 @@ export function PartnershipRoadmapAnimation({ locale }: { locale: Locale }) {
     >
       <div className="flex min-w-0 items-center justify-between gap-3">
         <span className="truncate text-[clamp(.62rem,1vw,.72rem)] font-medium text-[var(--ds-gray-700)]">
-          {locale === "de" ? "Gemeinsame Roadmap" : "Shared roadmap"}
+          {copy.title}
         </span>
         <motion.span
           className="flex shrink-0 items-center gap-1.5 rounded-full bg-white px-2.5 py-1 text-[clamp(.54rem,.9vw,.64rem)] font-medium text-[var(--ds-gray-800)] shadow-[inset_0_0_0_1px_var(--ds-gray-alpha-200)]"
@@ -42,7 +43,7 @@ export function PartnershipRoadmapAnimation({ locale }: { locale: Locale }) {
           transition={{ delay: noMotion ? 0 : 1.72, duration: noMotion ? 0 : 0.24, ease: OFFER_EASE_OUT }}
         >
           <Check className="size-3.5 text-[var(--ds-blue-700)]" strokeWidth={2} />
-          {locale === "de" ? "Im Takt" : "In sync"}
+          {copy.status}
         </motion.span>
       </div>
 

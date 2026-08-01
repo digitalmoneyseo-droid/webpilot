@@ -7,6 +7,7 @@ type CollapsePanelProps = {
   expanded: boolean;
   id: string;
   labelledBy: string;
+  ariaLabel?: string;
 };
 
 export function CollapsePanel({
@@ -14,6 +15,7 @@ export function CollapsePanel({
   expanded,
   id,
   labelledBy,
+  ariaLabel,
 }: CollapsePanelProps) {
   const contentRef = useRef<HTMLDivElement>(null);
   const [contentHeight, setContentHeight] = useState(0);
@@ -32,11 +34,12 @@ export function CollapsePanel({
 
   return (
     <div
-      aria-labelledby={labelledBy}
+      aria-label={ariaLabel}
+      aria-labelledby={ariaLabel ? undefined : labelledBy}
       className="overflow-y-hidden transition-[height] duration-200 ease-[cubic-bezier(.4,0,.2,1)] motion-reduce:transition-none"
       id={id}
       inert={!expanded}
-      role="region"
+      role={ariaLabel ? "region" : undefined}
       style={{ height: expanded ? contentHeight : 0 }}
     >
       <div ref={contentRef} className="max-h-[60vh] overflow-y-auto">{children}</div>

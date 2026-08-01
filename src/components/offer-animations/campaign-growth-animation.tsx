@@ -4,6 +4,7 @@ import { animate, motion, useInView, useMotionValue, useReducedMotion, useTransf
 import { useEffect, useMemo, useRef } from "react";
 import type { Locale } from "@/lib/i18n";
 import { OFFER_EASE_OUT, OFFER_VIEWPORT } from "@/components/offer-animations/motion-tokens";
+import { offersContent } from "@/i18n/offers";
 
 const FINAL_INQUIRIES = 286;
 const GRAPH_LINE = "M 12 207 C 31 194 44 181 64 188 C 82 194 97 164 116 153 C 135 142 149 161 169 140 C 189 118 202 126 221 111 C 241 95 252 107 272 83 C 292 59 306 76 326 52 C 346 29 361 44 380 27 C 393 16 402 19 408 12";
@@ -15,6 +16,7 @@ export function CampaignGrowthAnimation({ locale }: { locale: Locale }) {
   const prefersReducedMotion = useReducedMotion();
   const noMotion = Boolean(prefersReducedMotion);
   const active = noMotion || isInView;
+  const copy = offersContent[locale].campaignAnimation;
   const count = useMotionValue(FINAL_INQUIRIES);
   const formatter = useMemo(
     () => new Intl.NumberFormat(locale === "de" ? "de-DE" : "en-US"),
@@ -58,7 +60,7 @@ export function CampaignGrowthAnimation({ locale }: { locale: Locale }) {
             </motion.span>
           </div>
           <span className="mt-2 block text-[clamp(.8rem,1.3vw,1rem)] font-medium text-[var(--ds-gray-700)]">
-            {locale === "de" ? "neue qualifizierte Anfragen" : "new qualified inquiries"}
+            {copy.metricLabel}
           </span>
         </div>
       </div>

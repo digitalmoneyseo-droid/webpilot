@@ -1,8 +1,8 @@
 "use client";
 
 import { ArrowUpRight } from "lucide-react";
-import { type FormEvent, useState } from "react";
-import type { Locale } from "@/lib/i18n";
+import { type FormEvent, type ReactNode, useState } from "react";
+import { t, type Locale } from "@/lib/i18n";
 
 type FieldName = "name" | "email" | "message";
 type Errors = Partial<Record<FieldName, string>>;
@@ -12,36 +12,21 @@ const fieldControlClass = "w-full rounded-control border border-[#424242] bg-tra
 export function ContactForm({ locale }: { locale: Locale }) {
   const [errors, setErrors] = useState<Errors>({});
   const [emailOpened, setEmailOpened] = useState(false);
-  const copy = locale === "de" ? {
-    name: "Dein Name",
-    email: "Geschäftliche E-Mail",
-    message: "Was möchtest du erreichen?",
-    placeholder: "Etwas Kontext, die wichtigste Rahmenbedingung und wie Erfolg für dich aussieht …",
-    submit: "In E-Mail fortfahren",
-    required: "Bitte fülle dieses Feld aus.",
-    emailError: "Bitte gib eine gültige E-Mail-Adresse ein.",
-    messageError: "Bitte gib uns mindestens 20 Zeichen Kontext.",
-    note: "Beim Absenden öffnet sich dein E-Mail-Programm. Es werden keine Formulardaten auf dieser Website gespeichert.",
-    opened: "Dein E-Mail-Programm sollte jetzt geöffnet sein. Prüfe die Nachricht und sende sie ab, wenn alles passt.",
-    subject: "Projektanfrage",
-    bodyName: "Name",
-    bodyEmail: "E-Mail",
-    bodyMessage: "Projekt und Ziel",
-  } : {
-    name: "Your name",
-    email: "Work email",
-    message: "What are you trying to achieve?",
-    placeholder: "A little context, the important constraint, and what success looks like…",
-    submit: "Continue in email",
-    required: "Please complete this field.",
-    emailError: "Please enter a valid email address.",
-    messageError: "Please give us at least 20 characters of context.",
-    note: "Submitting opens your email app. No form data is stored on this website.",
-    opened: "Your email app should now be open. Review the message and send it when everything looks right.",
-    subject: "Project inquiry",
-    bodyName: "Name",
-    bodyEmail: "Email",
-    bodyMessage: "Project and goal",
+  const copy = {
+    name: t(locale, "contact.formName"),
+    email: t(locale, "contact.formEmail"),
+    message: t(locale, "contact.formMessage"),
+    placeholder: t(locale, "contact.formPlaceholder"),
+    submit: t(locale, "contact.formSubmit"),
+    required: t(locale, "contact.formRequired"),
+    emailError: t(locale, "contact.formEmailError"),
+    messageError: t(locale, "contact.formMessageError"),
+    note: t(locale, "contact.formNote"),
+    opened: t(locale, "contact.formOpened"),
+    subject: t(locale, "contact.formSubject"),
+    bodyName: t(locale, "contact.formBodyName"),
+    bodyEmail: t(locale, "contact.formBodyEmail"),
+    bodyMessage: t(locale, "contact.formBodyMessage"),
   };
 
   function clearError(field: FieldName) {
@@ -144,7 +129,7 @@ export function ContactForm({ locale }: { locale: Locale }) {
   );
 }
 
-function Field({ id, label, error, children }: { id: string; label: string; error?: string; children: React.ReactNode }) {
+function Field({ id, label, error, children }: { id: string; label: string; error?: string; children: ReactNode }) {
   return (
     <div className="grid gap-2">
       <label className={`text-small font-medium ${error ? "text-error" : "text-white"}`} htmlFor={id}>{label}</label>

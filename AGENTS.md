@@ -9,5 +9,5 @@
 ## Styling
 
 - Use Tailwind CSS utilities for component styling by default.
-- Add or retain custom CSS only when Tailwind would not express the requirement cleanly.
+- Add or retain custom CSS only when Tailwind would not express the requirement cleanly, such as global design tokens and resets, keyframes and complex motion, pseudo-elements, browser-specific behavior, or highly specialized generated visuals.
 - When touching existing custom CSS, migrate feasible declarations into the component’s Tailwind classes and remove selectors that are no longer used.

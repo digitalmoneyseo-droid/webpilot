@@ -10,7 +10,6 @@ import {
   useMemo,
   useRef,
 } from "react";
-import confetti from "canvas-confetti";
 import type {
   CreateTypes as ConfettiInstance,
   GlobalOptions as ConfettiGlobalOptions,
@@ -50,24 +49,49 @@ const Confetti = forwardRef<ConfettiRef, Props>((props, ref) => {
     () => ({ ...globalOptions, resize: true }),
     [globalOptions],
   );
+  const canvasNodeRef = useRef<HTMLCanvasElement | null>(null);
+  const loadPromiseRef = useRef<Promise<ConfettiInstance | null> | null>(null);
 
   const canvasRef = useCallback(
     (node: HTMLCanvasElement | null) => {
-      if (node !== null) {
-        if (instanceRef.current) return;
-        instanceRef.current = confetti.create(node, resolvedGlobalOptions);
-      } else if (instanceRef.current) {
-        instanceRef.current.reset();
+      if (node === null) {
+        instanceRef.current?.reset();
         instanceRef.current = null;
+        canvasNodeRef.current = null;
+        loadPromiseRef.current = null;
+        return;
       }
+      canvasNodeRef.current = node;
     },
-    [resolvedGlobalOptions],
+    [],
   );
 
+  const loadInstance = useCallback(async () => {
+    if (instanceRef.current) return instanceRef.current;
+    if (!canvasNodeRef.current) return null;
+    if (!loadPromiseRef.current) {
+      loadPromiseRef.current = import("canvas-confetti")
+        .then(({ default: createConfetti }) => {
+          const node = canvasNodeRef.current;
+          if (!node) return null;
+          const instance = createConfetti.create(node, resolvedGlobalOptions);
+          instanceRef.current = instance;
+          return instance;
+        })
+        .finally(() => {
+          loadPromiseRef.current = null;
+        });
+    }
+    return loadPromiseRef.current;
+  }, [resolvedGlobalOptions]);
+
   const fire = useCallback(
-    (overrides: ConfettiOptions = {}) =>
-      instanceRef.current?.({ ...options, ...overrides }),
-    [options],
+    (overrides: ConfettiOptions = {}) => {
+      void loadInstance().then((instance) => {
+        instance?.({ ...options, ...overrides });
+      });
+    },
+    [loadInstance, options],
   );
 
   const api = useMemo(() => ({ fire }), [fire]);
