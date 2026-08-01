@@ -31,7 +31,7 @@ export type ConfettiRef = Api | null;
 
 const DEFAULT_GLOBAL_OPTIONS: ConfettiGlobalOptions = {
   resize: true,
-  useWorker: true,
+  useWorker: false,
 };
 
 const ConfettiContext = createContext<Api>({} as Api);
@@ -46,7 +46,9 @@ const Confetti = forwardRef<ConfettiRef, Props>((props, ref) => {
   } = props;
   const instanceRef = useRef<ConfettiInstance | null>(null);
   const resolvedGlobalOptions = useMemo(
-    () => ({ ...globalOptions, resize: true }),
+    // This canvas is owned by React. Worker mode transfers it to an
+    // OffscreenCanvas, which makes later DOM canvas resizes invalid.
+    () => ({ ...globalOptions, resize: true, useWorker: false }),
     [globalOptions],
   );
   const canvasNodeRef = useRef<HTMLCanvasElement | null>(null);

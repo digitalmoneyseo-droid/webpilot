@@ -19,6 +19,7 @@ export type OffersCopy = {
     query: string;
     resultLabel: string;
     rankLabel: string;
+    topRankedLabel: string;
     winnerDescription: string;
     descriptions: readonly string[];
   };
@@ -92,6 +93,7 @@ export const offersContent = {
       query: "Beste Agentur für digitales Wachstum",
       resultLabel: "Suchergebnisse",
       rankLabel: "Rang",
+      topRankedLabel: "Top platziert",
       winnerDescription: "Digitale Systeme für profitables Wachstum",
       descriptions: ["Strategie und digitale Kampagnen", "Digitale Erlebnisse für wachsende Marken", "Performance Marketing und Optimierung"],
     },
@@ -161,6 +163,7 @@ export const offersContent = {
       query: "Best digital growth agency",
       resultLabel: "Search results",
       rankLabel: "Rank",
+      topRankedLabel: "Top ranked",
       winnerDescription: "Digital systems for profitable growth",
       descriptions: ["Strategy and digital campaigns", "Digital experiences for growing brands", "Performance marketing and optimization"],
     },

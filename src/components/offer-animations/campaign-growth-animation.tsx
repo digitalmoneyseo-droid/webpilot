@@ -47,13 +47,12 @@ export function CampaignGrowthAnimation({ locale }: { locale: Locale }) {
     <div ref={containerRef} className="grid h-full min-h-0 w-full grid-rows-[auto_1fr] gap-3">
       <div className="flex min-w-0 items-start justify-between gap-4">
         <div className="min-w-0">
-          <div className="font-mono font-medium tracking-[-.06em] tabular-nums text-[var(--ds-gray-1000)] leading-none">
-            <motion.span className="text-[clamp(1.8rem,4vw,2.7rem)]" style={{ verticalAlign: "bottom" }}>{displayCount}</motion.span>
+          <div data-campaign-metric className="inline-flex items-end font-mono font-medium leading-none tracking-[-.06em] tabular-nums text-[var(--ds-gray-1000)]">
+            <motion.span className="block text-[clamp(1.8rem,4vw,2.7rem)] leading-none">{displayCount}</motion.span>
             <motion.span
-              className="ml-2 text-[clamp(.95rem,1.9vw,1.3rem)] tracking-[-.01em] text-[#19a55d]"
-              style={{ verticalAlign: "bottom" }}
+              className="relative ml-2 block -top-[.16em] text-[clamp(.95rem,1.9vw,1.3rem)] leading-none tracking-[-.01em] text-[#19a55d]"
               initial={false}
-              animate={{ opacity: active ? 1 : 0, transform: active ? "translate3d(0, 0, 0)" : "translate3d(0, 4px, 0)" }}
+              animate={{ opacity: active ? 1 : 0, y: active ? 0 : 4 }}
               transition={{ delay: noMotion ? 0 : 1.1, duration: noMotion ? 0 : 0.3, ease: OFFER_EASE_OUT }}
             >
               +67%
