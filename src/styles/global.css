@@ -1,26 +1,6 @@
 * { box-sizing: border-box; }
 html { scroll-behavior: smooth; scrollbar-gutter: stable; background: var(--bg); overflow-x: clip; -webkit-tap-highlight-color: transparent; }
 section[id] { scroll-margin-top: 96px; }
-#partnership li span { min-width: 0; overflow-wrap: anywhere; hyphens: auto; }
-@media (max-width: 430px) {
-  #partnership { padding: 20px; }
-}
-@media (max-width: 900px) {
-  #partnership section > div {
-    display: flex;
-    gap: 12px;
-    overflow-x: auto;
-    overscroll-behavior-x: contain;
-    scroll-snap-type: x mandatory;
-    scrollbar-width: none;
-    touch-action: pan-x;
-  }
-  #partnership section > div::-webkit-scrollbar { display: none; }
-  #partnership section > div > div {
-    flex: 0 0 min(88%, 360px);
-    scroll-snap-align: start;
-  }
-}
 body { margin: 0; background: var(--bg); color: var(--ink); font-family: var(--font-sans); font-optical-sizing: auto; }
 button, input, textarea, select { font: inherit; }
 a { color: inherit; text-decoration: none; }

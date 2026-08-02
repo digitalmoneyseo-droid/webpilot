@@ -8,4 +8,3 @@ export interface ContentEntry<T> { id: string; data: T }
 const content = loadContentRepository(process.cwd());
 
 export function getFaqs(locale: Locale): ContentEntry<Faq>[] { return content.faqs[locale]; }
-export function getSolutionFaqs(locale: Locale): ContentEntry<Faq>[] { return content.solutionFaqs[locale]; }

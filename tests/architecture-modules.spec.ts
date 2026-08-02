@@ -1,22 +1,23 @@
 import { expect, test } from "@playwright/test";
 import { getOptimizationScene, OPTIMIZATION_FLIGHT_DELAY_MS, OPTIMIZATION_FLIGHT_DURATION_MS, OPTIMIZATION_RESULTS_DELAY_MS, OPTIMIZATION_TYPING_DELAY_MS } from "../src/components/offer-animations/optimization-scene";
-import { getOfferCatalog } from "../src/lib/offer-catalog";
+import { getServiceCatalog } from "../src/lib/service-catalog";
 import { loadContentRepository } from "../src/lib/content-core.mjs";
 
 test.describe("deep architecture modules", () => {
   test("loads one bilingual FAQ repository with parity", () => {
     const content = loadContentRepository(process.cwd());
     expect(content.faqs.de).toHaveLength(5);
-    expect(content.solutionFaqs.en).toHaveLength(5);
+    expect(content.faqs.en).toHaveLength(5);
   });
 
-  test("keeps Offer policy attached to stable identity", () => {
-    const german = getOfferCatalog("de");
-    const english = getOfferCatalog("en");
-    expect(german.map(({ id }) => id)).toEqual(["foundation", "optimization", "campaign", "partnership"]);
+  test("keeps service policy attached to stable identity", () => {
+    const german = getServiceCatalog("de");
+    const english = getServiceCatalog("en");
+    expect(german.map(({ id }) => id)).toEqual(["websites-apps", "seo-ai-visibility", "paid-campaigns", "ai-automation"]);
     expect(english.map(({ id }) => id)).toEqual(german.map(({ id }) => id));
-    expect(german.find(({ id }) => id === "partnership")).toMatchObject({ href: "/solutions#partnership", reverse: true, animation: { type: "partnership" } });
-    expect(english.find(({ id }) => id === "optimization")).toMatchObject({ href: "/en/solutions", reverse: true, animation: { type: "optimization" } });
+    expect(german.find(({ id }) => id === "ai-automation")).toMatchObject({ href: "/services/ai-automation", reverse: true, animation: { type: "automation" } });
+    expect(english.find(({ id }) => id === "seo-ai-visibility")).toMatchObject({ href: "/en/services/seo-ai-visibility", reverse: true, animation: { type: "optimization" } });
+    expect(english.find(({ id }) => id === "paid-campaigns")).toMatchObject({ animation: { type: "campaign" } });
   });
 
   test("derives the Optimization scene from one deterministic timeline", () => {
