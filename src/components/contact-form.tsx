@@ -54,7 +54,7 @@ export function ContactForm({ locale }: { locale: Locale }) {
       return;
     }
 
-    const subject = `${copy.subject} — ${name}`;
+    const subject = `${copy.subject}: ${name}`;
     const body = [
       `${copy.bodyName}: ${name}`,
       `${copy.bodyEmail}: ${email}`,

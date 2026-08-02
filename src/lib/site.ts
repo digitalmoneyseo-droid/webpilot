@@ -19,10 +19,10 @@ export function pageMetadata({
   description: string;
 }): Metadata {
   const pageTitle = title
-    ? `${title} — Webpilot`
+    ? `${title} | Webpilot`
     : locale === "de"
-      ? "Webpilot — Studio für digitales Wachstum und Technologie"
-      : "Webpilot — Digital growth and technology studio";
+      ? "Webpilot | Websites, Wachstum & Automatisierung"
+      : "Webpilot | Websites, Growth & Automation";
   const image = absoluteUrl("/social-card.png");
   return {
     title: pageTitle,

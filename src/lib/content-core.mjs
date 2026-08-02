@@ -1,7 +1,7 @@
 import fs from "node:fs";
 import path from "node:path";
 
-const collections = ["faqs", "faq-solutions"];
+const collections = ["faqs"];
 const locales = ["de", "en"];
 
 function record(value, source) {
@@ -67,5 +67,5 @@ export function loadContentRepository(root) {
     assertParity(collection, de, en);
     return [collection, { de, en }];
   }));
-  return { faqs: repository.faqs, solutionFaqs: repository["faq-solutions"] };
+  return { faqs: repository.faqs };
 }

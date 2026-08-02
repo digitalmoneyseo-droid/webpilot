@@ -2,7 +2,7 @@
 
 import { animate, motion, useInView, useMotionValue, useReducedMotion, useTransform } from "motion/react";
 import { useEffect, useMemo, useRef } from "react";
-import type { CampaignAnimationCopy } from "@/i18n/offers";
+import type { CampaignAnimationCopy } from "@/i18n/services";
 import type { Locale } from "@/lib/i18n";
 import { OFFER_EASE_OUT, OFFER_VIEWPORT } from "@/components/offer-animations/motion-tokens";
 

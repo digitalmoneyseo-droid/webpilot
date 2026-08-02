@@ -5,7 +5,7 @@ import { motion, useInView, useReducedMotion } from "motion/react";
 import { useEffect, useRef, useState } from "react";
 import { Confetti } from "@/components/confetti";
 import { getOptimizationScene, OPTIMIZATION_FLIGHT_DELAY_MS, OPTIMIZATION_FLIGHT_DURATION_MS, OPTIMIZATION_RESULTS_DELAY_MS, OPTIMIZATION_TYPING_DELAY_MS, type OptimizationScene } from "@/components/offer-animations/optimization-scene";
-import type { OptimizationAnimationCopy } from "@/i18n/offers";
+import type { OptimizationAnimationCopy } from "@/i18n/services";
 
 const WINNER_BADGE_HEIGHT = 32;
 const WINNER_BADGE_DURATION = 0.45;
