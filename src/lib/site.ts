@@ -12,15 +12,11 @@ export function pageMetadata({
   pathname,
   title,
   description,
-  indexable = true,
-  article = false,
 }: {
   locale: Locale;
   pathname: string;
   title?: string;
   description: string;
-  indexable?: boolean;
-  article?: boolean;
 }): Metadata {
   const pageTitle = title
     ? `${title} — Webpilot`
@@ -31,7 +27,7 @@ export function pageMetadata({
   return {
     title: pageTitle,
     description,
-    robots: indexable ? { index: true, follow: true } : { index: false, follow: true },
+    robots: { index: true, follow: true },
     alternates: {
       canonical: absoluteUrl(pathname),
       languages: {
@@ -41,7 +37,7 @@ export function pageMetadata({
       },
     },
     openGraph: {
-      type: article ? "article" : "website",
+      type: "website",
       siteName: "Webpilot",
       locale: locale === "de" ? "de_DE" : "en_US",
       title: pageTitle,

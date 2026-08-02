@@ -2,7 +2,7 @@ import { EditorialHero } from "@/components/editorial-hero";
 import { FinalCta } from "@/components/final-cta";
 import { Reveal } from "@/components/reveal";
 import { SectionHeading } from "@/components/section-heading";
-import { studioLocation, t, type Locale } from "@/lib/i18n";
+import { t, type Locale } from "@/lib/i18n";
 
 export function AboutPage({ locale }: { locale: Locale }) {
   const principles = [
@@ -17,13 +17,9 @@ export function AboutPage({ locale }: { locale: Locale }) {
       <EditorialHero
         title={t(locale, "about.title")}
         copy={t(locale, "about.copy")}
-      >
-        <span className="mt-2 rounded-full bg-[var(--ds-gray-100)] px-3 py-1.5 font-mono text-meta text-[var(--ds-gray-800)]">
-          {studioLocation(locale)}
-        </span>
-      </EditorialHero>
+      />
 
-      <section className="border-y border-line bg-canvas px-page py-section">
+      <section className="bg-canvas px-page py-section">
         <div className="mx-auto grid max-w-[70rem] grid-cols-[minmax(15rem,.78fr)_minmax(0,1.22fr)] gap-x-[clamp(3rem,8vw,8rem)] gap-y-8 max-[800px]:grid-cols-1">
           <Reveal>
             <h2 className="m-0 max-w-[12ch] text-heading-lg">{t(locale, "about.pov")}</h2>
@@ -47,7 +43,7 @@ export function AboutPage({ locale }: { locale: Locale }) {
           />
           <div className="grid grid-cols-2 gap-x-[clamp(2rem,7vw,6rem)] max-[700px]:grid-cols-1">
             {principles.map(([headingKey, copyKey], index) => (
-              <Reveal className="border-t border-line py-8" delay={index * 50} key={headingKey}>
+              <Reveal className="py-8" delay={index * 50} key={headingKey}>
                 <h3 className="m-0 max-w-[22ch] text-heading-sm">{t(locale, headingKey)}</h3>
                 <p className="mt-3 mb-0 max-w-[38rem] text-body text-muted">{t(locale, copyKey)}</p>
               </Reveal>

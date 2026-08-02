@@ -7,10 +7,6 @@ export function t(locale: Locale, key: MessageKey): string {
   return dictionaries[locale][key];
 }
 
-export function studioLocation(locale: Locale): string {
-  return t(locale, "footer.location");
-}
-
 export function localizePath(path: string, locale: Locale): string {
   const normalized = path.startsWith("/") ? path : `/${path}`;
   if (locale === "de") return normalized;

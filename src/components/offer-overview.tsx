@@ -20,7 +20,7 @@ function Offer({ locale, offer, revealDelay }: { locale: Locale; offer: OfferCat
   return <div className="reveal mb-[clamp(5rem,8vw,7rem)] last:mb-0" data-reveal style={{ "--reveal-delay": `${revealDelay}ms` } as React.CSSProperties}>
     <article className="grid grid-cols-2 items-center gap-x-8 max-[900px]:grid-cols-1 max-[900px]:gap-10">
       <div className={`min-w-0 max-w-[31rem] ${offer.reverse ? "min-[901px]:order-2 min-[901px]:justify-self-end" : ""}`}>
-        <h3 className="m-0 text-heading-md">{copy.title}</h3>
+        <h3 className="m-0 text-heading-md">{copy.need}</h3>
         <p className="mt-4 max-w-[46ch] text-body-lg text-muted">{copy.intro}</p>
         <div className="relative mt-8">{copy.rows.map(([label, detail], row) => {
           const panelId = `offer-${offer.id}-${row}`;

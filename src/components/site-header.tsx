@@ -4,7 +4,7 @@ import Link from "next/link";
 import { ArrowUpRight, Languages, Menu, X } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import { BrandMark } from "@/components/brand-mark";
-import { alternatePath, localizePath, studioLocation, t, type Locale } from "@/lib/i18n";
+import { alternatePath, localizePath, t, type Locale } from "@/lib/i18n";
 
 function LanguageLink({ dark = false, locale, otherLocale, pathname }: { dark?: boolean; locale: Locale; otherLocale: Locale; pathname: string }) {
   return (
@@ -72,7 +72,6 @@ export function SiteHeader({ locale, pathname }: { locale: Locale; pathname: str
   }, [open]);
 
   const navItems = [
-    { href: "/portfolio", label: t(locale, "nav.portfolio") },
     { href: "/solutions", label: t(locale, "nav.solutions") },
     { href: "/about", label: t(locale, "nav.about") },
     { href: "/contact", label: t(locale, "nav.contact") },
@@ -96,7 +95,7 @@ export function SiteHeader({ locale, pathname }: { locale: Locale; pathname: str
         <nav className="menu-links my-auto flex flex-col self-stretch max-[900px]:w-full max-[900px]:max-w-[44rem]" aria-label={t(locale, "nav.mainMenu")}>
           {navItems.map((item, index) => <Link key={item.href} className="group/menu-link grid grid-cols-[3rem_minmax(0,1fr)_2rem] items-center border-b border-white/13 py-2.5 text-heading-md max-[900px]:min-h-18 max-[600px]:grid-cols-[2rem_minmax(0,1fr)_1.5rem]" href={localizePath(item.href, locale)} onClick={() => setOpen(false)} tabIndex={open ? 0 : -1}><span className="text-caption tabular-nums text-[#929292]">{String(index + 1).padStart(2, "0")}</span><span>{item.label}</span><ArrowUpRight className="w-6 justify-self-end transition-transform duration-[250ms] ease-[var(--ease-out)] group-hover/menu-link:translate-x-[5px] group-hover/menu-link:-translate-y-[5px] motion-reduce:transform-none motion-reduce:transition-none" strokeWidth={1.7} /></Link>)}
         </nav>
-        <div className="menu-bottom flex items-center justify-between text-meta text-[#9a9a9a] max-[600px]:flex-col max-[600px]:items-start max-[600px]:gap-5"><span>{studioLocation(locale)}</span><a href="mailto:hello@webpilot.studio">hello@webpilot.studio</a></div>
+        <div className="menu-bottom flex items-center justify-end text-meta text-[#9a9a9a] max-[600px]:flex-col max-[600px]:items-start max-[600px]:gap-5"><a href="mailto:hello@webpilot.studio">hello@webpilot.studio</a></div>
       </div>
     </>
   );

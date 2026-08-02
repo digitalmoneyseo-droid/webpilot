@@ -4,6 +4,7 @@ export type OfferId = "foundation" | "optimization" | "campaign" | "partnership"
 
 export type OfferCopy = {
   id: OfferId;
+  need: string;
   title: string;
   intro: string;
   rows: readonly [label: string, copy: string][];
@@ -48,8 +49,9 @@ export const offersContent = {
     offers: [
       {
         id: "foundation",
+        need: "Etwas Neues aufbauen",
         title: "Fundament",
-        intro: "Baue oder erneuere die digitale Grundlage, mit der dein Unternehmen sichtbar wird, verkauft und arbeitet.",
+        intro: "Marke, Website, App oder digitales Produkt entwickeln.",
         rows: [
           ["Für wen es ideal ist", "Unternehmen, die eine Marke, Website, App oder ein digitales Produkt neu aufbauen oder grundlegend erneuern."],
           ["Welches Ergebnis du erwarten kannst", "Eine klare, startbereite Grundlage, die zu deinen Kunden und Geschäftszielen passt."],
@@ -59,8 +61,9 @@ export const offersContent = {
       },
       {
         id: "optimization",
+        need: "Bestehendes verbessern",
         title: "Optimierung",
-        intro: "Verbessere bestehende Websites, Produkte, Sichtbarkeit und Abläufe Monat für Monat.",
+        intro: "Sichtbarkeit, Conversion, UX oder Abläufe systematisch weiterentwickeln.",
         rows: [
           ["Für wen es ideal ist", "Unternehmen mit einer funktionierenden Grundlage, die mehr Sichtbarkeit, Conversion oder Effizienz erreichen möchten."],
           ["Welches Ergebnis du erwarten kannst", "Kontinuierliche Verbesserungen auf Basis klarer Prioritäten und echter Leistungsdaten."],
@@ -70,8 +73,9 @@ export const offersContent = {
       },
       {
         id: "campaign",
+        need: "Nachfrage erzeugen",
         title: "Kampagne",
-        intro: "Verwandle bezahlte Reichweite mit messbaren Kampagnen und klaren Conversion-Pfaden in qualifizierte Anfragen.",
+        intro: "Angebot, Kampagne, Landingpage und Tracking miteinander verbinden.",
         rows: [
           ["Für wen es ideal ist", "Unternehmen, die mit Werbung skalieren möchten."],
           ["Welches Ergebnis du erwarten kannst", "Bessere Entscheidungsgrundlagen, schnellere Lernzyklen und qualifiziertere Nachfrage."],
@@ -81,8 +85,9 @@ export const offersContent = {
       },
       {
         id: "partnership",
+        need: "Mehrere Bereiche verbinden",
         title: "Integrierte Partnerschaft",
-        intro: "Fundament, Optimierung und Kampagne werden über eine gemeinsame Roadmap koordiniert.",
+        intro: "Digitale Prioritäten über eine gemeinsame Roadmap steuern.",
         rows: [
           ["Für wen es ideal ist", "Unternehmen, bei denen mehrere digitale Bereiche gemeinsam geplant, umgesetzt und verbessert werden müssen."],
           ["Welches Ergebnis du erwarten kannst", "Ein abgestimmter Arbeitsrhythmus mit klaren Prioritäten statt voneinander getrennter Einzelmaßnahmen."],
@@ -122,8 +127,9 @@ export const offersContent = {
     offers: [
       {
         id: "foundation",
+        need: "Build something new",
         title: "Foundation",
-        intro: "Build or replace the digital foundation your business needs to get noticed, sell, and operate.",
+        intro: "Create or replace a brand, website, app, or digital product.",
         rows: [
           ["Who it is best for", "Businesses building or replacing a brand, website, app, or digital product."],
           ["The outcome you can expect", "A clear, launch-ready foundation designed around your customers and business goals."],
@@ -133,8 +139,9 @@ export const offersContent = {
       },
       {
         id: "optimization",
+        need: "Improve what already exists",
         title: "Optimization",
-        intro: "Improve existing websites, products, visibility, and workflows month by month.",
+        intro: "Develop visibility, conversion, UX, or operations through focused cycles.",
         rows: [
           ["Who it is best for", "Businesses with a working foundation that need better visibility, conversion, or efficiency."],
           ["The outcome you can expect", "Continuous improvements guided by clear priorities and real performance data."],
@@ -144,8 +151,9 @@ export const offersContent = {
       },
       {
         id: "campaign",
+        need: "Generate demand",
         title: "Campaign",
-        intro: "Turn paid reach into qualified inquiries with measurable campaigns and clear conversion paths.",
+        intro: "Connect the offer, campaign, landing page, and measurement.",
         rows: [
           ["Who it is best for", "Businesses ready to scale with paid advertising."],
           ["The outcome you can expect", "Clearer acquisition decisions, faster learning cycles, and better-qualified demand."],
@@ -155,8 +163,9 @@ export const offersContent = {
       },
       {
         id: "partnership",
+        need: "Connect several priorities",
         title: "Integrated Partnership",
-        intro: "Foundation, Optimization, and Campaign are coordinated through one shared roadmap.",
+        intro: "Manage digital work through one shared roadmap.",
         rows: [
           ["Who it is best for", "Businesses that need several digital areas to be planned, delivered, and improved together."],
           ["The outcome you can expect", "One coordinated working rhythm with clear priorities instead of disconnected initiatives."],

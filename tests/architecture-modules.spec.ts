@@ -1,24 +1,13 @@
 import { expect, test } from "@playwright/test";
 import { getOptimizationScene, OPTIMIZATION_FLIGHT_DELAY_MS, OPTIMIZATION_FLIGHT_DURATION_MS, OPTIMIZATION_RESULTS_DELAY_MS, OPTIMIZATION_TYPING_DELAY_MS } from "../src/components/offer-animations/optimization-scene";
 import { getOfferCatalog } from "../src/lib/offer-catalog";
-import { loadContentRepository, parseProject } from "../src/lib/content-core.mjs";
-import { parseProjectFilter, projectCategoryLabel, projectMatchesFilter } from "../src/lib/portfolio-taxonomy.mjs";
+import { loadContentRepository } from "../src/lib/content-core.mjs";
 
 test.describe("deep architecture modules", () => {
-  test("loads one bilingual content repository with parity", () => {
+  test("loads one bilingual FAQ repository with parity", () => {
     const content = loadContentRepository(process.cwd());
-    expect(content.projects.de.map(({ data }) => data.translationKey)).toEqual(content.projects.en.map(({ data }) => data.translationKey));
     expect(content.faqs.de).toHaveLength(5);
     expect(content.solutionFaqs.en).toHaveLength(5);
-    expect(() => parseProject({ translationKey: "fixture", locale: "en", slug: "fixture", order: 1, title: "Fixture", shortTitle: "Fixture", summary: "Fixture", categories: ["translated-label"], year: "2026", metric: "1", metricLabel: "Metric", challenge: "Challenge", strategy: "Strategy", execution: "Execution", timeline: "One week", tools: ["Tool"], palette: "blue", visual: "dashboard" }, "fixture.json")).toThrow(/stable Portfolio category IDs/);
-  });
-
-  test("owns Portfolio classification and localized labels", () => {
-    expect(projectCategoryLabel("de", "growth")).toBe("Wachstum");
-    expect(projectCategoryLabel("en", "growth")).toBe("Growth");
-    expect(projectMatchesFilter(["brand", "website"], "build")).toBeTruthy();
-    expect(projectMatchesFilter(["ai", "automation"], "grow")).toBeFalsy();
-    expect(parseProjectFilter("unknown")).toBe("all");
   });
 
   test("keeps Offer policy attached to stable identity", () => {

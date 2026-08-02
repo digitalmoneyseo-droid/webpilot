@@ -1,10 +1,7 @@
 import fs from "node:fs";
 import path from "node:path";
-import { parseProjectCategories } from "./portfolio-taxonomy.mjs";
 
-const palettes = ["violet", "orange", "blue", "green", "ink", "yellow", "coral", "ice"];
-const visuals = ["dashboard", "commerce", "assistant", "search", "content", "crm", "brand", "campaign"];
-const collections = ["projects", "faqs", "faq-solutions"];
+const collections = ["faqs", "faq-solutions"];
 const locales = ["de", "en"];
 
 function record(value, source) {
@@ -33,30 +30,6 @@ function localeValue(value, source) {
   return value;
 }
 
-function stringArrayValue(value, field, source) {
-  if (!Array.isArray(value) || value.length === 0 || value.some((item) => typeof item !== "string" || !item.trim())) throw new Error(`Invalid ${field} in ${source}.`);
-  return value;
-}
-
-function enumValue(value, values, field, source) {
-  if (typeof value !== "string" || !values.includes(value)) throw new Error(`Invalid ${field} in ${source}.`);
-  return value;
-}
-
-export function parseProject(value, source) {
-  const data = record(value, source);
-  return {
-    translationKey: stringValue(data.translationKey, "translationKey", source),
-    locale: localeValue(data.locale, source), slug: slugValue(data.slug, source), order: orderValue(data.order, source),
-    title: stringValue(data.title, "title", source), shortTitle: stringValue(data.shortTitle, "shortTitle", source),
-    summary: stringValue(data.summary, "summary", source), categories: parseProjectCategories(data.categories, source),
-    year: stringValue(data.year, "year", source), metric: stringValue(data.metric, "metric", source), metricLabel: stringValue(data.metricLabel, "metricLabel", source),
-    challenge: stringValue(data.challenge, "challenge", source), strategy: stringValue(data.strategy, "strategy", source), execution: stringValue(data.execution, "execution", source),
-    timeline: stringValue(data.timeline, "timeline", source), tools: stringArrayValue(data.tools, "tools", source),
-    palette: enumValue(data.palette, palettes, "palette", source), visual: enumValue(data.visual, visuals, "visual", source),
-  };
-}
-
 export function parseFaq(value, source) {
   const data = record(value, source);
   return {
@@ -68,10 +41,9 @@ export function parseFaq(value, source) {
 
 function readCollection(root, collection, locale) {
   const directory = path.join(root, "src", "content", collection, locale);
-  const parse = collection === "projects" ? parseProject : parseFaq;
   const entries = fs.readdirSync(directory).filter((file) => file.endsWith(".json")).map((file) => {
     const source = path.join("src", "content", collection, locale, file);
-    const data = parse(JSON.parse(fs.readFileSync(path.join(directory, file), "utf8")), source);
+    const data = parseFaq(JSON.parse(fs.readFileSync(path.join(directory, file), "utf8")), source);
     if (data.locale !== locale) throw new Error(`Wrong locale in ${source}.`);
     return { id: file.replace(/\.json$/, ""), data };
   }).sort((a, b) => a.data.order - b.data.order);
@@ -95,5 +67,5 @@ export function loadContentRepository(root) {
     assertParity(collection, de, en);
     return [collection, { de, en }];
   }));
-  return { projects: repository.projects, faqs: repository.faqs, solutionFaqs: repository["faq-solutions"] };
+  return { faqs: repository.faqs, solutionFaqs: repository["faq-solutions"] };
 }
