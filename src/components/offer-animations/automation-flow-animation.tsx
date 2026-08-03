@@ -19,26 +19,12 @@ export function AutomationFlowAnimation({ copy }: { copy: AutomationAnimationCop
   return (
     <motion.div
       ref={containerRef}
-      className="grid h-full min-h-0 w-full grid-rows-[auto_1fr] gap-3"
+      className="h-full min-h-0 w-full"
       initial={false}
       animate={active ? "visible" : "hidden"}
     >
-      <div className="flex min-w-0 items-center justify-between gap-3">
-        <span className="truncate text-[clamp(.62rem,1vw,.72rem)] font-medium text-[var(--ds-gray-700)]">
-          {copy.title}
-        </span>
-        <motion.span
-          className="flex shrink-0 items-center gap-1.5 rounded-full bg-white px-2.5 py-1 text-[clamp(.54rem,.9vw,.64rem)] font-medium text-[var(--ds-blue-800)] shadow-[inset_0_0_0_1px_var(--ds-gray-alpha-200)]"
-          variants={{ hidden: { opacity: 0, y: 4 }, visible: { opacity: 1, y: 0 } }}
-          transition={{ delay: noMotion ? 0 : 1.35, duration: noMotion ? 0 : 0.25, ease: OFFER_EASE_OUT }}
-        >
-          <Check className="size-3.5" strokeWidth={2} aria-hidden="true" />
-          {copy.status}
-        </motion.span>
-      </div>
-
       <motion.div
-        className="relative grid min-h-0 grid-cols-[minmax(4.8rem,1fr)_minmax(5.5rem,.82fr)_minmax(4.8rem,1fr)] items-center gap-[clamp(.45rem,2vw,1rem)] overflow-hidden rounded-xl bg-white p-[clamp(.75rem,2.8vw,1.35rem)] shadow-[inset_0_0_0_1px_var(--ds-gray-alpha-200)]"
+        className="relative grid h-full min-h-0 grid-cols-[minmax(4.8rem,1fr)_minmax(5.5rem,.82fr)_minmax(4.8rem,1fr)] items-center gap-[clamp(.45rem,2vw,1rem)] overflow-hidden rounded-xl bg-white p-[clamp(.75rem,2.8vw,1.35rem)] shadow-[inset_0_0_0_1px_var(--ds-gray-alpha-200)]"
         variants={{ hidden: { opacity: 0, scale: 0.99 }, visible: { opacity: 1, scale: 1 } }}
         transition={{ duration: noMotion ? 0 : 0.35, ease: OFFER_EASE_OUT }}
       >

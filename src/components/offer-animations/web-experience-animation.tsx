@@ -1,6 +1,6 @@
 "use client";
 
-import { Check, Globe2, Smartphone } from "lucide-react";
+import { Globe2, Smartphone } from "lucide-react";
 import { motion, useInView, useReducedMotion } from "motion/react";
 import { useRef } from "react";
 import { OFFER_EASE_OUT, OFFER_VIEWPORT } from "@/components/offer-animations/motion-tokens";
@@ -17,25 +17,11 @@ export function WebExperienceAnimation({ copy }: { copy: WebExperienceAnimationC
   return (
     <motion.div
       ref={containerRef}
-      className="grid h-full min-h-0 w-full grid-rows-[auto_1fr] gap-3"
+      className="h-full min-h-0 w-full"
       initial={false}
       animate={active ? "visible" : "hidden"}
     >
-      <div className="flex min-w-0 items-center justify-between gap-3">
-        <span className="truncate text-[clamp(.62rem,1vw,.72rem)] font-medium text-[var(--ds-gray-700)]">
-          {copy.title}
-        </span>
-        <motion.span
-          className="flex shrink-0 items-center gap-1.5 rounded-full bg-white px-2.5 py-1 text-[clamp(.54rem,.9vw,.64rem)] font-medium text-[var(--ds-blue-800)] shadow-[inset_0_0_0_1px_var(--ds-gray-alpha-200)]"
-          variants={{ hidden: { opacity: 0, y: 4 }, visible: { opacity: 1, y: 0 } }}
-          transition={{ delay: noMotion ? 0 : 1.05, duration: noMotion ? 0 : 0.25, ease: OFFER_EASE_OUT }}
-        >
-          <Check className="size-3.5" strokeWidth={2} aria-hidden="true" />
-          {copy.status}
-        </motion.span>
-      </div>
-
-      <div className="relative min-h-0 overflow-hidden rounded-xl bg-[var(--ds-blue-100)] p-[clamp(.75rem,2.4vw,1.25rem)] shadow-[inset_0_0_0_1px_var(--ds-blue-300)]">
+      <div className="relative h-full min-h-0 overflow-hidden rounded-xl bg-[var(--ds-blue-100)] p-[clamp(.75rem,2.4vw,1.25rem)] shadow-[inset_0_0_0_1px_var(--ds-blue-300)]">
         <div className="absolute inset-0 opacity-45 [background-image:linear-gradient(to_right,var(--ds-blue-300)_1px,transparent_1px),linear-gradient(to_bottom,var(--ds-blue-300)_1px,transparent_1px)] [background-size:28px_28px]" />
 
         <div className="relative grid h-full min-h-0 grid-cols-[minmax(0,1fr)_minmax(4.5rem,.3fr)] items-end gap-[clamp(.55rem,2vw,1rem)]">

@@ -1,10 +1,15 @@
 "use client";
 
-import { useEffect } from "react";
+import { useEffect, useLayoutEffect } from "react";
 import { usePathname } from "next/navigation";
+import { consumeRouteScrollTopRequest } from "@/lib/route-scroll";
 
 export function ClientEffects() {
   const pathname = usePathname();
+
+  useLayoutEffect(() => {
+    consumeRouteScrollTopRequest();
+  }, [pathname]);
 
   useEffect(() => {
     document.documentElement.classList.add("reveal-ready");

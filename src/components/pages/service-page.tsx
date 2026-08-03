@@ -1,8 +1,9 @@
-import { ArrowUpRight, Check, CircleGauge, Compass, Layers3 } from "lucide-react";
+import { ArrowUpRight, CircleGauge, Compass, Layers3 } from "lucide-react";
 import Link from "next/link";
 import { CtaButton } from "@/components/cta-button";
 import { Faq } from "@/components/faq";
 import { OfferAnimation } from "@/components/offer-animations/offer-animation";
+import { ServiceScopeGrid } from "@/components/pages/service-scope-grid";
 import { Reveal } from "@/components/reveal";
 import { SectionHeading } from "@/components/section-heading";
 import type { ServiceId } from "@/i18n/services";
@@ -58,19 +59,10 @@ export function ServicePage({ locale, serviceId }: { locale: Locale; serviceId: 
         </div>
       </section>
 
-      <section className="px-page py-section">
+      <section className="px-page py-section" data-service-scope>
         <div className="mx-auto max-w-[70rem]">
           <SectionHeading title={copy.page.scopeHeading} copy={copy.page.scopeIntro} />
-          <Reveal className="grid grid-cols-3 rounded-card bg-white shadow-[var(--ds-shadow-border)] max-[800px]:grid-cols-1">
-            {copy.page.scopeGroups.map((group, index) => (
-              <div className={`p-[clamp(1.4rem,3vw,2rem)] ${index > 0 ? "border-l border-[var(--ds-gray-alpha-200)] max-[800px]:border-t max-[800px]:border-l-0" : ""}`} key={group.title}>
-                <h3 className="m-0 text-heading-sm">{group.title}</h3>
-                <ul className="mt-6 grid list-none gap-3 p-0">
-                  {group.items.map((item) => <li className="flex gap-2.5 text-card-body text-muted" key={item}><Check className="mt-0.5 size-4.5 shrink-0 text-[var(--ds-blue-700)]" strokeWidth={2} aria-hidden="true" /><span>{item}</span></li>)}
-                </ul>
-              </div>
-            ))}
-          </Reveal>
+          <ServiceScopeGrid groups={copy.page.scopeGroups} serviceId={serviceId} />
         </div>
       </section>
 
