@@ -23,7 +23,7 @@ export function pageMetadata({
     : locale === "de"
       ? "Webpilot | Websites, Wachstum & Automatisierung"
       : "Webpilot | Websites, Growth & Automation";
-  const image = absoluteUrl("/social-card.png");
+  const image = absoluteUrl("/webpilot-social-card.png");
   return {
     title: pageTitle,
     description,
