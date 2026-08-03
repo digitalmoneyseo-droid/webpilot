@@ -1,9 +1,10 @@
 "use client";
 
 import { Bot, Check, FileInput, Inbox, Send, Sparkles, UserCheck } from "lucide-react";
-import { motion, useInView, useReducedMotion } from "motion/react";
+import { motion, useInView } from "motion/react";
 import { useRef } from "react";
 import { OFFER_EASE_IN_OUT, OFFER_EASE_OUT, OFFER_VIEWPORT } from "@/components/offer-animations/motion-tokens";
+import { useHydratedReducedMotion } from "@/components/offer-animations/use-hydrated-reduced-motion";
 import type { AutomationAnimationCopy } from "@/i18n/services";
 
 const inputIcons = [FileInput, Inbox, Bot] as const;
@@ -12,8 +13,7 @@ const outputIcons = [UserCheck, Check, Send] as const;
 export function AutomationFlowAnimation({ copy }: { copy: AutomationAnimationCopy }) {
   const containerRef = useRef<HTMLDivElement>(null);
   const isInView = useInView(containerRef, OFFER_VIEWPORT);
-  const prefersReducedMotion = useReducedMotion();
-  const noMotion = Boolean(prefersReducedMotion);
+  const noMotion = useHydratedReducedMotion();
   const active = noMotion || isInView;
 
   return (

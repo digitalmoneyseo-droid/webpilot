@@ -9,5 +9,5 @@ export const metadata: Metadata = {
 export const viewport: Viewport = { width: "device-width", initialScale: 1, themeColor: "#FAF9F6" };
 
 export default function EnglishLayout({ children }: { children: React.ReactNode }) {
-  return <html lang="en"><body className="flex min-h-screen flex-col overflow-x-hidden bg-canvas font-sans text-ink antialiased">{children}<Analytics /></body></html>;
+  return <html lang="en" data-scroll-behavior="smooth"><body className="flex min-h-screen flex-col overflow-x-hidden bg-canvas font-sans text-ink antialiased">{children}<Analytics /></body></html>;
 }

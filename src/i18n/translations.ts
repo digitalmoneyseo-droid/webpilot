@@ -1,5 +1,5 @@
 export const deMessages = {
-  "nav.services": "Services",
+  "nav.services": "Leistungen",
   "nav.about": "Über uns",
   "nav.contact": "Kontakt",
   "nav.brandHome": "Webpilot Startseite",

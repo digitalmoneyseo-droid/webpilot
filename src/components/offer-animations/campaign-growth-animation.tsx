@@ -1,7 +1,8 @@
 "use client";
 
-import { animate, motion, useInView, useMotionValue, useReducedMotion, useTransform } from "motion/react";
+import { animate, motion, useInView, useMotionValue, useTransform } from "motion/react";
 import { useEffect, useMemo, useRef } from "react";
+import { useHydratedReducedMotion } from "@/components/offer-animations/use-hydrated-reduced-motion";
 import type { CampaignAnimationCopy } from "@/i18n/services";
 import type { Locale } from "@/lib/i18n";
 import { OFFER_EASE_OUT, OFFER_VIEWPORT } from "@/components/offer-animations/motion-tokens";
@@ -13,8 +14,7 @@ const GRAPH_AREA = `${GRAPH_LINE} L 408 224 L 12 224 Z`;
 export function CampaignGrowthAnimation({ locale, copy }: { locale: Locale; copy: CampaignAnimationCopy }) {
   const containerRef = useRef<HTMLDivElement>(null);
   const isInView = useInView(containerRef, OFFER_VIEWPORT);
-  const prefersReducedMotion = useReducedMotion();
-  const noMotion = Boolean(prefersReducedMotion);
+  const noMotion = useHydratedReducedMotion();
   const active = noMotion || isInView;
   const count = useMotionValue(FINAL_INQUIRIES);
   const formatter = useMemo(

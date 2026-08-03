@@ -11,6 +11,11 @@ export function scrollToPageTopInstantly() {
   root.style.scrollBehavior = previousScrollBehavior;
 }
 
+export function scrollToPageTopSmoothly() {
+  const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  window.scrollTo({ top: 0, left: 0, behavior: reducedMotion ? "auto" : "smooth" });
+}
+
 export function requestRouteScrollTop() {
   window.sessionStorage.setItem(routeScrollTopKey, "true");
 }

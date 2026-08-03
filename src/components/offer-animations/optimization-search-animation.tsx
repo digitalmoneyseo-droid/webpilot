@@ -1,10 +1,11 @@
 "use client";
 
 import { Crown, Search } from "lucide-react";
-import { motion, useInView, useReducedMotion } from "motion/react";
+import { motion, useInView } from "motion/react";
 import { useEffect, useRef, useState } from "react";
 import { Confetti } from "@/components/confetti";
 import { getOptimizationScene, OPTIMIZATION_FLIGHT_DELAY_MS, OPTIMIZATION_FLIGHT_DURATION_MS, OPTIMIZATION_RESULTS_DELAY_MS, OPTIMIZATION_TYPING_DELAY_MS, type OptimizationScene } from "@/components/offer-animations/optimization-scene";
+import { useHydratedReducedMotion } from "@/components/offer-animations/use-hydrated-reduced-motion";
 import type { OptimizationAnimationCopy } from "@/i18n/services";
 
 const WINNER_BADGE_HEIGHT = 32;
@@ -48,8 +49,7 @@ export function OptimizationSearchAnimation({ copy }: { copy: OptimizationAnimat
   const containerRef = useRef<HTMLDivElement>(null);
   const resultsViewportRef = useRef<HTMLDivElement>(null);
   const isInView = useInView(containerRef, { once: true, amount: 0.55 });
-  const prefersReducedMotion = useReducedMotion();
-  const reducedMotion = Boolean(prefersReducedMotion);
+  const reducedMotion = useHydratedReducedMotion();
   const scene = useOptimizationScene(isInView, reducedMotion, copy.query.length);
   const [resultsHeight, setResultsHeight] = useState(0);
   const typedLength = reducedMotion ? copy.query.length : scene.typedLength;

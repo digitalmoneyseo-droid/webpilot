@@ -4,11 +4,19 @@ import { expect, test } from "@playwright/test";
 test.describe("localized routes", () => {
   for (const route of ["/", "/en"]) {
     test(`renders an accessible home page at ${route}`, async ({ page }) => {
+      const hydrationErrors: string[] = [];
+      page.on("console", (message) => {
+        if (message.type() === "error" && message.text().includes("Hydration failed")) hydrationErrors.push(message.text());
+      });
+      page.on("pageerror", (error) => {
+        if (error.message.includes("Hydration failed")) hydrationErrors.push(error.message);
+      });
       await page.emulateMedia({ reducedMotion: "reduce" });
       await page.goto(route);
       await expect(page.locator("h1")).toBeVisible();
       const results = await new AxeBuilder({ page }).exclude('[aria-hidden="true"]').analyze();
       expect(results.violations).toEqual([]);
+      expect(hydrationErrors).toEqual([]);
     });
   }
 
@@ -34,6 +42,19 @@ test.describe("localized routes", () => {
     await page.keyboard.press("Escape");
     await expect(menu).toHaveAttribute("aria-hidden", "true");
     await expect(button).toBeFocused();
+  });
+
+  test("smoothly scrolls to the top when the active navigation link is selected", async ({ page }) => {
+    await page.setViewportSize({ width: 1280, height: 720 });
+    await page.emulateMedia({ reducedMotion: "no-preference" });
+    await page.goto("/en/about");
+    await page.evaluate(() => window.scrollTo(0, document.documentElement.scrollHeight));
+    await expect.poll(() => page.evaluate(() => window.scrollY)).toBeGreaterThan(0);
+
+    await page.getByRole("navigation", { name: "Main navigation" }).getByRole("link", { name: "About us", exact: true }).click();
+
+    await expect(page).toHaveURL(/\/en\/about$/);
+    await expect.poll(() => page.evaluate(() => window.scrollY)).toBe(0);
   });
 
   test("opens and closes the mobile menu with the keyboard", async ({ page }) => {
