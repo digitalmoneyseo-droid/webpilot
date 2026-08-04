@@ -1,8 +1,11 @@
 import { ContactForm } from "@/components/contact-form";
 import { EditorialHero } from "@/components/editorial-hero";
+import { getServiceCopy, type ServiceId } from "@/i18n/services";
 import { t, type Locale } from "@/lib/i18n";
 
-export function ContactPage({ locale }: { locale: Locale }) {
+export function ContactPage({ locale, serviceId }: { locale: Locale; serviceId?: ServiceId }) {
+  const service = serviceId ? getServiceCopy(locale, serviceId) : undefined;
+
   return (
     <main id="main-content">
       <EditorialHero
@@ -17,12 +20,13 @@ export function ContactPage({ locale }: { locale: Locale }) {
               <p className="mt-2 mb-0 max-w-[38rem] text-body text-[#b7b7bd]">
                 {t(locale, "contact.essentialsCopy")}
               </p>
+              {service ? <p className="mt-4 mb-0 text-small text-[#b7b7bd]"><span>{t(locale, "contact.selectedService")}: </span><strong className="font-semibold text-white">{service.name}</strong></p> : null}
             </div>
             <a className="shrink-0 text-small text-white underline decoration-white/35 underline-offset-4 hover:decoration-white" href="mailto:hello@webpilot.studio">
               hello@webpilot.studio
             </a>
           </header>
-          <ContactForm locale={locale} />
+          <ContactForm locale={locale} serviceName={service?.name} />
         </div>
       </section>
     </main>

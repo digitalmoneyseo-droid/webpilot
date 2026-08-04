@@ -78,7 +78,7 @@ export const servicesContent = {
         rows: [
           ["Ideal für", "Unternehmen, die eine neue Website, App oder digitale Plattform aufbauen oder grundlegend erneuern möchten."],
           ["Das Ergebnis", "Ein schnelles, zugängliches und überzeugendes digitales Erlebnis, das zu deinen Kunden und Geschäftszielen passt."],
-          ["Was dazugehört", "Strategie, UX und UI Design, Entwicklung, CMS, Analytics, Integrationen und eine solide Conversion-Grundlage."],
+          ["Was dazugehört", "Strategie, UX und UI Design, Entwicklung, CMS, kundennahe Integrationen und eine solide technische Messgrundlage."],
         ],
         cta: "Websites & Apps entdecken",
         page: {
@@ -93,12 +93,17 @@ export const servicesContent = {
             { title: "Bereit für Weiterentwicklung", copy: "Saubere Systeme, sinnvolle Integrationen und messbare Grundlagen machen spätere Verbesserungen leichter." },
           ],
           scopeHeading: "Was wir entwickeln",
-          scopeIntro: "Von fokussierten Landingpages bis zu Kundenportalen: Wir gestalten den passenden digitalen Weg rund um Angebot, Nutzer und Systeme.",
+          scopeIntro: "Dieser Service verantwortet das sichtbare digitale Erlebnis: Struktur, Oberfläche und technische Umsetzung. Organische Sichtbarkeit, laufende Kampagnen und nachgelagerte Automatisierung werden bei Bedarf als klar abgegrenzte Services eingebunden.",
           scopeGroups: [
             {
               title: "Marketing-Websites",
               copy: "Mehrseitige Websites, die ein Angebot verständlich erklären, Vertrauen aufbauen und Besucher gezielt zur nächsten Handlung führen.",
-              items: ["Informationsarchitektur und Nutzerwege", "UX und UI Design", "CMS und redaktionelle Komponenten", "Performance, Barrierefreiheit und Analytics"],
+              items: ["Informationsarchitektur und Nutzerwege", "UX und UI Design", "CMS und redaktionelle Komponenten", "Technische Grundlage für Performance, Barrierefreiheit und Messung"],
+            },
+            {
+              title: "Landingpages",
+              copy: "Fokussierte Seiten für Kampagnen, Produkte oder Markteintritte. Wir verantworten Botschaftsstruktur, Nutzerführung und Umsetzung; laufende Media- und Kampagnenoptimierung gehört zu Werbekampagnen.",
+              items: ["Angebots- und Botschaftsstruktur", "Responsive Design und Entwicklung", "Formulare und Terminbuchung", "Conversion-Tracking als technische Grundlage"],
             },
             {
               title: "E-Commerce & Onlineshops",
@@ -106,24 +111,19 @@ export const servicesContent = {
               items: ["Shop- und Produktseiten-UX", "Warenkorb und Checkout", "Zahlungs-, Versand- und Systemintegrationen", "E-Commerce-Tracking und Consent"],
             },
             {
-              title: "Landingpages",
-              copy: "Fokussierte Seiten für Kampagnen, Produkte oder Markteintritte mit einer klaren Botschaft und einem messbaren Ziel.",
-              items: ["Angebots- und Botschaftsstruktur", "Responsive Design und Entwicklung", "Formulare, Terminbuchung und CRM-Anbindung", "Conversion-Tracking und Testgrundlage"],
-            },
-            {
               title: "Apps & Kundenportale",
               copy: "Web- und native Apps für Self-Service, Zusammenarbeit oder interne Abläufe, entwickelt für deine Nutzer und sinnvoll mit bestehenden Systemen verbunden.",
               items: ["Product Discovery und Prototypen", "Web-, Cross-Platform- und native App-Entwicklung", "Authentifizierte Bereiche und Nutzerkonten", "Daten-, API- und Systemintegrationen"],
             },
             {
-              title: "Website-Relaunches",
-              copy: "Grundlegende Erneuerungen für Websites, deren Struktur, Technik oder Darstellung das Unternehmen nicht mehr angemessen unterstützt.",
-              items: ["Audit der bestehenden Website", "Neue Struktur, Inhalte und Nutzerführung", "SEO- und Content-Migration", "Qualitätssicherung und kontrollierter Launch"],
+              title: "Content-Plattformen",
+              copy: "Redaktionelle Systeme für Teams, die Inhalte zuverlässig erstellen, prüfen und über mehrere Seitentypen oder Kanäle ausspielen müssen.",
+              items: ["CMS-Architektur und Inhaltsmodelle", "Rollen und redaktionelle Freigaben", "Wiederverwendbare Komponenten", "Migration und kontrollierter Launch"],
             },
             {
-              title: "Buchungs- & Lead-Systeme",
-              copy: "Conversion-Pfade, die Anfragen qualifizieren, Termine koordinieren und Informationen zuverlässig an Vertrieb oder Service übergeben.",
-              items: ["Mehrstufige Formulare und Qualifizierung", "Termin- und Kalenderintegration", "CRM-Routing und Benachrichtigungen", "Follow-up und Messung"],
+              title: "Formular- & Buchungserlebnisse",
+              copy: "Kundennahe Abläufe für Anfragen, Qualifizierung und Termine. Wir gestalten und bauen den sichtbaren Weg; CRM-Routing, Anreicherung und Follow-up gehören zu KI & Automatisierung.",
+              items: ["Mehrstufige Formulare", "Nutzerfreundliche Qualifizierung", "Termin- und Kalenderintegration", "Saubere Übergabe an verbundene Systeme"],
             },
           ],
           processHeading: "Von der Idee bis zum Launch",
@@ -137,7 +137,7 @@ export const servicesContent = {
           faqs: [
             { question: "Übernehmt ihr Design und Entwicklung?", answer: "Ja. Wir können Strategie, UX, UI Design und technische Umsetzung gemeinsam übernehmen oder an dem Punkt einsteigen, an dem dein Team Unterstützung braucht." },
             { question: "Könnt ihr mit unserer bestehenden Marke oder Technik arbeiten?", answer: "Ja. Wir prüfen zuerst, was tragfähig ist, und bauen darauf auf. Eine Erneuerung empfehlen wir nur dort, wo sie für das Ziel wirklich nötig ist." },
-            { question: "Sind Analytics und Conversion-Optimierung enthalten?", answer: "Eine saubere Messgrundlage und wichtige Conversion-Prinzipien gehören zur Planung. Laufende Tests und Optimierung können anschließend passend zum Bedarf vereinbart werden." },
+            { question: "Sind Analytics und Conversion-Optimierung enthalten?", answer: "Eine saubere technische Messgrundlage und wichtige Conversion-Prinzipien gehören zur Planung. Laufende Kampagnentests werden über Werbekampagnen betreut; organische Messung und Suchoptimierung über SEO & KI-Sichtbarkeit." },
             { question: "Wem gehören Design und Quellcode?", answer: "Dir. Nach Abschluss erhält dein Team die freigegebenen Designs, den vereinbarten Quellcode, Inhalte, Produktionszugänge und die relevante Dokumentation." },
           ],
           finalTitle: "Planen wir dein nächstes digitales Produkt.",
@@ -168,12 +168,12 @@ export const servicesContent = {
             { title: "Klare Signale statt GEO-Hacks", copy: "Nachvollziehbare Informationen, Struktur und externe Belege stärken die Sichtbarkeit in Suche und KI-Antworten." },
           ],
           scopeHeading: "Wie wir Sichtbarkeit verbessern",
-          scopeIntro: "Jeder Bereich verbindet eine klare Aufgabe mit konkreten technischen, redaktionellen und messbaren Maßnahmen.",
+          scopeIntro: "Dieser Service verantwortet organische Auffindbarkeit in Suche und relevanten KI-Antworten. Größere Website-Umbauten und laufende Werbemaßnahmen bleiben klar bei Websites & Apps beziehungsweise Werbekampagnen verortet.",
           scopeGroups: [
             {
               title: "Technisches SEO",
-              copy: "Wir beseitigen technische Hindernisse, damit wichtige Seiten zuverlässig gecrawlt, verstanden und indexiert werden können.",
-              items: ["Technischer SEO-Audit", "Crawling und Indexierung", "Interne Verlinkung und strukturierte Daten", "Core Web Vitals und Performance"],
+              copy: "Wir diagnostizieren und priorisieren technische Hindernisse, damit wichtige Seiten zuverlässig gecrawlt, verstanden und indexiert werden können. Größere technische Umbauten werden mit Websites & Apps umgesetzt.",
+              items: ["Technischer SEO-Audit", "Crawling und Indexierung", "Interne Verlinkung und strukturierte Daten", "Suchrelevante Performance-Prioritäten"],
             },
             {
               title: "Suchintention & Themen",
@@ -182,8 +182,8 @@ export const servicesContent = {
             },
             {
               title: "Onpage & Content",
-              copy: "Bestehende und neue Inhalte werden so strukturiert, dass sie für Menschen hilfreich und für Suchsysteme eindeutig verständlich sind.",
-              items: ["Optimierung wichtiger Seiten", "Service- und Landingpage-Inhalte", "Content-Briefings und redaktionelle Planung", "Metadaten und interne Verlinkung"],
+              copy: "Bestehende und neue Inhalte werden für organische Suchintention strukturiert. UX, visuelles Design und technische Seitenentwicklung bleiben Teil von Websites & Apps.",
+              items: ["Optimierung wichtiger Seiten", "Suchorientierte Service-Inhalte", "Content-Briefings und redaktionelle Planung", "Metadaten und interne Verlinkung"],
             },
             {
               title: "Lokale Sichtbarkeit",
@@ -197,8 +197,8 @@ export const servicesContent = {
             },
             {
               title: "Messung & Weiterentwicklung",
-              copy: "Sichtbarkeit wird nicht nur über Rankings bewertet. Wir verbinden Suchdaten mit relevanten Besuchen, Handlungen und Geschäftszielen.",
-              items: ["Search Console und Analytics", "Ranking- und Sichtbarkeitsmonitoring", "Conversion- und Nachfrageauswertung", "Regelmäßige Priorisierung"],
+              copy: "Organische Sichtbarkeit wird nicht nur über Rankings bewertet. Wir verbinden Suchdaten mit relevanten Besuchen, Handlungen und Geschäftszielen, getrennt von bezahlter Kampagnenattribution.",
+              items: ["Search Console und organische Analytics", "Ranking- und Sichtbarkeitsmonitoring", "Organische Conversion- und Nachfrageauswertung", "Regelmäßige Priorisierung"],
             },
           ],
           processHeading: "Lernen, priorisieren, verbessern",
@@ -224,11 +224,11 @@ export const servicesContent = {
         id: "paid-campaigns",
         name: "Werbekampagnen",
         navDescription: "Bezahlte Reichweite in qualifizierte Nachfrage verwandeln.",
-        summary: "Strategie, Anzeigen, Creative, Conversion-Pfade und Tracking als durchgängiger Weg von Aufmerksamkeit zu Anfrage.",
+        summary: "Strategie, Anzeigen, Creative, Kampagnenoptimierung und Messung als durchgängiger Weg von bezahlter Aufmerksamkeit zu qualifizierter Anfrage.",
         rows: [
           ["Ideal für", "Unternehmen mit einem überzeugenden Angebot, die über Google Ads oder Paid Social planbar Nachfrage erzeugen möchten."],
           ["Das Ergebnis", "Bessere Entscheidungsgrundlagen, schnellere Lernzyklen und ein klarer Weg von der Anzeige zur qualifizierten Anfrage."],
-          ["Was dazugehört", "Kampagnenstrategie, Media Buying, Creative, Conversion-Optimierung, Tracking, Attribution und CRM-Lead-Routing."],
+          ["Was dazugehört", "Kampagnenstrategie, Media Buying, Creative, Conversion-Optimierung, Attribution und eine definierte Übergabe qualifizierter Leads."],
         ],
         cta: "Werbekampagnen entdecken",
         page: {
@@ -240,10 +240,10 @@ export const servicesContent = {
           outcomes: [
             { title: "Ein überzeugendes Angebot", copy: "Botschaft, Zielgruppe und nächster Schritt werden vor dem Skalieren klar definiert." },
             { title: "Schnellere Lernzyklen", copy: "Strukturierte Tests zeigen, welche Kombinationen aus Kanal, Creative und Conversion-Pfad funktionieren." },
-            { title: "Messbare Nachfrage", copy: "Tracking und Lead-Routing verbinden Werbeausgaben mit den Anfragen, die für dein Unternehmen relevant sind." },
+            { title: "Messbare Nachfrage", copy: "Tracking und eine definierte Lead-Übergabe verbinden Werbeausgaben mit den Anfragen, die für dein Unternehmen relevant sind." },
           ],
           scopeHeading: "Was wir für Kampagnen entwickeln",
-          scopeIntro: "Wir verbinden Kanal, Botschaft und Conversion-Pfad, statt nur einzelne Anzeigen zu verwalten.",
+          scopeIntro: "Dieser Service verantwortet bezahlte Akquise vom Kanal bis zur Kampagnenauswertung. Neue Landingpages werden mit Websites & Apps gebaut; CRM-Automation nach der Übergabe gehört zu KI & Automatisierung.",
           scopeGroups: [
             {
               title: "Kampagnenstrategie & Angebot",
@@ -266,14 +266,14 @@ export const servicesContent = {
               items: ["Creative- und Messaging-Konzepte", "Statische, Video- und Textvarianten", "Angebots- und Hook-Tests", "Lernplan für neue Creatives"],
             },
             {
-              title: "Conversion-Pfade & CRO",
-            copy: "Wir optimieren nach dem Anzeigenklick Botschaft, Formular, Qualifizierung und den Weg bis zur qualifizierten Anfrage.",
-              items: ["Übergang von Anzeige zu Angebot", "Formulare und Lead-Qualifizierung", "Funnel- und Conversion-Optimierung", "Testhypothesen und Auswertung"],
+              title: "Kampagnenpfade & CRO",
+            copy: "Wir optimieren nach dem Anzeigenklick Botschaft, Formular und Qualifizierung innerhalb des vorhandenen Kampagnenpfads. Neue Seiten werden über Websites & Apps konzipiert und gebaut.",
+              items: ["Übergang von Anzeige zu Angebot", "Kampagnenbezogene Lead-Qualifizierung", "Funnel- und Conversion-Optimierung", "Testhypothesen und Auswertung"],
             },
             {
-              title: "Tracking & Lead-Routing",
-              copy: "Messung verbindet Media-Ausgaben mit echten Ergebnissen und leitet neue Anfragen zuverlässig an die richtigen Systeme weiter.",
-              items: ["Analytics und Conversion-Tracking", "Consent und Plattform-Signale", "Attribution und Reporting", "CRM-Routing und Lead-Qualität"],
+              title: "Kampagnenmessung & Lead-Übergabe",
+              copy: "Messung verbindet Media-Ausgaben mit echten Ergebnissen. Wir definieren und prüfen die Übergabe; Anreicherung, CRM-Routing und automatisiertes Follow-up werden über KI & Automatisierung umgesetzt.",
+              items: ["Kampagnen- und Conversion-Tracking", "Consent und Plattform-Signale", "Attribution und Reporting", "Übergabekriterien und Lead-Qualität"],
             },
           ],
           processHeading: "Von der Hypothese zur Verbesserung",
@@ -299,7 +299,7 @@ export const servicesContent = {
         id: "ai-automation",
         name: "KI & Automatisierung",
         navDescription: "Wiederkehrende Arbeit reduzieren und Systeme verbinden.",
-        summary: "Praktische KI-Funktionen und Automatisierungen, die Abläufe vereinfachen, Informationen verbinden und Teams entlasten.",
+        summary: "Praktische KI-Funktionen und Automatisierungen für die Abläufe hinter Formularen, Postfächern, CRM-Systemen und digitalen Produkten.",
         rows: [
           ["Ideal für", "Unternehmen mit wiederkehrenden Aufgaben, getrennten Systemen oder einer konkreten Idee für eine nützliche KI-Funktion."],
           ["Das Ergebnis", "Ein nachvollziehbarer Ablauf, der manuelle Arbeit reduziert und sich sinnvoll in bestehende Systeme einfügt."],
@@ -318,7 +318,7 @@ export const servicesContent = {
             { title: "KI dort, wo sie hilft", copy: "Assistenten und produktintegrierte Funktionen lösen eine klar definierte Aufgabe statt nur einen Demo-Effekt zu erzeugen." },
           ],
           scopeHeading: "Was wir automatisieren und entwickeln",
-          scopeIntro: "Von einem wiederkehrenden Schritt bis zur produktintegrierten KI-Funktion: Jede Lösung beginnt mit einer klaren Aufgabe.",
+          scopeIntro: "Dieser Service verantwortet interne Abläufe, Systemübergaben und klar definierte KI-Funktionen. Die sichtbare Website- oder App-Oberfläche wird bei Bedarf gemeinsam mit Websites & Apps geliefert.",
           scopeGroups: [
             {
               title: "Workflow-Automatisierung",
@@ -327,8 +327,8 @@ export const servicesContent = {
             },
             {
               title: "CRM & Lead-Prozesse",
-              copy: "Neue Kontakte werden erfasst, ergänzt, bewertet und an den passenden Vertriebs- oder Serviceprozess übergeben.",
-              items: ["Formular- und CRM-Integration", "Lead-Anreicherung und Qualifizierung", "Routing und Follow-up", "Pipeline- und Statusautomatisierung"],
+              copy: "Nach der Übergabe aus Website oder Kampagne werden neue Kontakte ergänzt, bewertet und an den passenden Vertriebs- oder Serviceprozess weitergegeben.",
+              items: ["Formular- und CRM-Übergabe", "Lead-Anreicherung und systemische Qualifizierung", "Routing und automatisiertes Follow-up", "Pipeline- und Statusautomatisierung"],
             },
             {
               title: "Dokumente & Kommunikation",
@@ -342,8 +342,8 @@ export const servicesContent = {
             },
             {
               title: "KI-Funktionen in Websites & Apps",
-              copy: "Nützliche KI-Funktionen werden direkt in digitale Produkte integriert und auf eine klar definierte Nutzeraufgabe ausgerichtet.",
-              items: ["Produkt- und UX-Konzept", "Prototypen und Machbarkeitstests", "Modell- und API-Integration", "Nutzung, Kosten und Qualitätsmessung"],
+              copy: "Nützliche KI-Funktionen werden auf eine klar definierte Nutzeraufgabe ausgerichtet. KI-Logik und Modellintegration liegen hier; das umgebende Produkterlebnis entsteht mit Websites & Apps.",
+              items: ["Aufgabe und Qualitätskriterien", "Prototypen und Machbarkeitstests", "Modell- und API-Integration", "Nutzung, Kosten und Qualitätsmessung"],
             },
             {
               title: "Integrationen & sicherer Betrieb",
@@ -363,7 +363,7 @@ export const servicesContent = {
             { question: "Wann ist KI wirklich sinnvoll?", answer: "Wenn eine Aufgabe Sprache, unstrukturierte Informationen oder variable Entscheidungen umfasst, kann KI helfen. Für einfache, feste Regeln ist eine klassische Automatisierung oft zuverlässiger und günstiger." },
             { question: "Müssen wir unsere bestehenden Systeme ersetzen?", answer: "Meistens nicht. Wir prüfen zuerst vorhandene Werkzeuge und Schnittstellen und verbinden sie, wenn das stabiler und wirtschaftlicher ist als ein kompletter Neubau." },
             { question: "Wie geht ihr mit sensiblen Daten um?", answer: "Datenzugriff, Speicherung, Anbieter und menschliche Kontrolle werden vor der Umsetzung geklärt. Wir wählen den technischen Ansatz passend zu Risiko und rechtlichen Anforderungen." },
-            { question: "Könnt ihr eine KI-Funktion in unsere Website oder App integrieren?", answer: "Ja. Wenn die Funktion einen klaren Nutzen hat, können Produktdesign, technische Integration, Nutzeroberfläche und Messung gemeinsam Teil des Projekts sein." },
+            { question: "Könnt ihr eine KI-Funktion in unsere Website oder App integrieren?", answer: "Ja. KI-Logik, Modellintegration und Qualitätsmessung werden über KI & Automatisierung betreut. Produktkonzept, Oberfläche und das umgebende Nutzererlebnis entstehen bei Bedarf gemeinsam mit Websites & Apps." },
           ],
           finalTitle: "Finden wir den sinnvollsten Automationsschritt.",
           finalCopy: "Zeig uns den Ablauf, der Zeit kostet oder regelmäßig stockt. Wir prüfen eine praktische Lösung.",
@@ -402,7 +402,7 @@ export const servicesContent = {
         rows: [
           ["Best for", "Businesses creating or replacing a website, app, or digital platform."],
           ["The outcome", "A fast, accessible, and persuasive digital experience designed around your customers and commercial goals."],
-          ["What it can include", "Strategy, UX and UI design, development, CMS, analytics, integrations, and a strong conversion foundation."],
+          ["What it can include", "Strategy, UX and UI design, development, CMS, customer-facing integrations, and a sound technical measurement foundation."],
         ],
         cta: "Explore Websites & Apps",
         page: {
@@ -417,12 +417,17 @@ export const servicesContent = {
             { title: "Ready to evolve", copy: "Clean systems, useful integrations, and measurable foundations make future improvements easier." },
           ],
           scopeHeading: "What we build",
-          scopeIntro: "From focused landing pages to customer portals, we shape the right digital experience around your offer, users, and systems.",
+          scopeIntro: "This service owns the visible digital experience: structure, interface, and technical delivery. Organic visibility, ongoing campaigns, and downstream automation are added as clearly defined services when needed.",
           scopeGroups: [
             {
               title: "Marketing websites",
               copy: "Multi-page websites that explain your offer clearly, build trust, and guide visitors toward a meaningful next action.",
-              items: ["Information architecture and user journeys", "UX and UI design", "CMS and editorial components", "Performance, accessibility, and analytics"],
+              items: ["Information architecture and user journeys", "UX and UI design", "CMS and editorial components", "Technical foundation for performance, accessibility, and measurement"],
+            },
+            {
+              title: "Landing pages",
+              copy: "Focused pages for campaigns, products, or market launches. We own message structure, user journey, and delivery; ongoing media and campaign optimization belongs to Paid Campaigns.",
+              items: ["Offer and message structure", "Responsive design and development", "Forms and scheduling", "Conversion tracking as a technical foundation"],
             },
             {
               title: "E-commerce experiences",
@@ -430,24 +435,19 @@ export const servicesContent = {
               items: ["Storefront and product-page UX", "Cart and checkout", "Payment, shipping, and system integrations", "E-commerce tracking and consent"],
             },
             {
-              title: "Landing pages",
-              copy: "Focused pages for campaigns, products, or market launches with a clear message and one measurable objective.",
-              items: ["Offer and message structure", "Responsive design and development", "Forms, scheduling, and CRM connection", "Conversion tracking and testing foundations"],
-            },
-            {
               title: "Applications & customer portals",
               copy: "Web and native applications for self-service, collaboration, or internal workflows, designed around your users and connected to existing systems.",
               items: ["Product discovery and prototypes", "Web, cross-platform, and native development", "Authenticated experiences and user accounts", "Data, API, and system integrations"],
             },
             {
-              title: "Website redesigns",
-              copy: "Substantial redesigns for websites whose structure, technology, or presentation no longer supports the business properly.",
-              items: ["Existing website audit", "New structure, content, and user journey", "SEO and content migration", "Quality assurance and controlled launch"],
+              title: "Content platforms",
+              copy: "Editorial systems for teams that need to create, review, and publish content reliably across multiple page types or channels.",
+              items: ["CMS architecture and content models", "Roles and editorial approvals", "Reusable components", "Migration and controlled launch"],
             },
             {
-              title: "Booking & lead-generation systems",
-              copy: "Conversion paths that qualify inquiries, coordinate appointments, and pass information reliably to sales or service teams.",
-              items: ["Multi-step forms and qualification", "Scheduling and calendar integration", "CRM routing and notifications", "Follow-up and measurement"],
+              title: "Form & booking experiences",
+              copy: "Customer-facing journeys for inquiries, qualification, and appointments. We design and build the visible path; CRM routing, enrichment, and follow-up belong to AI & Automation.",
+              items: ["Multi-step forms", "User-friendly qualification", "Scheduling and calendar integration", "Clean handoff to connected systems"],
             },
           ],
           processHeading: "From idea to launch",
@@ -461,7 +461,7 @@ export const servicesContent = {
           faqs: [
             { question: "Do you handle both design and development?", answer: "Yes. We can cover strategy, UX, UI design, and technical delivery together, or join at the point where your team needs support." },
             { question: "Can you work with our existing brand or technology?", answer: "Yes. We first assess what is sound and build on it. We only recommend replacing something when the project goal genuinely requires it." },
-            { question: "Are analytics and conversion optimization included?", answer: "A sound measurement setup and important conversion principles are part of the planning. Ongoing testing and improvement can be scoped afterward when useful." },
+            { question: "Are analytics and conversion optimization included?", answer: "A sound technical measurement foundation and important conversion principles are included in the planning. Ongoing campaign testing is handled through Paid Campaigns; organic measurement and search optimization through SEO & AI Visibility." },
             { question: "Who owns the designs and source code?", answer: "You do. At completion, your team receives the approved designs, agreed source code, content, production access, and relevant documentation." },
           ],
           finalTitle: "Let’s plan your next digital product.",
@@ -492,12 +492,12 @@ export const servicesContent = {
             { title: "Clear signals, not GEO hacks", copy: "Useful information, sound structure, and external evidence strengthen visibility in search and AI answers." },
           ],
           scopeHeading: "How we improve visibility",
-          scopeIntro: "Each area connects a clear objective with specific technical, editorial, and measurable work.",
+          scopeIntro: "This service owns organic discoverability in search and relevant AI answers. Larger website changes and ongoing advertising remain clearly assigned to Websites & Apps and Paid Campaigns respectively.",
           scopeGroups: [
             {
               title: "Technical SEO",
-              copy: "We remove technical barriers so important pages can be crawled, understood, and indexed reliably.",
-              items: ["Technical SEO audit", "Crawling and indexation", "Internal linking and structured data", "Core Web Vitals and performance"],
+              copy: "We diagnose and prioritize technical barriers so important pages can be crawled, understood, and indexed reliably. Larger technical changes are delivered with Websites & Apps.",
+              items: ["Technical SEO audit", "Crawling and indexation", "Internal linking and structured data", "Search-related performance priorities"],
             },
             {
               title: "Search intent & topics",
@@ -506,8 +506,8 @@ export const servicesContent = {
             },
             {
               title: "On-page SEO & content",
-              copy: "Existing and new content is structured to help people while remaining clear and understandable to search systems.",
-              items: ["Optimization of priority pages", "Service and landing-page content", "Content briefs and editorial planning", "Metadata and internal linking"],
+              copy: "Existing and new content is structured around organic search intent. UX, visual design, and technical page delivery remain part of Websites & Apps.",
+              items: ["Optimization of priority pages", "Search-led service content", "Content briefs and editorial planning", "Metadata and internal linking"],
             },
             {
               title: "Local visibility",
@@ -521,8 +521,8 @@ export const servicesContent = {
             },
             {
               title: "Measurement & iteration",
-              copy: "Visibility is not judged by rankings alone. We connect search data with relevant visits, actions, and commercial objectives.",
-              items: ["Search Console and analytics", "Ranking and visibility monitoring", "Conversion and demand analysis", "Regular prioritization"],
+              copy: "Organic visibility is not judged by rankings alone. We connect search data with relevant visits, actions, and commercial objectives, separate from paid campaign attribution.",
+              items: ["Search Console and organic analytics", "Ranking and visibility monitoring", "Organic conversion and demand analysis", "Regular prioritization"],
             },
           ],
           processHeading: "Learn, prioritize, improve",
@@ -548,11 +548,11 @@ export const servicesContent = {
         id: "paid-campaigns",
         name: "Paid Campaigns",
         navDescription: "Turn paid reach into qualified demand.",
-        summary: "Strategy, ads, creative, conversion journeys, and tracking connected from first impression to inquiry.",
+        summary: "Strategy, ads, creative, campaign optimization, and measurement connected from paid attention to qualified inquiry.",
         rows: [
           ["Best for", "Businesses with a persuasive offer that want to create predictable demand through Google Ads or paid social."],
           ["The outcome", "Clearer acquisition decisions, faster learning cycles, and a direct path from ad to qualified inquiry."],
-          ["What it can include", "Campaign strategy, media buying, creative, conversion optimization, tracking, attribution, and CRM lead routing."],
+          ["What it can include", "Campaign strategy, media buying, creative, conversion optimization, attribution, and a defined handoff for qualified leads."],
         ],
         cta: "Explore Paid Campaigns",
         page: {
@@ -564,10 +564,10 @@ export const servicesContent = {
           outcomes: [
             { title: "A persuasive offer", copy: "The message, audience, and next action are made clear before spending is scaled." },
             { title: "Faster learning cycles", copy: "Structured tests reveal which combinations of channel, creative, and conversion journey work." },
-            { title: "Measurable demand", copy: "Tracking and lead routing connect advertising spend to the inquiries that matter to your business." },
+            { title: "Measurable demand", copy: "Tracking and a defined lead handoff connect advertising spend to the inquiries that matter to your business." },
           ],
           scopeHeading: "What we build for campaigns",
-          scopeIntro: "We connect channel, message, and conversion path instead of managing isolated ads.",
+          scopeIntro: "This service owns paid acquisition from channel selection through campaign analysis. New landing pages are built with Websites & Apps; CRM automation after handoff belongs to AI & Automation.",
           scopeGroups: [
             {
               title: "Campaign strategy & offer",
@@ -590,14 +590,14 @@ export const servicesContent = {
               items: ["Creative and messaging concepts", "Static, video, and copy variants", "Offer and hook tests", "Learning plan for new creative"],
             },
             {
-              title: "Conversion journeys & CRO",
-            copy: "We improve what happens after the ad click: message continuity, forms, qualification, and the path to a qualified inquiry.",
-              items: ["Ad-to-offer message continuity", "Forms and lead qualification", "Funnel and conversion optimization", "Test hypotheses and analysis"],
+              title: "Campaign journeys & CRO",
+            copy: "We improve message continuity, forms, and qualification within the existing campaign journey. New pages are designed and built through Websites & Apps.",
+              items: ["Ad-to-offer message continuity", "Campaign-specific lead qualification", "Funnel and conversion optimization", "Test hypotheses and analysis"],
             },
             {
-              title: "Tracking & lead routing",
-              copy: "Measurement connects media spend with real outcomes and passes new inquiries reliably into the right systems.",
-              items: ["Analytics and conversion tracking", "Consent and platform signals", "Attribution and reporting", "CRM routing and lead quality"],
+              title: "Campaign measurement & lead handoff",
+              copy: "Measurement connects media spend with real outcomes. We define and verify the handoff; enrichment, CRM routing, and automated follow-up are delivered through AI & Automation.",
+              items: ["Campaign and conversion tracking", "Consent and platform signals", "Attribution and reporting", "Handoff criteria and lead quality"],
             },
           ],
           processHeading: "From hypothesis to improvement",
@@ -623,7 +623,7 @@ export const servicesContent = {
         id: "ai-automation",
         name: "AI & Automation",
         navDescription: "Reduce repetitive work and connect your systems.",
-        summary: "Practical AI features and automations that simplify workflows, connect information, and give teams time back.",
+        summary: "Practical AI features and automations for the workflows behind forms, inboxes, CRM systems, and digital products.",
         rows: [
           ["Best for", "Businesses with repetitive work, disconnected systems, or a specific idea for a useful AI feature."],
           ["The outcome", "A dependable workflow that reduces manual effort and fits sensibly into your existing systems."],
@@ -642,7 +642,7 @@ export const servicesContent = {
             { title: "AI where it helps", copy: "Assistants and product features solve one defined task instead of creating a temporary demo effect." },
           ],
           scopeHeading: "What we automate and build",
-          scopeIntro: "From one repetitive step to an AI feature inside a product, every solution begins with a clearly defined task.",
+          scopeIntro: "This service owns internal workflows, system handoffs, and clearly defined AI features. The visible website or app interface is delivered with Websites & Apps when needed.",
           scopeGroups: [
             {
               title: "Workflow automation",
@@ -651,8 +651,8 @@ export const servicesContent = {
             },
             {
               title: "CRM & lead processes",
-              copy: "New contacts are captured, enriched, assessed, and passed into the appropriate sales or service process.",
-              items: ["Form and CRM integration", "Lead enrichment and qualification", "Routing and follow-up", "Pipeline and status automation"],
+              copy: "After the handoff from a website or campaign, new contacts are enriched, assessed, and passed into the appropriate sales or service process.",
+              items: ["Form-to-CRM handoff", "Lead enrichment and system-level qualification", "Routing and automated follow-up", "Pipeline and status automation"],
             },
             {
               title: "Documents & communication",
@@ -666,8 +666,8 @@ export const servicesContent = {
             },
             {
               title: "AI features in websites & apps",
-              copy: "Useful AI capabilities are integrated directly into digital products and focused on one clearly defined user task.",
-              items: ["Product and UX concept", "Prototypes and feasibility tests", "Model and API integration", "Usage, cost, and quality measurement"],
+              copy: "Useful AI capabilities focus on one clearly defined user task. AI logic and model integration sit here; the surrounding product experience is developed with Websites & Apps.",
+              items: ["Task and quality criteria", "Prototypes and feasibility tests", "Model and API integration", "Usage, cost, and quality measurement"],
             },
             {
               title: "Integration & dependable operation",
@@ -687,7 +687,7 @@ export const servicesContent = {
             { question: "When is AI genuinely useful?", answer: "AI can help when a task involves language, unstructured information, or variable decisions. For simple fixed rules, conventional automation is often more dependable and economical." },
             { question: "Do we need to replace our existing systems?", answer: "Usually not. We first assess your current tools and interfaces and connect them when that is more stable and economical than replacing everything." },
             { question: "How do you handle sensitive data?", answer: "Data access, storage, providers, and human control are agreed before delivery. We choose the technical approach according to the risk and applicable legal requirements." },
-            { question: "Can you add an AI feature to our website or app?", answer: "Yes. When the feature has a clear purpose, product design, technical integration, interface, and measurement can be delivered as one project." },
+            { question: "Can you add an AI feature to our website or app?", answer: "Yes. AI logic, model integration, and quality measurement are handled through AI & Automation. Product concept, interface, and the surrounding user experience are delivered with Websites & Apps when needed." },
           ],
           finalTitle: "Find the most useful automation step.",
           finalCopy: "Show us the workflow that consumes time or regularly stalls. We will assess a practical solution.",

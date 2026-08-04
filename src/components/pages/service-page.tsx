@@ -2,6 +2,7 @@ import { ArrowUpRight, CircleGauge, Compass, Layers3 } from "lucide-react";
 import Link from "next/link";
 import { CtaButton } from "@/components/cta-button";
 import { Faq } from "@/components/faq";
+import { FaqStructuredData } from "@/components/faq-structured-data";
 import { OfferAnimation } from "@/components/offer-animations/offer-animation";
 import { ServiceScopeGrid } from "@/components/pages/service-scope-grid";
 import { Reveal } from "@/components/reveal";
@@ -18,7 +19,7 @@ export function ServicePage({ locale, serviceId }: { locale: Locale; serviceId: 
   if (!service) throw new Error(`Missing ${serviceId} service for ${locale}.`);
 
   const { copy } = service;
-  const contact = localizePath("/contact", locale);
+  const contact = `${localizePath("/contact", locale)}?service=${serviceId}`;
   const related = services.filter((entry) => entry.id !== serviceId);
   const faqItems = copy.page.faqs.map((faq, index) => ({ id: `${serviceId}-${index}`, data: faq }));
 
@@ -79,6 +80,7 @@ export function ServicePage({ locale, serviceId }: { locale: Locale; serviceId: 
         <SectionHeading title={copy.page.faqHeading} align="center" />
         <div className="mx-auto max-w-[820px]"><Faq items={faqItems} id={`service-${serviceId}-${locale}`} /></div>
       </section>
+      <FaqStructuredData items={copy.page.faqs} />
 
       <section className="bg-canvas px-page py-section-compact">
         <div className="mx-auto max-w-[70rem]">

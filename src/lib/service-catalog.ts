@@ -31,6 +31,10 @@ export const serviceOrder: readonly ServiceId[] = [
   "ai-automation",
 ];
 
+export function isServiceId(value: string | undefined): value is ServiceId {
+  return serviceOrder.some((serviceId) => serviceId === value);
+}
+
 const servicePolicy: Record<ServiceId, { reverse: boolean; theme: string }> = {
   "websites-apps": { reverse: false, theme: "bg-white text-ink" },
   "seo-ai-visibility": { reverse: true, theme: "bg-white text-ink" },

@@ -7,9 +7,9 @@ import { t, type Locale } from "@/lib/i18n";
 type FieldName = "name" | "email" | "message";
 type Errors = Partial<Record<FieldName, string>>;
 
-const fieldControlClass = "w-full rounded-control border border-[#424242] bg-transparent px-4 text-white outline-none transition-[border-color,box-shadow] duration-150 placeholder:text-[#b7b7bd] focus:border-[#737373] focus:shadow-[0_0_0_3px_rgb(255_255_255/8%)] aria-invalid:border-error aria-invalid:shadow-[0_0_0_1px_var(--error)] motion-reduce:transition-none";
+const fieldControlClass = "w-full rounded-control border border-[#424242] bg-transparent px-4 text-white transition-[border-color,box-shadow] duration-150 placeholder:text-[#b7b7bd] focus-visible:border-[#737373] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white focus-visible:shadow-[0_0_0_3px_rgb(255_255_255/8%)] aria-invalid:border-error aria-invalid:shadow-[0_0_0_1px_var(--error)] motion-reduce:transition-none";
 
-export function ContactForm({ locale }: { locale: Locale }) {
+export function ContactForm({ locale, serviceName }: { locale: Locale; serviceName?: string }) {
   const [errors, setErrors] = useState<Errors>({});
   const [emailOpened, setEmailOpened] = useState(false);
   const copy = {
@@ -26,6 +26,7 @@ export function ContactForm({ locale }: { locale: Locale }) {
     subject: t(locale, "contact.formSubject"),
     bodyName: t(locale, "contact.formBodyName"),
     bodyEmail: t(locale, "contact.formBodyEmail"),
+    bodyService: t(locale, "contact.formBodyService"),
     bodyMessage: t(locale, "contact.formBodyMessage"),
   };
 
@@ -54,10 +55,11 @@ export function ContactForm({ locale }: { locale: Locale }) {
       return;
     }
 
-    const subject = `${copy.subject}: ${name}`;
+    const subject = `${copy.subject}: ${serviceName ? `${serviceName} — ${name}` : name}`;
     const body = [
       `${copy.bodyName}: ${name}`,
       `${copy.bodyEmail}: ${email}`,
+      ...(serviceName ? [`${copy.bodyService}: ${serviceName}`] : []),
       "",
       `${copy.bodyMessage}:`,
       message,
@@ -68,7 +70,7 @@ export function ContactForm({ locale }: { locale: Locale }) {
   }
 
   return (
-    <form className="grid gap-6" noValidate onSubmit={onSubmit}>
+    <form className="grid gap-6" data-selected-service={serviceName} noValidate onSubmit={onSubmit}>
       <div className="grid grid-cols-2 gap-4 max-[600px]:grid-cols-1">
         <Field id="contact-name" label={copy.name} error={errors.name}>
           <input
