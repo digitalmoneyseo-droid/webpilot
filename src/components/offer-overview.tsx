@@ -33,7 +33,7 @@ function Service({ locale, service, revealDelay }: { locale: Locale; service: Se
         })}</div>
         <CtaButton href={service.href} className="mt-6">{copy.cta}</CtaButton>
       </div>
-      <div className={`relative grid min-w-0 aspect-[1.1/1] min-h-[24rem] overflow-hidden rounded-card p-10 shadow-[var(--ds-shadow-border)] [&>*]:relative ${service.theme} ${service.reverse ? "min-[901px]:order-1" : ""} max-[900px]:mx-auto max-[900px]:aspect-[4/3] max-[900px]:min-h-0 max-[900px]:w-full max-[900px]:max-w-[44rem] max-[600px]:h-[clamp(19rem,68vw,25rem)] max-[600px]:aspect-auto max-[600px]:p-4`} aria-hidden="true">
+      <div className={`relative grid min-w-0 aspect-[1.1/1] min-h-[24rem] overflow-hidden rounded-card shadow-[var(--ds-shadow-border)] [&>*]:relative ${service.animation.type === "automation" ? "p-0 max-[600px]:h-[32rem]" : "p-10 max-[600px]:h-[clamp(19rem,68vw,25rem)] max-[600px]:p-4"} ${service.theme} ${service.reverse ? "min-[901px]:order-1" : ""} max-[900px]:mx-auto max-[900px]:aspect-[4/3] max-[900px]:min-h-0 max-[900px]:w-full max-[900px]:max-w-[44rem] max-[600px]:aspect-auto`} aria-hidden="true">
         <OfferAnimation animation={service.animation} locale={locale} />
       </div>
     </article>

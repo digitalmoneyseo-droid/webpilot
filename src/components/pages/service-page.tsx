@@ -8,7 +8,7 @@ import { ServiceScopeGrid } from "@/components/pages/service-scope-grid";
 import { Reveal } from "@/components/reveal";
 import { SectionHeading } from "@/components/section-heading";
 import type { ServiceId } from "@/i18n/services";
-import { localizePath, type Locale } from "@/lib/i18n";
+import { localizePath, t, type Locale } from "@/lib/i18n";
 import { getServiceCatalog } from "@/lib/service-catalog";
 
 const outcomeIcons = [Compass, Layers3, CircleGauge] as const;
@@ -84,8 +84,8 @@ export function ServicePage({ locale, serviceId }: { locale: Locale; serviceId: 
 
       <section className="bg-canvas px-page py-section-compact">
         <div className="mx-auto max-w-[70rem]">
-          <h2 className="m-0 text-heading-md">{locale === "de" ? "Weitere Services" : "Other services"}</h2>
-          <nav className="mt-6 grid grid-cols-3 gap-3 max-[760px]:grid-cols-1" aria-label={locale === "de" ? "Weitere Services" : "Other services"}>
+          <h2 className="m-0 text-heading-md">{t(locale, "service.otherServices")}</h2>
+          <nav className="mt-6 grid grid-cols-3 gap-3 max-[760px]:grid-cols-1" aria-label={t(locale, "service.otherServices")}>
             {related.map((entry) => <Link className="group flex min-h-24 items-center justify-between gap-4 rounded-card bg-white p-5 text-heading-sm shadow-[var(--ds-shadow-border)] transition-[transform,box-shadow] duration-200 hover:-translate-y-0.5 hover:shadow-surface-hover motion-reduce:transition-none motion-reduce:hover:translate-y-0" href={entry.href} key={entry.id}><span>{entry.copy.name}</span><ArrowUpRight className="size-5 shrink-0 transition-transform duration-200 group-hover:translate-x-1 group-hover:-translate-y-1 motion-reduce:transition-none motion-reduce:group-hover:transform-none" strokeWidth={1.7} aria-hidden="true" /></Link>)}
           </nav>
         </div>

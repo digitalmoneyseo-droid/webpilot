@@ -1,0 +1,19 @@
+import type { Metadata } from "next";
+import { LocaleShell } from "@/components/locale-shell";
+import { AboutPage } from "@/components/pages/about-page";
+import { localizePath, t } from "@/lib/i18n";
+import { getRouteLocale, type LocaleRouteParams } from "@/lib/locale-route";
+import { pageMetadata } from "@/lib/site";
+
+type Props = { params: LocaleRouteParams };
+
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  const locale = await getRouteLocale(params);
+  return pageMetadata({ locale, pathname: localizePath("/about", locale), title: t(locale, "nav.about"), description: t(locale, "meta.aboutDescription") });
+}
+
+export default async function Page({ params }: Props) {
+  const locale = await getRouteLocale(params);
+  const pathname = localizePath("/about", locale);
+  return <LocaleShell locale={locale} pathname={pathname}><AboutPage locale={locale} /></LocaleShell>;
+}

@@ -1,4 +1,6 @@
-export type Locale = "de" | "en";
+import type { Locale } from "../i18n/config";
+
+export type { Locale };
 export interface Faq { translationKey: string; locale: Locale; slug: string; order: number; question: string; answer: string }
 export interface ContentEntry<T> { id: string; data: T }
 export type LocalizedEntries<T> = Record<Locale, ContentEntry<T>[]>;

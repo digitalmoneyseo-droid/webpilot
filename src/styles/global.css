@@ -12,43 +12,28 @@ button { color: inherit; }
 .header-language .header-language__icon {
   transition: opacity 700ms cubic-bezier(.16, 1, .3, 1), transform 700ms cubic-bezier(.16, 1, .3, 1);
 }
-.header-language__label-track {
-  transform: translate3d(0, 0, 0);
-  transition: transform 500ms cubic-bezier(.16, 1, .3, 1);
-  will-change: transform;
+.header-language__code {
+  transition: opacity 700ms cubic-bezier(.16, 1, .3, 1), transform 700ms cubic-bezier(.16, 1, .3, 1);
 }
-.header-language__row span {
-  transition: color 200ms;
+.header-language__code-preview {
+  animation: header-language-code-in 700ms cubic-bezier(.16, 1, .3, 1) both;
 }
-.header-language__row span.is-active {
-  color: #111;
-  font-weight: 500;
+@keyframes header-language-code-in {
+  from { opacity: 0; transform: translate(-6px, 6px) scale(.8); }
+  to { opacity: 1; transform: translate(0, 0) scale(1); }
 }
 .header-language:hover {
   box-shadow: var(--shadow-surface-hover);
 }
-.header-language:active {
+.header-language:has(select:active) {
   scale: .96;
 }
 .menu-language {
   transition: scale 150ms var(--ease-out), background-color 180ms var(--ease-out);
 }
-.menu-language .header-language__row span.is-active {
-  color: #fff;
-}
-.menu-language .header-language__row span:not(.is-active) {
-  color: rgb(255 255 255 / 60%);
-}
 .menu-language:hover {
   background: oklch(1 0 0 / 8%);
   box-shadow: var(--shadow-dark-surface-hover);
-}
-.menu-language:hover .header-language__row span.is-active {
-  color: rgb(255 255 255 / 60%);
-}
-.menu-language:hover .header-language__row span:not(.is-active) {
-  color: #fff;
-  font-weight: 500;
 }
 
 .pill-button {
@@ -81,16 +66,6 @@ button { color: inherit; }
   background: #e5e5e5;
 }
 @media (hover: hover) and (pointer: fine) {
-  .header-language:hover .header-language__row span.is-active {
-    color: #73736f;
-  }
-  .header-language:hover .header-language__row span:not(.is-active) {
-    color: #111;
-    font-weight: 500;
-  }
-  .header-language:hover .header-language__label-track {
-    transform: translate3d(0, -50%, 0);
-  }
   .header-language:hover .header-language__icon--out {
     opacity: 0;
     transform: translate(6px, -6px) scale(.8);
@@ -175,25 +150,25 @@ button { color: inherit; }
   .pill-button__label-track,
   .pill-button .pill-button__arrow,
   .header-language,
-  .header-language__label-track,
-  .header-language .header-language__icon {
+  .header-language .header-language__icon,
+  .header-language__code {
     transition: none;
+  }
+  .header-language__code-preview {
+    animation: none;
   }
   .pill-button:hover {
     transform: none;
   }
   .pill-button:active,
-  .header-language:active {
+  .header-language:has(select:active) {
     scale: 1;
   }
-  .header-language:is(:hover, :focus-visible) .header-language__label-track {
-    transform: none;
-  }
-  .header-language:is(:hover, :focus-visible) .header-language__icon--out {
+  .header-language:is(:hover, :focus-within) .header-language__icon--out {
     opacity: 1;
     transform: none;
   }
-  .header-language:is(:hover, :focus-visible) .header-language__icon--in {
+  .header-language:is(:hover, :focus-within) .header-language__icon--in {
     opacity: 0;
     transform: translate(-6px, 6px) scale(.8);
   }

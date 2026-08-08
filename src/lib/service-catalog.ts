@@ -39,7 +39,7 @@ const servicePolicy: Record<ServiceId, { reverse: boolean; theme: string }> = {
   "websites-apps": { reverse: false, theme: "bg-white text-ink" },
   "seo-ai-visibility": { reverse: true, theme: "bg-white text-ink" },
   "paid-campaigns": { reverse: false, theme: "bg-white text-ink" },
-  "ai-automation": { reverse: true, theme: "bg-[var(--ds-gray-100)] text-ink" },
+  "ai-automation": { reverse: true, theme: "bg-white text-ink" },
 };
 
 export function getServicePath(id: ServiceId, locale: Locale): string {

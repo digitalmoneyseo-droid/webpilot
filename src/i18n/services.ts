@@ -1,4 +1,5 @@
 import type { Locale } from "@/lib/i18n";
+import { frServices } from "./services-fr";
 
 export type ServiceId = "websites-apps" | "seo-ai-visibility" | "paid-campaigns" | "ai-automation";
 
@@ -21,9 +22,18 @@ export type OptimizationAnimationCopy = {
 export type CampaignAnimationCopy = { metricLabel: string };
 
 export type AutomationAnimationCopy = {
-  inputs: readonly string[];
-  intelligence: string;
-  outputs: readonly string[];
+  trigger: string;
+  agent: string;
+  extract: string;
+  condition: string;
+  success: string;
+  notify: string;
+  fallback: string;
+  model: string;
+  context: string;
+  research: string;
+  yes: string;
+  review: string;
 };
 
 type CopyRow = readonly [label: string, copy: string];
@@ -387,9 +397,18 @@ export const servicesContent = {
     },
     campaignAnimation: { metricLabel: "neue qualifizierte Anfragen" },
     automationAnimation: {
-      inputs: ["Formular", "Postfach", "CRM"],
-      intelligence: "KI-Prüfung",
-      outputs: ["Qualifiziert", "Aktualisiert", "Weitergeleitet"],
+      trigger: "Formular erhalten",
+      agent: "KI Agent",
+      extract: "Analysiert die Anfrage",
+      condition: "Qualifiziert?",
+      success: "Lead im CRM anlegen",
+      notify: "Vertrieb informieren",
+      fallback: "Manuell prüfen",
+      model: "KI",
+      context: "CRM",
+      research: "Web",
+      yes: "Ja",
+      review: "Prüfen",
     },
   },
   en: {
@@ -711,11 +730,21 @@ export const servicesContent = {
     },
     campaignAnimation: { metricLabel: "new qualified inquiries" },
     automationAnimation: {
-      inputs: ["Form", "Inbox", "CRM"],
-      intelligence: "AI review",
-      outputs: ["Qualified", "Updated", "Routed"],
+      trigger: "Form received",
+      agent: "AI agent",
+      extract: "Analyzes the enquiry",
+      condition: "Qualified?",
+      success: "Create CRM lead",
+      notify: "Notify sales",
+      fallback: "Human review",
+      model: "AI",
+      context: "CRM",
+      research: "Web",
+      yes: "Yes",
+      review: "Review",
     },
   },
+  fr: frServices,
 } satisfies Record<Locale, ServicesCopy>;
 
 export function getServiceCopy(locale: Locale, id: ServiceId): ServiceCopy {

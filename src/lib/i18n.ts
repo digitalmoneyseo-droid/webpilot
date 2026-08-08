@@ -1,7 +1,7 @@
 import { dictionaries, type MessageKey } from "../i18n/translations";
+import { defaultLocale, hasLocale, localeConfig, locales, type Locale } from "../i18n/config";
 
-export const locales = ["de", "en"] as const;
-export type Locale = (typeof locales)[number];
+export { defaultLocale, hasLocale, localeConfig, locales, type Locale };
 
 export function t(locale: Locale, key: MessageKey): string {
   return dictionaries[locale][key];
@@ -9,13 +9,14 @@ export function t(locale: Locale, key: MessageKey): string {
 
 export function localizePath(path: string, locale: Locale): string {
   const normalized = path.startsWith("/") ? path : `/${path}`;
-  if (locale === "de") return normalized;
-  return normalized === "/" ? "/en" : `/en${normalized}`;
+  if (locale === defaultLocale) return normalized;
+  return normalized === "/" ? `/${locale}` : `/${locale}${normalized}`;
 }
 
 export function basePath(pathname: string): string {
-  if (pathname === "/en" || pathname === "/en/") return "/";
-  return pathname.startsWith("/en/") ? pathname.slice(3) : pathname;
+  const [firstSegment, ...rest] = pathname.split("/").filter(Boolean);
+  if (!firstSegment || !hasLocale(firstSegment)) return pathname;
+  return rest.length ? `/${rest.join("/")}` : "/";
 }
 
 export function alternatePath(pathname: string, locale: Locale): string {

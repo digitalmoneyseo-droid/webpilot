@@ -2,12 +2,13 @@
 
 import Link from "next/link";
 import { ArrowUpRight, ChevronDown, ChevronRight, Languages, Menu, MonitorSmartphone, RadioTower, Search, Workflow, X } from "lucide-react";
+import { useRouter } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
-import type { MouseEvent } from "react";
+import type { ChangeEvent, MouseEvent } from "react";
 import { BrandMark } from "@/components/brand-mark";
 import { CollapsePanel } from "@/components/collapse-panel";
 import type { ServiceId } from "@/i18n/services";
-import { alternatePath, localizePath, t, type Locale } from "@/lib/i18n";
+import { alternatePath, hasLocale, localeConfig, locales, localizePath, t, type Locale } from "@/lib/i18n";
 import { requestRouteScrollTop, scrollToPageTopSmoothly } from "@/lib/route-scroll";
 import { getServiceCatalog } from "@/lib/service-catalog";
 
@@ -32,25 +33,92 @@ function scrollToPageTop(event: MouseEvent<HTMLAnchorElement>) {
   requestRouteScrollTop();
 }
 
-function LanguageLink({ dark = false, locale, otherLocale, pathname }: { dark?: boolean; locale: Locale; otherLocale: Locale; pathname: string }) {
+function LanguageSelect({ dark = false, locale, pathname }: { dark?: boolean; locale: Locale; pathname: string }) {
+  const router = useRouter();
+  const changeLocale = (event: ChangeEvent<HTMLSelectElement>) => {
+    const nextLocale = event.currentTarget.value;
+    if (!hasLocale(nextLocale) || nextLocale === locale) return;
+    requestRouteScrollTop();
+    router.push(alternatePath(pathname, nextLocale));
+  };
+
   return (
-    <Link className={`header-language inline-flex h-11 cursor-pointer items-center justify-center gap-[7px] rounded-[12px] border-0 px-3 text-navigation ${dark ? "menu-language fixed top-[22px] right-[74px] z-2 bg-transparent text-white shadow-dark-surface max-[900px]:right-[67px]" : "bg-white text-[#73736f] shadow-surface max-[900px]:fixed max-[900px]:top-[22px] max-[900px]:right-[65px]"}`} href={alternatePath(pathname, otherLocale)} onClick={scrollToPageTop} aria-label={t(otherLocale, "nav.switchLocale")}>
+    <div className={`header-language relative inline-flex h-11 cursor-pointer items-center justify-center gap-2 rounded-[12px] border-0 px-3 text-navigation min-[901px]:hidden ${dark ? "menu-language fixed top-[22px] right-[74px] z-2 bg-transparent text-white shadow-dark-surface max-[900px]:right-[67px]" : "fixed top-[22px] right-[65px] bg-white text-[#73736f] shadow-surface"}`}>
       <span className={`relative size-[19px] flex-none overflow-hidden ${dark ? "text-white" : "text-[#111]"}`} aria-hidden="true">
         <Languages className="header-language__icon header-language__icon--out absolute inset-0 size-[19px]" strokeWidth={1.7} />
         <Languages className="header-language__icon header-language__icon--in absolute inset-0 size-[19px] opacity-0 [transform:translate(-6px,6px)_scale(.8)]" strokeWidth={1.7} />
       </span>
-      <span className="block h-[1.5em] overflow-hidden leading-navigation">
-        <span className="header-language__label-track flex h-[200%] flex-col">
-          {[false, true].map((hidden) => (
-            <span key={String(hidden)} className="header-language__row flex h-[1.5em] shrink-0 items-center gap-[3px] whitespace-nowrap" aria-hidden={hidden || undefined}>
-              <span className={locale === "de" ? "is-active" : ""}>DE</span>
-              <i className={`not-italic ${dark ? "text-white/50" : "text-[#c3c3be]"}`}>/</i>
-              <span className={locale === "en" ? "is-active" : ""}>EN</span>
-            </span>
-          ))}
+      <span className={dark ? "font-medium text-white" : "font-medium text-[#111]"} aria-hidden="true">{localeConfig[locale].shortLabel}</span>
+      <ChevronDown className={`size-3.5 ${dark ? "text-white/60" : "text-[#9a9a96]"}`} strokeWidth={1.8} aria-hidden="true" />
+      <select className="absolute inset-0 size-full cursor-pointer opacity-0" value={locale} onChange={changeLocale} aria-label={t(locale, "nav.selectLocale")}>
+        {locales.map((candidate) => <option key={candidate} value={candidate}>{localeConfig[candidate].name}</option>)}
+      </select>
+    </div>
+  );
+}
+
+function DesktopLanguageMenu({ locale, pathname }: { locale: Locale; pathname: string }) {
+  const [open, setOpen] = useState(false);
+  const [highlightedLocale, setHighlightedLocale] = useState<Locale | null>(null);
+  const buttonRef = useRef<HTMLButtonElement>(null);
+  const menuRef = useRef<HTMLDivElement>(null);
+  const previewLocale = highlightedLocale ?? locale;
+  const previewing = previewLocale !== locale;
+
+  return (
+    <div
+      className="relative max-[900px]:hidden"
+      onPointerEnter={() => setOpen(true)}
+      onPointerLeave={() => { setOpen(false); setHighlightedLocale(null); }}
+      onBlur={(event) => { if (!event.currentTarget.contains(event.relatedTarget)) { setOpen(false); setHighlightedLocale(null); } }}
+      onKeyDown={(event) => {
+        if (event.key !== "Escape") return;
+        event.preventDefault();
+        setOpen(false);
+        buttonRef.current?.focus();
+      }}
+    >
+      <button
+        ref={buttonRef}
+        className="header-language inline-flex h-11 cursor-pointer items-center justify-center gap-2 rounded-[12px] bg-white px-3 text-navigation text-[#73736f] shadow-surface transition-transform duration-150 active:scale-[.96] motion-reduce:transition-none motion-reduce:active:scale-100"
+        type="button"
+        aria-label={t(locale, "nav.selectLocale")}
+        aria-expanded={open}
+        aria-controls="desktop-language-menu"
+        onClick={() => setOpen((current) => !current)}
+        onKeyDown={(event) => {
+          if (event.key !== "ArrowDown") return;
+          event.preventDefault();
+          setOpen(true);
+          window.setTimeout(() => menuRef.current?.querySelector<HTMLAnchorElement>("a[href]")?.focus(), 0);
+        }}
+      >
+        <span className="relative size-[19px] flex-none overflow-hidden text-[#111]" aria-hidden="true">
+          <Languages className="header-language__icon header-language__icon--out absolute inset-0 size-[19px]" strokeWidth={1.7} />
+          <Languages className="header-language__icon header-language__icon--in absolute inset-0 size-[19px] opacity-0 [transform:translate(-6px,6px)_scale(.8)]" strokeWidth={1.7} />
         </span>
-      </span>
-    </Link>
+        <span className="relative grid w-[2ch] overflow-hidden font-medium text-[#111]" aria-hidden="true">
+          <span className={`header-language__code col-start-1 row-start-1 ${previewing ? "opacity-0 [transform:translate(6px,-6px)_scale(.8)]" : "opacity-100"}`}>{localeConfig[locale].shortLabel}</span>
+          {previewing ? <span key={previewLocale} className="header-language__code-preview col-start-1 row-start-1">{localeConfig[previewLocale].shortLabel}</span> : null}
+        </span>
+        <ChevronDown className={`size-3.5 text-[#9a9a96] transition-transform duration-200 motion-reduce:transition-none ${open ? "rotate-180" : ""}`} strokeWidth={1.8} aria-hidden="true" />
+      </button>
+      <div
+        id="desktop-language-menu"
+        ref={menuRef}
+        className={`absolute top-full left-1/2 w-44 -translate-x-1/2 pt-2 transition-[opacity,translate] duration-200 ease-[var(--ease-out)] motion-reduce:duration-0 ${open ? "pointer-events-auto translate-y-0 opacity-100" : "pointer-events-none -translate-y-1 opacity-0"}`}
+        aria-hidden={!open}
+        inert={!open}
+      >
+        <div className="rounded-[12px] bg-white p-1 shadow-surface">
+          {locales.map((candidate) => {
+            const active = candidate === locale;
+            const highlighted = highlightedLocale === null ? active : highlightedLocale === candidate;
+            return <Link key={candidate} className={`flex h-9 items-center justify-between gap-6 rounded-lg px-3 text-navigation transition-[background-color,scale] duration-150 active:scale-[.96] motion-reduce:transition-none motion-reduce:active:scale-100 ${highlighted ? "bg-[var(--ds-gray-alpha-100)] text-ink" : "text-muted"}`} href={alternatePath(pathname, candidate)} aria-current={active ? "page" : undefined} onPointerEnter={() => setHighlightedLocale(candidate)} onPointerLeave={() => setHighlightedLocale(null)} onFocus={() => setHighlightedLocale(candidate)} onBlur={() => setHighlightedLocale(null)} onClick={(event) => { scrollToPageTop(event); setOpen(false); }}><span>{localeConfig[candidate].name}</span><span className="text-caption text-[#9a9a96]" aria-hidden="true">{localeConfig[candidate].shortLabel}</span></Link>;
+          })}
+        </div>
+      </div>
+    </div>
   );
 }
 
@@ -64,7 +132,6 @@ export function SiteHeader({ locale, pathname }: { locale: Locale; pathname: str
   const servicesButtonRef = useRef<HTMLButtonElement>(null);
   const mobileServicesButtonRef = useRef<HTMLButtonElement>(null);
   const closeServicesTimer = useRef<number | undefined>(undefined);
-  const otherLocale: Locale = locale === "de" ? "en" : "de";
   const services = getServiceCatalog(locale);
   const serviceIcons = [MonitorSmartphone, Search, RadioTower, Workflow] as const;
   const isActive = (href: string) => {
@@ -166,7 +233,7 @@ export function SiteHeader({ locale, pathname }: { locale: Locale; pathname: str
             </button>
             <div
               id="services-menu"
-              className={`absolute top-full left-1/2 w-[35rem] -ml-[17.5rem] pt-2 transition-opacity duration-200 ease-[var(--ease-out)] will-change-[opacity] motion-reduce:duration-0 ${servicesOpen ? "pointer-events-auto opacity-100" : "pointer-events-none opacity-0"}`}
+              className={`absolute top-full left-1/2 w-[35rem] -ml-[17.5rem] pt-3 transition-[opacity,translate] duration-200 ease-[var(--ease-out)] will-change-[opacity,translate] motion-reduce:duration-0 ${servicesOpen ? "pointer-events-auto translate-y-0 opacity-100" : "pointer-events-none -translate-y-1 opacity-0"}`}
               aria-hidden={!servicesOpen}
               inert={!servicesOpen}
             >
@@ -182,13 +249,14 @@ export function SiteHeader({ locale, pathname }: { locale: Locale; pathname: str
           </div>
           {navItems.map((item) => <Link key={item.href} href={localizePath(item.href, locale)} onClick={scrollToPageTop} className={`relative z-1 inline-flex h-9 items-center rounded-lg px-3.5 text-navigation transition-[color,background-color,scale] duration-150 active:scale-[.96] motion-reduce:transition-none motion-reduce:active:scale-100 ${isActive(item.href) ? "bg-[var(--ds-gray-alpha-100)] text-ink" : "text-muted hover:bg-[var(--ds-gray-alpha-100)] hover:text-ink"}`} aria-current={isActive(item.href) ? "page" : undefined}>{item.label}</Link>)}
         </nav>
-        <LanguageLink locale={locale} otherLocale={otherLocale} pathname={pathname} />
+        <DesktopLanguageMenu locale={locale} pathname={pathname} />
+        <LanguageSelect locale={locale} pathname={pathname} />
         <button ref={openRef} className="fixed top-[22px] right-[15px] inline-flex size-11 items-center justify-center rounded-[12px] bg-white shadow-surface transition-transform duration-150 active:scale-[.96] motion-reduce:transition-none motion-reduce:active:scale-100 min-[901px]:hidden" type="button" onClick={() => { setMobileServicesOpen(false); setOpen(true); }} aria-label={t(locale, "nav.openMenu")} aria-expanded={open} aria-controls="site-menu"><Menu className="w-[17px]" strokeWidth={1.7} /></button>
       </header>
       <div id="site-menu" className={`fixed inset-0 z-100 flex flex-col overscroll-contain bg-[#101010] px-[clamp(24px,5vw,76px)] pt-6 pb-[34px] text-white transition-[opacity,translate] duration-300 ease-[var(--ease-out)] will-change-[opacity,translate] min-[901px]:hidden max-[900px]:overflow-y-auto max-[600px]:px-[18px] motion-reduce:transition-none ${open ? "pointer-events-auto translate-y-0 opacity-100" : "pointer-events-none -translate-y-3 opacity-0"}`} aria-hidden={!open} inert={!open} role="dialog" aria-modal="true" aria-label={t(locale, "nav.siteMenu")}>
         <div className="menu-top flex items-center justify-between">
           <Link href={localizePath("/", locale)} onClick={(event) => { scrollToPageTop(event); setOpen(false); }} className="group/brand fixed top-[22px] left-[15px] z-2 inline-flex h-11 items-center rounded-[12px] bg-[#101010] px-[17px] shadow-dark-surface transition-[background-color,scale] duration-150 hover:bg-white/8 active:scale-[.96] motion-reduce:transition-none motion-reduce:active:scale-100"><BrandMark inverse /></Link>
-          <LanguageLink dark locale={locale} otherLocale={otherLocale} pathname={pathname} />
+          <LanguageSelect dark locale={locale} pathname={pathname} />
           <button ref={closeRef} type="button" className="fixed top-[22px] right-[15px] z-2 grid size-11 place-items-center rounded-[12px] bg-transparent text-white shadow-dark-surface transition-[background-color,scale] duration-150 hover:bg-white/8 active:scale-[.96] motion-reduce:transition-none motion-reduce:active:scale-100" onClick={() => { setMobileServicesOpen(false); setOpen(false); openRef.current?.focus(); }} aria-label={t(locale, "nav.closeMenu")}><X className="w-[19px]" strokeWidth={1.7} /></button>
         </div>
         <nav className="menu-links my-auto flex flex-col self-stretch py-24 max-[900px]:w-full max-[900px]:max-w-[44rem]" aria-label={t(locale, "nav.mainMenu")}>

@@ -18,7 +18,7 @@ export function CampaignGrowthAnimation({ locale, copy }: { locale: Locale; copy
   const active = noMotion || isInView;
   const count = useMotionValue(FINAL_INQUIRIES);
   const formatter = useMemo(
-    () => new Intl.NumberFormat(locale === "de" ? "de-DE" : "en-US"),
+    () => new Intl.NumberFormat(locale),
     [locale],
   );
   const displayCount = useTransform(count, (latest) => formatter.format(Math.round(latest)));

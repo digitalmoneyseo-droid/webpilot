@@ -1,0 +1,20 @@
+{
+  "defaultLocale": "de",
+  "locales": {
+    "de": {
+      "name": "Deutsch",
+      "shortLabel": "DE",
+      "openGraphLocale": "de_DE"
+    },
+    "en": {
+      "name": "English",
+      "shortLabel": "EN",
+      "openGraphLocale": "en_US"
+    },
+    "fr": {
+      "name": "Français",
+      "shortLabel": "FR",
+      "openGraphLocale": "fr_FR"
+    }
+  }
+}

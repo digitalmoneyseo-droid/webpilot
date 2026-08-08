@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { alternatePath, type Locale } from "@/lib/i18n";
+import { alternatePath, defaultLocale, localeConfig, locales, t, type Locale } from "@/lib/i18n";
 
 export const siteUrl = new URL(process.env.NEXT_PUBLIC_SITE_URL ?? "https://webpilot.studio");
 
@@ -18,12 +18,9 @@ export function pageMetadata({
   title?: string;
   description: string;
 }): Metadata {
-  const pageTitle = title
-    ? `${title} | Webpilot`
-    : locale === "de"
-      ? "Webpilot | Websites, Wachstum & Automatisierung"
-      : "Webpilot | Websites, Growth & Automation";
+  const pageTitle = title ? `${title} | Webpilot` : t(locale, "meta.siteTitle");
   const image = absoluteUrl("/webpilot-social-card.png");
+  const languageAlternates = Object.fromEntries(locales.map((candidate) => [candidate, absoluteUrl(alternatePath(pathname, candidate))]));
   return {
     title: pageTitle,
     description,
@@ -31,15 +28,15 @@ export function pageMetadata({
     alternates: {
       canonical: absoluteUrl(pathname),
       languages: {
-        de: absoluteUrl(alternatePath(pathname, "de")),
-        en: absoluteUrl(alternatePath(pathname, "en")),
-        "x-default": absoluteUrl(alternatePath(pathname, "de")),
+        ...languageAlternates,
+        "x-default": absoluteUrl(alternatePath(pathname, defaultLocale)),
       },
     },
     openGraph: {
       type: "website",
       siteName: "Webpilot",
-      locale: locale === "de" ? "de_DE" : "en_US",
+      locale: localeConfig[locale].openGraphLocale,
+      alternateLocale: locales.filter((candidate) => candidate !== locale).map((candidate) => localeConfig[candidate].openGraphLocale),
       title: pageTitle,
       description,
       url: absoluteUrl(pathname),

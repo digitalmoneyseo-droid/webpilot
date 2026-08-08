@@ -1,3 +1,6 @@
+import type { Locale } from "./config";
+import { frMessages } from "./translations-fr";
+
 export const deMessages = {
   "nav.services": "Leistungen",
   "nav.about": "Über uns",
@@ -7,10 +10,13 @@ export const deMessages = {
   "nav.siteMenu": "Seitennavigation",
   "nav.openMenu": "Navigation öffnen",
   "nav.closeMenu": "Navigation schließen",
-  "nav.switchLocale": "Auf Deutsch wechseln",
+  "nav.selectLocale": "Sprache auswählen",
+  "meta.siteTitle": "Webpilot | Websites, Wachstum & Automatisierung",
+  "meta.aboutDescription": "Lerne Webpilot kennen: ein unabhängiges Studio für Websites, Apps, Sichtbarkeit, Werbekampagnen, KI und Automatisierung.",
   "a11y.skip": "Zum Inhalt springen",
   "footer.explore": "Entdecken",
   "footer.connect": "Kontakt aufnehmen",
+  "service.otherServices": "Weitere Services",
   "footer.email": "E-Mail",
   "home.heroLine1": "Entwickelt für",
   "home.heroAccent": "profitables",
@@ -88,10 +94,13 @@ export const enMessages: Readonly<Record<MessageKey, string>> = {
   "nav.siteMenu": "Site navigation",
   "nav.openMenu": "Open navigation",
   "nav.closeMenu": "Close navigation",
-  "nav.switchLocale": "Switch to English",
+  "nav.selectLocale": "Select language",
+  "meta.siteTitle": "Webpilot | Websites, Growth & Automation",
+  "meta.aboutDescription": "Meet Webpilot, an independent studio for websites, apps, visibility, paid campaigns, AI, and automation.",
   "a11y.skip": "Skip to content",
   "footer.explore": "Explore",
   "footer.connect": "Connect",
+  "service.otherServices": "Other services",
   "footer.email": "Email",
   "home.heroLine1": "Engineered for",
   "home.heroAccent": "profitable",
@@ -158,4 +167,4 @@ export const enMessages: Readonly<Record<MessageKey, string>> = {
   "about.principle4Copy": "We use new tech when it helps the work, not when it only looks good in a pitch.",
 };
 
-export const dictionaries = { de: deMessages, en: enMessages } as const;
+export const dictionaries = { de: deMessages, en: enMessages, fr: frMessages } as const satisfies Record<Locale, Readonly<Record<MessageKey, string>>>;

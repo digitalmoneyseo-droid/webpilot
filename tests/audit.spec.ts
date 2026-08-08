@@ -20,6 +20,34 @@ test.describe("localized routes", () => {
     });
   }
 
+  test("keeps German URLs unprefixed and redirects explicit default-locale prefixes", async ({ page }) => {
+    await page.goto("/");
+    await expect(page).toHaveURL(/\/$/);
+    await expect(page.locator("html")).toHaveAttribute("lang", "de");
+
+    await page.goto("/de/about?source=locale-test");
+    await expect(page).toHaveURL(/\/about\?source=locale-test$/);
+    await expect(page.locator("html")).toHaveAttribute("lang", "de");
+  });
+
+  test("opens the desktop language menu on hover and switches locales", async ({ page }) => {
+    await page.setViewportSize({ width: 1280, height: 800 });
+    await page.goto("/en/about");
+
+    const englishButton = page.locator("header").getByRole("button", { name: "Select language" });
+    await englishButton.hover();
+    await expect(page.locator("#desktop-language-menu")).toHaveAttribute("aria-hidden", "false");
+    await page.locator("#desktop-language-menu").getByRole("link", { name: /Deutsch/ }).click();
+    await expect(page).toHaveURL(/\/about$/);
+    await expect(page.locator("html")).toHaveAttribute("lang", "de");
+
+    const germanButton = page.locator("header").getByRole("button", { name: "Sprache auswählen" });
+    await germanButton.hover();
+    await page.locator("#desktop-language-menu").getByRole("link", { name: /English/ }).click();
+    await expect(page).toHaveURL(/\/en\/about$/);
+    await expect(page.locator("html")).toHaveAttribute("lang", "en");
+  });
+
   for (const route of ["/services/websites-apps", "/en/services/ai-automation"]) {
     test(`renders an accessible service page at ${route}`, async ({ page }) => {
       await page.emulateMedia({ reducedMotion: "reduce" });
