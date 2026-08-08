@@ -29,14 +29,14 @@ test.describe("deep architecture modules", () => {
     }
     expect(english[0]?.copy.page.scopeGroups.map(({ title }) => title)).toEqual([
       "Marketing websites",
-      "E-commerce experiences",
       "Landing pages",
+      "E-commerce experiences",
       "Applications & customer portals",
-      "Website redesigns",
-      "Booking & lead-generation systems",
+      "Content platforms",
+      "Form & booking experiences",
     ]);
-    expect(english.find(({ id }) => id === "paid-campaigns")?.copy.page.scopeGroups[4]?.title).toBe("Conversion journeys & CRO");
-    expect(german.find(({ id }) => id === "paid-campaigns")?.copy.page.scopeGroups[4]?.title).toBe("Conversion-Pfade & CRO");
+    expect(english.find(({ id }) => id === "paid-campaigns")?.copy.page.scopeGroups[4]?.title).toBe("Campaign journeys & CRO");
+    expect(german.find(({ id }) => id === "paid-campaigns")?.copy.page.scopeGroups[4]?.title).toBe("Kampagnenpfade & CRO");
   });
 
   test("derives the Optimization scene from one deterministic timeline", () => {

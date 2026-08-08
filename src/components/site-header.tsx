@@ -1,13 +1,13 @@
 "use client";
 
 import Link from "next/link";
-import { ArrowUpRight, ChevronDown, ChevronRight, Languages, Menu, MonitorSmartphone, RadioTower, Search, Workflow, X } from "lucide-react";
+import { ArrowUpRight, ChevronDown, ChevronRight, Languages, Menu, MonitorSmartphone, RadioTower, Search, Workflow, type LucideIcon, X } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import type { MouseEvent } from "react";
 import { BrandMark } from "@/components/brand-mark";
 import { CollapsePanel } from "@/components/collapse-panel";
 import type { ServiceId } from "@/i18n/services";
-import { alternatePath, localeConfig, localeCookie, locales, localizePath, t, type Locale } from "@/lib/i18n";
+import { alternatePath, defaultLocale, localeConfig, locales, localizePath, t, type Locale } from "@/lib/i18n";
 import { requestRouteScrollTop, scrollToPageTopSmoothly } from "@/lib/route-scroll";
 import { getServiceCatalog } from "@/lib/service-catalog";
 
@@ -18,8 +18,10 @@ const serviceMenuStyles = {
   "ai-automation": { active: "bg-[#f2edff]", icon: "bg-[#f2edff] text-[#6650a6]", activeIcon: "bg-white text-[#6650a6]" },
 } satisfies Record<ServiceId, { active: string; icon: string; activeIcon: string }>;
 
-function saveLocalePreference(locale: Locale) {
-  document.cookie = `${localeCookie}=${locale}; Path=/; Max-Age=31536000; SameSite=Lax`;
+function localeSwitchPath(pathname: string, currentLocale: Locale, candidate: Locale) {
+  const path = alternatePath(pathname, candidate);
+  if (candidate !== defaultLocale || currentLocale === defaultLocale) return path;
+  return path === "/" ? `/${defaultLocale}` : `/${defaultLocale}${path}`;
 }
 
 function scrollToPageTop(event: MouseEvent<HTMLAnchorElement>) {
@@ -53,6 +55,7 @@ function LanguageMenu({ dark = false, id, locale, mobile = false, onSelect, path
       onKeyDown={(event) => {
         if (event.key !== "Escape") return;
         event.preventDefault();
+        event.stopPropagation();
         setOpen(false);
         buttonRef.current?.focus();
       }}
@@ -93,7 +96,7 @@ function LanguageMenu({ dark = false, id, locale, mobile = false, onSelect, path
           {locales.map((candidate) => {
             const active = candidate === locale;
             const highlighted = highlightedLocale === null ? active : highlightedLocale === candidate;
-            return <Link key={candidate} prefetch={false} className={`flex h-9 items-center justify-between gap-6 rounded-lg px-3 text-navigation transition-[background-color,scale] duration-150 active:scale-[.96] motion-reduce:transition-none motion-reduce:active:scale-100 ${dark ? highlighted ? "bg-white/8 text-white" : "text-[#b5b5b5]" : highlighted ? "bg-[var(--ds-gray-alpha-100)] text-ink" : "text-muted"}`} href={alternatePath(pathname, candidate)} aria-current={active ? "page" : undefined} onPointerEnter={() => setHighlightedLocale(candidate)} onPointerLeave={() => setHighlightedLocale(null)} onFocus={() => setHighlightedLocale(candidate)} onBlur={() => setHighlightedLocale(null)} onClick={(event) => { saveLocalePreference(candidate); scrollToPageTop(event); setOpen(false); onSelect?.(); }}><span>{localeConfig[candidate].name}</span><span className={`text-caption ${dark ? "text-[#929292]" : "text-[#9a9a96]"}`} aria-hidden="true">{localeConfig[candidate].shortLabel}</span></Link>;
+            return <Link key={candidate} prefetch={false} className={`flex h-9 items-center justify-between gap-6 rounded-lg px-3 text-navigation transition-[background-color,scale] duration-150 active:scale-[.96] motion-reduce:transition-none motion-reduce:active:scale-100 ${dark ? highlighted ? "bg-white/8 text-white" : "text-[#b5b5b5]" : highlighted ? "bg-[var(--ds-gray-alpha-100)] text-ink" : "text-muted"}`} href={localeSwitchPath(pathname, locale, candidate)} aria-current={active ? "page" : undefined} onPointerEnter={() => setHighlightedLocale(candidate)} onPointerLeave={() => setHighlightedLocale(null)} onFocus={() => setHighlightedLocale(candidate)} onBlur={() => setHighlightedLocale(null)} onClick={(event) => { scrollToPageTop(event); setOpen(false); onSelect?.(); }}><span>{localeConfig[candidate].name}</span><span className={`text-caption ${dark ? "text-[#929292]" : "text-[#9a9a96]"}`} aria-hidden="true">{localeConfig[candidate].shortLabel}</span></Link>;
           })}
         </div>
       </div>
@@ -112,14 +115,26 @@ export function SiteHeader({ locale, pathname }: { locale: Locale; pathname: str
   const mobileServicesButtonRef = useRef<HTMLButtonElement>(null);
   const closeServicesTimer = useRef<number | undefined>(undefined);
   const services = getServiceCatalog(locale);
-  const serviceIcons = [MonitorSmartphone, Search, RadioTower, Workflow] as const;
+  const serviceIcons: Record<ServiceId, LucideIcon> = {
+    "websites-apps": MonitorSmartphone,
+    "seo-ai-visibility": Search,
+    "paid-campaigns": RadioTower,
+    "ai-automation": Workflow,
+  };
   const isActive = (href: string) => {
     const localized = localizePath(href, locale);
     return pathname === localized || pathname.startsWith(`${localized}/`);
   };
 
   useEffect(() => {
-    document.body.style.overflow = open ? "hidden" : "";
+    const previousOverflow = document.body.style.overflow;
+    if (open) document.body.style.overflow = "hidden";
+    return () => {
+      document.body.style.overflow = previousOverflow;
+    };
+  }, [open]);
+
+  useEffect(() => {
     const focusTimer = open ? window.setTimeout(() => closeRef.current?.focus(), 50) : undefined;
     const onKeyDown = (event: KeyboardEvent) => {
       if (event.key === "Escape") {
@@ -133,6 +148,7 @@ export function SiteHeader({ locale, pathname }: { locale: Locale; pathname: str
           servicesButtonRef.current?.focus();
           return;
         }
+        if (!open) return;
         setOpen(false);
         openRef.current?.focus();
         return;
@@ -161,7 +177,6 @@ export function SiteHeader({ locale, pathname }: { locale: Locale; pathname: str
     return () => {
       if (focusTimer !== undefined) window.clearTimeout(focusTimer);
       if (closeServicesTimer.current !== undefined) window.clearTimeout(closeServicesTimer.current);
-      document.body.style.overflow = "";
       document.removeEventListener("keydown", onKeyDown);
       document.removeEventListener("pointerdown", onPointerDown);
     };
@@ -217,8 +232,8 @@ export function SiteHeader({ locale, pathname }: { locale: Locale; pathname: str
               inert={!servicesOpen}
             >
               <div className="grid grid-cols-2 gap-1.5 rounded-[16px] bg-white p-2 shadow-surface">
-                {services.map((service, index) => {
-                  const Icon = serviceIcons[index]!;
+                {services.map((service) => {
+                  const Icon = serviceIcons[service.id];
                   const active = pathname === service.href;
                   const styles = serviceMenuStyles[service.id];
                   return <Link className={`group/service flex min-w-0 gap-3 rounded-[11px] p-3.5 transition-colors duration-150 ${active ? styles.active : "hover:bg-[var(--ds-gray-100)]"}`} href={service.href} aria-current={active ? "page" : undefined} onClick={(event) => { scrollToPageTop(event); setServicesOpen(false); }} key={service.id}><span className={`grid size-9 shrink-0 place-items-center rounded-[9px] transition-colors duration-150 ${active ? styles.activeIcon : styles.icon}`}><Icon className="size-4.5" strokeWidth={1.7} aria-hidden="true" /></span><span className="min-w-0"><strong className="block text-small font-semibold text-ink">{service.copy.name}</strong><span className="mt-1 block text-caption leading-snug text-muted">{service.copy.navDescription}</span></span></Link>;

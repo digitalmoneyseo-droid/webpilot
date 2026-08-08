@@ -44,7 +44,7 @@ export function proxy(request: NextRequest) {
 
   const url = request.nextUrl.clone();
   url.pathname = `/${defaultLocale}${pathname === "/" ? "" : pathname}`;
-  return NextResponse.rewrite(url);
+  return rememberLocale(NextResponse.rewrite(url), defaultLocale);
 }
 
 export const config = {
