@@ -127,6 +127,50 @@ test.describe("localized routes", () => {
     await expect(open).toBeFocused();
   });
 
+  test("uses aligned custom language menus on small screens", async ({ page }) => {
+    await page.setViewportSize({ width: 430, height: 932 });
+    await page.goto("/fr/contact");
+
+    const header = page.locator("header");
+    const languageButton = header.locator('button[aria-controls="mobile-language-menu"]');
+    const menuButton = header.locator('button[aria-controls="site-menu"]');
+    await expect(header.locator("select")).toHaveCount(0);
+    await expect(languageButton).toBeVisible();
+
+    const [languageBox, menuBox] = await Promise.all([languageButton.boundingBox(), menuButton.boundingBox()]);
+    expect(languageBox).not.toBeNull();
+    expect(menuBox).not.toBeNull();
+    expect(languageBox!.x + languageBox!.width).toBeLessThanOrEqual(menuBox!.x - 8);
+    expect(menuBox!.x + menuBox!.width).toBeLessThanOrEqual(415);
+
+    await languageButton.click();
+    const languageMenu = page.locator("#mobile-language-menu");
+    await expect(languageMenu).toHaveAttribute("aria-hidden", "false");
+    await expect(languageMenu.getByRole("link", { name: /Deutsch/ })).toBeVisible();
+    const languageMenuBox = await languageMenu.boundingBox();
+    expect(languageMenuBox).not.toBeNull();
+    expect(Math.abs((languageMenuBox!.x + languageMenuBox!.width / 2) - (languageBox!.x + languageBox!.width / 2))).toBeLessThanOrEqual(1);
+    await languageButton.click();
+
+    await menuButton.click();
+    const dialog = page.locator("#site-menu");
+    const dialogLanguageButton = dialog.locator('button[aria-controls="mobile-menu-language-menu"]');
+    const closeButton = dialog.getByRole("button", { name: "Fermer la navigation" });
+    await expect(dialogLanguageButton).toHaveCSS("box-shadow", /rgba\(255, 255, 255, 0\.145\)/);
+    const [dialogLanguageBox, closeBox] = await Promise.all([dialogLanguageButton.boundingBox(), closeButton.boundingBox()]);
+    expect(dialogLanguageBox).not.toBeNull();
+    expect(closeBox).not.toBeNull();
+    expect(dialogLanguageBox!.x + dialogLanguageBox!.width).toBeLessThanOrEqual(closeBox!.x - 8);
+
+    await dialogLanguageButton.click();
+    const dialogLanguageMenu = page.locator("#mobile-menu-language-menu");
+    await expect(dialogLanguageMenu).toHaveAttribute("aria-hidden", "false");
+    await expect(dialogLanguageMenu.getByRole("link", { name: /English/ })).toBeVisible();
+    const dialogLanguageMenuBox = await dialogLanguageMenu.boundingBox();
+    expect(dialogLanguageMenuBox).not.toBeNull();
+    expect(Math.abs((dialogLanguageMenuBox!.x + dialogLanguageMenuBox!.width / 2) - (dialogLanguageBox!.x + dialogLanguageBox!.width / 2))).toBeLessThanOrEqual(1);
+  });
+
   test("keeps the detailed service catalogue within the mobile viewport", async ({ page }) => {
     await page.setViewportSize({ width: 390, height: 844 });
     await page.emulateMedia({ reducedMotion: "reduce" });

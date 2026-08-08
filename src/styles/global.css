@@ -25,9 +25,6 @@ button { color: inherit; }
 .header-language:hover {
   box-shadow: var(--shadow-surface-hover);
 }
-.header-language:has(select:active) {
-  scale: .96;
-}
 .menu-language {
   transition: scale 150ms var(--ease-out), background-color 180ms var(--ease-out);
 }
@@ -160,8 +157,7 @@ button { color: inherit; }
   .pill-button:hover {
     transform: none;
   }
-  .pill-button:active,
-  .header-language:has(select:active) {
+  .pill-button:active {
     scale: 1;
   }
   .header-language:is(:hover, :focus-within) .header-language__icon--out {

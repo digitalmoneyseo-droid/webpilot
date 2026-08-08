@@ -2,13 +2,12 @@
 
 import Link from "next/link";
 import { ArrowUpRight, ChevronDown, ChevronRight, Languages, Menu, MonitorSmartphone, RadioTower, Search, Workflow, X } from "lucide-react";
-import { useRouter } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
-import type { ChangeEvent, MouseEvent } from "react";
+import type { MouseEvent } from "react";
 import { BrandMark } from "@/components/brand-mark";
 import { CollapsePanel } from "@/components/collapse-panel";
 import type { ServiceId } from "@/i18n/services";
-import { alternatePath, hasLocale, localeConfig, localeCookie, locales, localizePath, t, type Locale } from "@/lib/i18n";
+import { alternatePath, localeConfig, localeCookie, locales, localizePath, t, type Locale } from "@/lib/i18n";
 import { requestRouteScrollTop, scrollToPageTopSmoothly } from "@/lib/route-scroll";
 import { getServiceCatalog } from "@/lib/service-catalog";
 
@@ -37,32 +36,7 @@ function scrollToPageTop(event: MouseEvent<HTMLAnchorElement>) {
   requestRouteScrollTop();
 }
 
-function LanguageSelect({ dark = false, locale, pathname }: { dark?: boolean; locale: Locale; pathname: string }) {
-  const router = useRouter();
-  const changeLocale = (event: ChangeEvent<HTMLSelectElement>) => {
-    const nextLocale = event.currentTarget.value;
-    if (!hasLocale(nextLocale) || nextLocale === locale) return;
-    saveLocalePreference(nextLocale);
-    requestRouteScrollTop();
-    router.push(alternatePath(pathname, nextLocale));
-  };
-
-  return (
-    <div className={`header-language relative inline-flex h-11 cursor-pointer items-center justify-center gap-2 rounded-[12px] border-0 px-3 text-navigation min-[901px]:hidden ${dark ? "menu-language fixed top-[22px] right-[74px] z-2 bg-transparent text-white shadow-dark-surface max-[900px]:right-[67px]" : "fixed top-[22px] right-[65px] bg-white text-[#73736f] shadow-surface"}`}>
-      <span className={`relative size-[19px] flex-none overflow-hidden ${dark ? "text-white" : "text-[#111]"}`} aria-hidden="true">
-        <Languages className="header-language__icon header-language__icon--out absolute inset-0 size-[19px]" strokeWidth={1.7} />
-        <Languages className="header-language__icon header-language__icon--in absolute inset-0 size-[19px] opacity-0 [transform:translate(-6px,6px)_scale(.8)]" strokeWidth={1.7} />
-      </span>
-      <span className={dark ? "font-medium text-white" : "font-medium text-[#111]"} aria-hidden="true">{localeConfig[locale].shortLabel}</span>
-      <ChevronDown className={`size-3.5 ${dark ? "text-white/60" : "text-[#9a9a96]"}`} strokeWidth={1.8} aria-hidden="true" />
-      <select className="absolute inset-0 size-full cursor-pointer opacity-0" value={locale} onChange={changeLocale} aria-label={t(locale, "nav.selectLocale")}>
-        {locales.map((candidate) => <option key={candidate} value={candidate}>{localeConfig[candidate].name}</option>)}
-      </select>
-    </div>
-  );
-}
-
-function DesktopLanguageMenu({ locale, pathname }: { locale: Locale; pathname: string }) {
+function LanguageMenu({ dark = false, id, locale, mobile = false, onSelect, pathname }: { dark?: boolean; id: string; locale: Locale; mobile?: boolean; onSelect?: () => void; pathname: string }) {
   const [open, setOpen] = useState(false);
   const [highlightedLocale, setHighlightedLocale] = useState<Locale | null>(null);
   const buttonRef = useRef<HTMLButtonElement>(null);
@@ -72,9 +46,9 @@ function DesktopLanguageMenu({ locale, pathname }: { locale: Locale; pathname: s
 
   return (
     <div
-      className="relative max-[900px]:hidden"
-      onPointerEnter={() => setOpen(true)}
-      onPointerLeave={() => { setOpen(false); setHighlightedLocale(null); }}
+      className={`relative ${mobile ? "ml-auto min-[901px]:hidden" : "max-[900px]:hidden"}`}
+      onPointerEnter={mobile ? undefined : () => setOpen(true)}
+      onPointerLeave={mobile ? undefined : () => { setOpen(false); setHighlightedLocale(null); }}
       onBlur={(event) => { if (!event.currentTarget.contains(event.relatedTarget)) { setOpen(false); setHighlightedLocale(null); } }}
       onKeyDown={(event) => {
         if (event.key !== "Escape") return;
@@ -85,11 +59,11 @@ function DesktopLanguageMenu({ locale, pathname }: { locale: Locale; pathname: s
     >
       <button
         ref={buttonRef}
-        className="header-language inline-flex h-11 cursor-pointer items-center justify-center gap-2 rounded-[12px] bg-white px-3 text-navigation text-[#73736f] shadow-surface transition-transform duration-150 active:scale-[.96] motion-reduce:transition-none motion-reduce:active:scale-100"
+        className={`header-language inline-flex h-11 cursor-pointer items-center justify-center gap-2 rounded-[12px] px-3 text-navigation transition-transform duration-150 active:scale-[.96] motion-reduce:transition-none motion-reduce:active:scale-100 ${dark ? "menu-language bg-transparent text-white shadow-dark-surface" : "bg-white text-[#73736f] shadow-surface"}`}
         type="button"
         aria-label={t(locale, "nav.selectLocale")}
         aria-expanded={open}
-        aria-controls="desktop-language-menu"
+        aria-controls={id}
         onClick={() => setOpen((current) => !current)}
         onKeyDown={(event) => {
           if (event.key !== "ArrowDown") return;
@@ -98,28 +72,28 @@ function DesktopLanguageMenu({ locale, pathname }: { locale: Locale; pathname: s
           window.setTimeout(() => menuRef.current?.querySelector<HTMLAnchorElement>("a[href]")?.focus(), 0);
         }}
       >
-        <span className="relative size-[19px] flex-none overflow-hidden text-[#111]" aria-hidden="true">
+        <span className={`relative size-[19px] flex-none overflow-hidden ${dark ? "text-white" : "text-[#111]"}`} aria-hidden="true">
           <Languages className="header-language__icon header-language__icon--out absolute inset-0 size-[19px]" strokeWidth={1.7} />
           <Languages className="header-language__icon header-language__icon--in absolute inset-0 size-[19px] opacity-0 [transform:translate(-6px,6px)_scale(.8)]" strokeWidth={1.7} />
         </span>
-        <span className="relative grid w-[2ch] overflow-hidden font-medium text-[#111]" aria-hidden="true">
+        <span className={`relative grid w-[2ch] overflow-hidden font-medium ${dark ? "text-white" : "text-[#111]"}`} aria-hidden="true">
           <span className={`header-language__code col-start-1 row-start-1 ${previewing ? "opacity-0 [transform:translate(6px,-6px)_scale(.8)]" : "opacity-100"}`}>{localeConfig[locale].shortLabel}</span>
           {previewing ? <span key={previewLocale} className="header-language__code-preview col-start-1 row-start-1">{localeConfig[previewLocale].shortLabel}</span> : null}
         </span>
-        <ChevronDown className={`size-3.5 text-[#9a9a96] transition-transform duration-200 motion-reduce:transition-none ${open ? "rotate-180" : ""}`} strokeWidth={1.8} aria-hidden="true" />
+        <ChevronDown className={`size-3.5 transition-transform duration-200 motion-reduce:transition-none ${dark ? "text-white/60" : "text-[#9a9a96]"} ${open ? "rotate-180" : ""}`} strokeWidth={1.8} aria-hidden="true" />
       </button>
       <div
-        id="desktop-language-menu"
+        id={id}
         ref={menuRef}
         className={`absolute top-full left-1/2 w-44 -translate-x-1/2 pt-2 transition-[opacity,translate] duration-200 ease-[var(--ease-out)] motion-reduce:duration-0 ${open ? "pointer-events-auto translate-y-0 opacity-100" : "pointer-events-none -translate-y-1 opacity-0"}`}
         aria-hidden={!open}
         inert={!open}
       >
-        <div className="rounded-[12px] bg-white p-1 shadow-surface">
+        <div className={`rounded-[12px] p-1 ${dark ? "bg-[#1f1f1f] shadow-dark-surface" : "bg-white shadow-surface"}`}>
           {locales.map((candidate) => {
             const active = candidate === locale;
             const highlighted = highlightedLocale === null ? active : highlightedLocale === candidate;
-            return <Link key={candidate} prefetch={false} className={`flex h-9 items-center justify-between gap-6 rounded-lg px-3 text-navigation transition-[background-color,scale] duration-150 active:scale-[.96] motion-reduce:transition-none motion-reduce:active:scale-100 ${highlighted ? "bg-[var(--ds-gray-alpha-100)] text-ink" : "text-muted"}`} href={alternatePath(pathname, candidate)} aria-current={active ? "page" : undefined} onPointerEnter={() => setHighlightedLocale(candidate)} onPointerLeave={() => setHighlightedLocale(null)} onFocus={() => setHighlightedLocale(candidate)} onBlur={() => setHighlightedLocale(null)} onClick={(event) => { saveLocalePreference(candidate); scrollToPageTop(event); setOpen(false); }}><span>{localeConfig[candidate].name}</span><span className="text-caption text-[#9a9a96]" aria-hidden="true">{localeConfig[candidate].shortLabel}</span></Link>;
+            return <Link key={candidate} prefetch={false} className={`flex h-9 items-center justify-between gap-6 rounded-lg px-3 text-navigation transition-[background-color,scale] duration-150 active:scale-[.96] motion-reduce:transition-none motion-reduce:active:scale-100 ${dark ? highlighted ? "bg-white/8 text-white" : "text-[#b5b5b5]" : highlighted ? "bg-[var(--ds-gray-alpha-100)] text-ink" : "text-muted"}`} href={alternatePath(pathname, candidate)} aria-current={active ? "page" : undefined} onPointerEnter={() => setHighlightedLocale(candidate)} onPointerLeave={() => setHighlightedLocale(null)} onFocus={() => setHighlightedLocale(candidate)} onBlur={() => setHighlightedLocale(null)} onClick={(event) => { saveLocalePreference(candidate); scrollToPageTop(event); setOpen(false); onSelect?.(); }}><span>{localeConfig[candidate].name}</span><span className={`text-caption ${dark ? "text-[#929292]" : "text-[#9a9a96]"}`} aria-hidden="true">{localeConfig[candidate].shortLabel}</span></Link>;
           })}
         </div>
       </div>
@@ -208,7 +182,7 @@ export function SiteHeader({ locale, pathname }: { locale: Locale; pathname: str
   const servicesActive = pathname.startsWith(localizePath("/services/", locale));
   return (
     <>
-      <header className="fixed top-[22px] left-1/2 z-50 flex w-max -translate-x-1/2 items-center gap-2 max-[900px]:left-[15px] max-[900px]:[translate:none]">
+      <header className="fixed top-[22px] left-1/2 z-50 flex w-max -translate-x-1/2 items-center gap-2 max-[900px]:right-[15px] max-[900px]:left-[15px] max-[900px]:w-auto max-[900px]:[translate:none]">
         <Link href={localizePath("/", locale)} onClick={scrollToPageTop} className="group/brand inline-flex h-11 items-center justify-center rounded-[12px] bg-white px-[17px] shadow-surface transition-transform duration-150 active:scale-[.96] motion-reduce:transition-none motion-reduce:active:scale-100" aria-label={t(locale, "nav.brandHome")}><BrandMark /></Link>
         <nav className="relative inline-flex h-11 items-center justify-center gap-px rounded-[12px] bg-white p-1 shadow-surface max-[900px]:hidden" aria-label={t(locale, "nav.mainMenu")}>
           <div
@@ -254,15 +228,15 @@ export function SiteHeader({ locale, pathname }: { locale: Locale; pathname: str
           </div>
           {navItems.map((item) => <Link key={item.href} href={localizePath(item.href, locale)} onClick={scrollToPageTop} className={`relative z-1 inline-flex h-9 items-center rounded-lg px-3.5 text-navigation transition-[color,background-color,scale] duration-150 active:scale-[.96] motion-reduce:transition-none motion-reduce:active:scale-100 ${isActive(item.href) ? "bg-[var(--ds-gray-alpha-100)] text-ink" : "text-muted hover:bg-[var(--ds-gray-alpha-100)] hover:text-ink"}`} aria-current={isActive(item.href) ? "page" : undefined}>{item.label}</Link>)}
         </nav>
-        <DesktopLanguageMenu locale={locale} pathname={pathname} />
-        <LanguageSelect locale={locale} pathname={pathname} />
-        <button ref={openRef} className="fixed top-[22px] right-[15px] inline-flex size-11 items-center justify-center rounded-[12px] bg-white shadow-surface transition-transform duration-150 active:scale-[.96] motion-reduce:transition-none motion-reduce:active:scale-100 min-[901px]:hidden" type="button" onClick={() => { setMobileServicesOpen(false); setOpen(true); }} aria-label={t(locale, "nav.openMenu")} aria-expanded={open} aria-controls="site-menu"><Menu className="w-[17px]" strokeWidth={1.7} /></button>
+        <LanguageMenu id="desktop-language-menu" locale={locale} pathname={pathname} />
+        <LanguageMenu id="mobile-language-menu" locale={locale} mobile pathname={pathname} />
+        <button ref={openRef} className="inline-flex size-11 items-center justify-center rounded-[12px] bg-white shadow-surface transition-transform duration-150 active:scale-[.96] motion-reduce:transition-none motion-reduce:active:scale-100 min-[901px]:hidden" type="button" onClick={() => { setMobileServicesOpen(false); setOpen(true); }} aria-label={t(locale, "nav.openMenu")} aria-expanded={open} aria-controls="site-menu"><Menu className="w-[17px]" strokeWidth={1.7} /></button>
       </header>
       <div id="site-menu" className={`fixed inset-0 z-100 flex flex-col overscroll-contain bg-[#101010] px-[clamp(24px,5vw,76px)] pt-6 pb-[34px] text-white transition-[opacity,translate] duration-300 ease-[var(--ease-out)] will-change-[opacity,translate] min-[901px]:hidden max-[900px]:overflow-y-auto max-[600px]:px-[18px] motion-reduce:transition-none ${open ? "pointer-events-auto translate-y-0 opacity-100" : "pointer-events-none -translate-y-3 opacity-0"}`} aria-hidden={!open} inert={!open} role="dialog" aria-modal="true" aria-label={t(locale, "nav.siteMenu")}>
-        <div className="menu-top flex items-center justify-between">
-          <Link href={localizePath("/", locale)} onClick={(event) => { scrollToPageTop(event); setOpen(false); }} className="group/brand fixed top-[22px] left-[15px] z-2 inline-flex h-11 items-center rounded-[12px] bg-[#101010] px-[17px] shadow-dark-surface transition-[background-color,scale] duration-150 hover:bg-white/8 active:scale-[.96] motion-reduce:transition-none motion-reduce:active:scale-100"><BrandMark inverse /></Link>
-          <LanguageSelect dark locale={locale} pathname={pathname} />
-          <button ref={closeRef} type="button" className="fixed top-[22px] right-[15px] z-2 grid size-11 place-items-center rounded-[12px] bg-transparent text-white shadow-dark-surface transition-[background-color,scale] duration-150 hover:bg-white/8 active:scale-[.96] motion-reduce:transition-none motion-reduce:active:scale-100" onClick={() => { setMobileServicesOpen(false); setOpen(false); openRef.current?.focus(); }} aria-label={t(locale, "nav.closeMenu")}><X className="w-[19px]" strokeWidth={1.7} /></button>
+        <div className="menu-top fixed top-[22px] right-[15px] left-[15px] z-2 flex items-center gap-2">
+          <Link href={localizePath("/", locale)} onClick={(event) => { scrollToPageTop(event); setOpen(false); }} className="group/brand inline-flex h-11 items-center rounded-[12px] bg-[#101010] px-[17px] shadow-dark-surface transition-[background-color,scale] duration-150 hover:bg-white/8 active:scale-[.96] motion-reduce:transition-none motion-reduce:active:scale-100"><BrandMark inverse /></Link>
+          <LanguageMenu dark id="mobile-menu-language-menu" locale={locale} mobile onSelect={() => setOpen(false)} pathname={pathname} />
+          <button ref={closeRef} type="button" className="grid size-11 place-items-center rounded-[12px] bg-transparent text-white shadow-dark-surface transition-[background-color,scale] duration-150 hover:bg-white/8 active:scale-[.96] motion-reduce:transition-none motion-reduce:active:scale-100" onClick={() => { setMobileServicesOpen(false); setOpen(false); openRef.current?.focus(); }} aria-label={t(locale, "nav.closeMenu")}><X className="w-[19px]" strokeWidth={1.7} /></button>
         </div>
         <nav className="menu-links my-auto flex flex-col self-stretch py-24 max-[900px]:w-full max-[900px]:max-w-[44rem]" aria-label={t(locale, "nav.mainMenu")}>
           <div>
