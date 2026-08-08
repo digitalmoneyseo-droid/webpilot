@@ -1,7 +1,7 @@
 import { dictionaries, type MessageKey } from "../i18n/translations";
-import { defaultLocale, hasLocale, localeConfig, locales, type Locale } from "../i18n/config";
+import { defaultLocale, hasLocale, localeConfig, localeCookie, locales, type Locale } from "../i18n/config";
 
-export { defaultLocale, hasLocale, localeConfig, locales, type Locale };
+export { defaultLocale, hasLocale, localeConfig, localeCookie, locales, type Locale };
 
 export function t(locale: Locale, key: MessageKey): string {
   return dictionaries[locale][key];

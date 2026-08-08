@@ -2,9 +2,11 @@ import { ContactForm } from "@/components/contact-form";
 import { EditorialHero } from "@/components/editorial-hero";
 import { getServiceCopy, type ServiceId } from "@/i18n/services";
 import { t, type Locale } from "@/lib/i18n";
+import { serviceOrder } from "@/lib/service-catalog";
 
 export function ContactPage({ locale, serviceId }: { locale: Locale; serviceId?: ServiceId }) {
   const service = serviceId ? getServiceCopy(locale, serviceId) : undefined;
+  const services = serviceOrder.map((id) => ({ id, name: getServiceCopy(locale, id).name }));
 
   return (
     <main id="main-content">
@@ -13,20 +15,11 @@ export function ContactPage({ locale, serviceId }: { locale: Locale; serviceId?:
         copy={t(locale, "contact.copy")}
       />
       <section className="px-page pb-section">
-        <div className="reveal mx-auto max-w-[50rem] rounded-card bg-black p-[clamp(1.25rem,5vw,3rem)] text-white shadow-[var(--ds-shadow-border-medium)]" data-reveal>
-          <header className="mb-8 flex items-end justify-between gap-6 border-b border-white/15 pb-6 max-[600px]:items-start max-[600px]:flex-col max-[600px]:gap-3">
-            <div>
-              <h2 className="m-0 text-heading-md text-white">{t(locale, "contact.essentialsTitle")}</h2>
-              <p className="mt-2 mb-0 max-w-[38rem] text-body text-[#b7b7bd]">
-                {t(locale, "contact.essentialsCopy")}
-              </p>
-              {service ? <p className="mt-4 mb-0 text-small text-[#b7b7bd]"><span>{t(locale, "contact.selectedService")}: </span><strong className="font-semibold text-white">{service.name}</strong></p> : null}
-            </div>
-            <a className="shrink-0 text-small text-white underline decoration-white/35 underline-offset-4 hover:decoration-white" href="mailto:hello@webpilot.studio">
-              hello@webpilot.studio
-            </a>
-          </header>
-          <ContactForm locale={locale} serviceName={service?.name} />
+        <div className="reveal mx-auto max-w-[50rem]" data-reveal>
+          <div className="rounded-[16px] bg-white p-10 shadow-surface max-[600px]:p-6">
+            {service ? <p className="mt-0 mb-8 inline-flex rounded-[12px] bg-[var(--ds-gray-alpha-100)] px-3 py-2 text-small text-muted"><span>{t(locale, "contact.selectedService")}: </span>&nbsp;<strong className="font-semibold text-ink">{service.name}</strong></p> : null}
+            <ContactForm locale={locale} services={services} selectedServiceId={serviceId} />
+          </div>
         </div>
       </section>
     </main>

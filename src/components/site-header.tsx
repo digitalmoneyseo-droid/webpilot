@@ -8,7 +8,7 @@ import type { ChangeEvent, MouseEvent } from "react";
 import { BrandMark } from "@/components/brand-mark";
 import { CollapsePanel } from "@/components/collapse-panel";
 import type { ServiceId } from "@/i18n/services";
-import { alternatePath, hasLocale, localeConfig, locales, localizePath, t, type Locale } from "@/lib/i18n";
+import { alternatePath, hasLocale, localeConfig, localeCookie, locales, localizePath, t, type Locale } from "@/lib/i18n";
 import { requestRouteScrollTop, scrollToPageTopSmoothly } from "@/lib/route-scroll";
 import { getServiceCatalog } from "@/lib/service-catalog";
 
@@ -18,6 +18,10 @@ const serviceMenuStyles = {
   "paid-campaigns": { active: "bg-[#fff8e8]", icon: "bg-[#fff8e8] text-[#b7791f]", activeIcon: "bg-white text-[#b7791f]" },
   "ai-automation": { active: "bg-[#f2edff]", icon: "bg-[#f2edff] text-[#6650a6]", activeIcon: "bg-white text-[#6650a6]" },
 } satisfies Record<ServiceId, { active: string; icon: string; activeIcon: string }>;
+
+function saveLocalePreference(locale: Locale) {
+  document.cookie = `${localeCookie}=${locale}; Path=/; Max-Age=31536000; SameSite=Lax`;
+}
 
 function scrollToPageTop(event: MouseEvent<HTMLAnchorElement>) {
   if (event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey || event.defaultPrevented) return;
@@ -38,6 +42,7 @@ function LanguageSelect({ dark = false, locale, pathname }: { dark?: boolean; lo
   const changeLocale = (event: ChangeEvent<HTMLSelectElement>) => {
     const nextLocale = event.currentTarget.value;
     if (!hasLocale(nextLocale) || nextLocale === locale) return;
+    saveLocalePreference(nextLocale);
     requestRouteScrollTop();
     router.push(alternatePath(pathname, nextLocale));
   };
@@ -114,7 +119,7 @@ function DesktopLanguageMenu({ locale, pathname }: { locale: Locale; pathname: s
           {locales.map((candidate) => {
             const active = candidate === locale;
             const highlighted = highlightedLocale === null ? active : highlightedLocale === candidate;
-            return <Link key={candidate} className={`flex h-9 items-center justify-between gap-6 rounded-lg px-3 text-navigation transition-[background-color,scale] duration-150 active:scale-[.96] motion-reduce:transition-none motion-reduce:active:scale-100 ${highlighted ? "bg-[var(--ds-gray-alpha-100)] text-ink" : "text-muted"}`} href={alternatePath(pathname, candidate)} aria-current={active ? "page" : undefined} onPointerEnter={() => setHighlightedLocale(candidate)} onPointerLeave={() => setHighlightedLocale(null)} onFocus={() => setHighlightedLocale(candidate)} onBlur={() => setHighlightedLocale(null)} onClick={(event) => { scrollToPageTop(event); setOpen(false); }}><span>{localeConfig[candidate].name}</span><span className="text-caption text-[#9a9a96]" aria-hidden="true">{localeConfig[candidate].shortLabel}</span></Link>;
+            return <Link key={candidate} className={`flex h-9 items-center justify-between gap-6 rounded-lg px-3 text-navigation transition-[background-color,scale] duration-150 active:scale-[.96] motion-reduce:transition-none motion-reduce:active:scale-100 ${highlighted ? "bg-[var(--ds-gray-alpha-100)] text-ink" : "text-muted"}`} href={alternatePath(pathname, candidate)} aria-current={active ? "page" : undefined} onPointerEnter={() => setHighlightedLocale(candidate)} onPointerLeave={() => setHighlightedLocale(null)} onFocus={() => setHighlightedLocale(candidate)} onBlur={() => setHighlightedLocale(null)} onClick={(event) => { saveLocalePreference(candidate); scrollToPageTop(event); setOpen(false); }}><span>{localeConfig[candidate].name}</span><span className="text-caption text-[#9a9a96]" aria-hidden="true">{localeConfig[candidate].shortLabel}</span></Link>;
           })}
         </div>
       </div>
@@ -286,7 +291,7 @@ export function SiteHeader({ locale, pathname }: { locale: Locale; pathname: str
           </div>
           {navItems.map((item, index) => <Link key={item.href} className="group/menu-link grid min-h-16 grid-cols-[2rem_minmax(0,1fr)_1.5rem] items-center border-b border-white/13 py-2.5 text-heading-md" href={localizePath(item.href, locale)} onClick={(event) => { scrollToPageTop(event); setMobileServicesOpen(false); setOpen(false); }} tabIndex={open ? 0 : -1}><span className="text-caption tabular-nums text-[#929292]">{String(index + 2).padStart(2, "0")}</span><span>{item.label}</span><ArrowUpRight className="w-6 justify-self-end transition-transform duration-[250ms] ease-[var(--ease-out)] group-hover/menu-link:translate-x-[5px] group-hover/menu-link:-translate-y-[5px] motion-reduce:transform-none motion-reduce:transition-none" strokeWidth={1.7} /></Link>)}
         </nav>
-        <div className="menu-bottom flex items-center justify-end text-meta text-[#9a9a9a] max-[600px]:flex-col max-[600px]:items-start max-[600px]:gap-5"><a href="mailto:hello@webpilot.studio">hello@webpilot.studio</a></div>
+        <div className="menu-bottom flex items-center justify-end text-meta text-[#9a9a9a] max-[600px]:flex-col max-[600px]:items-start max-[600px]:gap-5"><a href="mailto:digitalmoneyseo@gmail.com">digitalmoneyseo@gmail.com</a></div>
       </div>
     </>
   );

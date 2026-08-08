@@ -12,10 +12,10 @@ export function SiteFooter({ locale }: { locale: Locale }) {
         <div className="footer-links flex gap-20 max-[600px]:mt-16 max-[600px]:grid max-[600px]:grid-cols-2 max-[600px]:gap-x-6">
           <div className="flex min-w-25 flex-col gap-2"><span className="mb-3 text-meta text-[#929292]">{t(locale, "nav.services")}</span>{services.map((service) => <Link className="text-meta hover:text-white" href={service.href} key={service.id}>{service.copy.name}</Link>)}</div>
           <div className="flex min-w-25 flex-col gap-2"><span className="mb-3 text-meta text-[#929292]">{t(locale, "footer.explore")}</span><Link className="text-meta hover:text-white" href={localizePath("/about", locale)}>{t(locale, "nav.about")}</Link></div>
-          <div className="flex min-w-25 flex-col gap-2"><span className="mb-3 text-meta text-[#929292]">{t(locale, "footer.connect")}</span><Link className="text-meta hover:text-white" href={localizePath("/contact", locale)}>{t(locale, "nav.contact")}</Link><a className="text-meta hover:text-white" href="mailto:hello@webpilot.studio">{t(locale, "footer.email")}</a></div>
+          <div className="flex min-w-25 flex-col gap-2"><span className="mb-3 text-meta text-[#929292]">{t(locale, "footer.connect")}</span><Link className="text-meta hover:text-white" href={localizePath("/contact", locale)}>{t(locale, "nav.contact")}</Link><a className="text-meta hover:text-white" href="mailto:digitalmoneyseo@gmail.com">{t(locale, "footer.email")}</a></div>
         </div>
       </div>
-      <div className="footer-legal flex justify-between border-t border-[#292929] pt-6 text-meta text-[#929292] max-[600px]:mt-12 max-[600px]:flex-col max-[600px]:gap-2"><span>© 2026 Webpilot Studio</span><a href="mailto:hello@webpilot.studio">hello@webpilot.studio</a></div>
+      <div className="footer-legal flex justify-between border-t border-[#292929] pt-6 text-meta text-[#929292] max-[600px]:mt-12 max-[600px]:flex-col max-[600px]:gap-2"><span>© 2026 Webpilot Studio</span><a href="mailto:digitalmoneyseo@gmail.com">digitalmoneyseo@gmail.com</a></div>
     </footer>
   );
 }

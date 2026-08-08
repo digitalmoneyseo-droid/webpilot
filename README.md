@@ -50,4 +50,4 @@ Keep all configured locales equivalent when you change public content, metadata,
 
 ## Contact form
 
-The contact form validates the required fields and opens a prepared message in the visitor's email application. The website does not send or store form data.
+The contact form validates enquiries in the browser and on the server, then sends them through Resend without writing them to a website database. Copy `.env.example` to `.env.local`, add a Resend API key, and use a sender address on a domain verified in Resend.

@@ -8,6 +8,7 @@ export default defineConfig({
   reporter: process.env.CI ? "line" : "list",
   use: {
     baseURL: "http://127.0.0.1:3000",
+    locale: "de-DE",
     trace: "retain-on-failure",
   },
   webServer: {

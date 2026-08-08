@@ -2,6 +2,17 @@ import AxeBuilder from "@axe-core/playwright";
 import { expect, test } from "@playwright/test";
 
 test.describe("localized routes", () => {
+  test("uses a supported browser language on the first visit", async ({ browser }) => {
+    const context = await browser.newContext({ baseURL: "http://127.0.0.1:3000", locale: "fr-FR" });
+    const page = await context.newPage();
+
+    await page.goto("/");
+    await expect(page).toHaveURL(/\/fr$/);
+    await expect(page.locator("html")).toHaveAttribute("lang", "fr");
+
+    await context.close();
+  });
+
   for (const route of ["/", "/en"]) {
     test(`renders an accessible home page at ${route}`, async ({ page }) => {
       const hydrationErrors: string[] = [];
@@ -40,6 +51,11 @@ test.describe("localized routes", () => {
     await page.locator("#desktop-language-menu").getByRole("link", { name: /Deutsch/ }).click();
     await expect(page).toHaveURL(/\/about$/);
     await expect(page.locator("html")).toHaveAttribute("lang", "de");
+
+    await page.goto("/");
+    await expect(page).toHaveURL(/\/$/);
+    await expect(page.locator("html")).toHaveAttribute("lang", "de");
+    await page.goto("/about");
 
     const germanButton = page.locator("header").getByRole("button", { name: "Sprache auswählen" });
     await germanButton.hover();
@@ -184,10 +200,59 @@ test.describe("localized routes", () => {
 });
 
 test.describe("contact", () => {
+  test("keeps the contact islands within the mobile viewport", async ({ page }) => {
+    await page.setViewportSize({ width: 390, height: 844 });
+    await page.goto("/en/contact");
+    await expect(page.locator("#main-content form")).toBeVisible();
+    await expect(page.locator("input[name='service']")).toHaveCount(5);
+    await expect(page.getByPlaceholder("Alex Morgan")).toBeVisible();
+    await expect(page.getByPlaceholder("alex@company.com")).toBeVisible();
+    await expect(page.getByPlaceholder("Company name")).toBeVisible();
+    const notSure = page.locator("input[name='service'][value='not-sure']");
+    await expect(notSure).toBeChecked();
+    await expect(notSure.locator("+ span")).toHaveCSS("background-color", "rgb(229, 229, 226)");
+    await expect(page.getByRole("button", { name: "Planned project range" })).toHaveCSS("cursor", "pointer");
+    const horizontalOverflow = await page.evaluate(() => document.documentElement.scrollWidth - document.documentElement.clientWidth);
+    expect(horizontalOverflow).toBeLessThanOrEqual(1);
+  });
+
   test("shows localized contact validation errors", async ({ page }) => {
     await page.goto("/en/contact");
-    await page.getByRole("button", { name: "Continue in email" }).click();
-    await expect(page.locator("form [role='alert']")).toHaveCount(3);
+    const results = await new AxeBuilder({ page }).exclude('[aria-hidden="true"]').analyze();
+    expect(results.violations).toEqual([]);
+    await page.getByRole("button", { name: "Send project enquiry" }).click();
+    await expect(page.locator("form [role='alert']")).toHaveCount(4);
+  });
+
+  test("submits an enquiry and shows a clear success state", async ({ page }) => {
+    await page.route("**/api/contact", (route) => route.fulfill({ status: 200, contentType: "application/json", body: JSON.stringify({ ok: true }) }));
+    await page.goto("/en/contact");
+
+    await page.getByLabel("Your name").fill("Alex Morgan");
+    await page.getByLabel("Work email").fill("alex@example.com");
+    await page.getByLabel("Websites & Apps").check();
+    await page.getByRole("button", { name: "Planned project range" }).click();
+    await page.getByRole("option", { name: "€5,000 to €15,000" }).click();
+    await page.getByLabel("What are you trying to achieve?").fill("We need a clearer website that turns the right visitors into qualified enquiries.");
+    await page.getByRole("button", { name: "Send project enquiry" }).click();
+
+    await expect(page.getByRole("heading", { name: "Thanks, your enquiry has arrived." })).toBeVisible();
+    await expect(page.getByText("alex@example.com")).toBeVisible();
+  });
+
+  test("keeps a direct email fallback when delivery fails", async ({ page }) => {
+    await page.route("**/api/contact", (route) => route.fulfill({ status: 503, contentType: "application/json", body: JSON.stringify({ error: "unavailable" }) }));
+    await page.goto("/en/contact");
+
+    await page.getByLabel("Your name").fill("Alex Morgan");
+    await page.getByLabel("Work email").fill("alex@example.com");
+    await page.getByRole("button", { name: "Planned project range" }).click();
+    await page.getByRole("option", { name: "Still open" }).click();
+    await page.getByLabel("What are you trying to achieve?").fill("We need help deciding which digital project should come first for our team.");
+    await page.getByRole("button", { name: "Send project enquiry" }).click();
+
+    await expect(page.locator("form").getByRole("alert")).toContainText("digitalmoneyseo@gmail.com");
+    await expect(page.getByRole("button", { name: "Send project enquiry" })).toBeEnabled();
   });
 
 });
