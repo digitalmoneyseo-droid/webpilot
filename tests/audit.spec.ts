@@ -5,8 +5,20 @@ test.describe("localized routes", () => {
   test("uses a supported browser language on the first visit", async ({ browser }) => {
     const context = await browser.newContext({ baseURL: "http://127.0.0.1:3000", locale: "fr-FR" });
     const page = await context.newPage();
+    await page.setViewportSize({ width: 1280, height: 800 });
 
     await page.goto("/");
+    await expect(page).toHaveURL(/\/fr$/);
+    await expect(page.locator("html")).toHaveAttribute("lang", "fr");
+
+    const languageButton = page.locator('header button[aria-controls="desktop-language-menu"]');
+    await languageButton.hover();
+    await page.locator("#desktop-language-menu").getByRole("link", { name: /Deutsch/ }).click();
+    await expect(page).toHaveURL(/\/$/);
+    await expect(page.locator("html")).toHaveAttribute("lang", "de");
+
+    await languageButton.hover();
+    await page.locator("#desktop-language-menu").getByRole("link", { name: /Français/ }).click();
     await expect(page).toHaveURL(/\/fr$/);
     await expect(page.locator("html")).toHaveAttribute("lang", "fr");
 
