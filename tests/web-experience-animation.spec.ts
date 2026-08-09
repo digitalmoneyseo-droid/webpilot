@@ -1,64 +1,82 @@
 import { expect, test } from "@playwright/test";
 
-test("reveals the image composition with the first hero accent", async ({ page }) => {
+test("schedules the image composition with the first hero accent", async ({ page }) => {
   await page.goto("/services/websites-apps", { waitUntil: "commit" });
 
-  const revealTimes = await page.evaluate(async () => {
+  const revealDelays = await page.evaluate(async () => {
+    const desktop = '[data-web-experience-layer="desktop"]';
     const selectors = {
-      accent: '[data-web-experience-part="accent"]',
-      back: '[data-web-experience-card="back"]',
-      middle: '[data-web-experience-card="middle"]',
-      front: '[data-web-experience-card="front"]',
+      accent: `${desktop} [data-web-experience-part="accent"]`,
+      back: `${desktop} [data-web-experience-card="back"]`,
+      middle: `${desktop} [data-web-experience-card="middle"]`,
+      front: `${desktop} [data-web-experience-card="front"]`,
     } as const;
     const nextFrame = () => new Promise<void>((resolve) => requestAnimationFrame(() => resolve()));
 
     while (!Object.values(selectors).every((selector) => document.querySelector(selector))) await nextFrame();
 
-    const startedAt = performance.now();
-    const times: Partial<Record<keyof typeof selectors, number>> = {};
-    while (Object.keys(times).length < Object.keys(selectors).length && performance.now() - startedAt < 3_000) {
-      for (const [part, selector] of Object.entries(selectors) as [keyof typeof selectors, string][]) {
-        const element = document.querySelector(selector);
-        if (times[part] === undefined && element && Number(getComputedStyle(element).opacity) > 0.05) {
-          times[part] = performance.now() - startedAt;
-        }
-      }
+    let animations = Object.fromEntries(Object.entries(selectors).map(([part, selector]) => [
+      part,
+      document.querySelector(selector)?.getAnimations()[0],
+    ])) as Record<keyof typeof selectors, Animation | undefined>;
+
+    while (Object.values(animations).some((animation) => !animation)) {
       await nextFrame();
+      animations = Object.fromEntries(Object.entries(selectors).map(([part, selector]) => [
+        part,
+        document.querySelector(selector)?.getAnimations()[0],
+      ])) as Record<keyof typeof selectors, Animation | undefined>;
     }
-    return times;
+
+    return Object.fromEntries(Object.entries(animations).map(([part, animation]) => [
+      part,
+      animation!.effect!.getComputedTiming().delay,
+    ])) as Record<keyof typeof selectors, number>;
   });
 
-  expect(revealTimes.accent).toBeDefined();
-  expect(revealTimes.back).toBeDefined();
-  expect(revealTimes.middle).toBeDefined();
-  expect(revealTimes.front).toBeDefined();
-  expect(Math.abs(revealTimes.back! - revealTimes.accent!)).toBeLessThan(34);
-  expect(revealTimes.middle!).toBeGreaterThan(revealTimes.back! + 100);
-  expect(revealTimes.front!).toBeGreaterThan(revealTimes.middle! + 100);
+  expect(Math.abs(revealDelays.back - revealDelays.accent)).toBeLessThan(1);
+  expect(revealDelays.middle).toBeGreaterThan(revealDelays.back + 100);
+  expect(revealDelays.front).toBeGreaterThan(revealDelays.middle + 100);
 });
 
 test("keeps the inquiry CTA visible from desktop through phone", async ({ page }) => {
   await page.goto("/services/websites-apps");
 
-  const device = page.locator("[data-web-experience-device]");
-  const cta = page.locator('[data-web-experience-part="cta"]');
-  await device.scrollIntoViewIfNeeded();
+  const desktopLayer = page.locator('[data-web-experience-layer="desktop"]');
+  const phoneLayer = page.locator('[data-web-experience-layer="phone"]');
+  const desktopDevice = desktopLayer.locator("[data-web-experience-device]");
+  const desktopCta = desktopLayer.locator('[data-web-experience-part="cta"]');
+  const phoneCta = phoneLayer.locator('[data-web-experience-part="cta"]');
+  await desktopDevice.scrollIntoViewIfNeeded();
 
-  await expect.poll(async () => Number(await cta.evaluate((element) => getComputedStyle(element).opacity)), {
+  await expect.poll(async () => Number(await desktopCta.evaluate((element) => getComputedStyle(element).opacity)), {
     message: "the CTA should begin appearing in the desktop hero",
   }).toBeGreaterThan(0.5);
-  expect((await device.boundingBox())?.width).toBeGreaterThan(300);
+  expect((await desktopDevice.boundingBox())?.width).toBeGreaterThan(300);
 
-  await expect.poll(async () => Number(await cta.evaluate((element) => getComputedStyle(element).opacity)), {
+  await expect.poll(async () => Number(await desktopCta.evaluate((element) => getComputedStyle(element).opacity)), {
     message: "the CTA should finish appearing as the morph starts",
   }).toBeGreaterThan(0.95);
 
-  await expect.poll(async () => (await device.boundingBox())?.width ?? Number.POSITIVE_INFINITY, {
-    message: "the device should finish in the phone layout",
-    timeout: 6_000,
-  }).toBeLessThan(200);
-  await expect(cta).toHaveCSS("opacity", "1");
-  await expect(cta).toBeVisible();
+  const minimumCombinedOpacity = await page.evaluate(async () => {
+    const desktop = document.querySelector<HTMLElement>('[data-web-experience-layer="desktop"]')!;
+    const phone = document.querySelector<HTMLElement>('[data-web-experience-layer="phone"]')!;
+    const nextFrame = () => new Promise<void>((resolve) => requestAnimationFrame(() => resolve()));
+    let minimum = 1;
+
+    while (Number(getComputedStyle(phone).opacity) < 0.99) {
+      const desktopOpacity = Number(getComputedStyle(desktop).opacity);
+      const phoneOpacity = Number(getComputedStyle(phone).opacity);
+      minimum = Math.min(minimum, 1 - (1 - desktopOpacity) * (1 - phoneOpacity));
+      await nextFrame();
+    }
+
+    return minimum;
+  });
+
+  expect(minimumCombinedOpacity).toBeGreaterThan(0.7);
+  await expect(phoneLayer).toHaveCSS("opacity", "1");
+  await expect(phoneCta).toBeVisible();
 });
 
 test("starts the phone morph as soon as the desktop build finishes", async ({ page }) => {
@@ -66,12 +84,12 @@ test("starts the phone morph as soon as the desktop build finishes", async ({ pa
 
   const timing = await page.evaluate(async () => {
     const nextFrame = () => new Promise<void>((resolve) => requestAnimationFrame(() => resolve()));
-    let device = document.querySelector("[data-web-experience-device]");
-    let cta = document.querySelector('[data-web-experience-part="cta"]');
+    let device = document.querySelector('[data-web-experience-layer="desktop"] [data-web-experience-device]');
+    let cta = document.querySelector('[data-web-experience-layer="desktop"] [data-web-experience-part="cta"]');
     while (!device || !cta) {
       await nextFrame();
-      device = document.querySelector("[data-web-experience-device]");
-      cta = document.querySelector('[data-web-experience-part="cta"]');
+      device = document.querySelector('[data-web-experience-layer="desktop"] [data-web-experience-device]');
+      cta = document.querySelector('[data-web-experience-layer="desktop"] [data-web-experience-part="cta"]');
     }
 
     const startedAt = performance.now();
@@ -101,117 +119,106 @@ test("morphs the desktop hero into the phone without snapping or collapsing", as
   await page.goto("/services/websites-apps", { waitUntil: "commit" });
 
   const result = await page.evaluate(async () => {
-    const selectors = {
-      device: "[data-web-experience-device]",
-      accent: '[data-web-experience-part="accent"]',
-      headline: '[data-web-experience-part="headline"]',
-      cta: '[data-web-experience-part="cta"]',
-      image: '[data-web-experience-part="image"]',
-    } as const;
     const nextFrame = () => new Promise<void>((resolve) => requestAnimationFrame(() => resolve()));
+    let desktopLayer = document.querySelector<HTMLElement>('[data-web-experience-layer="desktop"]');
+    let phoneLayer = document.querySelector<HTMLElement>('[data-web-experience-layer="phone"]');
+    let desktopDevice = desktopLayer?.querySelector("[data-web-experience-device]");
+    let phoneDevice = phoneLayer?.querySelector("[data-web-experience-device]");
+    while (!desktopLayer || !phoneLayer || !desktopDevice || !phoneDevice) {
+      await nextFrame();
+      desktopLayer = document.querySelector<HTMLElement>('[data-web-experience-layer="desktop"]');
+      phoneLayer = document.querySelector<HTMLElement>('[data-web-experience-layer="phone"]');
+      desktopDevice = desktopLayer?.querySelector("[data-web-experience-device]");
+      phoneDevice = phoneLayer?.querySelector("[data-web-experience-device]");
+    }
 
-    while (!Object.values(selectors).every((selector) => document.querySelector(selector))) await nextFrame();
-
-    const frames: Array<{ time: number; rects: Record<keyof typeof selectors, { x: number; y: number; width: number; height: number }> }> = [];
+    const frames: Array<{
+      desktop: { x: number; y: number; width: number; height: number };
+      phone: { x: number; y: number; width: number; height: number };
+      combinedOpacity: number;
+    }> = [];
     const startedAt = performance.now();
     let reachedDesktop = false;
-    let morphTransforms: { headline: string; image: string } | undefined;
 
     while (performance.now() - startedAt < 7_000) {
-      const rects = Object.fromEntries(
-        Object.entries(selectors).map(([part, selector]) => {
-          const { x, y, width, height } = document.querySelector(selector)!.getBoundingClientRect();
-          return [part, { x, y, width, height }];
-        }),
-      ) as Record<keyof typeof selectors, { x: number; y: number; width: number; height: number }>;
-
-      if (rects.device.width > 400) reachedDesktop = true;
-      if (reachedDesktop && rects.device.width < 400) {
-        frames.push({ time: performance.now() - startedAt, rects });
-        if (!morphTransforms) {
-          morphTransforms = {
-            headline: getComputedStyle(document.querySelector(selectors.headline)!).transform,
-            image: getComputedStyle(document.querySelector(selectors.image)!).transform,
-          };
-        }
+      const desktop = desktopDevice.getBoundingClientRect();
+      const phone = phoneDevice.getBoundingClientRect();
+      if (desktop.width > 400) reachedDesktop = true;
+      if (reachedDesktop && desktop.width < 400) {
+        const desktopOpacity = Number(getComputedStyle(desktopLayer).opacity);
+        const phoneOpacity = Number(getComputedStyle(phoneLayer).opacity);
+        frames.push({
+          desktop: { x: desktop.x, y: desktop.y, width: desktop.width, height: desktop.height },
+          phone: { x: phone.x, y: phone.y, width: phone.width, height: phone.height },
+          combinedOpacity: 1 - (1 - desktopOpacity) * (1 - phoneOpacity),
+        });
       }
-      if (frames.length > 20 && rects.device.width < 190) break;
+      if (frames.length > 20 && desktop.width < 190) break;
       await nextFrame();
     }
 
-    let largestVelocity = 0;
-    for (let index = 1; index < frames.length; index += 1) {
-      const previous = frames[index - 1];
-      const current = frames[index];
-      const elapsedSeconds = (current.time - previous.time) / 1_000;
-      if (elapsedSeconds <= 0 || elapsedSeconds > 0.05) continue;
-
-      for (const part of ["accent", "headline", "cta", "image"] as const) {
-        const before = previous.rects[part];
-        const after = current.rects[part];
-        const change = Math.max(
-          Math.abs(after.x - before.x),
-          Math.abs(after.y - before.y),
-          Math.abs(after.width - before.width),
-          Math.abs(after.height - before.height),
-        );
-        largestVelocity = Math.max(largestVelocity, change / elapsedSeconds);
-      }
+    let largestLayerMismatch = 0;
+    for (const current of frames) {
+      largestLayerMismatch = Math.max(
+        largestLayerMismatch,
+        Math.abs(current.desktop.x - current.phone.x),
+        Math.abs(current.desktop.y - current.phone.y),
+        Math.abs(current.desktop.width - current.phone.width),
+        Math.abs(current.desktop.height - current.phone.height),
+      );
     }
 
-    return { frames, largestVelocity, morphTransforms };
+    const animatedProperties = [desktopLayer, phoneLayer].flatMap((layer) => layer.getAnimations({ subtree: true }).flatMap((animation) => {
+      const keyframes = (animation.effect as KeyframeEffect | null)?.getKeyframes() ?? [];
+      return keyframes.flatMap((keyframe) => Object.keys(keyframe));
+    })).filter((property) => !["offset", "computedOffset", "easing", "composite"].includes(property));
+
+    return { animatedProperties: [...new Set(animatedProperties)].sort(), frames, largestLayerMismatch };
   });
 
   expect(result.frames.length).toBeGreaterThan(20);
-  expect(result.largestVelocity).toBeLessThan(1_000);
-  expect(result.morphTransforms).toEqual({ headline: "none", image: "none" });
-
-  for (const { rects } of result.frames) {
-    for (const part of ["accent", "headline", "cta", "image"] as const) {
-      const element = rects[part];
-      expect(element.width).toBeGreaterThan(5);
-      expect(element.height).toBeGreaterThan(3);
-      expect(element.x).toBeGreaterThanOrEqual(rects.device.x - 2);
-      expect(element.x + element.width).toBeLessThanOrEqual(rects.device.x + rects.device.width + 2);
-      expect(element.y).toBeGreaterThanOrEqual(rects.device.y - 2);
-      expect(element.y + element.height).toBeLessThanOrEqual(rects.device.y + rects.device.height + 2);
-    }
-  }
+  expect(result.largestLayerMismatch).toBeLessThan(2);
+  expect(result.animatedProperties).toEqual(["opacity", "transform"]);
+  expect(Math.min(...result.frames.map(({ combinedOpacity }) => combinedOpacity))).toBeGreaterThan(0.7);
 });
 
 test("centers the URL vertically in the desktop and phone browser bars", async ({ page }) => {
-  const measureCenterOffset = () => page.evaluate(() => {
-    const device = document.querySelector("[data-web-experience-device]")!.getBoundingClientRect();
-    const divider = document.querySelector("[data-web-experience-divider]")!.getBoundingClientRect();
-    const url = document.querySelector("[data-web-experience-url]")!.getBoundingClientRect();
+  const measureCenterOffset = (variant: "desktop" | "phone") => page.evaluate((sceneVariant) => {
+    const layer = document.querySelector(`[data-web-experience-layer="${sceneVariant}"]`)!;
+    const device = layer.querySelector("[data-web-experience-device]")!.getBoundingClientRect();
+    const divider = layer.querySelector("[data-web-experience-divider]")!.getBoundingClientRect();
+    const url = layer.querySelector("[data-web-experience-url]")!.getBoundingClientRect();
     return Math.abs((device.top + divider.top) / 2 - (url.top + url.height / 2));
-  });
+  }, variant);
 
   await page.goto("/services/websites-apps");
-  const device = page.locator("[data-web-experience-device]");
-  const url = page.locator("[data-web-experience-url]");
-  await expect.poll(async () => (await device.boundingBox())?.width ?? 0).toBeGreaterThan(400);
-  await expect.poll(async () => Number(await url.evaluate((element) => getComputedStyle(element).opacity))).toBeGreaterThan(0.99);
-  expect(await measureCenterOffset()).toBeLessThan(1.5);
+  const desktopLayer = page.locator('[data-web-experience-layer="desktop"]');
+  const desktopDevice = desktopLayer.locator("[data-web-experience-device]");
+  await expect.poll(async () => (await desktopDevice.boundingBox())?.width ?? 0).toBeGreaterThan(400);
+  await expect.poll(async () => Number(await desktopLayer.evaluate((element) => getComputedStyle(element).opacity))).toBeGreaterThan(0.99);
+  await expect.poll(() => measureCenterOffset("desktop")).toBeLessThan(1.5);
 
   await page.emulateMedia({ reducedMotion: "reduce" });
   await page.reload();
-  await expect.poll(async () => (await device.boundingBox())?.width ?? Number.POSITIVE_INFINITY).toBeLessThan(200);
-  expect(await measureCenterOffset()).toBeLessThan(1.5);
+  const phoneLayer = page.locator('[data-web-experience-layer="phone"]');
+  const phoneDevice = phoneLayer.locator("[data-web-experience-device]");
+  await expect.poll(async () => (await phoneDevice.boundingBox())?.width ?? Number.POSITIVE_INFINITY).toBeLessThan(200);
+  await expect.poll(() => measureCenterOffset("phone")).toBeLessThan(1.5);
 });
 
 test("keeps the inquiry CTA at full scale in the phone layout", async ({ page }) => {
   await page.emulateMedia({ reducedMotion: "reduce" });
   await page.goto("/services/websites-apps");
 
-  const cta = page.locator('[data-web-experience-part="cta"]');
-  const ctaLabel = page.locator("[data-web-experience-cta-label]");
-  const ctaBackground = page.locator("[data-web-experience-cta-bg]");
-  const device = page.locator("[data-web-experience-device]");
-  const primaryLine = page.locator('[data-web-experience-part="primary-line"]');
-  const image = page.locator('[data-web-experience-part="image"]');
-  const notch = page.locator("[data-web-experience-notch]");
-  const homeIndicator = page.locator("[data-web-experience-home-indicator]");
+  const phoneLayer = page.locator('[data-web-experience-layer="phone"]');
+  const cta = phoneLayer.locator('[data-web-experience-part="cta"]');
+  const ctaLabel = phoneLayer.locator("[data-web-experience-cta-label]");
+  const ctaBackground = phoneLayer.locator("[data-web-experience-cta-bg]");
+  const device = phoneLayer.locator("[data-web-experience-device]");
+  const primaryLine = phoneLayer.locator('[data-web-experience-part="primary-line"]');
+  const image = phoneLayer.locator('[data-web-experience-part="image"]');
+  const notch = phoneLayer.locator("[data-web-experience-notch]");
+  const homeIndicator = phoneLayer.locator("[data-web-experience-home-indicator]");
 
   await expect(cta).toBeVisible();
   await expect(cta).toHaveCSS("transform", "none");

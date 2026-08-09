@@ -136,7 +136,16 @@ export function SiteHeader({ locale, pathname }: { locale: Locale; pathname: str
   }, [open]);
 
   useEffect(() => {
-    const focusTimer = open ? window.setTimeout(() => closeRef.current?.focus(), 50) : undefined;
+    if (!open) return;
+
+    const focusTimer = window.setTimeout(() => {
+      const dialog = document.getElementById("site-menu");
+      if (!dialog?.contains(document.activeElement)) closeRef.current?.focus();
+    }, 50);
+    return () => window.clearTimeout(focusTimer);
+  }, [open]);
+
+  useEffect(() => {
     const onKeyDown = (event: KeyboardEvent) => {
       if (event.key === "Escape") {
         if (open && mobileServicesOpen) {
@@ -176,7 +185,6 @@ export function SiteHeader({ locale, pathname }: { locale: Locale; pathname: str
     document.addEventListener("keydown", onKeyDown);
     document.addEventListener("pointerdown", onPointerDown);
     return () => {
-      if (focusTimer !== undefined) window.clearTimeout(focusTimer);
       if (closeServicesTimer.current !== undefined) window.clearTimeout(closeServicesTimer.current);
       document.removeEventListener("keydown", onKeyDown);
       document.removeEventListener("pointerdown", onPointerDown);
