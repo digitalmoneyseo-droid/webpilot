@@ -1,7 +1,7 @@
 import type { Locale } from "./config";
 import { frMessages } from "./translations-fr";
 
-export const deMessages = {
+const deMessages = {
   "nav.services": "Leistungen",
   "nav.about": "Über uns",
   "nav.contact": "Kontakt",
@@ -75,11 +75,9 @@ export const deMessages = {
   "contact.formSuccessCopy": "Wir prüfen deine Angaben und antworten an {email}.",
   "contact.formAnother": "Weitere Anfrage senden",
   "contact.formNotProvided": "Nicht angegeben",
-  "contact.formOpened": "Dein E-Mail-Programm sollte jetzt geöffnet sein. Prüfe die Nachricht und sende sie ab, wenn alles passt.",
   "contact.formSubject": "Projektanfrage",
   "contact.formBodyName": "Name",
   "contact.formBodyEmail": "E-Mail",
-  "contact.formBodyService": "Service",
   "contact.formBodyMessage": "Projekt und Ziel",
   "notFound.title": "Dieses Signal ist verloren gegangen.",
   "notFound.copy": "Die gesuchte Seite existiert nicht oder wurde verschoben.",
@@ -103,7 +101,7 @@ export const deMessages = {
 
 export type MessageKey = keyof typeof deMessages;
 
-export const enMessages: Readonly<Record<MessageKey, string>> = {
+const enMessages: Readonly<Record<MessageKey, string>> = {
   "nav.services": "Services",
   "nav.about": "About us",
   "nav.contact": "Contact",
@@ -177,11 +175,9 @@ export const enMessages: Readonly<Record<MessageKey, string>> = {
   "contact.formSuccessCopy": "We will review the details and reply to {email}.",
   "contact.formAnother": "Send another enquiry",
   "contact.formNotProvided": "Not provided",
-  "contact.formOpened": "Your email app should now be open. Review the message and send it when everything looks right.",
   "contact.formSubject": "Project inquiry",
   "contact.formBodyName": "Name",
   "contact.formBodyEmail": "Email",
-  "contact.formBodyService": "Service",
   "contact.formBodyMessage": "Project and goal",
   "notFound.title": "That signal got lost.",
   "notFound.copy": "The page you’re looking for does not exist or has moved.",

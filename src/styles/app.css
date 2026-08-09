@@ -10,10 +10,19 @@
   --color-canvas: var(--bg);
   --color-ink: var(--ink);
   --color-muted: var(--muted);
+  --color-subtle: var(--subtle);
   --color-line: var(--line);
+  --color-line-strong: var(--line-strong);
   --color-surface: var(--surface);
   --color-surface-subtle: var(--surface-subtle);
+  --color-surface-selected: var(--surface-selected);
   --color-inverse: var(--inverse);
+  --color-inverse-muted: var(--inverse-muted);
+  --color-inverse-surface: var(--inverse-surface);
+  --color-inverse-surface-raised: var(--inverse-surface-raised);
+  --color-inverse-line: var(--inverse-line);
+  --color-interaction: var(--interaction);
+  --color-interaction-strong: var(--interaction-strong);
   --color-dark: var(--dark);
   --color-dark-muted: var(--dark-muted);
   --color-accent: var(--accent);
@@ -21,13 +30,17 @@
   --color-error: var(--error);
 
   --radius-pill: var(--ds-radius-pill);
+  --radius-inset: var(--ds-radius-inset);
   --radius-card: var(--ds-radius-card);
   --radius-control: var(--ds-radius-control);
   --radius-shell: var(--ds-radius-shell);
 
   --shadow-surface: var(--shadow-surface);
   --shadow-surface-hover: var(--shadow-surface-hover);
+  --shadow-floating: var(--shadow-floating);
+  --shadow-accent-surface: var(--shadow-accent-surface);
   --shadow-dark-surface: var(--shadow-dark-surface);
+  --shadow-dark-surface-hover: var(--shadow-dark-surface-hover);
 
   --text-caption: var(--type-caption);
   --text-caption--line-height: var(--leading-caption);
@@ -102,8 +115,14 @@
   --spacing-section: var(--section-space);
   --spacing-section-compact: var(--section-space-compact);
   --spacing-heading-gap: var(--section-heading-gap);
+  --spacing-page-title: var(--page-title-top);
+  --spacing-split: var(--layout-gap);
+  --spacing-grid: var(--grid-gap);
+  --spacing-content-stack: var(--content-stack-space);
+  --spacing-menu: var(--menu-gutter);
 
   --spacing-card-padding: var(--card-padding);
+  --spacing-card-fluid: var(--card-padding-fluid);
   --spacing-control-x: var(--control-padding-x);
   --spacing-control-y: var(--input-padding-y);
 

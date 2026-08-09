@@ -3,7 +3,6 @@
 import { Crown, Search } from "lucide-react";
 import { motion, useInView } from "motion/react";
 import { useEffect, useRef, useState } from "react";
-import { Confetti } from "@/components/confetti";
 import { getOptimizationScene, OPTIMIZATION_FLIGHT_DELAY_MS, OPTIMIZATION_FLIGHT_DURATION_MS, OPTIMIZATION_RESULTS_DELAY_MS, OPTIMIZATION_TYPING_DELAY_MS, type OptimizationScene } from "@/components/offer-animations/optimization-scene";
 import { useHydratedReducedMotion } from "@/components/offer-animations/use-hydrated-reduced-motion";
 import type { OptimizationAnimationCopy } from "@/i18n/services";
@@ -47,6 +46,7 @@ const resultSites = [
 
 export function OptimizationSearchAnimation({ copy }: { copy: OptimizationAnimationCopy }) {
   const containerRef = useRef<HTMLDivElement>(null);
+  const confettiRef = useRef<HTMLCanvasElement>(null);
   const resultsViewportRef = useRef<HTMLDivElement>(null);
   const isInView = useInView(containerRef, { once: true, amount: 0.55 });
   const reducedMotion = useHydratedReducedMotion();
@@ -57,6 +57,24 @@ export function OptimizationSearchAnimation({ copy }: { copy: OptimizationAnimat
   const flightStarted = reducedMotion || scene.flightStarted;
   const currentRank = reducedMotion ? 1 : scene.rank;
   const winnerLanded = currentRank === 1;
+
+  useEffect(() => {
+    const canvas = confettiRef.current;
+    if (!canvas || !winnerLanded || reducedMotion) return;
+
+    let disposed = false;
+    let reset: (() => void) | undefined;
+    void import("canvas-confetti").then(({ default: confetti }) => {
+      if (disposed) return;
+      const instance = confetti.create(canvas, { resize: true, useWorker: false });
+      reset = instance.reset;
+      void instance(WINNER_CONFETTI_OPTIONS);
+    });
+    return () => {
+      disposed = true;
+      reset?.();
+    };
+  }, [reducedMotion, winnerLanded]);
 
   useEffect(() => {
     const viewport = resultsViewportRef.current;
@@ -79,7 +97,7 @@ export function OptimizationSearchAnimation({ copy }: { copy: OptimizationAnimat
   const resultsReady = resultsVisible && resultsHeight > 0;
 
   return <div ref={containerRef} data-optimization-animation className="relative grid h-full min-h-0 min-w-0 w-full grid-cols-1 grid-rows-[auto_minmax(0,1fr)]">
-    {winnerLanded && !reducedMotion ? <Confetti data-optimization-confetti aria-hidden="true" className="pointer-events-none absolute -inset-x-10 -inset-y-10 z-40 h-[calc(100%+5rem)] w-[calc(100%+5rem)]" options={WINNER_CONFETTI_OPTIONS} /> : null}
+    {winnerLanded && !reducedMotion ? <canvas ref={confettiRef} data-optimization-confetti aria-hidden="true" className="pointer-events-none absolute -inset-x-10 -inset-y-10 z-40 h-[calc(100%+5rem)] w-[calc(100%+5rem)]" /> : null}
     <div>
       <div className="flex min-w-0 min-h-11 items-center gap-3 rounded-full border border-[var(--ds-gray-alpha-200)] bg-white px-4 shadow-[0_2px_8px_rgb(0_0_0/.06)] max-[640px]:min-h-9 max-[640px]:gap-2 max-[640px]:px-3">
         <Search className="size-4 shrink-0 text-[var(--ds-gray-700)]" strokeWidth={1.8} />

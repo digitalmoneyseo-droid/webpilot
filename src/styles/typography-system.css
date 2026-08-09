@@ -3,9 +3,9 @@
  * Component styling lives with the component as Tailwind utilities.
  */
 :root {
-  /* Type values mirror the measured t3.codes hierarchy. */
   color-scheme: light;
 
+  /* Primitive palette. Components consume semantic aliases below. */
   --ds-background-100: hsla(0, 0%, 100%, 1);
   --ds-background-200: hsla(0, 0%, 98%, 1);
   --ds-gray-100: hsla(0, 0%, 95%, 1);
@@ -40,33 +40,70 @@
   --font-mono-system: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, monospace;
   --font-mono: var(--font-mono-system);
 
-  --bg: #FAF9F6;
-  --surface: var(--ds-background-100);
-  --surface-subtle: var(--ds-background-200);
-  --ink: var(--ds-gray-1000);
-  --muted: var(--ds-gray-900);
-  --line: var(--ds-gray-alpha-200);
-  --white: var(--ds-background-100);
-  --inverse: var(--ds-background-100);
-  --dark: #000;
-  --dark-muted: var(--ds-gray-700);
-  --accent: var(--ds-blue-700);
+  /* Semantic color roles. */
+  --color-canvas: #faf9f6;
+  --color-surface-primary: var(--ds-background-100);
+  --color-surface-secondary: var(--ds-background-200);
+  --color-surface-selected: #e5e5e2;
+  --color-surface-inverse: #101010;
+  --color-surface-inverse-raised: #1f1f1f;
+  --color-surface-inverse-strong: #000;
+  --color-surface-inverse-hover: #292929;
+  --color-text-primary: var(--ds-gray-1000);
+  --color-text-secondary: var(--ds-gray-900);
+  --color-text-tertiary: #73736f;
+  --color-text-inverse: var(--ds-background-100);
+  --color-text-inverse-secondary: #929292;
+  --color-border-subtle: var(--ds-gray-alpha-200);
+  --color-border-emphasis: var(--ds-gray-alpha-300);
+  --color-border-strong: #a7a7a2;
+  --color-border-inverse: #ffffff21;
+  --color-interaction-subtle: var(--ds-gray-alpha-100);
+  --color-interaction-strong: var(--ds-gray-alpha-200);
+  --color-interactive-primary: var(--ds-blue-800);
+  --color-interactive-focus: var(--ds-blue-700);
+  --color-feedback-error: #b42318;
+
+  /* Compatibility aliases used by the Tailwind theme. */
+  --bg: var(--color-canvas);
+  --surface: var(--color-surface-primary);
+  --surface-subtle: var(--color-surface-secondary);
+  --surface-selected: var(--color-surface-selected);
+  --ink: var(--color-text-primary);
+  --muted: var(--color-text-secondary);
+  --subtle: var(--color-text-tertiary);
+  --line: var(--color-border-subtle);
+  --line-strong: var(--color-border-emphasis);
+  --white: var(--color-text-inverse);
+  --inverse: var(--color-text-inverse);
+  --inverse-muted: var(--color-text-inverse-secondary);
+  --inverse-surface: var(--color-surface-inverse);
+  --inverse-surface-raised: var(--color-surface-inverse-raised);
+  --inverse-line: var(--color-border-inverse);
+  --interaction: var(--color-interaction-subtle);
+  --interaction-strong: var(--color-interaction-strong);
+  --dark: var(--color-surface-inverse-strong);
+  --dark-muted: var(--color-text-inverse-secondary);
+  --accent: var(--color-interactive-primary);
   --accent-strong: var(--ds-blue-800);
   --accent-soft: var(--ds-blue-200);
   --accent-soft-strong: var(--ds-blue-300);
-  --focus: var(--ds-focus-color);
-  --error: #ef4444;
+  --focus: var(--color-interactive-focus);
+  --error: var(--color-feedback-error);
   --wave-blue: var(--ds-blue-700);
 
   --ds-radius-pill: 999px;
+  --ds-radius-inset: 8px;
   --ds-radius-card: 12px;
-  --ds-radius-control: 6px;
-  --ds-radius-shell: 12px;
+  --ds-radius-control: 12px;
+  --ds-radius-shell: 16px;
   --radius-pill: var(--ds-radius-pill);
+  --radius-inset: var(--ds-radius-inset);
   --radius-card: var(--ds-radius-card);
   --radius-control: var(--ds-radius-control);
   --radius-shell: var(--ds-radius-shell);
   --border-subtle: var(--line);
+  --border-strong: var(--color-border-strong);
 
   --control-height-sm: 32px;
   --control-height-md: 36px;
@@ -79,60 +116,62 @@
   --ease-in-out: ease-in-out;
   --shadow-surface: var(--ds-shadow-border);
   --shadow-surface-hover: var(--ds-shadow-border-medium);
+  --shadow-floating: var(--ds-shadow-menu);
+  --shadow-accent-surface: inset 0 0 0 1px var(--ds-blue-300);
   --shadow-dark-surface: 0 0 0 1px #ffffff25;
   --shadow-dark-surface-hover: 0 0 0 1px #ffffff3d;
 
   --type-caption: 0.8125rem;
   --type-meta: 0.8125rem;
-  --type-mono-meta: 0.6875rem;
+  --type-mono-meta: 0.75rem;
   --type-small: 0.875rem;
   --type-control: 0.9375rem;
-  --type-label: 0.6875rem;
+  --type-label: 0.75rem;
   --type-navigation: 0.875rem;
   --type-card-body: 0.9375rem;
   --type-body: 1rem;
   --type-body-lg: 1.125rem;
   --type-cta-copy: 1.125rem;
-  --type-lead: clamp(1rem, 1.4vw, 1.1875rem);
+  --type-lead: clamp(1.0625rem, calc(1.02rem + .25vw), 1.25rem);
   --type-heading-sm: 1.25rem;
-  --type-heading-md: 1.75rem;
-  --type-heading-lg: clamp(2rem, 4vw, 3rem);
-  --type-display-sm: clamp(2.5rem, 6vw, 4.5rem);
-  --type-display-lg: clamp(2.375rem, 5.6vw, 4.75rem);
+  --type-heading-md: 1.5rem;
+  --type-heading-lg: clamp(2rem, calc(1.8rem + .85vw), 2.5rem);
+  --type-display-sm: clamp(2.5rem, calc(2.02rem + 2.05vw), 3.75rem);
+  --type-display-lg: clamp(2.75rem, calc(2.08rem + 2.85vw), 4.5rem);
   --leading-caption: 1.5;
   --leading-meta: 1.5;
   --leading-mono-meta: 1.5;
   --leading-small: 1.5;
   --leading-control: 1.5;
-  --leading-label: 1.5;
+  --leading-label: 1.333;
   --leading-navigation: 1.5;
   --leading-card-body: 1.5;
   --leading-body: 1.5rem;
   --leading-body-lg: 1.5;
-  --leading-cta-copy: 1.55;
-  --leading-lead: 1.55;
-  --leading-heading-sm: 1.05;
-  --leading-heading-md: 1.05;
-  --leading-heading-lg: 1.05;
-  --leading-display-sm: 1.05;
-  --leading-display-lg: 1.05;
-  --tracking-caption: -0.005em;
+  --leading-cta-copy: 1.5;
+  --leading-lead: 1.5;
+  --leading-heading-sm: 1.25;
+  --leading-heading-md: 1.2;
+  --leading-heading-lg: 1.08;
+  --leading-display-sm: 1.04;
+  --leading-display-lg: 1.02;
+  --tracking-caption: 0;
   --tracking-meta: 0;
   --tracking-mono-meta: 0;
-  --tracking-small: -0.01em;
+  --tracking-small: 0;
   --tracking-control: 0;
-  --tracking-label: 0.14em;
-  --tracking-navigation: -0.01em;
+  --tracking-label: 0.12em;
+  --tracking-navigation: -0.005em;
   --tracking-card-body: 0;
   --tracking-body: 0;
-  --tracking-body-lg: -0.005em;
-  --tracking-cta-copy: -0.005em;
-  --tracking-lead: -0.005em;
-  --tracking-heading-sm: -0.035em;
-  --tracking-heading-md: -0.035em;
+  --tracking-body-lg: 0;
+  --tracking-cta-copy: 0;
+  --tracking-lead: -0.01em;
+  --tracking-heading-sm: -0.015em;
+  --tracking-heading-md: -0.025em;
   --tracking-heading-lg: -0.035em;
-  --tracking-display-sm: -0.035em;
-  --tracking-display-lg: -0.035em;
+  --tracking-display-sm: -0.04em;
+  --tracking-display-lg: -0.045em;
 
   --measure-reading: 68ch;
   --measure-narrow: 54ch;
@@ -143,8 +182,24 @@
   --section-space-compact: clamp(3rem, 4vw, 4rem);
   --section-heading-gap: clamp(2rem, 4vw, 3rem);
   --page-title-top: clamp(8rem, 12vw, 10rem);
+  --layout-gap: clamp(2.5rem, 7vw, 6rem);
+  --grid-gap: clamp(1.5rem, 4vw, 4rem);
+  --card-padding-fluid: clamp(1.5rem, 4vw, 2.5rem);
+  --content-stack-space: clamp(5rem, 8vw, 7rem);
+  --menu-gutter: clamp(1.5rem, 5vw, 5rem);
+  --space-0: 0;
+  --space-1: .25rem;
+  --space-2: .5rem;
   --space-3: .75rem;
   --space-4: 1rem;
+  --space-5: 1.25rem;
+  --space-6: 1.5rem;
+  --space-8: 2rem;
+  --space-10: 2.5rem;
+  --space-12: 3rem;
+  --space-16: 4rem;
+  --space-20: 5rem;
+  --space-24: 6rem;
 }
 
 html {
@@ -187,13 +242,8 @@ button {
 @media (max-width: 600px) {
   :root {
     --page-gutter: 1.5rem;
+    --page-title-top: 6.5rem;
     --section-space: 4rem;
     --section-space-compact: 3rem;
-  }
-}
-
-@media (max-width: 820px) {
-  :root {
-    --type-display-lg: clamp(2.5rem, 11vw, 3.5rem);
   }
 }

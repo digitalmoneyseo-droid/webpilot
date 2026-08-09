@@ -10,14 +10,14 @@ type Status = "idle" | "sending" | "success";
 
 type ServiceOption = { id: string; name: string };
 
-const fieldControlClass = "w-full rounded-[12px] border-0 bg-[var(--ds-background-200)] px-4 text-ink shadow-surface transition-[background-color,box-shadow,scale] duration-150 ease-[var(--ease-out)] placeholder:text-[#8f8f8b] hover:bg-white hover:shadow-surface-hover focus-visible:bg-white focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-focus aria-invalid:outline-2 aria-invalid:outline-error motion-reduce:transition-none";
+const fieldControlClass = "w-full rounded-control border-0 bg-surface-subtle px-4 text-ink shadow-surface transition-[background-color,box-shadow,scale] duration-150 ease-[var(--ease-out)] placeholder:text-subtle hover:bg-white hover:shadow-surface-hover focus-visible:bg-white focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-focus aria-invalid:outline-2 aria-invalid:outline-error motion-reduce:transition-none";
 
 const serviceOptionStyles: Record<string, { selected: string; icon: string }> = {
   "websites-apps": { selected: "peer-checked:bg-[#eaf2ff] peer-checked:text-[#245bb8]", icon: "bg-[#eaf2ff] text-[#245bb8]" },
   "seo-ai-visibility": { selected: "peer-checked:bg-[#e9f7ef] peer-checked:text-[#26734d]", icon: "bg-[#e9f7ef] text-[#26734d]" },
   "paid-campaigns": { selected: "peer-checked:bg-[#fff8e8] peer-checked:text-[#9a651b]", icon: "bg-[#fff8e8] text-[#9a651b]" },
   "ai-automation": { selected: "peer-checked:bg-[#f2edff] peer-checked:text-[#6650a6]", icon: "bg-[#f2edff] text-[#6650a6]" },
-  "not-sure": { selected: "peer-checked:bg-[#e5e5e2] peer-checked:text-ink peer-checked:shadow-surface-hover", icon: "bg-white text-[#73736f]" },
+  "not-sure": { selected: "peer-checked:bg-surface-selected peer-checked:text-ink peer-checked:shadow-surface-hover", icon: "bg-white text-subtle" },
 };
 
 const serviceIcons = {
@@ -159,7 +159,7 @@ export function ContactForm({
   if (status === "success") {
     return (
       <div className="flex min-h-[32rem] flex-col items-start justify-center" role="status" aria-live="polite">
-        <span className="mb-6 grid size-12 place-items-center rounded-[12px] bg-ink text-white shadow-surface" aria-hidden="true">
+        <span className="mb-6 grid size-12 place-items-center rounded-control bg-ink text-white shadow-surface" aria-hidden="true">
           <Check className="size-5" strokeWidth={2} />
         </span>
         <h2 className="m-0 max-w-[32rem] text-heading-lg text-ink">{copy.successTitle}</h2>
@@ -167,7 +167,7 @@ export function ContactForm({
           {copy.successCopy.replace("{email}", submittedEmail)}
         </p>
         <button
-          className="mt-8 rounded-lg bg-[var(--ds-gray-alpha-100)] px-3 py-2 text-small font-medium text-ink transition-[background-color,scale] duration-150 hover:bg-[var(--ds-gray-alpha-200)] active:scale-[.96] motion-reduce:transition-none motion-reduce:active:scale-100"
+          className="mt-8 rounded-inset bg-interaction px-3 py-2 text-small font-medium text-ink transition-[background-color,scale] duration-150 hover:bg-interaction-strong active:scale-[.96] motion-reduce:transition-none motion-reduce:active:scale-100"
           type="button"
           onClick={() => setStatus("idle")}
         >
@@ -240,8 +240,8 @@ export function ContactForm({
                 defaultChecked={selectedServiceId === service.id || (!selectedServiceId && service.id === "not-sure")}
                 onChange={() => clearError("service")}
               />
-              <span className={`flex min-h-14 items-center gap-3 rounded-[12px] bg-[var(--ds-background-200)] p-2 text-small text-muted shadow-surface transition-[background-color,color,box-shadow,scale] duration-150 ease-[var(--ease-out)] group-hover:bg-white group-hover:shadow-surface-hover peer-focus-visible:outline-2 peer-focus-visible:outline-offset-2 peer-focus-visible:outline-focus peer-active:scale-[.96] motion-reduce:transition-none motion-reduce:peer-active:scale-100 ${styles.selected}`}>
-                <span className={`grid size-9 shrink-0 place-items-center rounded-[9px] shadow-surface ${styles.icon}`} aria-hidden="true">
+              <span className={`flex min-h-14 items-center gap-3 rounded-control bg-surface-subtle p-2 text-small text-muted shadow-surface transition-[background-color,color,box-shadow,scale] duration-150 ease-[var(--ease-out)] group-hover:bg-white group-hover:shadow-surface-hover peer-focus-visible:outline-2 peer-focus-visible:outline-offset-2 peer-focus-visible:outline-focus peer-active:scale-[.96] motion-reduce:transition-none motion-reduce:peer-active:scale-100 ${styles.selected}`}>
+                <span className={`grid size-9 shrink-0 place-items-center rounded-inset shadow-surface ${styles.icon}`} aria-hidden="true">
                   <Icon className="size-4.5" strokeWidth={1.7} />
                 </span>
                 <span>{service.name}</span>
@@ -258,7 +258,7 @@ export function ContactForm({
           <button
             ref={budgetButtonRef}
             id="contact-budget"
-            className={`flex min-h-12 w-full cursor-pointer items-center justify-between gap-4 rounded-[12px] border-0 bg-[var(--ds-background-200)] px-4 text-left text-small shadow-surface transition-[background-color,box-shadow,scale] duration-150 ease-[var(--ease-out)] hover:bg-white hover:shadow-surface-hover active:scale-[.99] focus-visible:bg-white focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-focus data-[invalid=true]:outline-2 data-[invalid=true]:outline-error motion-reduce:transition-none motion-reduce:active:scale-100 ${selectedBudgetLabel ? "text-ink" : "text-muted"}`}
+            className={`flex min-h-12 w-full cursor-pointer items-center justify-between gap-4 rounded-control border-0 bg-surface-subtle px-4 text-left text-small shadow-surface transition-[background-color,box-shadow,scale] duration-150 ease-[var(--ease-out)] hover:bg-white hover:shadow-surface-hover active:scale-[.99] focus-visible:bg-white focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-focus data-[invalid=true]:outline-2 data-[invalid=true]:outline-error motion-reduce:transition-none motion-reduce:active:scale-100 ${selectedBudgetLabel ? "text-ink" : "text-muted"}`}
             type="button"
             aria-haspopup="listbox"
             aria-expanded={budgetOpen}
@@ -274,7 +274,7 @@ export function ContactForm({
             }}
           >
             <span>{selectedBudgetLabel ?? copy.budgetPlaceholder}</span>
-            <ChevronDown className={`size-4 shrink-0 text-[#73736f] transition-transform duration-200 ease-[var(--ease-out)] motion-reduce:transition-none ${budgetOpen ? "rotate-180" : ""}`} strokeWidth={1.8} aria-hidden="true" />
+            <ChevronDown className={`size-4 shrink-0 text-subtle transition-transform duration-200 ease-[var(--ease-out)] motion-reduce:transition-none ${budgetOpen ? "rotate-180" : ""}`} strokeWidth={1.8} aria-hidden="true" />
           </button>
           <div
             ref={budgetMenuRef}
@@ -285,11 +285,11 @@ export function ContactForm({
             aria-hidden={!budgetOpen}
             inert={!budgetOpen}
           >
-            <div className="rounded-[12px] bg-white p-1 shadow-surface">
+            <div className="rounded-control bg-white p-1 shadow-floating">
               {budgetOptions.map((option, index) => (
                 <button
                   key={option.id}
-                  className={`flex min-h-9 w-full cursor-pointer items-center justify-between gap-4 rounded-lg px-3 text-left text-small transition-[background-color,scale] duration-150 hover:bg-[var(--ds-gray-alpha-100)] active:scale-[.98] focus-visible:outline-2 focus-visible:outline-offset-0 focus-visible:outline-focus motion-reduce:transition-none motion-reduce:active:scale-100 ${selectedBudget === option.id ? "bg-[var(--ds-gray-alpha-100)] text-ink" : "text-muted"}`}
+                  className={`flex min-h-9 w-full cursor-pointer items-center justify-between gap-4 rounded-inset px-3 text-left text-small transition-[background-color,scale] duration-150 hover:bg-interaction active:scale-[.98] focus-visible:outline-2 focus-visible:outline-offset-0 focus-visible:outline-focus motion-reduce:transition-none motion-reduce:active:scale-100 ${selectedBudget === option.id ? "bg-interaction text-ink" : "text-muted"}`}
                   type="button"
                   role="option"
                   aria-selected={selectedBudget === option.id}

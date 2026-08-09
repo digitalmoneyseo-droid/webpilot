@@ -7,7 +7,7 @@ import { OfferAnimation } from "@/components/offer-animations/offer-animation";
 import { ServiceScopeGrid } from "@/components/pages/service-scope-grid";
 import { Reveal } from "@/components/reveal";
 import { SectionHeading } from "@/components/section-heading";
-import type { ServiceId } from "@/i18n/services";
+import { getServiceCopy, type ServiceId } from "@/i18n/services";
 import { localizePath, t, type Locale } from "@/lib/i18n";
 import { getServiceCatalog } from "@/lib/service-catalog";
 
@@ -25,8 +25,8 @@ export function ServicePage({ locale, serviceId }: { locale: Locale; serviceId: 
 
   return (
     <main id="main-content">
-      <section className="px-page pt-[var(--page-title-top)] pb-[clamp(4rem,8vw,7rem)] max-[600px]:pt-26">
-        <div className="mx-auto grid max-w-[76rem] grid-cols-[minmax(0,.92fr)_minmax(24rem,1.08fr)] items-center gap-[clamp(2.5rem,7vw,6.5rem)] max-[900px]:grid-cols-1">
+      <section className="px-page pt-page-title pb-section">
+        <div className="mx-auto grid max-w-layout grid-cols-[minmax(0,.92fr)_minmax(24rem,1.08fr)] items-center gap-split max-[900px]:grid-cols-1">
           <Reveal className="min-w-0 max-w-[39rem]">
             <p className="mb-5 text-small font-medium text-[var(--ds-blue-800)]">{copy.name}</p>
             <h1 className="m-0 text-display-sm text-balance">{copy.page.title}</h1>
@@ -34,7 +34,7 @@ export function ServicePage({ locale, serviceId }: { locale: Locale; serviceId: 
             <CtaButton href={contact} className="mt-8">{copy.page.finalCta}</CtaButton>
           </Reveal>
           <Reveal className="min-w-0" delay={70}>
-            <div className={`relative grid aspect-[1.1/1] min-h-[24rem] overflow-hidden rounded-card p-10 shadow-[var(--ds-shadow-border)] [&>*]:relative ${service.theme} max-[900px]:mx-auto max-[900px]:aspect-[4/3] max-[900px]:min-h-0 max-[900px]:w-full max-[900px]:max-w-[44rem] max-[600px]:h-[clamp(19rem,68vw,25rem)] max-[600px]:aspect-auto max-[600px]:p-4`} aria-hidden="true">
+            <div className={`relative grid aspect-[1.1/1] min-h-[24rem] overflow-hidden rounded-card p-10 shadow-surface [&>*]:relative ${service.theme} max-[900px]:mx-auto max-[900px]:aspect-[4/3] max-[900px]:min-h-0 max-[900px]:w-full max-[900px]:max-w-[44rem] max-[600px]:h-[clamp(19rem,68vw,25rem)] max-[600px]:aspect-auto max-[600px]:p-4`} aria-hidden="true">
               <OfferAnimation animation={service.animation} locale={locale} />
             </div>
           </Reveal>
@@ -45,7 +45,7 @@ export function ServicePage({ locale, serviceId }: { locale: Locale; serviceId: 
         <div className="mx-auto max-w-[70rem]">
           <SectionHeading title={copy.page.outcomesHeading} copy={copy.page.outcomesIntro} />
           <div className="grid grid-cols-[1.08fr_.92fr] gap-4 max-[760px]:grid-cols-1">
-            <Reveal className="row-span-2 flex min-h-[20rem] flex-col justify-between rounded-card bg-[var(--ds-blue-100)] p-[clamp(1.5rem,4vw,2.5rem)] shadow-[inset_0_0_0_1px_var(--ds-blue-300)] max-[760px]:min-h-0">
+            <Reveal className="row-span-2 flex min-h-[20rem] flex-col justify-between rounded-card bg-[var(--ds-blue-100)] p-card-fluid shadow-accent-surface max-[760px]:min-h-0">
               {(() => {
                 const Icon = outcomeIcons[0];
                 const item = copy.page.outcomes[0]!;
@@ -54,7 +54,7 @@ export function ServicePage({ locale, serviceId }: { locale: Locale; serviceId: 
             </Reveal>
             {copy.page.outcomes.slice(1).map((item, index) => {
               const Icon = outcomeIcons[index + 1]!;
-              return <Reveal className="flex min-h-[9.5rem] items-start gap-5 rounded-card bg-white p-6 shadow-[var(--ds-shadow-border)]" delay={(index + 1) * 50} key={item.title}><Icon className="mt-1 size-7 shrink-0" strokeWidth={1.7} aria-hidden="true" /><div><h3 className="m-0 text-heading-sm">{item.title}</h3><p className="mt-2 text-body text-muted">{item.copy}</p></div></Reveal>;
+              return <Reveal className="flex min-h-[9.5rem] items-start gap-5 rounded-card bg-white p-card-padding shadow-surface" delay={(index + 1) * 50} key={item.title}><Icon className="mt-1 size-7 shrink-0" strokeWidth={1.7} aria-hidden="true" /><div><h3 className="m-0 text-heading-sm">{item.title}</h3><p className="mt-2 text-body text-muted">{item.copy}</p></div></Reveal>;
             })}
           </div>
         </div>
@@ -70,8 +70,8 @@ export function ServicePage({ locale, serviceId }: { locale: Locale; serviceId: 
       <section className="bg-canvas px-page py-section">
         <div className="mx-auto max-w-[70rem]">
           <SectionHeading title={copy.page.processHeading} copy={copy.page.processIntro} align="center" />
-          <ol className="mx-auto grid max-w-[62rem] list-none grid-cols-3 gap-[clamp(1.5rem,4vw,4rem)] p-0 max-[760px]:grid-cols-1">
-            {copy.page.process.map((item, index) => <Reveal as="li" className="relative pt-7 before:absolute before:inset-x-0 before:top-0 before:h-px before:bg-[var(--ds-gray-alpha-300)]" delay={index * 50} key={item.title}><span className="font-mono text-small text-[var(--wave-blue)]" aria-hidden="true">{String(index + 1).padStart(2, "0")}</span><h3 className="mt-5 mb-0 text-heading-sm">{item.title}</h3><p className="mt-3 text-body text-muted">{item.copy}</p></Reveal>)}
+          <ol className="mx-auto grid max-w-[62rem] list-none grid-cols-3 gap-grid p-0 max-[760px]:grid-cols-1">
+            {copy.page.process.map((item, index) => <Reveal as="li" className="relative pt-7 before:absolute before:inset-x-0 before:top-0 before:h-px before:bg-line-strong" delay={index * 50} key={item.title}><span className="font-mono text-small text-[var(--wave-blue)]" aria-hidden="true">{String(index + 1).padStart(2, "0")}</span><h3 className="mt-5 mb-0 text-heading-sm">{item.title}</h3><p className="mt-3 text-body text-muted">{item.copy}</p></Reveal>)}
           </ol>
         </div>
       </section>
@@ -86,12 +86,12 @@ export function ServicePage({ locale, serviceId }: { locale: Locale; serviceId: 
         <div className="mx-auto max-w-[70rem]">
           <h2 className="m-0 text-heading-md">{t(locale, "service.otherServices")}</h2>
           <nav className="mt-6 grid grid-cols-3 gap-3 max-[760px]:grid-cols-1" aria-label={t(locale, "service.otherServices")}>
-            {related.map((entry) => <Link className="group flex min-h-24 items-center justify-between gap-4 rounded-card bg-white p-5 text-heading-sm shadow-[var(--ds-shadow-border)] transition-[transform,box-shadow] duration-200 hover:-translate-y-0.5 hover:shadow-surface-hover motion-reduce:transition-none motion-reduce:hover:translate-y-0" href={entry.href} key={entry.id}><span>{entry.copy.name}</span><ArrowUpRight className="size-5 shrink-0 transition-transform duration-200 group-hover:translate-x-1 group-hover:-translate-y-1 motion-reduce:transition-none motion-reduce:group-hover:transform-none" strokeWidth={1.7} aria-hidden="true" /></Link>)}
+            {related.map((entry) => <Link className="group flex min-h-24 items-center justify-between gap-4 rounded-card bg-white p-5 text-heading-sm shadow-surface transition-[transform,box-shadow] duration-200 hover:-translate-y-0.5 hover:shadow-surface-hover motion-reduce:transition-none motion-reduce:hover:translate-y-0" href={entry.href} key={entry.id}><span>{entry.copy.name}</span><ArrowUpRight className="size-5 shrink-0 transition-transform duration-200 group-hover:translate-x-1 group-hover:-translate-y-1 motion-reduce:transition-none motion-reduce:group-hover:transform-none" strokeWidth={1.7} aria-hidden="true" /></Link>)}
           </nav>
         </div>
       </section>
 
-      <section className="flex min-h-[28rem] flex-col items-center justify-center border-b border-white/15 bg-black px-page py-section text-center text-inverse max-[600px]:px-4.5">
+      <section className="flex min-h-[28rem] flex-col items-center justify-center border-b border-inverse-line bg-black px-page py-section text-center text-inverse">
         <Reveal>
           <h2 className="mx-auto max-w-[18ch] text-display-sm text-white">{copy.page.finalTitle}</h2>
           <p className="mx-auto mt-6 mb-7 max-w-[35rem] text-cta-copy text-dark-muted">{copy.page.finalCopy}</p>
@@ -103,7 +103,5 @@ export function ServicePage({ locale, serviceId }: { locale: Locale; serviceId: 
 }
 
 export function getServiceDescription(locale: Locale, serviceId: ServiceId): string {
-  const service = getServiceCatalog(locale).find((entry) => entry.id === serviceId);
-  if (!service) throw new Error(`Missing ${serviceId} service description for ${locale}.`);
-  return service.copy.page.metaDescription;
+  return getServiceCopy(locale, serviceId).page.metaDescription;
 }

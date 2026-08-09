@@ -54,21 +54,21 @@ const scopeMotionStyles = [
 export function ServiceScopeGrid({ groups, serviceId }: { groups: readonly ScopeGroup[]; serviceId: ServiceId }) {
   return (
     <div
-      className="grid grid-cols-12 gap-px overflow-hidden rounded-card border border-[var(--ds-gray-alpha-300)] bg-[var(--ds-gray-alpha-300)]"
+      className="grid grid-cols-12 gap-px overflow-hidden rounded-card border border-line-strong bg-line-strong"
       data-scope-grid
     >
       {groups.map((group, index) => {
         const Icon = scopeIcons[serviceId][index] ?? Layers3;
         return (
           <article
-            className={`col-span-6 flex flex-col bg-white p-[clamp(1.5rem,3.5vw,2.5rem)] max-[800px]:col-span-12 ${scopeMotionStyles[index] ?? scopeMotionStyles[0]}`}
+            className={`col-span-6 flex flex-col bg-white p-card-fluid max-[800px]:col-span-12 ${scopeMotionStyles[index] ?? scopeMotionStyles[0]}`}
             data-reveal
             data-reveal-threshold="half"
             data-scope-item
             key={group.title}
           >
             <div className="flex items-center gap-3.5">
-              <span className={`grid size-10 shrink-0 place-items-center rounded-[10px] ${scopeIconStyles[index] ?? "bg-[var(--ds-blue-100)] text-[var(--ds-blue-800)]"}`} data-scope-icon>
+              <span className={`grid size-10 shrink-0 place-items-center rounded-control ${scopeIconStyles[index] ?? "bg-[var(--ds-blue-100)] text-[var(--ds-blue-800)]"}`} data-scope-icon>
                 <Icon className="size-5" strokeWidth={1.7} aria-hidden="true" />
               </span>
               <h3 className="m-0 text-heading-sm">{group.title}</h3>

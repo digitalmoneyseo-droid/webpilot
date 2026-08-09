@@ -49,18 +49,18 @@ button { color: inherit; }
   transition: opacity 700ms var(--ease-out), transform 700ms var(--ease-out);
 }
 .pill-button--dark:hover {
-  background: #292929;
+  background: var(--color-surface-inverse-hover);
   box-shadow: var(--shadow-dark-surface-hover);
 }
 .pill-button:active {
   scale: .96;
 }
 .pill-button--light .pill-button__icon {
-  background: #111;
+  background: var(--color-surface-inverse);
   color: #fff;
 }
 .pill-button--light:hover {
-  background: #e5e5e5;
+  background: var(--ds-gray-300);
 }
 @media (hover: hover) and (pointer: fine) {
   .header-language:hover .header-language__icon--out {
@@ -120,7 +120,7 @@ button { color: inherit; }
 @keyframes hero-accent-mark-in { from { transform:scaleX(0); } to { transform:scaleX(1); } }
 @keyframes hero-copy-in { to { opacity:1; transform:none; } }
 @keyframes hero-actions-in { to { opacity:1; } }
-.process-step:not(:last-child)::before{content:"";position:absolute;z-index:0;top:-33px;left:calc(50% + 19px);right:calc(-50% - 19px);height:2px;background:#a7a7a2;transform-origin:left}.process-node{box-shadow:0 0 0 6px var(--bg)}.reveal-ready .process-list .process-step{opacity:0;transform:translateX(-20px)}.reveal-ready .process-list .process-step.is-reveal-armed{transition:opacity 900ms var(--ease-out) var(--process-delay),transform 900ms var(--ease-out) var(--process-delay)}.reveal-ready .process-list .process-step::before{transform:scaleX(0)}.reveal-ready .process-list .process-step.is-reveal-armed::before{transition:transform 650ms var(--ease-out) calc(var(--process-delay) + 200ms)}.reveal-ready .process-list .process-step.is-visible{opacity:1;transform:none}.reveal-ready .process-list .process-step.is-visible::before{transform:scaleX(1)}
+.process-step:not(:last-child)::before{content:"";position:absolute;z-index:0;top:-33px;left:calc(50% + 19px);right:calc(-50% - 19px);height:2px;background:var(--color-border-strong);transform-origin:left}.process-node{box-shadow:0 0 0 6px var(--bg)}.reveal-ready .process-list .process-step{opacity:0;transform:translateX(-20px)}.reveal-ready .process-list .process-step.is-reveal-armed{transition:opacity 900ms var(--ease-out) var(--process-delay),transform 900ms var(--ease-out) var(--process-delay)}.reveal-ready .process-list .process-step::before{transform:scaleX(0)}.reveal-ready .process-list .process-step.is-reveal-armed::before{transition:transform 650ms var(--ease-out) calc(var(--process-delay) + 200ms)}.reveal-ready .process-list .process-step.is-visible{opacity:1;transform:none}.reveal-ready .process-list .process-step.is-visible::before{transform:scaleX(1)}
 @supports (view-transition-name: none) {
   main { view-transition-name: page-content; }
   ::view-transition-group(root),

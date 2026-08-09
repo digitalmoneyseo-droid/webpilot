@@ -1,6 +1,4 @@
-"use client";
-
-import { useLayoutEffect, useRef, useState, type ReactNode } from "react";
+import type { ReactNode } from "react";
 
 type CollapsePanelProps = {
   children: ReactNode;
@@ -17,32 +15,18 @@ export function CollapsePanel({
   labelledBy,
   ariaLabel,
 }: CollapsePanelProps) {
-  const contentRef = useRef<HTMLDivElement>(null);
-  const [contentHeight, setContentHeight] = useState(0);
-
-  useLayoutEffect(() => {
-    const content = contentRef.current;
-    if (!content) return;
-
-    const measure = () => setContentHeight(content.scrollHeight);
-    measure();
-
-    const observer = new ResizeObserver(measure);
-    observer.observe(content);
-    return () => observer.disconnect();
-  }, []);
-
   return (
     <div
       aria-label={ariaLabel}
       aria-labelledby={ariaLabel ? undefined : labelledBy}
-      className="overflow-y-hidden transition-[height] duration-200 ease-[cubic-bezier(.4,0,.2,1)] motion-reduce:transition-none"
+      className={`grid transition-[grid-template-rows] duration-200 ease-[cubic-bezier(.4,0,.2,1)] motion-reduce:transition-none ${expanded ? "grid-rows-[1fr]" : "grid-rows-[0fr]"}`}
       id={id}
       inert={!expanded}
       role={ariaLabel ? "region" : undefined}
-      style={{ height: expanded ? contentHeight : 0 }}
     >
-      <div ref={contentRef} className="max-h-[60vh] overflow-y-auto">{children}</div>
+      <div className="min-h-0 overflow-hidden">
+        <div className="max-h-[60vh] overflow-y-auto">{children}</div>
+      </div>
     </div>
   );
 }

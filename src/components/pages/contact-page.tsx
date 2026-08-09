@@ -16,8 +16,8 @@ export function ContactPage({ locale, serviceId }: { locale: Locale; serviceId?:
       />
       <section className="px-page pb-section">
         <div className="reveal mx-auto max-w-[50rem]" data-reveal>
-          <div className="rounded-[16px] bg-white p-10 shadow-surface max-[600px]:p-6">
-            {service ? <p className="mt-0 mb-8 inline-flex rounded-[12px] bg-[var(--ds-gray-alpha-100)] px-3 py-2 text-small text-muted"><span>{t(locale, "contact.selectedService")}: </span>&nbsp;<strong className="font-semibold text-ink">{service.name}</strong></p> : null}
+          <div className="rounded-shell bg-white p-10 shadow-surface max-[600px]:p-6">
+            {service ? <p className="mt-0 mb-8 inline-flex rounded-control bg-interaction px-3 py-2 text-small text-muted"><span>{t(locale, "contact.selectedService")}: </span>&nbsp;<strong className="font-semibold text-ink">{service.name}</strong></p> : null}
             <ContactForm locale={locale} services={services} selectedServiceId={serviceId} />
           </div>
         </div>

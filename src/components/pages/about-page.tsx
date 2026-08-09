@@ -20,7 +20,7 @@ export function AboutPage({ locale }: { locale: Locale }) {
       />
 
       <section className="bg-canvas px-page py-section">
-        <div className="mx-auto grid max-w-[70rem] grid-cols-[minmax(15rem,.78fr)_minmax(0,1.22fr)] gap-x-[clamp(3rem,8vw,8rem)] gap-y-8 max-[800px]:grid-cols-1">
+        <div className="mx-auto grid max-w-[70rem] grid-cols-[minmax(15rem,.78fr)_minmax(0,1.22fr)] gap-x-split gap-y-8 max-[800px]:grid-cols-1">
           <Reveal>
             <h2 className="m-0 max-w-[12ch] text-heading-lg">{t(locale, "about.pov")}</h2>
           </Reveal>
@@ -41,7 +41,7 @@ export function AboutPage({ locale }: { locale: Locale }) {
             title={t(locale, "about.howTitle")}
             copy={t(locale, "about.howCopy")}
           />
-          <div className="grid grid-cols-2 gap-x-[clamp(2rem,7vw,6rem)] max-[700px]:grid-cols-1">
+          <div className="grid grid-cols-2 gap-x-grid max-[700px]:grid-cols-1">
             {principles.map(([headingKey, copyKey], index) => (
               <Reveal className="py-8" delay={index * 50} key={headingKey}>
                 <h3 className="m-0 max-w-[22ch] text-heading-sm">{t(locale, headingKey)}</h3>

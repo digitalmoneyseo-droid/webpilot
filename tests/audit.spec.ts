@@ -2,8 +2,8 @@ import AxeBuilder from "@axe-core/playwright";
 import { expect, test } from "@playwright/test";
 
 test.describe("localized routes", () => {
-  test("uses a supported browser language on the first visit", async ({ browser }) => {
-    const context = await browser.newContext({ baseURL: "http://127.0.0.1:3000", locale: "fr-FR" });
+  test("uses a supported browser language on the first visit", async ({ browser, baseURL }) => {
+    const context = await browser.newContext({ baseURL, locale: "fr-FR" });
     const page = await context.newPage();
     await page.setViewportSize({ width: 1280, height: 800 });
 

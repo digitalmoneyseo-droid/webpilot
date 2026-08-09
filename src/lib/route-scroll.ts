@@ -1,6 +1,6 @@
-const routeScrollTopKey = "webpilot:scroll-to-top";
+let routeScrollTopRequested = false;
 
-export function scrollToPageTopInstantly() {
+function scrollToPageTopInstantly() {
   const root = document.documentElement;
   const previousScrollBehavior = root.style.scrollBehavior;
 
@@ -17,11 +17,11 @@ export function scrollToPageTopSmoothly() {
 }
 
 export function requestRouteScrollTop() {
-  window.sessionStorage.setItem(routeScrollTopKey, "true");
+  routeScrollTopRequested = true;
 }
 
 export function consumeRouteScrollTopRequest() {
-  if (window.sessionStorage.getItem(routeScrollTopKey) !== "true") return;
-  window.sessionStorage.removeItem(routeScrollTopKey);
+  if (!routeScrollTopRequested) return;
+  routeScrollTopRequested = false;
   scrollToPageTopInstantly();
 }

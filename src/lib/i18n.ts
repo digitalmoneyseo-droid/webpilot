@@ -13,7 +13,7 @@ export function localizePath(path: string, locale: Locale): string {
   return normalized === "/" ? `/${locale}` : `/${locale}${normalized}`;
 }
 
-export function basePath(pathname: string): string {
+function basePath(pathname: string): string {
   const [firstSegment, ...rest] = pathname.split("/").filter(Boolean);
   if (!firstSegment || !hasLocale(firstSegment)) return pathname;
   return rest.length ? `/${rest.join("/")}` : "/";
