@@ -101,7 +101,7 @@ test("resolves the semantic spatial and surface roles in compiled CSS", async ({
 
 for (const [locale, route] of [["German", "/"], ["English", "/en"], ["French", "/fr"]] as const) {
   test(`keeps the ${locale} mobile hierarchy ordered and within the viewport`, async ({ page }) => {
-    await page.setViewportSize({ width: 390, height: 844 });
+    await page.setViewportSize({ width: 320, height: 844 });
     await page.emulateMedia({ reducedMotion: "reduce" });
     await page.goto(route);
 

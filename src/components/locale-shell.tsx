@@ -8,7 +8,7 @@ export function LocaleShell({ locale, pathname, children }: { locale: Locale; pa
   return (
     <>
       <ScrollProgress />
-      <nav aria-label={t(locale, "a11y.skip")}><a className="fixed top-3 left-4 z-[1000] -translate-y-[160%] rounded-full bg-inverse-surface px-3.5 py-2.5 text-white focus:translate-y-0" href="#main-content">{t(locale, "a11y.skip")}</a></nav>
+      <nav aria-label={t(locale, "a11y.skip")}><a className="fixed top-3 left-4 z-[1000] -translate-y-[160%] rounded-full bg-inverse-surface px-3.5 py-2.5 text-white focus-visible:translate-y-0" href="#main-content">{t(locale, "a11y.skip")}</a></nav>
       <ClientEffects />
       <SiteHeader locale={locale} pathname={pathname} />
       {children}

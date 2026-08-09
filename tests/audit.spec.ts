@@ -256,17 +256,53 @@ test.describe("localized routes", () => {
 });
 
 test.describe("contact", () => {
+  test("warns before unloading a changed enquiry", async ({ page }) => {
+    await page.goto("/en/contact");
+    await page.getByLabel("Your name").fill("Alex Morgan");
+
+    const warned = await page.evaluate(() => {
+      const event = new Event("beforeunload", { cancelable: true });
+      return !window.dispatchEvent(event) && event.defaultPrevented;
+    });
+    expect(warned).toBe(true);
+  });
+
+  test("announces and shows the pending submit state", async ({ page }) => {
+    let completeRequest: (() => void) | undefined;
+    await page.route("**/api/contact", async (route) => {
+      await new Promise<void>((resolve) => { completeRequest = resolve; });
+      await route.fulfill({ status: 200, contentType: "application/json", body: JSON.stringify({ ok: true }) });
+    });
+    await page.goto("/en/contact");
+    await page.getByLabel("Your name").fill("Alex Morgan");
+    await page.getByLabel("Work email").fill("alex@example.com");
+    await page.getByLabel("Not sure yet").check();
+    await page.getByRole("button", { name: "Planned project range" }).click();
+    await page.getByRole("option", { name: "Still open" }).click();
+    await page.getByLabel("What are you trying to achieve?").fill("We need help deciding which digital project should come first for our team.");
+    await page.getByRole("button", { name: "Send project enquiry" }).click();
+
+    const submit = page.getByRole("button", { name: "Sending enquiry…" });
+    await expect(submit).toBeDisabled();
+    await expect(submit.locator(".animate-spin")).toBeVisible();
+    completeRequest?.();
+    await expect(page.getByRole("heading", { name: "Thanks, your enquiry has arrived." })).toBeVisible();
+  });
+
   test("keeps the contact islands within the mobile viewport", async ({ page }) => {
     await page.setViewportSize({ width: 390, height: 844 });
     await page.goto("/en/contact");
     await expect(page.locator("#main-content form")).toBeVisible();
     await expect(page.locator("input[name='service']")).toHaveCount(5);
-    await expect(page.getByPlaceholder("Alex Morgan")).toBeVisible();
-    await expect(page.getByPlaceholder("alex@company.com")).toBeVisible();
-    await expect(page.getByPlaceholder("Company name")).toBeVisible();
-    const notSure = page.locator("input[name='service'][value='not-sure']");
-    await expect(notSure).toBeChecked();
-    await expect(notSure.locator("+ span")).toHaveCSS("background-color", "rgb(229, 229, 226)");
+    await expect(page.getByPlaceholder("Alex Morgan…")).toBeVisible();
+    await expect(page.getByPlaceholder("alex@company.com…")).toBeVisible();
+    await expect(page.getByPlaceholder("Your business or organization…")).toBeVisible();
+    await expect(page.getByPlaceholder("https://company.com…")).toBeVisible();
+    const optionalHint = page.locator("label[for='contact-company'] span", { hasText: "(optional)" }).last();
+    await expect(optionalHint).toHaveText("(optional)");
+    await expect(optionalHint).toHaveCSS("font-style", "italic");
+    await expect(page.locator("form [aria-hidden='true']", { hasText: "*" })).toHaveCount(5);
+    await expect(page.locator("input[name='service']:checked")).toHaveCount(0);
     await expect(page.getByRole("button", { name: "Planned project range" })).toHaveCSS("cursor", "pointer");
     const horizontalOverflow = await page.evaluate(() => document.documentElement.scrollWidth - document.documentElement.clientWidth);
     expect(horizontalOverflow).toBeLessThanOrEqual(1);
@@ -276,16 +312,22 @@ test.describe("contact", () => {
     await page.goto("/en/contact");
     const results = await new AxeBuilder({ page }).exclude('[aria-hidden="true"]').analyze();
     expect(results.violations).toEqual([]);
+    await page.getByLabel("Company website").fill("company.com");
     await page.getByRole("button", { name: "Send project enquiry" }).click();
-    await expect(page.locator("form [role='alert']")).toHaveCount(4);
+    await expect(page.locator("form [role='alert']")).toHaveCount(6);
+    await expect(page.getByText("Please enter a valid URL starting with http:// or https://.")).toBeVisible();
   });
 
   test("submits an enquiry and shows a clear success state", async ({ page }) => {
-    await page.route("**/api/contact", (route) => route.fulfill({ status: 200, contentType: "application/json", body: JSON.stringify({ ok: true }) }));
+    await page.route("**/api/contact", (route) => {
+      expect(route.request().postDataJSON()).toMatchObject({ companyUrl: "https://example.com" });
+      return route.fulfill({ status: 200, contentType: "application/json", body: JSON.stringify({ ok: true }) });
+    });
     await page.goto("/en/contact");
 
     await page.getByLabel("Your name").fill("Alex Morgan");
     await page.getByLabel("Work email").fill("alex@example.com");
+    await page.getByLabel("Company website").fill("https://example.com");
     await page.getByLabel("Websites & Apps").check();
     await page.getByRole("button", { name: "Planned project range" }).click();
     await page.getByRole("option", { name: "€5,000 to €15,000" }).click();
@@ -302,6 +344,7 @@ test.describe("contact", () => {
 
     await page.getByLabel("Your name").fill("Alex Morgan");
     await page.getByLabel("Work email").fill("alex@example.com");
+    await page.getByLabel("Not sure yet").check();
     await page.getByRole("button", { name: "Planned project range" }).click();
     await page.getByRole("option", { name: "Still open" }).click();
     await page.getByLabel("What are you trying to achieve?").fill("We need help deciding which digital project should come first for our team.");

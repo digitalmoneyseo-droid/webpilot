@@ -1,10 +1,10 @@
 "use client";
 
-import { ArrowRight, ArrowUpRight, Check, ChevronDown, CircleHelp, MonitorSmartphone, RadioTower, Search, Workflow } from "lucide-react";
+import { ArrowRight, ArrowUpRight, Check, ChevronDown, CircleHelp, LoaderCircle, MonitorSmartphone, RadioTower, Search, Workflow } from "lucide-react";
 import { type FormEvent, type KeyboardEvent, type ReactNode, useEffect, useRef, useState } from "react";
 import { t, type Locale } from "@/lib/i18n";
 
-type FieldName = "name" | "email" | "service" | "budget" | "message";
+type FieldName = "name" | "email" | "companyUrl" | "service" | "budget" | "message";
 type Errors = Partial<Record<FieldName | "form", string>>;
 type Status = "idle" | "sending" | "success";
 
@@ -40,6 +40,7 @@ export function ContactForm({
   const [errors, setErrors] = useState<Errors>({});
   const [status, setStatus] = useState<Status>("idle");
   const [submittedEmail, setSubmittedEmail] = useState("");
+  const [isDirty, setIsDirty] = useState(false);
   const [budgetOpen, setBudgetOpen] = useState(false);
   const [selectedBudget, setSelectedBudget] = useState("");
   const budgetControlRef = useRef<HTMLDivElement>(null);
@@ -52,6 +53,8 @@ export function ContactForm({
     emailPlaceholder: t(locale, "contact.formEmailPlaceholder"),
     company: t(locale, "contact.formCompany"),
     companyPlaceholder: t(locale, "contact.formCompanyPlaceholder"),
+    companyUrl: t(locale, "contact.formCompanyUrl"),
+    companyUrlPlaceholder: t(locale, "contact.formCompanyUrlPlaceholder"),
     companyOptional: t(locale, "contact.formOptional"),
     service: t(locale, "contact.formService"),
     budget: t(locale, "contact.formBudget"),
@@ -68,7 +71,9 @@ export function ContactForm({
     submit: t(locale, "contact.formSubmit"),
     sending: t(locale, "contact.formSending"),
     required: t(locale, "contact.formRequired"),
+    requiredLabel: t(locale, "contact.formRequiredLabel"),
     emailError: t(locale, "contact.formEmailError"),
+    companyUrlError: t(locale, "contact.formCompanyUrlError"),
     messageError: t(locale, "contact.formMessageError"),
     note: t(locale, "contact.formNote"),
     error: t(locale, "contact.formError"),
@@ -99,6 +104,16 @@ export function ContactForm({
     };
   }, [budgetOpen]);
 
+  useEffect(() => {
+    if (!isDirty) return;
+    const warnBeforeUnload = (event: BeforeUnloadEvent) => {
+      event.preventDefault();
+      event.returnValue = "";
+    };
+    window.addEventListener("beforeunload", warnBeforeUnload);
+    return () => window.removeEventListener("beforeunload", warnBeforeUnload);
+  }, [isDirty]);
+
   function clearError(field: FieldName) {
     setErrors((current) => current[field] || current.form ? { ...current, [field]: undefined, form: undefined } : current);
   }
@@ -112,10 +127,12 @@ export function ContactForm({
     const service = String(data.get("service") ?? "");
     const budget = String(data.get("budget") ?? "");
     const message = String(data.get("message") ?? "").trim();
+    const companyUrl = String(data.get("companyUrl") ?? "").trim();
     const nextErrors: Errors = {};
 
     if (!name) nextErrors.name = copy.required;
     if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) nextErrors.email = copy.emailError;
+    if (companyUrl && !isHttpUrl(companyUrl)) nextErrors.companyUrl = copy.companyUrlError;
     if (!service) nextErrors.service = copy.required;
     if (!budget) nextErrors.budget = copy.required;
     if (message.length < 20) nextErrors.message = copy.messageError;
@@ -137,6 +154,7 @@ export function ContactForm({
           name,
           email,
           company: String(data.get("company") ?? "").trim(),
+          companyUrl,
           service,
           budget,
           message,
@@ -148,6 +166,7 @@ export function ContactForm({
       if (!response.ok) throw new Error("Contact request failed");
       setSubmittedEmail(email);
       setStatus("success");
+      setIsDirty(false);
       setSelectedBudget("");
       form.reset();
     } catch {
@@ -178,9 +197,9 @@ export function ContactForm({
   }
 
   return (
-    <form className="grid gap-6" noValidate onSubmit={onSubmit}>
+    <form className="grid gap-6" noValidate onChange={() => setIsDirty(true)} onSubmit={onSubmit}>
       <div className="grid grid-cols-2 gap-4 max-[600px]:grid-cols-1">
-        <Field id="contact-name" label={copy.name} error={errors.name}>
+        <Field id="contact-name" label={copy.name} error={errors.name} required={copy.requiredLabel}>
           <input
             id="contact-name"
             className={`min-h-12 ${fieldControlClass}`}
@@ -194,7 +213,7 @@ export function ContactForm({
             onChange={() => clearError("name")}
           />
         </Field>
-        <Field id="contact-email" label={copy.email} error={errors.email}>
+        <Field id="contact-email" label={copy.email} error={errors.email} required={copy.requiredLabel}>
           <input
             id="contact-email"
             className={`min-h-12 ${fieldControlClass}`}
@@ -213,19 +232,39 @@ export function ContactForm({
         </Field>
       </div>
 
-      <Field id="contact-company" label={copy.company} hint={copy.companyOptional}>
-        <input
-          id="contact-company"
-          className={`min-h-12 ${fieldControlClass}`}
-          name="company"
-          autoComplete="organization"
-          placeholder={copy.companyPlaceholder}
-          maxLength={120}
-        />
-      </Field>
+      <div className="grid grid-cols-2 gap-4 max-[600px]:grid-cols-1">
+        <Field id="contact-company" label={copy.company} hint={copy.companyOptional}>
+          <input
+            id="contact-company"
+            className={`min-h-12 ${fieldControlClass}`}
+            name="company"
+            autoComplete="organization"
+            placeholder={copy.companyPlaceholder}
+            maxLength={120}
+          />
+        </Field>
+        <Field id="contact-company-url" label={copy.companyUrl} hint={copy.companyOptional} error={errors.companyUrl}>
+          <input
+            id="contact-company-url"
+            className={`min-h-12 ${fieldControlClass}`}
+            type="url"
+            name="companyUrl"
+            autoComplete="url"
+            placeholder={copy.companyUrlPlaceholder}
+            inputMode="url"
+            maxLength={2048}
+            spellCheck={false}
+            aria-invalid={Boolean(errors.companyUrl)}
+            aria-describedby={errors.companyUrl ? "contact-company-url-error" : undefined}
+            onChange={() => clearError("companyUrl")}
+          />
+        </Field>
+      </div>
 
       <fieldset className="m-0 grid gap-3 border-0 p-0" aria-describedby={errors.service ? "contact-service-error" : undefined}>
-        <legend className={`mb-1 text-small font-medium ${errors.service ? "text-error" : "text-ink"}`}>{copy.service}</legend>
+        <legend className={`mb-1 text-small font-medium ${errors.service ? "text-error" : "text-ink"}`}>
+          {copy.service}<RequiredMarker label={copy.requiredLabel} />
+        </legend>
         <div className="grid grid-cols-2 gap-3 max-[600px]:grid-cols-1">
           {serviceOptions.map((service) => {
             const Icon = serviceIcons[service.id as keyof typeof serviceIcons] ?? CircleHelp;
@@ -237,7 +276,8 @@ export function ContactForm({
                 type="radio"
                 name="service"
                 value={service.id}
-                defaultChecked={selectedServiceId === service.id || (!selectedServiceId && service.id === "not-sure")}
+                required
+                defaultChecked={selectedServiceId === service.id}
                 onChange={() => clearError("service")}
               />
               <span className={`flex min-h-14 items-center gap-3 rounded-control bg-surface-subtle p-2 text-small text-muted shadow-surface transition-[background-color,color,box-shadow,scale] duration-150 ease-[var(--ease-out)] group-hover:bg-white group-hover:shadow-surface-hover peer-focus-visible:outline-2 peer-focus-visible:outline-offset-2 peer-focus-visible:outline-focus peer-active:scale-[.96] motion-reduce:transition-none motion-reduce:peer-active:scale-100 ${styles.selected}`}>
@@ -252,7 +292,7 @@ export function ContactForm({
         {errors.service ? <span id="contact-service-error" className="text-small text-error" role="alert">{errors.service}</span> : null}
       </fieldset>
 
-      <Field id="contact-budget" label={copy.budget} error={errors.budget}>
+      <Field id="contact-budget" label={copy.budget} error={errors.budget} required={copy.requiredLabel}>
         <div ref={budgetControlRef} className="relative">
           <input name="budget" type="hidden" value={selectedBudget} readOnly />
           <button
@@ -296,6 +336,7 @@ export function ContactForm({
                   tabIndex={budgetOpen ? 0 : -1}
                   onClick={() => {
                     setSelectedBudget(option.id);
+                    setIsDirty(true);
                     clearError("budget");
                     setBudgetOpen(false);
                     budgetButtonRef.current?.focus();
@@ -311,7 +352,7 @@ export function ContactForm({
         </div>
       </Field>
 
-      <Field id="contact-message" label={copy.message} error={errors.message}>
+      <Field id="contact-message" label={copy.message} error={errors.message} required={copy.requiredLabel}>
         <textarea
           id="contact-message"
           className={`min-h-44 resize-y p-4 ${fieldControlClass}`}
@@ -340,7 +381,10 @@ export function ContactForm({
         >
           <span className="block h-[1.5em] overflow-hidden leading-control">
             <span className="pill-button__label-track flex h-[200%] flex-col">
-              <span className="flex h-[1.5em] shrink-0 items-center whitespace-nowrap">{status === "sending" ? copy.sending : copy.submit}</span>
+              <span className="flex h-[1.5em] shrink-0 items-center gap-2 whitespace-nowrap" aria-live="polite">
+                {status === "sending" ? <LoaderCircle className="size-4 animate-spin motion-reduce:animate-none" aria-hidden="true" /> : null}
+                {status === "sending" ? copy.sending : copy.submit}
+              </span>
               <span className="flex h-[1.5em] shrink-0 items-center whitespace-nowrap" aria-hidden="true">{status === "sending" ? copy.sending : copy.submit}</span>
             </span>
           </span>
@@ -367,27 +411,41 @@ function moveBudgetFocus(event: KeyboardEvent<HTMLButtonElement>, index: number,
   options[nextIndex]?.focus();
 }
 
+function isHttpUrl(value: string) {
+  try {
+    return ["http:", "https:"].includes(new URL(value).protocol);
+  } catch {
+    return false;
+  }
+}
+
 function Field({
   id,
   label,
   hint,
   error,
+  required,
   children,
 }: {
   id: string;
   label: string;
   hint?: string;
   error?: string;
+  required?: string;
   children: ReactNode;
 }) {
   return (
     <div className="grid gap-2">
-      <label className={`flex items-baseline justify-between gap-4 text-small font-medium ${error ? "text-error" : "text-ink"}`} htmlFor={id}>
-        <span>{label}</span>
-        {hint ? <span className="font-normal text-muted">{hint}</span> : null}
+      <label className={`flex items-baseline gap-2 text-small font-medium ${error ? "text-error" : "text-ink"}`} htmlFor={id}>
+        <span>{label}{required ? <RequiredMarker label={required} /> : null}</span>
+        {hint ? <span className="font-normal italic text-muted">({hint})</span> : null}
       </label>
       {children}
       {error ? <span id={`${id}-error`} className="text-small text-error" role="alert">{error}</span> : null}
     </div>
   );
+}
+
+function RequiredMarker({ label }: { label: string }) {
+  return <span className="ml-1 text-error"><span aria-hidden="true">*</span><span className="sr-only"> {label}</span></span>;
 }

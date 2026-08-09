@@ -33,6 +33,7 @@ export async function POST(request: Request) {
   const name = cleanString(body.name);
   const email = cleanString(body.email);
   const company = cleanString(body.company);
+  const companyUrl = cleanString(body.companyUrl);
   const message = cleanString(body.message);
   const locale = typeof body.locale === "string" && hasLocale(body.locale) ? body.locale : null;
   const serviceId = typeof body.service === "string" ? body.service : "";
@@ -42,6 +43,7 @@ export async function POST(request: Request) {
     !name || name.length > 100 ||
     !emailPattern.test(email) || email.length > 254 ||
     company.length > 120 ||
+    companyUrl.length > 2048 || (companyUrl && !isHttpUrl(companyUrl)) ||
     !locale || !message || message.length < 20 || message.length > 5000 ||
     (!isServiceId(serviceId) && serviceId !== "not-sure") ||
     !budgetIds.has(budgetId)
@@ -63,6 +65,7 @@ export async function POST(request: Request) {
     `${t(locale, "contact.formBodyName")}: ${name}`,
     `${t(locale, "contact.formBodyEmail")}: ${email}`,
     `${t(locale, "contact.formCompany")}: ${company || t(locale, "contact.formNotProvided")}`,
+    `${t(locale, "contact.formCompanyUrl")}: ${companyUrl || t(locale, "contact.formNotProvided")}`,
     `${t(locale, "contact.formService")}: ${service}`,
     `${t(locale, "contact.formBudget")}: ${budget}`,
     "",
@@ -101,6 +104,14 @@ function safeHost(value: string): string {
     return new URL(value).host;
   } catch {
     return "";
+  }
+}
+
+function isHttpUrl(value: string): boolean {
+  try {
+    return ["http:", "https:"].includes(new URL(value).protocol);
+  } catch {
+    return false;
   }
 }
 
