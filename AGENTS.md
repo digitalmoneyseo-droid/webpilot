@@ -55,23 +55,13 @@ When questions are needed:
 
 ### Design system contract
 
-For every task that creates, changes, reviews, or plans visual design or interface work, read and actively follow `design.md` before making decisions. This includes pages, components, typography, color, spacing, layout, responsive behavior, interaction states, motion, and visual content hierarchy. Backend-only and non-interface tasks do not need to load it.
+Before planning, implementing, or reviewing visual design or interface work, read and actively follow `DESIGN.md`. This includes pages, components, typography, color, spacing, layout, responsive behavior, interaction states, motion, and visual content hierarchy. Backend-only and non-interface tasks are exempt.
 
-`design.md` is the design authority for every route and locale. Use it to choose existing roles and patterns, not merely as background reading. `src/styles/typography-system.css` owns the tokens, `src/styles/app.css` exposes their Tailwind utilities, and shared components own recurring composition.
+Treat the responsibilities in `DESIGN.md` as a contract: it owns visual intent, public roles, exceptions, and review criteria; the token CSS owns current values; the Tailwind theme owns utility exposure; shared components own recurring composition. A disagreement between those sources is a defect to resolve, not permission to choose whichever is convenient.
 
-Use semantic roles for typography, color, page spacing, layout gaps, card insets, radii, borders, shadows, and motion. In particular:
+Reuse semantic roles and shared components before adding values or copying compositions. Keep local values inside the documented generated-visual, service-visual, or functional-geometry exceptions. When a genuinely recurring role is missing, add the token, expose it through Tailwind, document it in `DESIGN.md`, and extend relevant design-system coverage in the same change.
 
-- Page sections use `px-page` and `py-section` or `py-section-compact`; page openings use `pt-page-title`.
-- Repeated split layouts, peer grids, headings, cards, and overlays use the documented `gap-split`, `gap-grid`, `mb-heading-gap`, `p-card-padding`, `p-card-fluid`, and `px-menu` roles.
-- Ordinary component spacing stays on the documented 4px rhythm. The 2px half-step is only for documented optical adjustments inside compact controls.
-- Rounded UI uses `rounded-inset`, `rounded-control`, `rounded-card`, `rounded-shell`, or `rounded-pill`.
-- Separators use `line`, `line-strong`, or `inverse-line`; rounded surfaces use the matching semantic shadow role. Reserve `shadow-floating` for menus and popovers.
-
-Do not introduce arbitrary typography, fluid page spacing, raw interface colors, raw border colors, raw box shadows, or generic framework radii when a semantic role exists. Generated visuals and functional diagram geometry may use local values, but keep those exceptions self-contained and out of editorial UI.
-
-When a genuinely recurring role is missing, add the semantic token, expose it through Tailwind, document its purpose in `design.md`, and extend the design-system test in the same change. Verify the longest locale, mobile reflow, keyboard focus, and reduced motion after visual changes.
-
-Follow the established component patterns. Use Tailwind for ordinary component styling. Keep custom CSS when it owns tokens, complex motion, pseudo-elements, browser behavior, or generated visuals.
+Use Tailwind for ordinary component styling. Keep custom CSS for tokens, complex motion, pseudo-elements, browser behavior, and generated visuals. Verify the longest locale, narrow reflow, keyboard focus, and reduced motion after visual changes.
 
 Do not perform unrelated migrations or cleanup.
 

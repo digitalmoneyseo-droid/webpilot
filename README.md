@@ -26,7 +26,17 @@ pnpm dev
 
 Open [http://localhost:3000](http://localhost:3000).
 
+## Design system
+
+[`DESIGN.md`](DESIGN.md) is the visual authority for every route and locale. It defines Webpilot's public semantic roles, shared composition patterns, signature explanatory visuals, documented exceptions, and review criteria.
+
+`src/styles/typography-system.css` owns the current token values, `src/styles/app.css` exposes them as Tailwind utilities, and shared components own recurring composition and behavior. Reuse those roles and components before adding local values or copying a pattern. When a genuinely recurring role is missing, update the token, Tailwind exposure, design authority, and relevant design-system coverage together.
+
+Treat locale content, narrow reflow, keyboard focus, and reduced motion as part of the same visual change.
+
 ## Verification
+
+CI runs the following checks in order:
 
 ```bash
 pnpm validate:content
@@ -36,7 +46,7 @@ pnpm build
 pnpm test
 ```
 
-The Playwright suite uses the production build. Run `pnpm build` before `pnpm test` when you test locally.
+The Playwright suite uses the production build and covers localized routes, accessibility, responsive behavior, motion, and common design-system violations. Run `pnpm build` before `pnpm test` when testing locally.
 
 ## Localization and content
 
