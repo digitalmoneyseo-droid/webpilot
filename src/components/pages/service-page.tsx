@@ -1,4 +1,27 @@
-import { ArrowUpRight, CircleGauge, Compass, Layers3 } from "lucide-react";
+import {
+  ArrowRight,
+  ArrowUpRight,
+  ChartNoAxesCombined,
+  CircleGauge,
+  Compass,
+  Crosshair,
+  FlaskConical,
+  Layers3,
+  ListTodo,
+  MonitorSmartphone,
+  PanelsTopLeft,
+  RadioTower,
+  Rocket,
+  ScanSearch,
+  Search,
+  ShieldCheck,
+  Telescope,
+  TestTubeDiagonal,
+  TrendingUp,
+  Waypoints,
+  Workflow,
+  type LucideIcon,
+} from "lucide-react";
 import Link from "next/link";
 import { CtaButton } from "@/components/cta-button";
 import { Faq } from "@/components/faq";
@@ -12,6 +35,26 @@ import { localizePath, t, type Locale } from "@/lib/i18n";
 import { getServiceCatalog } from "@/lib/service-catalog";
 
 const outcomeIcons = [Compass, Layers3, CircleGauge] as const;
+const processIcons: Record<ServiceId, readonly [LucideIcon, LucideIcon, LucideIcon]> = {
+  "websites-apps": [Telescope, PanelsTopLeft, Rocket],
+  "seo-ai-visibility": [ScanSearch, ListTodo, ChartNoAxesCombined],
+  "paid-campaigns": [Crosshair, FlaskConical, TrendingUp],
+  "ai-automation": [Waypoints, TestTubeDiagonal, ShieldCheck],
+};
+
+const relatedServiceIcons: Record<ServiceId, LucideIcon> = {
+  "websites-apps": MonitorSmartphone,
+  "seo-ai-visibility": Search,
+  "paid-campaigns": RadioTower,
+  "ai-automation": Workflow,
+};
+
+const relatedServiceIconStyles: Record<ServiceId, string> = {
+  "websites-apps": "bg-[#eaf2ff] text-[#245bb8]",
+  "seo-ai-visibility": "bg-[#e9f7ef] text-[#26734d]",
+  "paid-campaigns": "bg-[#fff8e8] text-[#b7791f]",
+  "ai-automation": "bg-[#f2edff] text-[#6650a6]",
+};
 
 export function ServicePage({ locale, serviceId }: { locale: Locale; serviceId: ServiceId }) {
   const services = getServiceCatalog(locale);
@@ -28,7 +71,6 @@ export function ServicePage({ locale, serviceId }: { locale: Locale; serviceId: 
       <section className="px-page pt-page-title pb-section">
         <div className="mx-auto grid max-w-layout grid-cols-[minmax(0,.92fr)_minmax(24rem,1.08fr)] items-center gap-split max-[900px]:grid-cols-1">
           <Reveal className="min-w-0 max-w-[39rem]">
-            <p className="mb-5 text-small font-medium text-[var(--ds-blue-800)]">{copy.name}</p>
             <h1 className="m-0 text-display-sm text-balance">{copy.page.title}</h1>
             <p className="mt-6 max-w-[38rem] text-lead text-muted text-balance">{copy.page.intro}</p>
             <CtaButton href={contact} className="mt-8">{copy.page.finalCta}</CtaButton>
@@ -67,11 +109,29 @@ export function ServicePage({ locale, serviceId }: { locale: Locale; serviceId: 
         </div>
       </section>
 
-      <section className="bg-canvas px-page py-section">
+      <section className="bg-canvas px-page py-section" data-service-process>
         <div className="mx-auto max-w-[70rem]">
           <SectionHeading title={copy.page.processHeading} copy={copy.page.processIntro} align="center" />
-          <ol className="mx-auto grid max-w-[62rem] list-none grid-cols-3 gap-grid p-0 max-[760px]:grid-cols-1">
-            {copy.page.process.map((item, index) => <Reveal as="li" className="relative pt-7 before:absolute before:inset-x-0 before:top-0 before:h-px before:bg-line-strong" delay={index * 50} key={item.title}><span className="font-mono text-small text-[var(--wave-blue)]" aria-hidden="true">{String(index + 1).padStart(2, "0")}</span><h3 className="mt-5 mb-0 text-heading-sm">{item.title}</h3><p className="mt-3 text-body text-muted">{item.copy}</p></Reveal>)}
+          <ol className="process-list m-0 mx-auto grid max-w-[62rem] list-none grid-cols-3 gap-4 p-0 pt-13 max-[900px]:grid-cols-1 max-[900px]:pt-0">
+            {copy.page.process.map((item, index) => {
+              const Icon = processIcons[serviceId][index]!;
+              return (
+                <li
+                  className="process-step relative rounded-card bg-white p-card-padding shadow-surface max-[900px]:ml-12"
+                  style={{ "--process-delay": `${index * 160}ms` } as React.CSSProperties}
+                  data-reveal
+                  data-reveal-threshold="half"
+                  key={item.title}
+                >
+                  <span className="process-node absolute -top-13 left-[calc(50%_-_19px)] z-[1] grid size-[38px] place-items-center rounded-full bg-ink font-mono text-meta text-white tabular-nums max-[900px]:top-6 max-[900px]:-left-12" aria-hidden="true">{index + 1}</span>
+                  <Icon className="block size-8" strokeWidth={1.7} aria-hidden="true" />
+                  <div className="pt-4">
+                    <h3 className="mt-0 mb-2 text-heading-sm">{item.title}</h3>
+                    <p className="text-body text-muted">{item.copy}</p>
+                  </div>
+                </li>
+              );
+            })}
           </ol>
         </div>
       </section>
@@ -85,8 +145,25 @@ export function ServicePage({ locale, serviceId }: { locale: Locale; serviceId: 
       <section className="bg-canvas px-page py-section-compact">
         <div className="mx-auto max-w-[70rem]">
           <h2 className="m-0 text-heading-md">{t(locale, "service.otherServices")}</h2>
-          <nav className="mt-6 grid grid-cols-3 gap-3 max-[760px]:grid-cols-1" aria-label={t(locale, "service.otherServices")}>
-            {related.map((entry) => <Link className="group flex min-h-24 items-center justify-between gap-4 rounded-card bg-white p-5 text-heading-sm shadow-surface transition-[transform,box-shadow] duration-200 hover:-translate-y-0.5 hover:shadow-surface-hover motion-reduce:transition-none motion-reduce:hover:translate-y-0" href={entry.href} key={entry.id}><span>{entry.copy.name}</span><ArrowUpRight className="size-5 shrink-0 transition-transform duration-200 group-hover:translate-x-1 group-hover:-translate-y-1 motion-reduce:transition-none motion-reduce:group-hover:transform-none" strokeWidth={1.7} aria-hidden="true" /></Link>)}
+          <nav className="mt-6 grid grid-cols-3 gap-3 max-[900px]:grid-cols-1" aria-label={t(locale, "service.otherServices")} data-other-services>
+            {related.map((entry) => {
+              const Icon = relatedServiceIcons[entry.id];
+              return (
+                <Link className="pill-button flex min-w-0 items-center gap-3 rounded-card bg-white p-5 shadow-surface transition-[background-color,box-shadow,transform] duration-150 hover:bg-interaction hover:shadow-surface-hover motion-reduce:transition-none" href={entry.href} key={entry.id}>
+                  <span className={`grid size-9 shrink-0 place-items-center rounded-inset ${relatedServiceIconStyles[entry.id]}`} data-related-service-icon>
+                    <Icon className="size-4.5" strokeWidth={1.7} aria-hidden="true" />
+                  </span>
+                  <span className="min-w-0 flex-1">
+                    <strong className="block text-small font-semibold text-ink">{entry.copy.name}</strong>
+                    <span className="mt-1 block text-caption leading-snug text-muted">{entry.copy.navDescription}</span>
+                  </span>
+                  <span className="pill-button__icon relative size-8 flex-none overflow-hidden rounded-pill bg-inverse-surface text-white" aria-hidden="true">
+                    <ArrowRight className="pill-button__arrow pill-button__arrow--right absolute inset-[7px] size-[18px]" strokeWidth={1.7} />
+                    <ArrowUpRight className="pill-button__arrow pill-button__arrow--up-right absolute inset-[7px] size-[18px] opacity-0 [transform:translate(-6px,6px)_scale(.8)]" strokeWidth={1.7} />
+                  </span>
+                </Link>
+              );
+            })}
           </nav>
         </div>
       </section>
