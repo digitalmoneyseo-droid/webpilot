@@ -13,8 +13,8 @@ export function getHomeDescription(locale: Locale): string {
   return t(locale, "home.heroDescription");
 }
 
-export function HomePage({ locale }: { locale: Locale }) {
-  const faqs = getFaqs(locale);
+export async function HomePage({ locale }: { locale: Locale }) {
+  const faqs = await getFaqs(locale);
   const benefits = [
     [Handshake, "home.benefit1Title", "home.benefit1Copy"],
     [SlidersHorizontal, "home.benefit2Title", "home.benefit2Copy"],

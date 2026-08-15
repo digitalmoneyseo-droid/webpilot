@@ -6,6 +6,4 @@ node_modules/
 next-dev.*.log
 next-start.*.log
 *.tsbuildinfo
-playwright-report/
-test-results/
 .vercel

@@ -1,12 +1,12 @@
-import { expect, test } from "@playwright/test";
+import { describe, expect, test } from "bun:test";
 import { getOptimizationScene, OPTIMIZATION_FLIGHT_DELAY_MS, OPTIMIZATION_FLIGHT_DURATION_MS, OPTIMIZATION_RESULTS_DELAY_MS, OPTIMIZATION_TYPING_DELAY_MS } from "../src/components/offer-animations/optimization-scene";
 import { locales } from "../src/i18n/config";
 import { getServiceCatalog } from "../src/lib/service-catalog";
-import { loadContentRepository } from "../src/lib/content-core.mjs";
+import { loadContentRepository } from "../src/lib/content-core";
 
-test.describe("deep architecture modules", () => {
-  test("loads every configured FAQ locale with parity", () => {
-    const content = loadContentRepository(process.cwd());
+describe("deep architecture modules", () => {
+  test("loads every configured FAQ locale with parity", async () => {
+    const content = await loadContentRepository();
     for (const locale of locales) expect(content.faqs[locale]).toHaveLength(5);
   });
 

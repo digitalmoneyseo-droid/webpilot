@@ -16,7 +16,7 @@
 
 ## Project Conventions
 
-- Use pnpm for package management and project scripts.
+- Use Bun for package management and project scripts.
 - Use Next.js with the App Router, TypeScript, and Tailwind CSS.
 - Prefer Server Components and static rendering. Add Client Components only when browser-side interactivity requires them.
 - Keep architecture local and simple until another service or abstraction is demonstrably needed.

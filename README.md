@@ -5,23 +5,24 @@ Webpilot is the main website for an independent digital growth and technology st
 ## Technology
 
 - Next.js 16 with the App Router
+- Bun for package management and the server runtime
 - React 19 and TypeScript
 - Tailwind CSS 4
 - Motion for interface animation
-- Playwright for browser and accessibility tests
+- Bun's native test runner
 
 ## Development
 
 Install the dependencies:
 
 ```bash
-pnpm install
+bun install
 ```
 
 Start the development server:
 
 ```bash
-pnpm dev
+bun run dev
 ```
 
 Open [http://localhost:3000](http://localhost:3000).
@@ -39,14 +40,14 @@ Treat locale content, narrow reflow, keyboard focus, and reduced motion as part 
 CI runs the following checks in order:
 
 ```bash
-pnpm validate:content
-pnpm lint
-pnpm typecheck
-pnpm build
-pnpm test
+bun run validate:content
+bun run lint
+bun run typecheck
+bun run build
+bun run test
 ```
 
-The Playwright suite uses the production build and covers localized routes, accessibility, responsive behavior, motion, and common design-system violations. Run `pnpm build` before `pnpm test` when testing locally.
+The Bun suite covers content parity, service policy, deterministic animation state, and common design-system violations.
 
 ## Localization and content
 

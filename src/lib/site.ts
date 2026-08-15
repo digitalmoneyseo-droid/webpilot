@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { alternatePath, defaultLocale, localeConfig, locales, t, type Locale } from "@/lib/i18n";
 
-const siteUrl = new URL(process.env.NEXT_PUBLIC_SITE_URL ?? "https://webpilot.studio");
+const siteUrl = new URL(Bun.env.NEXT_PUBLIC_SITE_URL ?? "https://webpilot.studio");
 
 export function absoluteUrl(path: string): string {
   return new URL(path, siteUrl).toString();

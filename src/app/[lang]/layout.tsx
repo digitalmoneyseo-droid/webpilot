@@ -5,7 +5,7 @@ import { locales } from "@/lib/i18n";
 import { getRouteLocale, type LocaleRouteParams } from "@/lib/locale-route";
 
 export const metadata: Metadata = {
-  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL ?? "https://webpilot.studio"),
+  metadataBase: new URL(Bun.env.NEXT_PUBLIC_SITE_URL ?? "https://webpilot.studio"),
   icons: { icon: [{ url: "/webpilot-favicon.svg", type: "image/svg+xml" }, { url: "/webpilot-favicon-32x32.png", sizes: "32x32" }], apple: "/apple-touch-icon.png" },
 };
 

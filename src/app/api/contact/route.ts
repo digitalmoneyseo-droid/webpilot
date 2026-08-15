@@ -51,9 +51,9 @@ export async function POST(request: Request) {
     return Response.json({ error: "Invalid form data" }, { status: 400 });
   }
 
-  const apiKey = process.env.RESEND_API_KEY;
-  const to = process.env.CONTACT_EMAIL_TO;
-  const from = process.env.CONTACT_EMAIL_FROM;
+  const apiKey = Bun.env.RESEND_API_KEY;
+  const to = Bun.env.CONTACT_EMAIL_TO;
+  const from = Bun.env.CONTACT_EMAIL_FROM;
   if (!apiKey || !to || !from) {
     console.error("Contact email is not configured. RESEND_API_KEY, CONTACT_EMAIL_TO, and CONTACT_EMAIL_FROM are required.");
     return Response.json({ error: "Email service unavailable" }, { status: 503 });
