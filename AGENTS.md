@@ -16,7 +16,7 @@
 
 ## Project Conventions
 
-- Use Bun for package management and project scripts.
+- Use Bun for package management, tests, development, builds, and the production runtime. Vercel's Bun runtime is configured in `vercel.json`; run Next.js verification through Bun rather than introducing a Node-only production path.
 - Use Next.js with the App Router, TypeScript, and Tailwind CSS.
 - Prefer Server Components and static rendering. Add Client Components only when browser-side interactivity requires them.
 - Keep architecture local and simple until another service or abstraction is demonstrably needed.
@@ -40,8 +40,10 @@
 ## Verification
 
 - Match verification effort to the risk and scope of the change. Do not run broad or repetitive checks for trivial edits.
-- For functional changes, run the smallest relevant content, lint, type, test, or build command and report checks that could not be completed.
-- For interface changes, verify the longest locale, narrow reflow, keyboard focus, and reduced motion.
+- Baseline CI consists of lint, focused Bun tests, a production build, and the small Chromium smoke suite.
+- For content-only changes, validate the affected content and locale parity; browser verification is needed only when copy can affect layout or interaction.
+- For layout changes, inspect the affected route in the longest locale at narrow width. For navigation, form, or runtime changes, run the relevant production-server browser flow. For motion changes, verify reduced motion on the affected visual.
+- Do not add exact pixel or timing tests for decorative behavior unless they protect a confirmed regression.
 - Use the CI workflow as the source of truth for required checks.
 
 <!-- BEGIN:nextjs-agent-rules -->

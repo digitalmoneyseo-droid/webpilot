@@ -5,7 +5,7 @@ Webpilot is the main website for an independent digital growth and technology st
 ## Technology
 
 - Next.js 16 with the App Router
-- Bun for package management and the server runtime
+- Bun for package management, tests, builds, and the production runtime on Vercel (public beta)
 - React 19 and TypeScript
 - Tailwind CSS 4
 - Motion for interface animation
@@ -40,14 +40,13 @@ Treat locale content, narrow reflow, keyboard focus, and reduced motion as part 
 CI runs the following checks in order:
 
 ```bash
-bun run validate:content
 bun run lint
-bun run typecheck
-bun run build
 bun run test
+bun run build
+bun run test:e2e
 ```
 
-The Bun suite covers content parity, service policy, deterministic animation state, and common design-system violations.
+The Bun suite covers content parity, service policy, deterministic animation state, and common design-system violations. The small Chromium suite runs against the Bun production server and covers localized route rendering, mobile keyboard navigation and reflow, the contact flow, and representative accessibility and reduced-motion behavior. Run `bun run build` before `bun run test:e2e` locally.
 
 ## Localization and content
 

@@ -3,8 +3,6 @@ import { getServiceCopy } from "@/i18n/services";
 import { hasLocale, t, type Locale } from "@/lib/i18n";
 import { isServiceId } from "@/lib/service-catalog";
 
-export const runtime = "nodejs";
-
 const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 const budgetIds = new Set(["budget-1", "budget-2", "budget-3", "budget-4", "budget-5"]);
 

@@ -219,7 +219,9 @@ Responsive, keyboard, reduced-motion, content, and locale behavior are one accep
 
 ## 7. Verification
 
-Before handoff, verify the changed behavior in the longest locale, at narrow width, with keyboard navigation, and with reduced motion. Use the CI workflow as the source of truth and run the checks relevant to the change.
+These are product acceptance criteria, not a requirement to rerun every check after every change. Automate stable invariants, inspect visual judgment on the affected surfaces, and match verification to the scope of the change. Run the full locale, reflow, zoom, keyboard, reduced-motion, and contact-flow matrix before launch or a major release.
+
+Before handoff, verify the changed behavior in the longest relevant locale and in the states the change can affect. Use the CI workflow as the baseline and add targeted checks where the change carries more risk.
 
 Confirm that:
 
