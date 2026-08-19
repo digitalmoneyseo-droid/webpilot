@@ -93,17 +93,17 @@ export const servicesContent = {
         cta: "Websites & Apps entdecken",
         page: {
           metaDescription: "Websites, Web-Apps und digitale Produkte von Webpilot: Strategie, UX/UI Design, Entwicklung, Integrationen, Analytics und Launch.",
-          title: "Digitale Erlebnisse, die für dein Unternehmen arbeiten.",
+          title: "Klare, schnelle Websites und Apps.",
           intro: "Wir planen, gestalten und entwickeln schnelle, zugängliche Websites und Apps rund um deine Kunden und Geschäftsziele.",
-          outcomesHeading: "Mehr als eine schöne Oberfläche",
-          outcomesIntro: "Design, Technologie und Conversion werden gemeinsam geplant, damit das Ergebnis im Alltag funktioniert.",
+          outcomesHeading: "Was das fertige Produkt leisten muss",
+          outcomesIntro: "Wir richten Inhalte, Oberfläche, technische Umsetzung und Messung darauf aus, was Nutzer erledigen und dein Team verwalten muss.",
           outcomes: [
             { title: "Ein klarer Weg zur Handlung", copy: "Inhalte, Navigation und Interaktionen führen Besucher verständlich zum nächsten sinnvollen Schritt." },
             { title: "Schnell und zugänglich", copy: "Das Erlebnis funktioniert zuverlässig auf verschiedenen Geräten und für möglichst viele Menschen." },
             { title: "Bereit für Weiterentwicklung", copy: "Saubere Systeme, sinnvolle Integrationen und messbare Grundlagen machen spätere Verbesserungen leichter." },
           ],
           scopeHeading: "Was wir entwickeln",
-          scopeIntro: "Dieser Service verantwortet das sichtbare digitale Erlebnis: Struktur, Oberfläche und technische Umsetzung. Organische Sichtbarkeit, laufende Kampagnen und nachgelagerte Automatisierung werden bei Bedarf als klar abgegrenzte Services eingebunden.",
+          scopeIntro: "Wir übernehmen Struktur, Oberfläche und technische Umsetzung. SEO, laufende Kampagnen und Workflow-Automatisierung planen wir bei Bedarf als eigene Leistungen.",
           scopeGroups: [
             {
               title: "Marketing-Websites",
@@ -122,7 +122,7 @@ export const servicesContent = {
             },
             {
               title: "Apps & Kundenportale",
-              copy: "Web- und native Apps für Self-Service, Zusammenarbeit oder interne Abläufe, entwickelt für deine Nutzer und sinnvoll mit bestehenden Systemen verbunden.",
+              copy: "Web- und native Apps für Selbstbedienung, Zusammenarbeit oder interne Abläufe, entwickelt für deine Nutzer und sinnvoll mit bestehenden Systemen verbunden.",
               items: ["Product Discovery und Prototypen", "Web-, Cross-Platform- und native App-Entwicklung", "Authentifizierte Bereiche und Nutzerkonten", "Daten-, API- und Systemintegrationen"],
             },
             {
@@ -168,17 +168,17 @@ export const servicesContent = {
         cta: "SEO & KI-Sichtbarkeit entdecken",
         page: {
           metaDescription: "SEO und KI-Sichtbarkeit von Webpilot: technische Optimierung, Content, lokale Suche und bessere Auffindbarkeit in Suchmaschinen und KI-Antworten.",
-          title: "Gefunden werden, wo Kunden nach Antworten suchen.",
+          title: "Sichtbar, wenn Kunden suchen.",
           intro: "Wir verbessern Technik, Inhalte und Autorität für klassische Suche und relevante KI-gestützte Antworten.",
-          outcomesHeading: "Sichtbarkeit mit Substanz",
-          outcomesIntro: "Wir verbinden bewährte SEO-Grundlagen mit der Frage, wie deine Inhalte in neuen Sucherlebnissen verstanden und zitiert werden.",
+          outcomesHeading: "Was bessere Sichtbarkeit braucht",
+          outcomesIntro: "Wir beseitigen technische Hindernisse, richten Seiten an echten Suchanfragen aus und machen wichtige Informationen leichter verständlich und zitierbar.",
           outcomes: [
             { title: "Eine auffindbare Grundlage", copy: "Technische Hindernisse werden sichtbar und wichtige Seiten können zuverlässig gefunden, verstanden und indexiert werden." },
             { title: "Inhalte für echte Suchintention", copy: "Themen und Seiten beantworten die Fragen, die potenzielle Kunden vor einer Entscheidung wirklich haben." },
             { title: "Klare Signale statt GEO-Hacks", copy: "Nachvollziehbare Informationen, Struktur und externe Belege stärken die Sichtbarkeit in Suche und KI-Antworten." },
           ],
           scopeHeading: "Wie wir Sichtbarkeit verbessern",
-          scopeIntro: "Dieser Service verantwortet organische Auffindbarkeit in Suche und relevanten KI-Antworten. Größere Website-Umbauten und laufende Werbemaßnahmen bleiben klar bei Websites & Apps beziehungsweise Werbekampagnen verortet.",
+          scopeIntro: "Wir übernehmen technisches SEO, Suchintention, Inhalte, lokale Sichtbarkeit, strukturierte Daten und Messung. Größere Website-Umbauten und bezahlte Werbung planen wir als eigene Leistungen.",
           scopeGroups: [
             {
               title: "Technisches SEO",
@@ -193,7 +193,7 @@ export const servicesContent = {
             {
               title: "Onpage & Content",
               copy: "Bestehende und neue Inhalte werden für organische Suchintention strukturiert. UX, visuelles Design und technische Seitenentwicklung bleiben Teil von Websites & Apps.",
-              items: ["Optimierung wichtiger Seiten", "Suchorientierte Service-Inhalte", "Content-Briefings und redaktionelle Planung", "Metadaten und interne Verlinkung"],
+              items: ["Optimierung wichtiger Seiten", "Suchorientierte Inhalte zu Leistungen", "Content-Briefings und redaktionelle Planung", "Metadaten und interne Verlinkung"],
             },
             {
               title: "Lokale Sichtbarkeit",
@@ -226,7 +226,7 @@ export const servicesContent = {
             { question: "Könnt ihr lokale Suche verbessern?", answer: "Ja. Wenn lokale Nachfrage für dein Unternehmen wichtig ist, beziehen wir Standortseiten, Unternehmensprofile, lokale Signale und passende Suchintentionen ein." },
           ],
           finalTitle: "Machen wir dein Angebot leichter auffindbar.",
-          finalCopy: "Wir prüfen, wo Sichtbarkeit verloren geht und welche nächsten Schritte das größte realistische Potenzial haben.",
+          finalCopy: "Wir zeigen dir, was Sichtbarkeit verhindert, was zuerst behoben werden sollte und was warten kann.",
           finalCta: "SEO-Projekt besprechen",
         },
       },
@@ -243,7 +243,7 @@ export const servicesContent = {
         cta: "Werbekampagnen entdecken",
         page: {
           metaDescription: "Werbekampagnen von Webpilot: Google Ads, Paid Social, Creative, Conversion-Optimierung, Tracking und laufende Verbesserung für qualifizierte Nachfrage.",
-          title: "Bezahlte Aufmerksamkeit in Nachfrage verwandeln.",
+          title: "Werbung vom Klick bis zur Anfrage.",
           intro: "Wir verbinden Strategie, Anzeigen, Conversion-Pfade und Messung zu einem klaren Akquisitionsweg.",
           outcomesHeading: "Die ganze Kampagne im Blick",
           outcomesIntro: "Gute Media-Performance entsteht nicht nur im Anzeigenkonto. Angebot, Creative und Conversion-Pfad müssen zusammenarbeiten.",
@@ -253,7 +253,7 @@ export const servicesContent = {
             { title: "Messbare Nachfrage", copy: "Tracking und eine definierte Lead-Übergabe verbinden Werbeausgaben mit den Anfragen, die für dein Unternehmen relevant sind." },
           ],
           scopeHeading: "Was wir für Kampagnen entwickeln",
-          scopeIntro: "Dieser Service verantwortet bezahlte Akquise vom Kanal bis zur Kampagnenauswertung. Neue Landingpages werden mit Websites & Apps gebaut; CRM-Automation nach der Übergabe gehört zu KI & Automatisierung.",
+          scopeIntro: "Wir planen und steuern bezahlte Akquise von der Kanalauswahl bis zum Reporting. Websites & Apps übernimmt Konzeption und Umsetzung neuer Landingpages. KI & Automatisierung übernimmt die CRM-Automation nach der Lead-Erfassung.",
           scopeGroups: [
             {
               title: "Kampagnenstrategie & Angebot",
@@ -287,7 +287,7 @@ export const servicesContent = {
             },
           ],
           processHeading: "Von der Hypothese zur Verbesserung",
-          processIntro: "Jede Kampagne startet mit einer klaren Annahme und wird anhand echter Reaktionen weiterentwickelt.",
+          processIntro: "Wir starten mit einer überprüfbaren Annahme zur Zielgruppe, zum Angebot oder zum Kanal. Die Ergebnisse bestimmen, was sich als Nächstes ändert.",
           process: [
             { title: "Ausrichten", copy: "Wir klären Angebot, Zielgruppe, Wirtschaftlichkeit und den relevanten Conversion-Pfad." },
             { title: "Starten und testen", copy: "Wir starten Kampagnen und Creatives und testen die wichtigsten Annahmen entlang des vereinbarten Conversion-Pfads." },
@@ -318,17 +318,17 @@ export const servicesContent = {
         cta: "KI & Automatisierung entdecken",
         page: {
           metaDescription: "Praktische KI-Lösungen und Workflow-Automatisierung von Webpilot: Prozessanalyse, Prototypen, Integrationen, CRM-Automation und produktive KI-Funktionen.",
-          title: "Praktische KI für bessere Abläufe.",
+          title: "Weniger Routine, mehr Kontrolle.",
           intro: "Wir verbinden Systeme, automatisieren wiederkehrende Arbeit und entwickeln KI-Funktionen für konkrete Aufgaben.",
-          outcomesHeading: "Technologie mit einem klaren Zweck",
-          outcomesIntro: "Wir starten beim Ablauf und dem gewünschten Ergebnis, nicht bei einem bestimmten KI-Tool.",
+          outcomesHeading: "Die Arbeit zuerst, nicht das Werkzeug",
+          outcomesIntro: "Zuerst erfassen wir die Aufgabe, Ausnahmen, Daten und Entscheidungen, die weiterhin einen Menschen brauchen.",
           outcomes: [
             { title: "Weniger manuelle Übergaben", copy: "Informationen bewegen sich zuverlässig zwischen Formularen, Postfächern, CRM und internen Werkzeugen." },
             { title: "Schnellere Bearbeitung", copy: "Wiederkehrende Aufgaben werden vorbereitet oder automatisiert, während wichtige Entscheidungen sichtbar bleiben." },
             { title: "KI dort, wo sie hilft", copy: "Assistenten und produktintegrierte Funktionen lösen eine klar definierte Aufgabe statt nur einen Demo-Effekt zu erzeugen." },
           ],
           scopeHeading: "Was wir automatisieren und entwickeln",
-          scopeIntro: "Dieser Service verantwortet interne Abläufe, Systemübergaben und klar definierte KI-Funktionen. Die sichtbare Website- oder App-Oberfläche wird bei Bedarf gemeinsam mit Websites & Apps geliefert.",
+          scopeIntro: "Wir automatisieren interne Abläufe und Systemübergaben und entwickeln KI-Funktionen für klar definierte Aufgaben. Websites & Apps übernimmt bei Bedarf die umgebende Website- oder App-Oberfläche.",
           scopeGroups: [
             {
               title: "Workflow-Automatisierung",
@@ -337,7 +337,7 @@ export const servicesContent = {
             },
             {
               title: "CRM & Lead-Prozesse",
-              copy: "Nach der Übergabe aus Website oder Kampagne werden neue Kontakte ergänzt, bewertet und an den passenden Vertriebs- oder Serviceprozess weitergegeben.",
+              copy: "Nach der Übergabe aus Website oder Kampagne werden neue Kontakte ergänzt, bewertet und an den passenden Vertriebs- oder Kundenbetreuungsprozess weitergegeben.",
               items: ["Formular- und CRM-Übergabe", "Lead-Anreicherung und systemische Qualifizierung", "Routing und automatisiertes Follow-up", "Pipeline- und Statusautomatisierung"],
             },
             {
@@ -388,11 +388,11 @@ export const servicesContent = {
       cta: "Anfrage starten",
     },
     optimizationAnimation: {
-      query: "Beste Agentur für digitales Wachstum",
+      query: "Studio für digitales Wachstum",
       resultLabel: "Suchergebnisse",
       rankLabel: "Rang",
       topRankedLabel: "Top platziert",
-      winnerDescription: "Digitale Systeme für profitables Wachstum",
+      winnerDescription: "Websites, Kampagnen und Automatisierung",
       descriptions: ["Strategie und digitale Kampagnen", "Digitale Erlebnisse für wachsende Marken", "Performance Marketing und Optimierung"],
     },
     campaignAnimation: { metricLabel: "neue qualifizierte Anfragen" },
@@ -426,17 +426,17 @@ export const servicesContent = {
         cta: "Explore Websites & Apps",
         page: {
           metaDescription: "Websites, web apps, and digital products by Webpilot: strategy, UX/UI design, development, integrations, analytics, and launch support.",
-          title: "Digital experiences built to perform.",
+          title: "Clear, fast websites and apps.",
           intro: "We plan, design, and build fast, accessible websites and apps around your customers and commercial goals.",
-          outcomesHeading: "More than a polished interface",
-          outcomesIntro: "Design, technology, and conversion are planned together so the finished experience works in the real world.",
+          outcomesHeading: "What the finished product needs to do",
+          outcomesIntro: "We plan the content, interface, build, and measurement around what users need to do and what your team needs to manage.",
           outcomes: [
             { title: "A clear path to action", copy: "Content, navigation, and interactions help visitors understand the next useful step." },
             { title: "Fast and accessible", copy: "The experience works reliably across devices and for as many people as possible." },
             { title: "Ready to evolve", copy: "Clean systems, useful integrations, and measurable foundations make future improvements easier." },
           ],
           scopeHeading: "What we build",
-          scopeIntro: "This service owns the visible digital experience: structure, interface, and technical delivery. Organic visibility, ongoing campaigns, and downstream automation are added as clearly defined services when needed.",
+          scopeIntro: "We handle the structure, interface, and build. SEO, ongoing campaigns, and workflow automation are scoped separately when the project needs them.",
           scopeGroups: [
             {
               title: "Marketing websites",
@@ -501,17 +501,17 @@ export const servicesContent = {
         cta: "Explore SEO & AI Visibility",
         page: {
           metaDescription: "SEO and AI visibility by Webpilot: technical optimization, content, local search, and stronger discoverability in search engines and AI answers.",
-          title: "Be found where customers look for answers.",
+          title: "Be found when customers search.",
           intro: "We improve technology, content, and authority for traditional search and relevant AI-powered answers.",
-          outcomesHeading: "Visibility with substance",
-          outcomesIntro: "We connect proven SEO foundations with how your information is understood and cited in new search experiences.",
+          outcomesHeading: "What better visibility requires",
+          outcomesIntro: "We fix technical blockers, align pages with real searches, and make important information easier to understand and cite.",
           outcomes: [
             { title: "A discoverable foundation", copy: "Technical barriers become visible and important pages can be found, understood, and indexed reliably." },
             { title: "Content for real search intent", copy: "Topics and pages answer the questions potential customers genuinely have before making a decision." },
             { title: "Clear signals, not GEO hacks", copy: "Useful information, sound structure, and external evidence strengthen visibility in search and AI answers." },
           ],
           scopeHeading: "How we improve visibility",
-          scopeIntro: "This service owns organic discoverability in search and relevant AI answers. Larger website changes and ongoing advertising remain clearly assigned to Websites & Apps and Paid Campaigns respectively.",
+          scopeIntro: "We handle technical SEO, search intent, content, local visibility, structured data, and measurement. Website rebuilds and paid media are scoped separately.",
           scopeGroups: [
             {
               title: "Technical SEO",
@@ -559,7 +559,7 @@ export const servicesContent = {
             { question: "Can you improve local search visibility?", answer: "Yes. When local demand matters, we include location pages, business profiles, local signals, and the relevant search intent." },
           ],
           finalTitle: "Make your offer easier to find.",
-          finalCopy: "We will identify where visibility is being lost and which next steps have the strongest realistic potential.",
+          finalCopy: "We will show you what blocks visibility, what to fix first, and what should wait.",
           finalCta: "Discuss your SEO project",
         },
       },
@@ -576,7 +576,7 @@ export const servicesContent = {
         cta: "Explore Paid Campaigns",
         page: {
           metaDescription: "Paid campaigns by Webpilot: Google Ads, paid social, creative, conversion optimization, tracking, and ongoing improvement for qualified demand.",
-          title: "Turn paid attention into demand.",
+          title: "Paid campaigns from click to enquiry.",
           intro: "We connect strategy, ads, conversion journeys, and measurement into one clear acquisition path.",
           outcomesHeading: "See the whole campaign",
           outcomesIntro: "Strong media performance is not created inside an ad account alone. The offer, creative, and conversion path must work together.",
@@ -586,7 +586,7 @@ export const servicesContent = {
             { title: "Measurable demand", copy: "Tracking and a defined lead handoff connect advertising spend to the inquiries that matter to your business." },
           ],
           scopeHeading: "What we build for campaigns",
-          scopeIntro: "This service owns paid acquisition from channel selection through campaign analysis. New landing pages are built with Websites & Apps; CRM automation after handoff belongs to AI & Automation.",
+          scopeIntro: "We plan and manage paid acquisition from channel selection through reporting. Websites & Apps designs and builds any new landing page the campaign needs. AI & Automation handles CRM automation after lead capture.",
           scopeGroups: [
             {
               title: "Campaign strategy & offer",
@@ -620,7 +620,7 @@ export const servicesContent = {
             },
           ],
           processHeading: "From hypothesis to improvement",
-          processIntro: "Every campaign begins with a clear assumption and develops through real audience response.",
+          processIntro: "We start with one testable assumption about the audience, offer, or channel. Results decide what changes next.",
           process: [
             { title: "Align", copy: "We clarify the offer, audience, economics, and the relevant conversion path." },
             { title: "Launch and test", copy: "We launch campaigns and creative, then test the most important assumptions across the agreed conversion journey." },
@@ -651,17 +651,17 @@ export const servicesContent = {
         cta: "Explore AI & Automation",
         page: {
           metaDescription: "Practical AI solutions and workflow automation by Webpilot: process analysis, prototypes, integrations, CRM automation, and useful AI features.",
-          title: "Put practical AI to work.",
+          title: "Less repetition, more control.",
           intro: "We connect systems, automate repetitive work, and build AI features for clearly defined tasks.",
-          outcomesHeading: "Technology with a clear purpose",
-          outcomesIntro: "We begin with the workflow and desired result, not with a particular AI tool.",
+          outcomesHeading: "Start with the work, not the tool",
+          outcomesIntro: "We first map the task, exceptions, data, and decisions that still need a person.",
           outcomes: [
             { title: "Fewer manual handoffs", copy: "Information moves reliably between forms, inboxes, CRM platforms, and internal tools." },
             { title: "Faster handling", copy: "Repetitive work is prepared or automated while important decisions remain visible." },
             { title: "AI where it helps", copy: "Assistants and product features solve one defined task instead of creating a temporary demo effect." },
           ],
           scopeHeading: "What we automate and build",
-          scopeIntro: "This service owns internal workflows, system handoffs, and clearly defined AI features. The visible website or app interface is delivered with Websites & Apps when needed.",
+          scopeIntro: "We automate internal workflows and system handoffs, and build AI features for defined tasks. Websites & Apps handles the surrounding website or app interface when needed.",
           scopeGroups: [
             {
               title: "Workflow automation",
@@ -721,11 +721,11 @@ export const servicesContent = {
       cta: "Start an inquiry",
     },
     optimizationAnimation: {
-      query: "Best digital growth agency",
+      query: "Digital growth studio",
       resultLabel: "Search results",
       rankLabel: "Rank",
       topRankedLabel: "Top ranked",
-      winnerDescription: "Digital systems for profitable growth",
+      winnerDescription: "Websites, campaigns, and automation",
       descriptions: ["Strategy and digital campaigns", "Digital experiences for growing brands", "Performance marketing and optimization"],
     },
     campaignAnimation: { metricLabel: "new qualified inquiries" },

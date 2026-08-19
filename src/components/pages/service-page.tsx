@@ -69,7 +69,7 @@ export function ServicePage({ locale, serviceId }: { locale: Locale; serviceId: 
   return (
     <main id="main-content">
       <section className="px-page pt-page-title pb-section">
-        <div className="mx-auto grid max-w-layout grid-cols-[minmax(0,.92fr)_minmax(24rem,1.08fr)] items-center gap-split max-[900px]:grid-cols-1">
+        <div className="mx-auto grid max-w-[70rem] grid-cols-2 items-center gap-x-8 max-[900px]:grid-cols-1 max-[900px]:gap-10">
           <Reveal className="min-w-0 max-w-[39rem]">
             <h1 className="m-0 text-display-sm text-balance">{copy.page.title}</h1>
             <p className="mt-6 max-w-[38rem] text-lead text-muted text-balance">{copy.page.intro}</p>

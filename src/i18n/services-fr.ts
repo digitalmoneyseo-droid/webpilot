@@ -15,17 +15,17 @@ export const frServices: ServicesCopy = {
       cta: "Découvrir Sites web & applications",
       page: {
         metaDescription: "Sites web, applications web et produits numériques par Webpilot : stratégie, design UX/UI, développement, intégrations, analytics et accompagnement au lancement.",
-        title: "Des expériences numériques conçues pour performer.",
+        title: "Sites et applications clairs et rapides.",
         intro: "Nous planifions, concevons et développons des sites web et des applications rapides et accessibles, centrés sur vos clients et vos objectifs commerciaux.",
-        outcomesHeading: "Bien plus qu’une interface soignée",
-        outcomesIntro: "Design, technologie et conversion sont pensés ensemble pour que l’expérience finale fonctionne dans la réalité.",
+        outcomesHeading: "Ce que le produit final doit accomplir",
+        outcomesIntro: "Nous alignons le contenu, l’interface, la réalisation technique et la mesure sur ce que les utilisateurs doivent faire et ce que votre équipe doit gérer.",
         outcomes: [
           { title: "Un parcours clair vers l’action", copy: "Le contenu, la navigation et les interactions aident les visiteurs à comprendre la prochaine étape utile." },
           { title: "Rapide et accessible", copy: "L’expérience fonctionne de manière fiable sur tous les appareils et pour le plus grand nombre." },
           { title: "Prêt à évoluer", copy: "Des systèmes propres, des intégrations utiles et des fondations mesurables facilitent les améliorations futures." },
         ],
         scopeHeading: "Ce que nous créons",
-        scopeIntro: "Ce service prend en charge l’expérience numérique visible : structure, interface et réalisation technique. La visibilité organique, les campagnes continues et l’automatisation en aval sont ajoutées sous forme de services clairement définis lorsque nécessaire.",
+        scopeIntro: "Nous prenons en charge la structure, l’interface et la réalisation technique. Le SEO, les campagnes continues et l’automatisation des processus font l’objet de prestations distinctes lorsque le projet le demande.",
         scopeGroups: [
           {
             title: "Sites web marketing",
@@ -90,17 +90,17 @@ export const frServices: ServicesCopy = {
       cta: "Découvrir SEO & visibilité IA",
       page: {
         metaDescription: "SEO et visibilité IA par Webpilot : optimisation technique, contenu, recherche locale et présence renforcée dans les moteurs de recherche et les réponses IA.",
-        title: "Soyez présent là où vos clients cherchent des réponses.",
+        title: "Visible lorsque vos clients cherchent.",
         intro: "Nous améliorons la technologie, le contenu et l’autorité de votre marque pour la recherche traditionnelle et les réponses IA pertinentes.",
-        outcomesHeading: "Une visibilité fondée sur du concret",
-        outcomesIntro: "Nous relions les fondations éprouvées du SEO à la manière dont vos informations sont comprises et citées dans les nouvelles expériences de recherche.",
+        outcomesHeading: "Ce qu’exige une meilleure visibilité",
+        outcomesIntro: "Nous corrigeons les obstacles techniques, alignons les pages sur les recherches réelles et rendons les informations importantes plus faciles à comprendre et à citer.",
         outcomes: [
           { title: "Des fondations faciles à découvrir", copy: "Les obstacles techniques deviennent visibles et les pages importantes peuvent être trouvées, comprises et indexées de manière fiable." },
           { title: "Du contenu pour de vraies intentions", copy: "Les sujets et les pages répondent aux questions que les clients potentiels se posent réellement avant de décider." },
           { title: "Des signaux clairs, pas des astuces GEO", copy: "Des informations utiles, une structure solide et des preuves externes renforcent la visibilité dans la recherche et les réponses IA." },
         ],
         scopeHeading: "Comment nous renforçons votre visibilité",
-        scopeIntro: "Ce service prend en charge la visibilité organique dans les moteurs de recherche et les réponses IA pertinentes. Les évolutions importantes du site et la publicité continue restent clairement attribuées aux services Sites web & applications et Campagnes payantes.",
+        scopeIntro: "Nous prenons en charge le SEO technique, les intentions de recherche, le contenu, la visibilité locale, les données structurées et la mesure. Les refontes importantes du site et les campagnes payantes font l’objet de prestations distinctes.",
         scopeGroups: [
           {
             title: "SEO technique",
@@ -148,7 +148,7 @@ export const frServices: ServicesCopy = {
           { question: "Pouvez-vous améliorer notre visibilité locale ?", answer: "Oui. Lorsque la demande locale compte, nous intégrons les pages géographiques, les fiches d’établissement, les signaux locaux et les intentions de recherche pertinentes." },
         ],
         finalTitle: "Rendez votre offre plus facile à trouver.",
-        finalCopy: "Nous identifierons les pertes de visibilité et les prochaines étapes au potentiel réaliste le plus fort.",
+        finalCopy: "Nous vous montrerons ce qui freine la visibilité, ce qu’il faut corriger en premier et ce qui peut attendre.",
         finalCta: "Parler de votre projet SEO",
       },
     },
@@ -165,7 +165,7 @@ export const frServices: ServicesCopy = {
       cta: "Découvrir les Campagnes payantes",
       page: {
         metaDescription: "Campagnes payantes par Webpilot : Google Ads, réseaux sociaux payants, création, optimisation des conversions, suivi et amélioration continue de la demande qualifiée.",
-        title: "Transformez l’attention payante en demande.",
+        title: "Des campagnes du clic à la demande.",
         intro: "Nous relions stratégie, publicité, parcours de conversion et mesure dans un chemin d’acquisition clair.",
         outcomesHeading: "Voir la campagne dans son ensemble",
         outcomesIntro: "Une bonne performance média ne se construit pas uniquement dans un compte publicitaire. L’offre, la création et le parcours de conversion doivent fonctionner ensemble.",
@@ -175,7 +175,7 @@ export const frServices: ServicesCopy = {
           { title: "Une demande mesurable", copy: "Le suivi et une transmission définie des prospects relient les dépenses publicitaires aux demandes qui comptent pour votre entreprise." },
         ],
         scopeHeading: "Ce que nous construisons pour vos campagnes",
-        scopeIntro: "Ce service prend en charge l’acquisition payante, du choix des canaux à l’analyse des campagnes. Les nouvelles pages de destination sont réalisées avec Sites web & applications ; l’automatisation CRM après la transmission relève de l’IA & automatisation.",
+        scopeIntro: "Nous planifions et pilotons l’acquisition payante, du choix des canaux au reporting. Pour toute nouvelle page de destination, Sites web & applications prend en charge la conception et la réalisation. IA & automatisation prend en charge l’automatisation CRM après la collecte du prospect.",
         scopeGroups: [
           {
             title: "Stratégie de campagne & offre",
@@ -209,7 +209,7 @@ export const frServices: ServicesCopy = {
           },
         ],
         processHeading: "De l’hypothèse à l’amélioration",
-        processIntro: "Chaque campagne part d’une hypothèse claire et évolue grâce aux réactions réelles du public.",
+        processIntro: "Nous partons d’une hypothèse testable sur le public, l’offre ou le canal. Les résultats déterminent le changement suivant.",
         process: [
           { title: "Cadrer", copy: "Nous clarifions l’offre, le public, l’économie et le parcours de conversion pertinent." },
           { title: "Lancer et tester", copy: "Nous lançons les campagnes et les créations, puis testons les hypothèses principales sur le parcours de conversion convenu." },
@@ -240,17 +240,17 @@ export const frServices: ServicesCopy = {
       cta: "Découvrir IA & automatisation",
       page: {
         metaDescription: "Solutions IA concrètes et automatisation des processus par Webpilot : analyse, prototypes, intégrations, automatisation CRM et fonctionnalités IA utiles.",
-        title: "Mettez l’IA concrète au travail.",
+        title: "Moins de tâches, plus de contrôle.",
         intro: "Nous connectons les systèmes, automatisons le travail répétitif et créons des fonctionnalités IA pour des tâches clairement définies.",
-        outcomesHeading: "Une technologie au service d’un objectif clair",
-        outcomesIntro: "Nous partons du processus et du résultat attendu, pas d’un outil d’IA particulier.",
+        outcomesHeading: "Commencer par le travail, pas par l’outil",
+        outcomesIntro: "Nous commençons par cartographier la tâche, les exceptions, les données et les décisions qui doivent rester humaines.",
         outcomes: [
           { title: "Moins de transmissions manuelles", copy: "Les informations circulent de manière fiable entre les formulaires, les boîtes de réception, les plateformes CRM et les outils internes." },
           { title: "Un traitement plus rapide", copy: "Le travail répétitif est préparé ou automatisé, tandis que les décisions importantes restent visibles." },
           { title: "L’IA là où elle aide", copy: "Les assistants et fonctionnalités produit résolvent une tâche précise au lieu de créer un simple effet de démonstration." },
         ],
         scopeHeading: "Ce que nous automatisons et créons",
-        scopeIntro: "Ce service prend en charge les processus internes, les transmissions entre systèmes et les fonctionnalités IA clairement définies. L’interface visible du site ou de l’application est réalisée avec Sites web & applications lorsque nécessaire.",
+        scopeIntro: "Nous automatisons les processus internes et les transmissions entre systèmes, et créons des fonctionnalités IA pour des tâches définies. Sites web & applications prend en charge l’interface du site ou de l’application lorsque nécessaire.",
         scopeGroups: [
           {
             title: "Automatisation des processus",
@@ -310,11 +310,11 @@ export const frServices: ServicesCopy = {
     cta: "Nous contacter",
   },
   optimizationAnimation: {
-    query: "Meilleure agence de croissance digitale",
+    query: "Studio de croissance numérique",
     resultLabel: "Résultats de recherche",
     rankLabel: "Position",
     topRankedLabel: "Premier résultat",
-    winnerDescription: "Systèmes numériques pour une croissance rentable",
+    winnerDescription: "Sites web, campagnes et automatisation",
     descriptions: ["Stratégie et campagnes numériques", "Expériences numériques pour les marques en croissance", "Marketing à la performance et optimisation"],
   },
   campaignAnimation: { metricLabel: "nouvelles demandes qualifiées" },
