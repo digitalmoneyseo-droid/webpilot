@@ -40,9 +40,10 @@
 ## Verification
 
 - Match verification effort to the risk and scope of the change. Do not run broad or repetitive checks for trivial edits.
-- Baseline CI consists of lint, focused Bun tests, a production build, and the small Chromium smoke suite.
+- Baseline CI consists of lint, content validation, a production build, and the small Chromium smoke suite.
+- Do not run the full CI suite or Playwright for routine local edits. Run Playwright only when a change affects navigation, forms, public routes, runtime behavior, or when preparing a deployment.
 - For content-only changes, validate the affected content and locale parity; browser verification is needed only when copy can affect layout or interaction.
-- For layout changes, inspect the affected route in the longest locale at narrow width. For navigation, form, or runtime changes, run the relevant production-server browser flow. For motion changes, verify reduced motion on the affected visual.
+- For layout changes, inspect only the affected route in the longest locale at narrow width. For navigation, form, or runtime changes, run the relevant production-server browser flow. For motion changes, verify reduced motion on the affected visual.
 - Do not add exact pixel or timing tests for decorative behavior unless they protect a confirmed regression.
 - Use the CI workflow as the source of truth for required checks.
 

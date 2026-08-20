@@ -136,6 +136,7 @@
   --type-heading-sm: 1.25rem;
   --type-heading-md: 1.5rem;
   --type-heading-lg: clamp(2rem, calc(1.8rem + .85vw), 2.5rem);
+  --type-display-service: clamp(2.5rem, calc(1.0625rem + 2.5vw), 3.25rem);
   --type-display-sm: clamp(2.5rem, calc(2.02rem + 2.05vw), 3.75rem);
   --type-display-lg: clamp(2.75rem, calc(2.08rem + 2.85vw), 4.5rem);
   --leading-caption: 1.5;
@@ -153,6 +154,7 @@
   --leading-heading-sm: 1.25;
   --leading-heading-md: 1.2;
   --leading-heading-lg: 1.08;
+  --leading-display-service: 1.06;
   --leading-display-sm: 1.04;
   --leading-display-lg: 1.02;
   --tracking-caption: 0;
@@ -170,6 +172,7 @@
   --tracking-heading-sm: -0.015em;
   --tracking-heading-md: -0.025em;
   --tracking-heading-lg: -0.035em;
+  --tracking-display-service: -0.035em;
   --tracking-display-sm: -0.04em;
   --tracking-display-lg: -0.045em;
 

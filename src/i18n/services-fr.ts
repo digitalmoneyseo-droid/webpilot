@@ -15,7 +15,7 @@ export const frServices: ServicesCopy = {
       cta: "Découvrir Sites web & applications",
       page: {
         metaDescription: "Sites web, applications web et produits numériques par Webpilot : stratégie, design UX/UI, développement, intégrations, analytics et accompagnement au lancement.",
-        title: "Sites et applications clairs et rapides.",
+        title: "Des sites web et des applications clairs, rapides et faciles à gérer.",
         intro: "Nous planifions, concevons et développons des sites web et des applications rapides et accessibles, centrés sur vos clients et vos objectifs commerciaux.",
         outcomesHeading: "Ce que le produit final doit accomplir",
         outcomesIntro: "Nous alignons le contenu, l’interface, la réalisation technique et la mesure sur ce que les utilisateurs doivent faire et ce que votre équipe doit gérer.",
@@ -90,7 +90,7 @@ export const frServices: ServicesCopy = {
       cta: "Découvrir SEO & visibilité IA",
       page: {
         metaDescription: "SEO et visibilité IA par Webpilot : optimisation technique, contenu, recherche locale et présence renforcée dans les moteurs de recherche et les réponses IA.",
-        title: "Visible lorsque vos clients cherchent.",
+        title: "Soyez présent là où vos clients cherchent des réponses.",
         intro: "Nous améliorons la technologie, le contenu et l’autorité de votre marque pour la recherche traditionnelle et les réponses IA pertinentes.",
         outcomesHeading: "Ce qu’exige une meilleure visibilité",
         outcomesIntro: "Nous corrigeons les obstacles techniques, alignons les pages sur les recherches réelles et rendons les informations importantes plus faciles à comprendre et à citer.",
@@ -165,7 +165,7 @@ export const frServices: ServicesCopy = {
       cta: "Découvrir les Campagnes payantes",
       page: {
         metaDescription: "Campagnes payantes par Webpilot : Google Ads, réseaux sociaux payants, création, optimisation des conversions, suivi et amélioration continue de la demande qualifiée.",
-        title: "Des campagnes du clic à la demande.",
+        title: "Des campagnes payantes, du clic à la demande qualifiée.",
         intro: "Nous relions stratégie, publicité, parcours de conversion et mesure dans un chemin d’acquisition clair.",
         outcomesHeading: "Voir la campagne dans son ensemble",
         outcomesIntro: "Une bonne performance média ne se construit pas uniquement dans un compte publicitaire. L’offre, la création et le parcours de conversion doivent fonctionner ensemble.",
@@ -240,7 +240,7 @@ export const frServices: ServicesCopy = {
       cta: "Découvrir IA & automatisation",
       page: {
         metaDescription: "Solutions IA concrètes et automatisation des processus par Webpilot : analyse, prototypes, intégrations, automatisation CRM et fonctionnalités IA utiles.",
-        title: "Moins de tâches, plus de contrôle.",
+        title: "Automatisez les tâches répétitives sans perdre le contrôle.",
         intro: "Nous connectons les systèmes, automatisons le travail répétitif et créons des fonctionnalités IA pour des tâches clairement définies.",
         outcomesHeading: "Commencer par le travail, pas par l’outil",
         outcomesIntro: "Nous commençons par cartographier la tâche, les exceptions, les données et les décisions qui doivent rester humaines.",

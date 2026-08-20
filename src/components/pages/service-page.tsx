@@ -69,14 +69,14 @@ export function ServicePage({ locale, serviceId }: { locale: Locale; serviceId: 
   return (
     <main id="main-content">
       <section className="px-page pt-page-title pb-section">
-        <div className="mx-auto grid max-w-[70rem] grid-cols-2 items-center gap-x-8 max-[900px]:grid-cols-1 max-[900px]:gap-10">
+        <div className="mx-auto grid max-w-[75rem] grid-cols-[minmax(0,1fr)_34rem] items-center gap-x-8 max-[1160px]:grid-cols-1 max-[1160px]:gap-10">
           <Reveal className="min-w-0 max-w-[39rem]">
-            <h1 className="m-0 text-display-sm text-balance">{copy.page.title}</h1>
+            <h1 className="m-0 text-display-service text-balance">{copy.page.title}</h1>
             <p className="mt-6 max-w-[38rem] text-lead text-muted text-balance">{copy.page.intro}</p>
             <CtaButton href={contact} className="mt-8">{copy.page.finalCta}</CtaButton>
           </Reveal>
           <Reveal className="min-w-0" delay={70}>
-            <div className={`relative grid aspect-[1.1/1] min-h-[24rem] overflow-hidden rounded-card p-10 shadow-surface [&>*]:relative ${service.theme} max-[900px]:mx-auto max-[900px]:aspect-[4/3] max-[900px]:min-h-0 max-[900px]:w-full max-[900px]:max-w-[44rem] max-[600px]:h-[clamp(19rem,68vw,25rem)] max-[600px]:aspect-auto max-[600px]:p-4`} aria-hidden="true">
+            <div className={`relative grid aspect-[1.1/1] min-h-[24rem] overflow-hidden rounded-card p-10 shadow-surface [&>*]:relative ${service.theme} max-[1160px]:mx-auto max-[1160px]:aspect-[4/3] max-[1160px]:min-h-0 max-[1160px]:w-full max-[1160px]:max-w-[44rem] max-[600px]:h-[clamp(19rem,68vw,25rem)] max-[600px]:aspect-auto max-[600px]:p-4`} aria-hidden="true">
               <OfferAnimation animation={service.animation} locale={locale} />
             </div>
           </Reveal>

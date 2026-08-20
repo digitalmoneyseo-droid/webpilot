@@ -55,7 +55,8 @@ Fluid roles use continuous `clamp()` formulas in `rem`; their ranges must not cr
 | Role | Utility | Size / line height | Weight | Use |
 |---|---|---:|---:|---|
 | Hero display | `text-display-lg` | 44–72px / 1.02 | 500 | Homepage `h1` only |
-| Page title | `text-display-sm` | 40–60px / 1.04 | 500 | Standard page/service `h1`; final conversion statement |
+| Page title | `text-display-sm` | 40–60px / 1.04 | 500 | Standard editorial `h1`; final conversion statement |
+| Service title | `text-display-service` | 40–52px / 1.06 | 500 | Service `h1` beside an explanatory visual |
 | Section title | `text-heading-lg` | 32–40px / 1.08 | 500 | Main `h2`, normally through `SectionHeading` |
 | Subsection title | `text-heading-md` | 24px / 1.2 | 500 | Real nested section or service title |
 | Card title | `text-heading-sm` | 20px / 1.25 | 500 | Peer card, FAQ question, short feature title |
@@ -71,7 +72,7 @@ Fluid roles use continuous `clamp()` formulas in `rem`; their ranges must not cr
 | Mono metadata | `text-mono-meta` | 12px / 1.5 | 400 | Short technical or numeric metadata |
 | Label | `text-label` | 12px / 16px | 500 | Very short eyebrow or status; uppercase is allowed here only |
 
-Each page has one descriptive `h1`. The homepage alone uses `text-display-lg`; other page titles use `text-display-sm`. Equivalent peers use the same role, weight, tracking, color, and line height. Never shrink a translated string to make it fit.
+Each page has one descriptive `h1`. The homepage uses `text-display-lg`, service pages use `text-display-service`, and other page titles use `text-display-sm`. Equivalent peers use the same role, weight, tracking, color, and line height. Never shrink one translated string to make it fit.
 
 Reading prose uses `max-w-reading` (68ch); narrow introductions use `max-w-narrow` (54ch); hero statements stay around 18–20ch. Balance headings and short ledes, use pretty wrapping for prose, and keep running text left aligned. Rewrite or adjust measure before reducing a semantic type role.
 
@@ -173,7 +174,7 @@ Page openings use one of three patterns:
 
 1. Homepage: centered `text-display-lg`, one lead, one primary CTA, and one service anchor.
 2. Editorial: `EditorialHero` with `text-display-sm`, one lead, and no competing visual.
-3. Service: split title and explanatory visual with `text-display-sm`, one lead, and one service-specific CTA.
+3. Service: split title and explanatory visual with `text-display-service`, one lead, and one service-specific CTA.
 
 Do not invent another hero because a translation is longer. Adjust copy and measure within the matching pattern.
 

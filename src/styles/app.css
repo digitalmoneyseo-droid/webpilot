@@ -102,6 +102,10 @@
   --text-heading-lg--line-height: var(--leading-heading-lg);
   --text-heading-lg--letter-spacing: var(--tracking-heading-lg);
   --text-heading-lg--font-weight: 500;
+  --text-display-service: var(--type-display-service);
+  --text-display-service--line-height: var(--leading-display-service);
+  --text-display-service--letter-spacing: var(--tracking-display-service);
+  --text-display-service--font-weight: 500;
   --text-display-sm: var(--type-display-sm);
   --text-display-sm--line-height: var(--leading-display-sm);
   --text-display-sm--letter-spacing: var(--tracking-display-sm);
