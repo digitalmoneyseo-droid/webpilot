@@ -64,6 +64,16 @@
   --color-interactive-focus: var(--ds-blue-700);
   --color-feedback-error: #b42318;
 
+  /* Service identity palette. */
+  --service-websites-bg: #eaf2ff;
+  --service-websites-fg: #245bb8;
+  --service-search-bg: #e9f7ef;
+  --service-search-fg: #26734d;
+  --service-campaigns-bg: #fff8e8;
+  --service-campaigns-fg: #91600a;
+  --service-automation-bg: #f2edff;
+  --service-automation-fg: #6650a6;
+
   /* Compatibility aliases used by the Tailwind theme. */
   --bg: var(--color-canvas);
   --surface: var(--color-surface-primary);

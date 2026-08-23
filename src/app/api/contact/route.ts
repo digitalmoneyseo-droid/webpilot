@@ -2,9 +2,9 @@ import { Resend } from "resend";
 import { getServiceCopy } from "@/i18n/services";
 import { hasLocale, t, type Locale } from "@/lib/i18n";
 import { isServiceId } from "@/lib/service-catalog";
+import { budgetOptions, isBudgetId, type BudgetId } from "@/lib/contact-options";
 
 const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-const budgetIds = new Set(["budget-1", "budget-2", "budget-3", "budget-4", "budget-5"]);
 
 export async function POST(request: Request) {
   const origin = request.headers.get("origin");
@@ -44,7 +44,7 @@ export async function POST(request: Request) {
     companyUrl.length > 2048 || (companyUrl && !isHttpUrl(companyUrl)) ||
     !locale || !message || message.length < 20 || message.length > 5000 ||
     (!isServiceId(serviceId) && serviceId !== "not-sure") ||
-    !budgetIds.has(budgetId)
+    !isBudgetId(budgetId)
   ) {
     return Response.json({ error: "Invalid form data" }, { status: 400 });
   }
@@ -113,13 +113,8 @@ function isHttpUrl(value: string): boolean {
   }
 }
 
-function budgetLabel(locale: Locale, budgetId: string): string {
-  const keyById = {
-    "budget-1": "contact.formBudget1",
-    "budget-2": "contact.formBudget2",
-    "budget-3": "contact.formBudget3",
-    "budget-4": "contact.formBudget4",
-    "budget-5": "contact.formBudgetUnsure",
-  } as const;
-  return t(locale, keyById[budgetId as keyof typeof keyById]);
+function budgetLabel(locale: Locale, budgetId: BudgetId): string {
+  const option = budgetOptions.find(({ id }) => id === budgetId);
+  if (!option) throw new Error(`Missing contact budget option ${budgetId}.`);
+  return t(locale, option.messageKey);
 }

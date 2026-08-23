@@ -49,6 +49,33 @@ test("renders every public route in every locale", async ({ page }) => {
   }
 });
 
+test("returns a localized 404 for unknown routes", async ({ page }) => {
+  const cases = [
+    { route: "/missing-page", heading: "Seite nicht gefunden." },
+    { route: "/en/missing-page", heading: "Page not found." },
+    { route: "/fr/missing-page", heading: "Page introuvable." },
+  ] as const;
+
+  for (const { route, heading } of cases) {
+    await test.step(route, async () => {
+      const response = await page.goto(route);
+      expect(response?.status()).toBe(404);
+      await expect(page.getByRole("heading", { level: 1, name: heading })).toBeVisible();
+    });
+  }
+});
+
+test("sends the site security headers", async ({ request }) => {
+  const response = await request.get("/en/about");
+
+  expect(response.headers()["strict-transport-security"]).toBe("max-age=31536000");
+  expect(response.headers()["x-content-type-options"]).toBe("nosniff");
+  expect(response.headers()["x-frame-options"]).toBe("SAMEORIGIN");
+  expect(response.headers()["referrer-policy"]).toBe("strict-origin-when-cross-origin");
+  expect(response.headers()["permissions-policy"]).toBe("camera=(), microphone=(), geolocation=(), browsing-topics=()");
+  expect(response.headers()["x-powered-by"]).toBeUndefined();
+});
+
 test("keeps mobile navigation keyboard-accessible and within the viewport", async ({ page }) => {
   await page.setViewportSize({ width: 320, height: 844 });
   await page.emulateMedia({ reducedMotion: "reduce" });

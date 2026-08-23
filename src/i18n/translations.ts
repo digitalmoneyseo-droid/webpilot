@@ -1,5 +1,6 @@
 import type { Locale } from "./config";
 import { frMessages } from "./translations-fr";
+import { notFoundMessages } from "./not-found";
 
 const deMessages = {
   "nav.services": "Leistungen",
@@ -80,7 +81,7 @@ const deMessages = {
   "contact.formCompanyUrlError": "Bitte gib eine gültige Webadresse mit http:// oder https:// ein.",
   "contact.formMessageError": "Bitte gib uns mindestens 20 Zeichen Kontext.",
   "contact.formNote": "Deine Angaben werden per E-Mail an Webpilot gesendet und nicht in einer Website-Datenbank gespeichert.",
-  "contact.formError": "Die Anfrage konnte nicht gesendet werden. Versuche es erneut oder schreibe direkt an digitalmoneyseo@gmail.com.",
+  "contact.formError": "Die Anfrage konnte nicht gesendet werden. Versuche es erneut oder schreibe uns direkt:",
   "contact.formSuccessTitle": "Danke, deine Anfrage ist angekommen.",
   "contact.formSuccessCopy": "Wir prüfen deine Angaben und antworten an {email}.",
   "contact.formAnother": "Weitere Anfrage senden",
@@ -89,9 +90,9 @@ const deMessages = {
   "contact.formBodyName": "Name",
   "contact.formBodyEmail": "E-Mail",
   "contact.formBodyMessage": "Projekt und Ziel",
-  "notFound.title": "Seite nicht gefunden.",
-  "notFound.copy": "Die gesuchte Seite existiert nicht oder wurde verschoben.",
-  "notFound.back": "Zurück zur Startseite",
+  "notFound.title": notFoundMessages.de.title,
+  "notFound.copy": notFoundMessages.de.copy,
+  "notFound.back": notFoundMessages.de.back,
   "about.title": "Verschiedene Disziplinen. Eine klare Richtung.",
   "about.copy": "Webpilot verbindet Webdesign und Entwicklung, Suchmaschinenoptimierung, Werbekampagnen und Automatisierung, wenn ein Projekt mehr als eine Disziplin braucht.",
   "about.pov": "Warum wir Disziplinen verbinden",
@@ -222,7 +223,7 @@ const enMessages: Readonly<Record<MessageKey, string>> = {
   "contact.formCompanyUrlError": "Please enter a valid URL starting with http:// or https://.",
   "contact.formMessageError": "Please give us at least 20 characters of context.",
   "contact.formNote": "Your details are sent to Webpilot by email and are not added to a website database.",
-  "contact.formError": "We could not send your enquiry. Try again or email digitalmoneyseo@gmail.com directly.",
+  "contact.formError": "We could not send your enquiry. Try again or email us directly:",
   "contact.formSuccessTitle": "Thanks, your enquiry has arrived.",
   "contact.formSuccessCopy": "We will review the details and reply to {email}.",
   "contact.formAnother": "Send another enquiry",
@@ -231,9 +232,9 @@ const enMessages: Readonly<Record<MessageKey, string>> = {
   "contact.formBodyName": "Name",
   "contact.formBodyEmail": "Email",
   "contact.formBodyMessage": "Project and goal",
-  "notFound.title": "Page not found.",
-  "notFound.copy": "The page you’re looking for does not exist or has moved.",
-  "notFound.back": "Back to the homepage",
+  "notFound.title": notFoundMessages.en.title,
+  "notFound.copy": notFoundMessages.en.copy,
+  "notFound.back": notFoundMessages.en.back,
   "about.title": "Different disciplines. One clear direction.",
   "about.copy": "Webpilot brings together web design and development, search, paid campaigns, and automation when a project needs more than one discipline.",
   "about.pov": "Why we connect disciplines",

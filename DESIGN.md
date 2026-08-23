@@ -36,7 +36,7 @@ Before adding a visual value:
 4. Add a public semantic role only when it will recur and an existing role cannot express it.
 5. Expose a new role through Tailwind, document it here, and extend relevant design-system coverage in the same change.
 
-Primitive `--ds-*` values are raw materials, not the ordinary component API. `tests/design-system.spec.ts` catches common arbitrary typography, spacing, border, shadow, and radius violations; review remains responsible for cases outside those checks.
+Primitive `--ds-*` values are raw materials, not the ordinary component API. `tests/design-system.spec.ts` protects the shared service identity palette and its Tailwind exposure. Review remains responsible for typography, spacing, borders, shadows, radii, and exceptions that need visual judgment.
 
 ## 3. Core system
 
@@ -97,6 +97,8 @@ Reading prose uses `max-w-reading` (68ch); narrow introductions use `max-w-narro
 Establish hierarchy with typography and space before color. Use semantic roles for editorial text, generic surfaces, forms, and navigation. Never communicate state with color alone.
 
 Service illustrations, service identifiers, process markers, and offer animations may use scoped primitive or local palette values when semantic UI colors would erase useful category distinctions. Keep these exceptions within the service visual or generated explanation; do not turn them into general body-copy, form, or navigation colors.
+
+The four service identities use shared background and foreground pairs: `service-websites-*`, `service-search-*`, `service-campaigns-*`, and `service-automation-*`. Header navigation, contact selection, and related-service links consume these roles. The six-color service scope grid is a separate positional palette and remains local to that generated explanation.
 
 Do not add decorative gradients. Continuous data scales are the exception.
 

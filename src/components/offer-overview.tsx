@@ -5,15 +5,18 @@ import { useState } from "react";
 import { CollapsePanel } from "@/components/collapse-panel";
 import { CtaButton } from "@/components/cta-button";
 import { OfferAnimation } from "@/components/offer-animations/offer-animation";
-import { getServiceCatalog, type ServiceCatalogEntry } from "@/lib/service-catalog";
+import type { ServiceCatalogEntry } from "@/lib/service-catalog";
 import type { Locale } from "@/lib/i18n";
 
-export function OfferOverview({ locale }: { locale: Locale }) {
-  const services = getServiceCatalog(locale);
+export type OfferOverviewService = Pick<ServiceCatalogEntry, "id" | "animation" | "href" | "reverse" | "theme"> & {
+  copy: Pick<ServiceCatalogEntry["copy"], "name" | "summary" | "rows" | "cta">;
+};
+
+export function OfferOverview({ locale, services }: { locale: Locale; services: readonly OfferOverviewService[] }) {
   return <div className="mx-auto max-w-[70rem]">{services.map((service, index) => <Service key={service.id} locale={locale} service={service} revealDelay={index * 50} />)}</div>;
 }
 
-function Service({ locale, service, revealDelay }: { locale: Locale; service: ServiceCatalogEntry; revealDelay: number }) {
+function Service({ locale, service, revealDelay }: { locale: Locale; service: OfferOverviewService; revealDelay: number }) {
   const [open, setOpen] = useState<number | null>(0);
   const { copy } = service;
 

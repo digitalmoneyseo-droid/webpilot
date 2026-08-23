@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import { LocaleShell } from "@/components/locale-shell";
 import { LegalDraftPage } from "@/components/pages/legal-draft-page";
 import { localizePath, t } from "@/lib/i18n";
 import { getRouteLocale, type LocaleRouteParams } from "@/lib/locale-route";
@@ -21,6 +20,5 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
 export default async function Page({ params }: Props) {
   const locale = await getRouteLocale(params);
-  const pathname = localizePath("/imprint", locale);
-  return <LocaleShell locale={locale} pathname={pathname}><LegalDraftPage locale={locale} kind="imprint" /></LocaleShell>;
+  return <LegalDraftPage locale={locale} kind="imprint" />;
 }

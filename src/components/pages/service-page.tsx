@@ -50,10 +50,10 @@ const relatedServiceIcons: Record<ServiceId, LucideIcon> = {
 };
 
 const relatedServiceIconStyles: Record<ServiceId, string> = {
-  "websites-apps": "bg-[#eaf2ff] text-[#245bb8]",
-  "seo-ai-visibility": "bg-[#e9f7ef] text-[#26734d]",
-  "paid-campaigns": "bg-[#fff8e8] text-[#b7791f]",
-  "ai-automation": "bg-[#f2edff] text-[#6650a6]",
+  "websites-apps": "bg-service-websites-bg text-service-websites-fg",
+  "seo-ai-visibility": "bg-service-search-bg text-service-search-fg",
+  "paid-campaigns": "bg-service-campaigns-bg text-service-campaigns-fg",
+  "ai-automation": "bg-service-automation-bg text-service-automation-fg",
 };
 
 export function ServicePage({ locale, serviceId }: { locale: Locale; serviceId: ServiceId }) {

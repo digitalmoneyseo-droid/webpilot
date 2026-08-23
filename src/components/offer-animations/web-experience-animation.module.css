@@ -2,19 +2,6 @@
   isolation: isolate;
 }
 
-.layer {
-  position: absolute;
-  transform-origin: center;
-}
-
-.desktopLayer {
-  z-index: 1;
-}
-
-.phoneLayer {
-  z-index: 2;
-}
-
 .chrome,
 .accent,
 .headline,
@@ -25,16 +12,4 @@
 .middleCard,
 .frontCard {
   opacity: 0;
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .desktopLayer {
-    opacity: 0 !important;
-    transform: translate3d(0, 0, 0) scale(0.347826, 1.184211) !important;
-  }
-
-  .phoneLayer {
-    opacity: 1 !important;
-    transform: translate3d(0, 0, 0) scale(1, 1) !important;
-  }
 }

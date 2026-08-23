@@ -1,6 +1,5 @@
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
-import { LocaleShell } from "@/components/locale-shell";
 import { getServiceDescription, ServicePage } from "@/components/pages/service-page";
 import { getServiceCopy } from "@/i18n/services";
 import { getRouteLocale } from "@/lib/locale-route";
@@ -29,6 +28,5 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
 export default async function Page({ params }: Props) {
   const { locale, serviceId } = await getPageParams(params);
-  const pathname = getServicePath(serviceId, locale);
-  return <LocaleShell locale={locale} pathname={pathname}><ServicePage locale={locale} serviceId={serviceId} /></LocaleShell>;
+  return <ServicePage locale={locale} serviceId={serviceId} />;
 }

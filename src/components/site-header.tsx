@@ -1,21 +1,41 @@
 "use client";
 
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { ArrowUpRight, ChevronDown, ChevronRight, Languages, Menu, MonitorSmartphone, RadioTower, Search, Workflow, type LucideIcon, X } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import type { MouseEvent } from "react";
 import { BrandMark } from "@/components/brand-mark";
 import { CollapsePanel } from "@/components/collapse-panel";
+import { defaultLocale, localeConfig, locales, type Locale } from "@/i18n/config";
 import type { ServiceId } from "@/i18n/services";
-import { alternatePath, defaultLocale, localeConfig, locales, localizePath, t, type Locale } from "@/lib/i18n";
+import { alternatePath, localizePath } from "@/lib/locale-path";
 import { requestRouteScrollTop, scrollToPageTopSmoothly } from "@/lib/route-scroll";
-import { getServiceCatalog } from "@/lib/service-catalog";
+
+export type SiteHeaderCopy = {
+  about: string;
+  brandHome: string;
+  closeMenu: string;
+  contact: string;
+  mainMenu: string;
+  openMenu: string;
+  selectLocale: string;
+  services: string;
+  siteMenu: string;
+};
+
+export type SiteHeaderService = {
+  id: ServiceId;
+  name: string;
+  navDescription: string;
+  href: string;
+};
 
 const serviceMenuStyles = {
-  "websites-apps": { active: "bg-[#eaf2ff]", icon: "bg-[#eaf2ff] text-[#245bb8]", activeIcon: "bg-white text-[#245bb8]" },
-  "seo-ai-visibility": { active: "bg-[#e9f7ef]", icon: "bg-[#e9f7ef] text-[#26734d]", activeIcon: "bg-white text-[#26734d]" },
-  "paid-campaigns": { active: "bg-[#fff8e8]", icon: "bg-[#fff8e8] text-[#b7791f]", activeIcon: "bg-white text-[#b7791f]" },
-  "ai-automation": { active: "bg-[#f2edff]", icon: "bg-[#f2edff] text-[#6650a6]", activeIcon: "bg-white text-[#6650a6]" },
+  "websites-apps": { active: "bg-service-websites-bg", icon: "bg-service-websites-bg text-service-websites-fg", activeIcon: "bg-white text-service-websites-fg" },
+  "seo-ai-visibility": { active: "bg-service-search-bg", icon: "bg-service-search-bg text-service-search-fg", activeIcon: "bg-white text-service-search-fg" },
+  "paid-campaigns": { active: "bg-service-campaigns-bg", icon: "bg-service-campaigns-bg text-service-campaigns-fg", activeIcon: "bg-white text-service-campaigns-fg" },
+  "ai-automation": { active: "bg-service-automation-bg", icon: "bg-service-automation-bg text-service-automation-fg", activeIcon: "bg-white text-service-automation-fg" },
 } satisfies Record<ServiceId, { active: string; icon: string; activeIcon: string }>;
 
 const serviceIcons: Record<ServiceId, LucideIcon> = {
@@ -45,7 +65,7 @@ function scrollToPageTop(event: MouseEvent<HTMLAnchorElement>) {
   requestRouteScrollTop();
 }
 
-function LanguageMenu({ dark = false, id, locale, mobile = false, onSelect, pathname }: { dark?: boolean; id: string; locale: Locale; mobile?: boolean; onSelect?: () => void; pathname: string }) {
+function LanguageMenu({ dark = false, id, locale, mobile = false, onSelect, pathname, selectLocaleLabel }: { dark?: boolean; id: string; locale: Locale; mobile?: boolean; onSelect?: () => void; pathname: string; selectLocaleLabel: string }) {
   const [open, setOpen] = useState(false);
   const [highlightedLocale, setHighlightedLocale] = useState<Locale | null>(null);
   const buttonRef = useRef<HTMLButtonElement>(null);
@@ -71,7 +91,7 @@ function LanguageMenu({ dark = false, id, locale, mobile = false, onSelect, path
         ref={buttonRef}
         className={`header-language inline-flex h-11 cursor-pointer items-center justify-center gap-2 rounded-control px-3 text-navigation transition-transform duration-150 active:scale-[.96] motion-reduce:transition-none motion-reduce:active:scale-100 ${dark ? "menu-language bg-transparent text-white shadow-dark-surface" : "bg-white text-subtle shadow-surface"}`}
         type="button"
-        aria-label={t(locale, "nav.selectLocale")}
+        aria-label={selectLocaleLabel}
         aria-expanded={open}
         aria-controls={id}
         onClick={() => setOpen((current) => !current)}
@@ -111,7 +131,7 @@ function LanguageMenu({ dark = false, id, locale, mobile = false, onSelect, path
   );
 }
 
-export function SiteHeader({ locale, pathname }: { locale: Locale; pathname: string }) {
+export function SiteHeader({ contactEmail, copy, locale, services }: { contactEmail: string; copy: SiteHeaderCopy; locale: Locale; services: readonly SiteHeaderService[] }) {
   const [open, setOpen] = useState(false);
   const [servicesOpen, setServicesOpen] = useState(false);
   const [mobileServicesOpen, setMobileServicesOpen] = useState(false);
@@ -121,7 +141,7 @@ export function SiteHeader({ locale, pathname }: { locale: Locale; pathname: str
   const servicesButtonRef = useRef<HTMLButtonElement>(null);
   const mobileServicesButtonRef = useRef<HTMLButtonElement>(null);
   const closeServicesTimer = useRef<number | undefined>(undefined);
-  const services = getServiceCatalog(locale);
+  const pathname = usePathname();
   const isActive = (href: string) => {
     const localized = localizePath(href, locale);
     return pathname === localized || pathname.startsWith(`${localized}/`);
@@ -200,15 +220,15 @@ export function SiteHeader({ locale, pathname }: { locale: Locale; pathname: str
   };
 
   const navItems = [
-    { href: "/about", label: t(locale, "nav.about") },
-    { href: "/contact", label: t(locale, "nav.contact") },
+    { href: "/about", label: copy.about },
+    { href: "/contact", label: copy.contact },
   ];
   const servicesActive = pathname.startsWith(localizePath("/services/", locale));
   return (
     <>
       <header className="fixed left-1/2 z-50 flex w-max -translate-x-1/2 items-center gap-2 max-[900px]:right-4 max-[900px]:left-4 max-[900px]:w-auto max-[900px]:[translate:none]" style={{ top: "max(1.5rem, env(safe-area-inset-top))" }}>
-        <Link href={localizePath("/", locale)} onClick={scrollToPageTop} className="group/brand inline-flex h-11 items-center justify-center rounded-control bg-white px-4.5 shadow-surface transition-[transform,box-shadow] duration-150 hover:shadow-surface-hover active:scale-[.96] motion-reduce:transition-none motion-reduce:active:scale-100" aria-label={t(locale, "nav.brandHome")}><BrandMark /></Link>
-        <nav className="relative inline-flex h-11 items-center justify-center gap-px rounded-control bg-white p-1 shadow-surface max-[900px]:hidden" aria-label={t(locale, "nav.mainMenu")}>
+        <Link href={localizePath("/", locale)} onClick={scrollToPageTop} className="group/brand inline-flex h-11 items-center justify-center rounded-control bg-white px-4.5 shadow-surface transition-[transform,box-shadow] duration-150 hover:shadow-surface-hover active:scale-[.96] motion-reduce:transition-none motion-reduce:active:scale-100" aria-label={copy.brandHome}><BrandMark /></Link>
+        <nav className="relative inline-flex h-11 items-center justify-center gap-px rounded-control bg-white p-1 shadow-surface max-[900px]:hidden" aria-label={copy.mainMenu}>
           <div
             ref={servicesRef}
             className="relative"
@@ -231,7 +251,7 @@ export function SiteHeader({ locale, pathname }: { locale: Locale; pathname: str
                 }
               }}
             >
-              {t(locale, "nav.services")}
+              {copy.services}
               <ChevronDown className={`size-3.5 transition-transform duration-200 motion-reduce:transition-none ${servicesOpen ? "rotate-180" : ""}`} strokeWidth={1.8} aria-hidden="true" />
             </button>
             <div
@@ -245,24 +265,24 @@ export function SiteHeader({ locale, pathname }: { locale: Locale; pathname: str
                   const Icon = serviceIcons[service.id];
                   const active = pathname === service.href;
                   const styles = serviceMenuStyles[service.id];
-                  return <Link className={`group/service flex min-w-0 gap-3 rounded-inset p-3.5 transition-colors duration-150 ${active ? styles.active : "hover:bg-interaction"}`} href={service.href} aria-current={active ? "page" : undefined} onClick={(event) => { scrollToPageTop(event); setServicesOpen(false); }} key={service.id}><span className={`grid size-9 shrink-0 place-items-center rounded-inset transition-colors duration-150 ${active ? styles.activeIcon : styles.icon}`}><Icon className="size-4.5" strokeWidth={1.7} aria-hidden="true" /></span><span className="min-w-0"><strong className="block text-small font-semibold text-ink">{service.copy.name}</strong><span className="mt-1 block text-caption leading-snug text-muted">{service.copy.navDescription}</span></span></Link>;
+                  return <Link className={`group/service flex min-w-0 gap-3 rounded-inset p-3.5 transition-colors duration-150 ${active ? styles.active : "hover:bg-interaction"}`} href={service.href} aria-current={active ? "page" : undefined} onClick={(event) => { scrollToPageTop(event); setServicesOpen(false); }} key={service.id}><span className={`grid size-9 shrink-0 place-items-center rounded-inset transition-colors duration-150 ${active ? styles.activeIcon : styles.icon}`}><Icon className="size-4.5" strokeWidth={1.7} aria-hidden="true" /></span><span className="min-w-0"><strong className="block text-small font-semibold text-ink">{service.name}</strong><span className="mt-1 block text-caption leading-snug text-muted">{service.navDescription}</span></span></Link>;
                 })}
               </div>
             </div>
           </div>
           {navItems.map((item) => <Link key={item.href} href={localizePath(item.href, locale)} onClick={scrollToPageTop} className={`relative z-1 inline-flex h-9 items-center rounded-inset px-3.5 text-navigation transition-[color,background-color,scale] duration-150 active:scale-[.96] motion-reduce:transition-none motion-reduce:active:scale-100 ${isActive(item.href) ? "bg-interaction text-ink" : "text-muted hover:bg-interaction hover:text-ink"}`} aria-current={isActive(item.href) ? "page" : undefined}>{item.label}</Link>)}
         </nav>
-        <LanguageMenu id="desktop-language-menu" locale={locale} pathname={pathname} />
-        <LanguageMenu id="mobile-language-menu" locale={locale} mobile pathname={pathname} />
-        <button ref={openRef} className="inline-flex size-11 items-center justify-center rounded-control bg-white shadow-surface transition-[transform,box-shadow] duration-150 hover:shadow-surface-hover active:scale-[.96] motion-reduce:transition-none motion-reduce:active:scale-100 min-[901px]:hidden" type="button" onClick={() => { setMobileServicesOpen(false); setOpen(true); }} aria-label={t(locale, "nav.openMenu")} aria-expanded={open} aria-controls="site-menu"><Menu className="w-[17px]" strokeWidth={1.7} aria-hidden="true" /></button>
+        <LanguageMenu id="desktop-language-menu" locale={locale} pathname={pathname} selectLocaleLabel={copy.selectLocale} />
+        <LanguageMenu id="mobile-language-menu" locale={locale} mobile pathname={pathname} selectLocaleLabel={copy.selectLocale} />
+        <button ref={openRef} className="inline-flex size-11 items-center justify-center rounded-control bg-white shadow-surface transition-[transform,box-shadow] duration-150 hover:shadow-surface-hover active:scale-[.96] motion-reduce:transition-none motion-reduce:active:scale-100 min-[901px]:hidden" type="button" onClick={() => { setMobileServicesOpen(false); setOpen(true); }} aria-label={copy.openMenu} aria-expanded={open} aria-controls="site-menu"><Menu className="w-[17px]" strokeWidth={1.7} aria-hidden="true" /></button>
       </header>
-      <div id="site-menu" className={`fixed inset-0 z-100 flex flex-col overscroll-contain bg-inverse-surface text-white transition-[opacity,translate] duration-300 ease-[var(--ease-out)] will-change-[opacity,translate] min-[901px]:hidden max-[900px]:overflow-y-auto motion-reduce:transition-none ${open ? "pointer-events-auto translate-y-0 opacity-100" : "pointer-events-none -translate-y-3 opacity-0"}`} style={{ paddingTop: "max(1.5rem, env(safe-area-inset-top))", paddingRight: "max(var(--menu-gutter), env(safe-area-inset-right))", paddingBottom: "max(2rem, env(safe-area-inset-bottom))", paddingLeft: "max(var(--menu-gutter), env(safe-area-inset-left))" }} aria-hidden={!open} inert={!open} role="dialog" aria-modal="true" aria-label={t(locale, "nav.siteMenu")}>
+      <div id="site-menu" className={`fixed inset-0 z-100 flex flex-col overscroll-contain bg-inverse-surface text-white transition-[opacity,translate] duration-300 ease-[var(--ease-out)] will-change-[opacity,translate] min-[901px]:hidden max-[900px]:overflow-y-auto motion-reduce:transition-none ${open ? "pointer-events-auto translate-y-0 opacity-100" : "pointer-events-none -translate-y-3 opacity-0"}`} style={{ paddingTop: "max(1.5rem, env(safe-area-inset-top))", paddingRight: "max(var(--menu-gutter), env(safe-area-inset-right))", paddingBottom: "max(2rem, env(safe-area-inset-bottom))", paddingLeft: "max(var(--menu-gutter), env(safe-area-inset-left))" }} aria-hidden={!open} inert={!open} role="dialog" aria-modal="true" aria-label={copy.siteMenu}>
         <div className="menu-top fixed right-4 left-4 z-2 flex items-center gap-2" style={{ top: "max(1.5rem, env(safe-area-inset-top))" }}>
           <Link href={localizePath("/", locale)} onClick={(event) => { scrollToPageTop(event); setOpen(false); }} className="group/brand inline-flex h-11 items-center rounded-control bg-inverse-surface px-4.5 shadow-dark-surface transition-[background-color,scale] duration-150 hover:bg-white/8 active:scale-[.96] motion-reduce:transition-none motion-reduce:active:scale-100"><BrandMark inverse /></Link>
-          <LanguageMenu dark id="mobile-menu-language-menu" locale={locale} mobile onSelect={() => setOpen(false)} pathname={pathname} />
-          <button ref={closeRef} type="button" className="grid size-11 place-items-center rounded-control bg-transparent text-white shadow-dark-surface transition-[background-color,scale] duration-150 hover:bg-white/8 active:scale-[.96] motion-reduce:transition-none motion-reduce:active:scale-100" onClick={() => { setMobileServicesOpen(false); setOpen(false); openRef.current?.focus(); }} aria-label={t(locale, "nav.closeMenu")}><X className="w-[19px]" strokeWidth={1.7} aria-hidden="true" /></button>
+          <LanguageMenu dark id="mobile-menu-language-menu" locale={locale} mobile onSelect={() => setOpen(false)} pathname={pathname} selectLocaleLabel={copy.selectLocale} />
+          <button ref={closeRef} type="button" className="grid size-11 place-items-center rounded-control bg-transparent text-white shadow-dark-surface transition-[background-color,scale] duration-150 hover:bg-white/8 active:scale-[.96] motion-reduce:transition-none motion-reduce:active:scale-100" onClick={() => { setMobileServicesOpen(false); setOpen(false); openRef.current?.focus(); }} aria-label={copy.closeMenu}><X className="w-[19px]" strokeWidth={1.7} aria-hidden="true" /></button>
         </div>
-        <nav className="menu-links my-auto flex flex-col self-stretch py-24 max-[900px]:w-full max-[900px]:max-w-[44rem]" aria-label={t(locale, "nav.mainMenu")}>
+        <nav className="menu-links my-auto flex flex-col self-stretch py-24 max-[900px]:w-full max-[900px]:max-w-[44rem]" aria-label={copy.mainMenu}>
           <div>
             <button
               ref={mobileServicesButtonRef}
@@ -275,7 +295,7 @@ export function SiteHeader({ locale, pathname }: { locale: Locale; pathname: str
               tabIndex={open ? 0 : -1}
             >
               <span className="text-caption tabular-nums text-inverse-muted" aria-hidden="true">01</span>
-              <span>{t(locale, "nav.services")}</span>
+              <span>{copy.services}</span>
               <span className="grid size-6 place-items-center justify-self-end" aria-hidden="true">
                 <ChevronRight className={`size-5 transition-transform duration-200 ease-[var(--ease-out)] motion-reduce:transition-none ${mobileServicesOpen ? "rotate-90" : ""}`} strokeWidth={1.7} />
               </span>
@@ -283,13 +303,13 @@ export function SiteHeader({ locale, pathname }: { locale: Locale; pathname: str
             <CollapsePanel id="mobile-services-menu" labelledBy="mobile-services-button" expanded={mobileServicesOpen}>
               {services.map((service) => {
                 const active = pathname === service.href;
-                return <Link key={service.id} className="group/menu-link grid min-h-14 grid-cols-[minmax(0,1fr)_1.5rem] items-center border-b border-inverse-line py-2 pl-8 text-heading-sm transition-colors duration-150 hover:bg-white/8" href={service.href} aria-current={active ? "page" : undefined} onClick={(event) => { scrollToPageTop(event); setMobileServicesOpen(false); setOpen(false); }} tabIndex={open && mobileServicesOpen ? 0 : -1}><span>{service.copy.name}</span><ArrowUpRight className="w-5 justify-self-end transition-transform duration-250 ease-[var(--ease-out)] group-hover/menu-link:translate-x-1 group-hover/menu-link:-translate-y-1 motion-reduce:transform-none motion-reduce:transition-none" strokeWidth={1.7} aria-hidden="true" /></Link>;
+                return <Link key={service.id} className="group/menu-link grid min-h-14 grid-cols-[minmax(0,1fr)_1.5rem] items-center border-b border-inverse-line py-2 pl-8 text-heading-sm transition-colors duration-150 hover:bg-white/8" href={service.href} aria-current={active ? "page" : undefined} onClick={(event) => { scrollToPageTop(event); setMobileServicesOpen(false); setOpen(false); }} tabIndex={open && mobileServicesOpen ? 0 : -1}><span>{service.name}</span><ArrowUpRight className="w-5 justify-self-end transition-transform duration-250 ease-[var(--ease-out)] group-hover/menu-link:translate-x-1 group-hover/menu-link:-translate-y-1 motion-reduce:transform-none motion-reduce:transition-none" strokeWidth={1.7} aria-hidden="true" /></Link>;
               })}
             </CollapsePanel>
           </div>
           {navItems.map((item, index) => <Link key={item.href} className="group/menu-link grid min-h-16 grid-cols-[2rem_minmax(0,1fr)_1.5rem] items-center border-b border-inverse-line py-2.5 text-heading-md transition-colors duration-150 hover:bg-white/8" href={localizePath(item.href, locale)} onClick={(event) => { scrollToPageTop(event); setMobileServicesOpen(false); setOpen(false); }} tabIndex={open ? 0 : -1}><span className="text-caption tabular-nums text-inverse-muted">{String(index + 2).padStart(2, "0")}</span><span>{item.label}</span><ArrowUpRight className="w-6 justify-self-end transition-transform duration-250 ease-[var(--ease-out)] group-hover/menu-link:translate-x-1 group-hover/menu-link:-translate-y-1 motion-reduce:transform-none motion-reduce:transition-none" strokeWidth={1.7} aria-hidden="true" /></Link>)}
         </nav>
-        <div className="menu-bottom flex items-center justify-end text-meta text-inverse-muted max-[600px]:flex-col max-[600px]:items-start max-[600px]:gap-5"><a className="transition-colors duration-150 hover:text-white" href="mailto:digitalmoneyseo@gmail.com">digitalmoneyseo@gmail.com</a></div>
+        <div className="menu-bottom flex items-center justify-end text-meta text-inverse-muted max-[600px]:flex-col max-[600px]:items-start max-[600px]:gap-5"><a className="transition-colors duration-150 hover:text-white" href={`mailto:${contactEmail}`}>{contactEmail}</a></div>
       </div>
     </>
   );

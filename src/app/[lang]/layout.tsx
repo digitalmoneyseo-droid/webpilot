@@ -1,6 +1,7 @@
 import "../globals.css";
 import { Analytics } from "@vercel/analytics/next";
 import type { Metadata, Viewport } from "next";
+import { LocaleShell } from "@/components/locale-shell";
 import { locales } from "@/lib/i18n";
 import { getRouteLocale, type LocaleRouteParams } from "@/lib/locale-route";
 
@@ -17,5 +18,5 @@ export function generateStaticParams() {
 
 export default async function LocaleLayout({ children, params }: { children: React.ReactNode; params: LocaleRouteParams }) {
   const locale = await getRouteLocale(params);
-  return <html lang={locale} data-scroll-behavior="smooth"><body className="flex min-h-screen flex-col overflow-x-hidden bg-canvas font-sans text-ink antialiased">{children}<Analytics /></body></html>;
+  return <html lang={locale} data-scroll-behavior="smooth"><body className="flex min-h-screen flex-col overflow-x-hidden bg-canvas font-sans text-ink antialiased"><LocaleShell locale={locale}>{children}</LocaleShell><Analytics /></body></html>;
 }

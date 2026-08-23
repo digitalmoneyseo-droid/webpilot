@@ -41,12 +41,14 @@ CI runs the following checks in order:
 
 ```bash
 bun run lint
+bun run validate:content
 bun run test
 bun run build
+bun run validate:bundle
 bun run test:e2e
 ```
 
-The Bun suite covers content parity, service policy, deterministic animation state, and common design-system violations. The small Chromium suite runs against the Bun production server and covers localized route rendering, mobile keyboard navigation and reflow, the contact flow, and representative accessibility and reduced-motion behavior. Run `bun run build` before `bun run test:e2e` locally.
+The content validator checks home FAQ structure and locale parity. Bun tests protect service locale parity, contact option IDs, client/server localization boundaries, and the shared service identity palette. The bundle validator checks the production client chunks for server-owned dictionary copy. The Chromium suite runs against the Bun production server and covers localized route rendering, correct 404 responses, mobile keyboard navigation and reflow, the contact flow, and representative accessibility and reduced-motion behavior. Run `bun run build` before `bun run validate:bundle` or `bun run test:e2e` locally. For TypeScript changes that do not need a production build, run `bun run typecheck`.
 
 ## Localization and content
 
@@ -61,3 +63,25 @@ Keep all configured locales equivalent when you change public content, metadata,
 ## Contact form
 
 The contact form validates enquiries in the browser and on the server, then sends them through Resend without writing them to a website database. Copy `.env.example` to `.env.local` and add a Resend API key. The example sender works only when `CONTACT_EMAIL_TO` matches the email address on the Resend account; for other recipients, use a sender address on a domain verified in Resend.
+
+Vercel provides automatic DDoS mitigation. Rate limiting for `POST /api/contact` belongs in Vercel Firewall so counters work across application instances. Start the rule in log mode, review production matches, test enforcement on preview, then publish it for production. The repository is linked to `webpilot.studio`, but firewall changes require an authenticated Vercel CLI session.
+
+Stage the initial observation rule after signing in with the Vercel CLI:
+
+```bash
+bunx vercel firewall rules add "Observe contact rate" \
+  --condition '{"type":"path","op":"eq","value":"/api/contact"}' \
+  --condition '{"type":"method","op":"eq","value":"POST"}' \
+  --action rate_limit \
+  --rate-limit-window 60 \
+  --rate-limit-requests 20 \
+  --rate-limit-keys ip \
+  --rate-limit-action log \
+  --yes
+```
+
+Inspect the draft with `bunx vercel firewall diff`. Publish only after reviewing the match conditions. After enough traffic has been observed, test a `rate_limit` response on preview before enabling it in production.
+
+## Planned work
+
+[`BACKLOG.md`](BACKLOG.md) records validated review findings that need more evidence, deployment observation, or design work before implementation.

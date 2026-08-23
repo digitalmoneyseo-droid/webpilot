@@ -40,12 +40,13 @@
 ## Verification
 
 - Match verification effort to the risk and scope of the change. Do not run broad or repetitive checks for trivial edits.
-- Baseline CI consists of lint, content validation, a production build, and the small Chromium smoke suite.
-- Do not run the full CI suite or Playwright for routine local edits. Run Playwright only when a change affects navigation, forms, public routes, runtime behavior, or when preparing a deployment.
-- For content-only changes, validate the affected content and locale parity; browser verification is needed only when copy can affect layout or interaction.
-- For layout changes, inspect only the affected route in the longest locale at narrow width. For navigation, form, or runtime changes, run the relevant production-server browser flow. For motion changes, verify reduced motion on the affected visual.
+- Use `.github/workflows/ci.yml` as the source of truth for required CI checks.
+- For TypeScript changes, run `bun run typecheck` unless the change already warrants `bun run build`.
+- `bun run validate:content` checks home FAQ structure and locale parity. Verify other localized content across every configured locale.
+- Run `bun run build` followed by `bun run test:e2e` for navigation, forms, route creation or canonicalization, runtime behavior, and deployment preparation. Copy changes need browser verification only when they may affect layout or interaction.
+- For layout changes, inspect the affected route in the longest relevant locale at the viewport being changed. Include a narrow viewport whenever reflow may be affected.
+- For motion changes, verify both normal and reduced-motion behavior on the affected visual.
 - Do not add exact pixel or timing tests for decorative behavior unless they protect a confirmed regression.
-- Use the CI workflow as the source of truth for required checks.
 
 <!-- BEGIN:nextjs-agent-rules -->
 

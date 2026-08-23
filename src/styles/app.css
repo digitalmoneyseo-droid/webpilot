@@ -28,6 +28,14 @@
   --color-accent: var(--accent);
   --color-focus: var(--focus);
   --color-error: var(--error);
+  --color-service-websites-bg: var(--service-websites-bg);
+  --color-service-websites-fg: var(--service-websites-fg);
+  --color-service-search-bg: var(--service-search-bg);
+  --color-service-search-fg: var(--service-search-fg);
+  --color-service-campaigns-bg: var(--service-campaigns-bg);
+  --color-service-campaigns-fg: var(--service-campaigns-fg);
+  --color-service-automation-bg: var(--service-automation-bg);
+  --color-service-automation-fg: var(--service-automation-fg);
 
   --radius-pill: var(--ds-radius-pill);
   --radius-inset: var(--ds-radius-inset);

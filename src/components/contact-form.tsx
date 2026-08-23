@@ -2,25 +2,59 @@
 
 import { ArrowRight, ArrowUpRight, Check, ChevronDown, CircleHelp, LoaderCircle, MonitorSmartphone, RadioTower, Search, Workflow } from "lucide-react";
 import { type FormEvent, type KeyboardEvent, type ReactNode, useEffect, useRef, useState } from "react";
-import { t, type Locale } from "@/lib/i18n";
+import type { Locale } from "@/i18n/config";
+import type { ServiceId } from "@/i18n/services";
+import type { BudgetId } from "@/lib/contact-options";
 
 type FieldName = "name" | "email" | "companyUrl" | "service" | "budget" | "message";
 type Errors = Partial<Record<FieldName | "form", string>>;
 type Status = "idle" | "sending" | "success";
 
-type ServiceOption = { id: string; name: string };
+type ServiceOption = { id: ServiceId; name: string };
+type ServiceChoiceId = ServiceId | "not-sure";
+
+export type ContactFormCopy = {
+  name: string;
+  namePlaceholder: string;
+  email: string;
+  emailPlaceholder: string;
+  company: string;
+  companyPlaceholder: string;
+  companyUrl: string;
+  companyUrlPlaceholder: string;
+  companyOptional: string;
+  service: string;
+  serviceUnsure: string;
+  budget: string;
+  budgetPlaceholder: string;
+  budgetOptions: readonly { id: BudgetId; label: string }[];
+  message: string;
+  placeholder: string;
+  submit: string;
+  sending: string;
+  required: string;
+  requiredLabel: string;
+  emailError: string;
+  companyUrlError: string;
+  messageError: string;
+  note: string;
+  error: string;
+  successTitle: string;
+  successCopy: string;
+  another: string;
+};
 
 const fieldControlClass = "w-full rounded-control border-0 bg-surface-subtle px-4 text-ink shadow-surface transition-[background-color,box-shadow,scale] duration-150 ease-[var(--ease-out)] placeholder:text-subtle hover:bg-white hover:shadow-surface-hover focus-visible:bg-white focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-focus aria-invalid:outline-2 aria-invalid:outline-error motion-reduce:transition-none";
 
-const serviceOptionStyles: Record<string, { selected: string; icon: string }> = {
-  "websites-apps": { selected: "peer-checked:bg-[#eaf2ff] peer-checked:text-[#245bb8]", icon: "bg-[#eaf2ff] text-[#245bb8]" },
-  "seo-ai-visibility": { selected: "peer-checked:bg-[#e9f7ef] peer-checked:text-[#26734d]", icon: "bg-[#e9f7ef] text-[#26734d]" },
-  "paid-campaigns": { selected: "peer-checked:bg-[#fff8e8] peer-checked:text-[#9a651b]", icon: "bg-[#fff8e8] text-[#9a651b]" },
-  "ai-automation": { selected: "peer-checked:bg-[#f2edff] peer-checked:text-[#6650a6]", icon: "bg-[#f2edff] text-[#6650a6]" },
+const serviceOptionStyles: Record<ServiceChoiceId, { selected: string; icon: string }> = {
+  "websites-apps": { selected: "peer-checked:bg-service-websites-bg peer-checked:text-service-websites-fg", icon: "bg-service-websites-bg text-service-websites-fg" },
+  "seo-ai-visibility": { selected: "peer-checked:bg-service-search-bg peer-checked:text-service-search-fg", icon: "bg-service-search-bg text-service-search-fg" },
+  "paid-campaigns": { selected: "peer-checked:bg-service-campaigns-bg peer-checked:text-service-campaigns-fg", icon: "bg-service-campaigns-bg text-service-campaigns-fg" },
+  "ai-automation": { selected: "peer-checked:bg-service-automation-bg peer-checked:text-service-automation-fg", icon: "bg-service-automation-bg text-service-automation-fg" },
   "not-sure": { selected: "peer-checked:bg-surface-selected peer-checked:text-ink peer-checked:shadow-surface-hover", icon: "bg-white text-subtle" },
 };
 
-const serviceIcons = {
+const serviceIcons: Record<ServiceChoiceId, typeof MonitorSmartphone> = {
   "websites-apps": MonitorSmartphone,
   "seo-ai-visibility": Search,
   "paid-campaigns": RadioTower,
@@ -29,13 +63,17 @@ const serviceIcons = {
 };
 
 export function ContactForm({
+  contactEmail,
+  copy,
   locale,
   services,
   selectedServiceId,
 }: {
+  contactEmail: string;
+  copy: ContactFormCopy;
   locale: Locale;
   services: ServiceOption[];
-  selectedServiceId?: string;
+  selectedServiceId?: ServiceId;
 }) {
   const [errors, setErrors] = useState<Errors>({});
   const [status, setStatus] = useState<Status>("idle");
@@ -46,45 +84,8 @@ export function ContactForm({
   const budgetControlRef = useRef<HTMLDivElement>(null);
   const budgetButtonRef = useRef<HTMLButtonElement>(null);
   const budgetMenuRef = useRef<HTMLDivElement>(null);
-  const copy = {
-    name: t(locale, "contact.formName"),
-    namePlaceholder: t(locale, "contact.formNamePlaceholder"),
-    email: t(locale, "contact.formEmail"),
-    emailPlaceholder: t(locale, "contact.formEmailPlaceholder"),
-    company: t(locale, "contact.formCompany"),
-    companyPlaceholder: t(locale, "contact.formCompanyPlaceholder"),
-    companyUrl: t(locale, "contact.formCompanyUrl"),
-    companyUrlPlaceholder: t(locale, "contact.formCompanyUrlPlaceholder"),
-    companyOptional: t(locale, "contact.formOptional"),
-    service: t(locale, "contact.formService"),
-    budget: t(locale, "contact.formBudget"),
-    budgetPlaceholder: t(locale, "contact.formBudgetPlaceholder"),
-    budgetOptions: [
-      t(locale, "contact.formBudget1"),
-      t(locale, "contact.formBudget2"),
-      t(locale, "contact.formBudget3"),
-      t(locale, "contact.formBudget4"),
-      t(locale, "contact.formBudgetUnsure"),
-    ],
-    message: t(locale, "contact.formMessage"),
-    placeholder: t(locale, "contact.formPlaceholder"),
-    submit: t(locale, "contact.formSubmit"),
-    sending: t(locale, "contact.formSending"),
-    required: t(locale, "contact.formRequired"),
-    requiredLabel: t(locale, "contact.formRequiredLabel"),
-    emailError: t(locale, "contact.formEmailError"),
-    companyUrlError: t(locale, "contact.formCompanyUrlError"),
-    messageError: t(locale, "contact.formMessageError"),
-    note: t(locale, "contact.formNote"),
-    error: t(locale, "contact.formError"),
-    successTitle: t(locale, "contact.formSuccessTitle"),
-    successCopy: t(locale, "contact.formSuccessCopy"),
-    another: t(locale, "contact.formAnother"),
-  };
-
-  const serviceOptions = [...services, { id: "not-sure", name: t(locale, "contact.formServiceUnsure") }];
-  const budgetOptions = copy.budgetOptions.map((label, index) => ({ id: `budget-${index + 1}`, label }));
-  const selectedBudgetLabel = budgetOptions.find(({ id }) => id === selectedBudget)?.label;
+  const serviceOptions: readonly { id: ServiceChoiceId; name: string }[] = [...services, { id: "not-sure", name: copy.serviceUnsure }];
+  const selectedBudgetLabel = copy.budgetOptions.find(({ id }) => id === selectedBudget)?.label;
 
   useEffect(() => {
     if (!budgetOpen) return;
@@ -267,8 +268,8 @@ export function ContactForm({
         </legend>
         <div className="grid grid-cols-2 gap-3 max-[600px]:grid-cols-1">
           {serviceOptions.map((service) => {
-            const Icon = serviceIcons[service.id as keyof typeof serviceIcons] ?? CircleHelp;
-            const styles = serviceOptionStyles[service.id] ?? serviceOptionStyles["not-sure"];
+            const Icon = serviceIcons[service.id];
+            const styles = serviceOptionStyles[service.id];
             return (
             <label key={service.id} className="group relative cursor-pointer">
               <input
@@ -326,7 +327,7 @@ export function ContactForm({
             inert={!budgetOpen}
           >
             <div className="rounded-control bg-white p-1 shadow-floating">
-              {budgetOptions.map((option, index) => (
+              {copy.budgetOptions.map((option, index) => (
                 <button
                   key={option.id}
                   className={`flex min-h-9 w-full cursor-pointer items-center justify-between gap-4 rounded-inset px-3 text-left text-small transition-[background-color,scale] duration-150 hover:bg-interaction active:scale-[.98] focus-visible:outline-2 focus-visible:outline-offset-0 focus-visible:outline-focus motion-reduce:transition-none motion-reduce:active:scale-100 ${selectedBudget === option.id ? "bg-interaction text-ink" : "text-muted"}`}
@@ -341,7 +342,7 @@ export function ContactForm({
                     setBudgetOpen(false);
                     budgetButtonRef.current?.focus();
                   }}
-                  onKeyDown={(event) => moveBudgetFocus(event, index, budgetOptions.length, budgetMenuRef.current)}
+                  onKeyDown={(event) => moveBudgetFocus(event, index, copy.budgetOptions.length, budgetMenuRef.current)}
                 >
                   <span>{option.label}</span>
                   {selectedBudget === option.id ? <Check className="size-4" strokeWidth={1.8} aria-hidden="true" /> : null}
@@ -396,7 +397,7 @@ export function ContactForm({
         <p id="contact-form-note" className="mt-4 mb-0 max-w-[36rem] text-small text-muted">
           {copy.note}
         </p>
-        {errors.form ? <p className="mt-4 mb-0 text-small text-error" role="alert">{errors.form}</p> : null}
+        {errors.form ? <p className="mt-4 mb-0 text-small text-error" role="alert">{errors.form} <a className="underline underline-offset-2" href={`mailto:${contactEmail}`}>{contactEmail}</a></p> : null}
       </div>
     </form>
   );

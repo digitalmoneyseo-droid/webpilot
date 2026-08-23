@@ -8,9 +8,11 @@
     "build": "bun --bun next build",
     "lint": "eslint .",
     "start": "bun --bun next start",
+    "test": "bun test tests",
     "test:e2e": "playwright test",
     "typecheck": "next typegen && tsc --noEmit",
-    "validate:content": "bun scripts/validate-content.mjs"
+    "validate:content": "bun scripts/validate-content.mjs",
+    "validate:bundle": "bun scripts/validate-client-bundle.mjs"
   },
   "dependencies": {
     "@fontsource-variable/dm-sans": "^5.3.0",

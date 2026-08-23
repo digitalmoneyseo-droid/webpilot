@@ -1,4 +1,5 @@
 import type { MessageKey } from "./translations";
+import { notFoundMessages } from "./not-found";
 
 export const frMessages: Readonly<Record<MessageKey, string>> = {
   "nav.services": "Services",
@@ -79,7 +80,7 @@ export const frMessages: Readonly<Record<MessageKey, string>> = {
   "contact.formCompanyUrlError": "Veuillez saisir une adresse web valide commençant par http:// ou https://.",
   "contact.formMessageError": "Veuillez nous donner au moins 20 caractères de contexte.",
   "contact.formNote": "Vos informations sont envoyées à Webpilot par e-mail et ne sont pas ajoutées à une base de données du site.",
-  "contact.formError": "Nous n’avons pas pu envoyer votre demande. Réessayez ou écrivez directement à digitalmoneyseo@gmail.com.",
+  "contact.formError": "Nous n’avons pas pu envoyer votre demande. Réessayez ou écrivez-nous directement :",
   "contact.formSuccessTitle": "Merci, votre demande est bien arrivée.",
   "contact.formSuccessCopy": "Nous examinerons les informations et répondrons à {email}.",
   "contact.formAnother": "Envoyer une autre demande",
@@ -88,9 +89,9 @@ export const frMessages: Readonly<Record<MessageKey, string>> = {
   "contact.formBodyName": "Nom",
   "contact.formBodyEmail": "E-mail",
   "contact.formBodyMessage": "Projet et objectif",
-  "notFound.title": "Page introuvable.",
-  "notFound.copy": "La page que vous recherchez n’existe pas ou a été déplacée.",
-  "notFound.back": "Retour à l’accueil",
+  "notFound.title": notFoundMessages.fr.title,
+  "notFound.copy": notFoundMessages.fr.copy,
+  "notFound.back": notFoundMessages.fr.back,
   "about.title": "Plusieurs disciplines. Une direction claire.",
   "about.copy": "Webpilot réunit conception et développement web, référencement, campagnes payantes et automatisation lorsqu’un projet demande plusieurs disciplines.",
   "about.pov": "Pourquoi nous relions les disciplines",
