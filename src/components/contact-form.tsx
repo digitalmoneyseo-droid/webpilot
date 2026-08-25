@@ -183,11 +183,11 @@ export function ContactForm({
           <Check className="size-5" strokeWidth={2} />
         </span>
         <h2 className="m-0 max-w-[32rem] text-heading-lg text-ink">{copy.successTitle}</h2>
-        <p className="mt-4 mb-0 max-w-[32rem] text-body text-muted">
+        <p className="mt-4 mb-0 max-w-[32rem] text-base/6 text-muted">
           {copy.successCopy.replace("{email}", submittedEmail)}
         </p>
         <button
-          className="mt-8 rounded-inset bg-interaction px-3 py-2 text-small font-medium text-ink transition-[background-color,scale] duration-150 hover:bg-interaction-strong active:scale-[.96] motion-reduce:transition-none motion-reduce:active:scale-100"
+          className="mt-8 rounded-inset bg-interaction px-3 py-2 text-sm font-medium text-ink transition-[background-color,scale] duration-150 hover:bg-interaction-strong active:scale-[.96] motion-reduce:transition-none motion-reduce:active:scale-100"
           type="button"
           onClick={() => setStatus("idle")}
         >
@@ -199,7 +199,7 @@ export function ContactForm({
 
   return (
     <form className="grid gap-6" noValidate onChange={() => setIsDirty(true)} onSubmit={onSubmit}>
-      <div className="grid grid-cols-2 gap-4 max-[600px]:grid-cols-1">
+      <div className="grid grid-cols-2 gap-4 max-narrow:grid-cols-1">
         <Field id="contact-name" label={copy.name} error={errors.name} required={copy.requiredLabel}>
           <input
             id="contact-name"
@@ -233,7 +233,7 @@ export function ContactForm({
         </Field>
       </div>
 
-      <div className="grid grid-cols-2 gap-4 max-[600px]:grid-cols-1">
+      <div className="grid grid-cols-2 gap-4 max-narrow:grid-cols-1">
         <Field id="contact-company" label={copy.company} hint={copy.companyOptional}>
           <input
             id="contact-company"
@@ -263,10 +263,10 @@ export function ContactForm({
       </div>
 
       <fieldset className="m-0 grid gap-3 border-0 p-0" aria-describedby={errors.service ? "contact-service-error" : undefined}>
-        <legend className={`mb-1 text-small font-medium ${errors.service ? "text-error" : "text-ink"}`}>
+        <legend className={`mb-1 text-sm font-medium ${errors.service ? "text-error" : "text-ink"}`}>
           {copy.service}<RequiredMarker label={copy.requiredLabel} />
         </legend>
-        <div className="grid grid-cols-2 gap-3 max-[600px]:grid-cols-1">
+        <div className="grid grid-cols-2 gap-3 max-narrow:grid-cols-1">
           {serviceOptions.map((service) => {
             const Icon = serviceIcons[service.id];
             const styles = serviceOptionStyles[service.id];
@@ -281,7 +281,7 @@ export function ContactForm({
                 defaultChecked={selectedServiceId === service.id}
                 onChange={() => clearError("service")}
               />
-              <span className={`flex min-h-14 items-center gap-3 rounded-control bg-surface-subtle p-2 text-small text-muted shadow-surface transition-[background-color,color,box-shadow,scale] duration-150 ease-[var(--ease-out)] group-hover:bg-white group-hover:shadow-surface-hover peer-focus-visible:outline-2 peer-focus-visible:outline-offset-2 peer-focus-visible:outline-focus peer-active:scale-[.96] motion-reduce:transition-none motion-reduce:peer-active:scale-100 ${styles.selected}`}>
+              <span className={`flex min-h-14 items-center gap-3 rounded-control bg-surface-subtle p-2 text-sm text-muted shadow-surface transition-[background-color,color,box-shadow,scale] duration-150 ease-[var(--ease-out)] group-hover:bg-white group-hover:shadow-surface-hover peer-focus-visible:outline-2 peer-focus-visible:outline-offset-2 peer-focus-visible:outline-focus peer-active:scale-[.96] motion-reduce:transition-none motion-reduce:peer-active:scale-100 ${styles.selected}`}>
                 <span className={`grid size-9 shrink-0 place-items-center rounded-inset shadow-surface ${styles.icon}`} aria-hidden="true">
                   <Icon className="size-4.5" strokeWidth={1.7} />
                 </span>
@@ -290,7 +290,7 @@ export function ContactForm({
             </label>
           );})}
         </div>
-        {errors.service ? <span id="contact-service-error" className="text-small text-error" role="alert">{errors.service}</span> : null}
+        {errors.service ? <span id="contact-service-error" className="text-sm text-error" role="alert">{errors.service}</span> : null}
       </fieldset>
 
       <Field id="contact-budget" label={copy.budget} error={errors.budget} required={copy.requiredLabel}>
@@ -299,7 +299,7 @@ export function ContactForm({
           <button
             ref={budgetButtonRef}
             id="contact-budget"
-            className={`flex min-h-12 w-full cursor-pointer items-center justify-between gap-4 rounded-control border-0 bg-surface-subtle px-4 text-left text-small shadow-surface transition-[background-color,box-shadow,scale] duration-150 ease-[var(--ease-out)] hover:bg-white hover:shadow-surface-hover active:scale-[.99] focus-visible:bg-white focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-focus data-[invalid=true]:outline-2 data-[invalid=true]:outline-error motion-reduce:transition-none motion-reduce:active:scale-100 ${selectedBudgetLabel ? "text-ink" : "text-muted"}`}
+            className={`flex min-h-12 w-full cursor-pointer items-center justify-between gap-4 rounded-control border-0 bg-surface-subtle px-4 text-left text-sm shadow-surface transition-[background-color,box-shadow,scale] duration-150 ease-[var(--ease-out)] hover:bg-white hover:shadow-surface-hover active:scale-[.99] focus-visible:bg-white focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-focus data-[invalid=true]:outline-2 data-[invalid=true]:outline-error motion-reduce:transition-none motion-reduce:active:scale-100 ${selectedBudgetLabel ? "text-ink" : "text-muted"}`}
             type="button"
             aria-haspopup="listbox"
             aria-expanded={budgetOpen}
@@ -330,7 +330,7 @@ export function ContactForm({
               {copy.budgetOptions.map((option, index) => (
                 <button
                   key={option.id}
-                  className={`flex min-h-9 w-full cursor-pointer items-center justify-between gap-4 rounded-inset px-3 text-left text-small transition-[background-color,scale] duration-150 hover:bg-interaction active:scale-[.98] focus-visible:outline-2 focus-visible:outline-offset-0 focus-visible:outline-focus motion-reduce:transition-none motion-reduce:active:scale-100 ${selectedBudget === option.id ? "bg-interaction text-ink" : "text-muted"}`}
+                  className={`flex min-h-9 w-full cursor-pointer items-center justify-between gap-4 rounded-inset px-3 text-left text-sm transition-[background-color,scale] duration-150 hover:bg-interaction active:scale-[.98] focus-visible:outline-2 focus-visible:outline-offset-0 focus-visible:outline-focus motion-reduce:transition-none motion-reduce:active:scale-100 ${selectedBudget === option.id ? "bg-interaction text-ink" : "text-muted"}`}
                   type="button"
                   role="option"
                   aria-selected={selectedBudget === option.id}
@@ -376,7 +376,7 @@ export function ContactForm({
 
       <div>
         <button
-          className="pill-button pill-button--dark inline-flex min-h-[52px] items-center gap-3.5 rounded-pill bg-dark py-0 pr-2.5 pl-4 text-control text-white shadow-dark-surface disabled:cursor-wait disabled:opacity-65 max-[600px]:w-full max-[600px]:justify-between"
+          className="pill-button pill-button--dark inline-flex min-h-[52px] items-center gap-3.5 rounded-pill bg-inverse-surface py-0 pr-2.5 pl-4 text-ui font-semibold text-white shadow-dark-surface disabled:cursor-wait disabled:opacity-65 max-narrow:w-full max-narrow:justify-between"
           type="submit"
           disabled={status === "sending"}
         >
@@ -394,10 +394,10 @@ export function ContactForm({
             <ArrowUpRight className="pill-button__arrow pill-button__arrow--up-right absolute inset-[7px] size-[18px] opacity-0 [transform:translate(-6px,6px)_scale(.8)]" strokeWidth={1.7} />
           </span>
         </button>
-        <p id="contact-form-note" className="mt-4 mb-0 max-w-[36rem] text-small text-muted">
+        <p id="contact-form-note" className="mt-4 mb-0 max-w-[36rem] text-sm text-muted">
           {copy.note}
         </p>
-        {errors.form ? <p className="mt-4 mb-0 text-small text-error" role="alert">{errors.form} <a className="underline underline-offset-2" href={`mailto:${contactEmail}`}>{contactEmail}</a></p> : null}
+        {errors.form ? <p className="mt-4 mb-0 text-sm text-error" role="alert">{errors.form} <a className="underline underline-offset-2" href={`mailto:${contactEmail}`}>{contactEmail}</a></p> : null}
       </div>
     </form>
   );
@@ -437,12 +437,12 @@ function Field({
 }) {
   return (
     <div className="grid gap-2">
-      <label className={`flex items-baseline gap-2 text-small font-medium ${error ? "text-error" : "text-ink"}`} htmlFor={id}>
+      <label className={`flex items-baseline gap-2 text-sm font-medium ${error ? "text-error" : "text-ink"}`} htmlFor={id}>
         <span>{label}{required ? <RequiredMarker label={required} /> : null}</span>
         {hint ? <span className="font-normal italic text-muted">({hint})</span> : null}
       </label>
       {children}
-      {error ? <span id={`${id}-error`} className="text-small text-error" role="alert">{error}</span> : null}
+      {error ? <span id={`${id}-error`} className="text-sm text-error" role="alert">{error}</span> : null}
     </div>
   );
 }

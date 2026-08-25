@@ -20,15 +20,15 @@ export function AboutPage({ locale }: { locale: Locale }) {
       />
 
       <section className="bg-canvas px-page py-section">
-        <div className="mx-auto grid max-w-[70rem] grid-cols-[minmax(15rem,.78fr)_minmax(0,1.22fr)] gap-x-split gap-y-8 max-[800px]:grid-cols-1">
+        <div className="mx-auto grid max-w-[70rem] grid-cols-[minmax(15rem,.78fr)_minmax(0,1.22fr)] gap-x-split gap-y-8 max-compact:grid-cols-1">
           <Reveal>
             <h2 className="m-0 max-w-[12ch] text-heading-lg">{t(locale, "about.pov")}</h2>
           </Reveal>
           <Reveal className="grid max-w-[45rem] gap-6" delay={60}>
-            <p className="m-0 text-body-lg text-ink">
+            <p className="m-0 text-lg/7 text-ink">
               {t(locale, "about.pov1")}
             </p>
-            <p className="m-0 text-body-lg text-muted">
+            <p className="m-0 text-lg/7 text-muted">
               {t(locale, "about.pov2")}
             </p>
           </Reveal>
@@ -41,11 +41,11 @@ export function AboutPage({ locale }: { locale: Locale }) {
             title={t(locale, "about.howTitle")}
             copy={t(locale, "about.howCopy")}
           />
-          <div className="grid grid-cols-2 gap-x-grid max-[700px]:grid-cols-1">
+          <div className="grid grid-cols-2 gap-x-grid max-compact:grid-cols-1">
             {principles.map(([headingKey, copyKey], index) => (
               <Reveal className="py-8" delay={index * 50} key={headingKey}>
                 <h3 className="m-0 max-w-[22ch] text-heading-sm">{t(locale, headingKey)}</h3>
-                <p className="mt-3 mb-0 max-w-[38rem] text-body text-muted">{t(locale, copyKey)}</p>
+                <p className="mt-3 mb-0 max-w-[38rem] text-base/6 text-muted">{t(locale, copyKey)}</p>
               </Reveal>
             ))}
           </div>

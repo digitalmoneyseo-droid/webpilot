@@ -7,7 +7,7 @@ export function BrandMark({
 }) {
   const letters = [..."WEBPILOT"];
   return (
-    <span className={`inline-flex whitespace-nowrap font-sans leading-none font-[650] tracking-[-.025em] ${size === "large" ? "text-heading-md" : "text-body"} ${inverse ? "text-white" : ""}`} translate="no">
+    <span className={`inline-flex whitespace-nowrap font-sans leading-none font-[650] tracking-[-.025em] ${size === "large" ? "text-heading-md" : "text-base/6"} ${inverse ? "text-white" : ""}`} translate="no">
       <span className="sr-only">Webpilot</span>
       <span className="flex gap-[.035em]" aria-hidden="true">
         {letters.map((letter, index) => (

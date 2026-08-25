@@ -24,7 +24,7 @@ function TriggerPulse({ running }: { running: boolean }) {
   return (
     <motion.span
       data-flow-pulse="trigger"
-      className="pointer-events-none absolute inset-0 rounded-full border border-[var(--ds-blue-700)]"
+      className="pointer-events-none absolute inset-0 rounded-full border border-brand-500"
       initial={false}
       animate={running
         ? { opacity: [0, 0.42, 0], transform: ["scale(0.8)", "scale(1.35)", "scale(1.35)"] }
@@ -41,7 +41,7 @@ function ProcessEmphasis({ running, delay }: { running: boolean; delay: number }
   return (
     <motion.span
       data-flow-card-pulse
-      className="pointer-events-none absolute inset-0 rounded-[inherit] ring-2 ring-inset ring-[var(--ds-blue-700)]"
+      className="pointer-events-none absolute inset-0 rounded-[inherit] ring-2 ring-inset ring-brand-500"
       initial={false}
       animate={running
         ? { opacity: [0, 0.36, 0], transform: ["scale(0.995)", "scale(1.01)", "scale(1.018)"] }
@@ -102,7 +102,7 @@ function LineSignal({
         : { duration: 0.15 }}
       aria-hidden="true"
     >
-      <span className={`absolute size-1.5 rounded-full bg-white ring-2 ring-[var(--ds-blue-700)] ${bubblePosition}`} />
+      <span className={`absolute size-1.5 rounded-full bg-white ring-2 ring-brand-500 ${bubblePosition}`} />
     </motion.span>
   );
 }
@@ -127,7 +127,7 @@ export function AutomationFlowAnimation({ copy }: { copy: AutomationAnimationCop
         <div className="grid grid-cols-[minmax(5rem,.7fr)_1rem_minmax(0,1.5fr)] items-stretch">
           <motion.div
             data-flow-node="trigger"
-            className="relative grid min-w-0 place-items-center rounded-xl bg-white p-3 text-center shadow-[var(--ds-shadow-border)] max-[600px]:p-2"
+            className="relative grid min-w-0 place-items-center rounded-xl bg-white p-3 text-center shadow-surface max-[600px]:p-2"
             variants={nodeVariants}
             transition={{ delay: noMotion ? 0 : 0.08, duration: noMotion ? 0 : 0.35, ease: OFFER_EASE_OUT }}
           >
@@ -135,7 +135,7 @@ export function AutomationFlowAnimation({ copy }: { copy: AutomationAnimationCop
             <span className="min-w-0">
               <span className="relative mx-auto grid size-7 place-items-center">
                 <TriggerPulse running={loopActive} />
-                <Webhook className="relative size-5 text-[var(--ds-blue-800)]" strokeWidth={1.8} aria-hidden="true" />
+                <Webhook className="relative size-5 text-brand-600" strokeWidth={1.8} aria-hidden="true" />
               </span>
               <span className="mt-2 block text-xs font-semibold text-pretty [overflow-wrap:normal] hyphens-none">{copy.trigger}</span>
             </span>
@@ -143,7 +143,7 @@ export function AutomationFlowAnimation({ copy }: { copy: AutomationAnimationCop
 
           <motion.span
             data-flow-connector="trigger-agent"
-            className="relative my-auto block h-0.5 origin-left bg-[var(--ds-blue-700)]"
+            className="relative my-auto block h-0.5 origin-left bg-brand-500"
             variants={{ hidden: { opacity: 0, scaleX: 0 }, visible: { opacity: 1, scaleX: 1 } }}
             transition={{ delay: noMotion ? 0 : 0.3, duration: noMotion ? 0 : 0.3, ease: OFFER_EASE_IN_OUT }}
             aria-hidden="true"
@@ -153,25 +153,25 @@ export function AutomationFlowAnimation({ copy }: { copy: AutomationAnimationCop
 
           <motion.div
             data-flow-node="agent"
-            className="relative min-w-0 rounded-xl bg-[var(--ds-blue-100)] p-3 shadow-[inset_0_0_0_1px_var(--ds-blue-300)] max-[600px]:p-2"
+            className="relative min-w-0 rounded-xl bg-brand-50 p-3 shadow-accent-surface max-[600px]:p-2"
             variants={nodeVariants}
             transition={{ delay: noMotion ? 0 : 0.42, duration: noMotion ? 0 : 0.38, ease: OFFER_EASE_OUT }}
           >
             <ProcessEmphasis running={loopActive} delay={2.7} />
             <div className="flex min-w-0 items-center gap-2">
-              <span className="grid size-8 shrink-0 place-items-center rounded-lg bg-[var(--ds-gray-1000)] text-white">
+              <span className="grid size-8 shrink-0 place-items-center rounded-lg bg-neutral-900 text-white">
                 <Bot className="size-4" strokeWidth={1.8} aria-hidden="true" />
               </span>
               <span className="min-w-0">
                 <span className="block text-sm font-semibold text-pretty [overflow-wrap:normal] hyphens-none">{copy.agent}</span>
-                <span className="block text-xs text-pretty text-[var(--ds-gray-700)] [overflow-wrap:normal] hyphens-none max-[400px]:hidden">{copy.extract}</span>
+                <span className="block text-xs text-pretty text-neutral-400 [overflow-wrap:normal] hyphens-none max-[400px]:hidden">{copy.extract}</span>
               </span>
             </div>
             <div className="mt-3 grid grid-cols-3 gap-2 max-[600px]:mt-2 max-[600px]:gap-1">
               {tools.map(({ key, Icon }) => (
-                <span className="grid min-w-0 place-items-center gap-1 rounded-lg bg-white p-2 text-center shadow-[var(--ds-shadow-border)] max-[600px]:p-1" key={key}>
-                  <Icon className="size-3.5 text-[var(--ds-gray-800)]" strokeWidth={1.8} aria-hidden="true" />
-                  <span className="text-xs font-medium text-[var(--ds-gray-800)]">{copy[key]}</span>
+                <span className="grid min-w-0 place-items-center gap-1 rounded-lg bg-white p-2 text-center shadow-surface max-[600px]:p-1" key={key}>
+                  <Icon className="size-3.5 text-neutral-500" strokeWidth={1.8} aria-hidden="true" />
+                  <span className="text-xs font-medium text-neutral-500">{copy[key]}</span>
                 </span>
               ))}
             </div>
@@ -180,7 +180,7 @@ export function AutomationFlowAnimation({ copy }: { copy: AutomationAnimationCop
 
         <motion.span
           data-flow-connector="agent-condition"
-          className="relative mx-auto block h-8 w-0.5 origin-top bg-[var(--ds-blue-700)] max-[600px]:h-3"
+          className="relative mx-auto block h-8 w-0.5 origin-top bg-brand-500 max-[600px]:h-3"
           variants={{ hidden: { opacity: 0, scaleY: 0 }, visible: { opacity: 1, scaleY: 1 } }}
           transition={{ delay: noMotion ? 0 : 0.84, duration: noMotion ? 0 : 0.28, ease: OFFER_EASE_IN_OUT }}
           aria-hidden="true"
@@ -190,12 +190,12 @@ export function AutomationFlowAnimation({ copy }: { copy: AutomationAnimationCop
 
         <motion.div
           data-flow-node="condition"
-          className="relative mx-auto flex w-full max-w-xs min-w-0 items-center justify-center gap-2 rounded-xl bg-white px-4 py-3 text-center shadow-[var(--ds-shadow-border)] max-[600px]:px-3 max-[600px]:py-2"
+          className="relative mx-auto flex w-full max-w-xs min-w-0 items-center justify-center gap-2 rounded-xl bg-white px-4 py-3 text-center shadow-surface max-[600px]:px-3 max-[600px]:py-2"
           variants={nodeVariants}
           transition={{ delay: noMotion ? 0 : 1.06, duration: noMotion ? 0 : 0.35, ease: OFFER_EASE_OUT }}
         >
           <ProcessEmphasis running={loopActive} delay={3.25} />
-          <GitBranch className="size-5 shrink-0 text-[var(--ds-blue-800)]" strokeWidth={1.9} aria-hidden="true" />
+          <GitBranch className="size-5 shrink-0 text-brand-600" strokeWidth={1.9} aria-hidden="true" />
           <span className="text-xs font-semibold text-pretty [overflow-wrap:normal] hyphens-none">{copy.condition}</span>
         </motion.div>
 
@@ -206,7 +206,7 @@ export function AutomationFlowAnimation({ copy }: { copy: AutomationAnimationCop
         >
           <motion.span
             data-flow-segment="stem"
-            className="absolute top-0 left-1/2 h-3 w-0.5 -translate-x-1/2 origin-top bg-[var(--ds-blue-700)]"
+            className="absolute top-0 left-1/2 h-3 w-0.5 -translate-x-1/2 origin-top bg-brand-500"
             variants={{ hidden: { opacity: 0, scaleY: 0 }, visible: { opacity: 1, scaleY: 1 } }}
             transition={{ delay: noMotion ? 0 : 1.3, duration: noMotion ? 0 : 0.12, ease: OFFER_EASE_IN_OUT }}
           >
@@ -216,7 +216,7 @@ export function AutomationFlowAnimation({ copy }: { copy: AutomationAnimationCop
           <div className="relative">
             <motion.span
               data-flow-segment="left-rail"
-              className="absolute top-3 right-[-0.375rem] left-1/2 h-0.5 origin-right bg-[var(--ds-blue-700)]"
+              className="absolute top-3 right-[-0.375rem] left-1/2 h-0.5 origin-right bg-brand-500"
               variants={{ hidden: { opacity: 0, scaleX: 0 }, visible: { opacity: 1, scaleX: 1 } }}
               transition={{ delay: noMotion ? 0 : 1.42, duration: noMotion ? 0 : 0.2, ease: OFFER_EASE_IN_OUT }}
             >
@@ -224,7 +224,7 @@ export function AutomationFlowAnimation({ copy }: { copy: AutomationAnimationCop
             </motion.span>
             <motion.span
               data-flow-segment="left-leg"
-              className="absolute top-3 bottom-0 left-1/2 w-0.5 -translate-x-1/2 origin-top bg-[var(--ds-blue-700)]"
+              className="absolute top-3 bottom-0 left-1/2 w-0.5 -translate-x-1/2 origin-top bg-brand-500"
               variants={{ hidden: { opacity: 0, scaleY: 0 }, visible: { opacity: 1, scaleY: 1 } }}
               transition={{ delay: noMotion ? 0 : 1.62, duration: noMotion ? 0 : 0.2, ease: OFFER_EASE_IN_OUT }}
             >
@@ -235,7 +235,7 @@ export function AutomationFlowAnimation({ copy }: { copy: AutomationAnimationCop
           <div className="relative">
             <motion.span
               data-flow-segment="right-rail"
-              className="absolute top-3 right-1/2 left-[-0.375rem] h-0.5 origin-left bg-[var(--ds-blue-700)]"
+              className="absolute top-3 right-1/2 left-[-0.375rem] h-0.5 origin-left bg-brand-500"
               variants={{ hidden: { opacity: 0, scaleX: 0 }, visible: { opacity: 1, scaleX: 1 } }}
               transition={{ delay: noMotion ? 0 : 1.42, duration: noMotion ? 0 : 0.2, ease: OFFER_EASE_IN_OUT }}
             >
@@ -243,7 +243,7 @@ export function AutomationFlowAnimation({ copy }: { copy: AutomationAnimationCop
             </motion.span>
             <motion.span
               data-flow-segment="right-leg"
-              className="absolute top-3 right-1/2 bottom-0 w-0.5 translate-x-1/2 origin-top bg-[var(--ds-blue-700)]"
+              className="absolute top-3 right-1/2 bottom-0 w-0.5 translate-x-1/2 origin-top bg-brand-500"
               variants={{ hidden: { opacity: 0, scaleY: 0 }, visible: { opacity: 1, scaleY: 1 } }}
               transition={{ delay: noMotion ? 0 : 1.62, duration: noMotion ? 0 : 0.2, ease: OFFER_EASE_IN_OUT }}
             >
@@ -255,27 +255,27 @@ export function AutomationFlowAnimation({ copy }: { copy: AutomationAnimationCop
         <div className="grid grid-cols-2 gap-3">
           <motion.div
             data-flow-node="success"
-            className="relative flex min-w-0 items-center gap-2 rounded-xl bg-white p-3 shadow-[var(--ds-shadow-border)] max-[600px]:p-2"
+            className="relative flex min-w-0 items-center gap-2 rounded-xl bg-white p-3 shadow-surface max-[600px]:p-2"
             variants={nodeVariants}
             transition={{ delay: noMotion ? 0 : 1.78, duration: noMotion ? 0 : 0.35, ease: OFFER_EASE_OUT }}
           >
             <ProcessEmphasis running={loopActive} delay={4} />
-            <UserRoundPlus className="size-5 shrink-0 text-[var(--ds-blue-800)]" strokeWidth={1.8} aria-hidden="true" />
+            <UserRoundPlus className="size-5 shrink-0 text-brand-600" strokeWidth={1.8} aria-hidden="true" />
             <span className="min-w-0">
-              <span className="block text-xs font-medium text-[var(--ds-blue-800)]">{copy.yes}</span>
+              <span className="block text-xs font-medium text-brand-600">{copy.yes}</span>
               <span className="block text-xs font-semibold text-pretty [overflow-wrap:normal] hyphens-none">{copy.success}</span>
             </span>
           </motion.div>
           <motion.div
             data-flow-node="fallback"
-            className="relative flex min-w-0 items-center gap-2 rounded-xl bg-white p-3 shadow-[var(--ds-shadow-border)] max-[600px]:p-2"
+            className="relative flex min-w-0 items-center gap-2 rounded-xl bg-white p-3 shadow-surface max-[600px]:p-2"
             variants={nodeVariants}
             transition={{ delay: noMotion ? 0 : 1.86, duration: noMotion ? 0 : 0.35, ease: OFFER_EASE_OUT }}
           >
             <ProcessEmphasis running={loopActive} delay={4} />
-            <ListTodo className="size-5 shrink-0 text-[var(--ds-gray-800)]" strokeWidth={1.8} aria-hidden="true" />
+            <ListTodo className="size-5 shrink-0 text-neutral-500" strokeWidth={1.8} aria-hidden="true" />
             <span className="min-w-0">
-              <span className="block text-xs font-medium text-[var(--ds-gray-700)]">{copy.review}</span>
+              <span className="block text-xs font-medium text-neutral-400">{copy.review}</span>
               <span className="block text-xs font-semibold text-pretty [overflow-wrap:normal] hyphens-none">{copy.fallback}</span>
             </span>
           </motion.div>

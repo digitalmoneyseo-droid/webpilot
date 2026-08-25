@@ -340,7 +340,7 @@ function Scene({ clipId, copy }: { clipId: string; copy: WebExperienceAnimationC
       <rect
         data-web-experience-device
         fill="white"
-        stroke="var(--ds-gray-alpha-300)"
+        stroke="var(--color-line-strong)"
         vectorEffect="non-scaling-stroke"
         {...device}
       />
@@ -361,20 +361,19 @@ function BrowserChrome({ scene, variant }: { scene: SceneGeometry; variant: Scen
 
   return (
     <g className={isDesktop ? styles.chrome : undefined} style={isDesktop ? { opacity: 0 } : undefined}>
-      <rect data-web-experience-divider fill="var(--ds-gray-alpha-200)" {...scene.divider} />
+      <rect data-web-experience-divider fill="var(--color-line)" {...scene.divider} />
 
       <g data-web-experience-desktop-controls>
-        {[40, 48, 56].map((cx) => <circle cx={cx} cy="71.1" fill="var(--ds-gray-300)" key={cx} r="3" />)}
+        {[40, 48, 56].map((cx) => <circle cx={cx} cy="71.1" fill="var(--color-neutral-200)" key={cx} r="3" />)}
       </g>
 
       <g data-web-experience-url>
         <rect data-web-experience-url-box fill="transparent" height="10" width="76" x="212" y={urlBoxY} />
-        <text fill="var(--ds-gray-700)" fontFamily="inherit" fontSize="8" textAnchor="middle" x="220" y={urlBaselineY}>◎</text>
-        <text fill="var(--ds-gray-700)" fontFamily="inherit" fontSize="7.5" x="228" y={urlBaselineY}>webpilot.studio</text>
+        <text fill="var(--color-neutral-400)" fontFamily="inherit" fontSize="10" textAnchor="middle" x="250" y={urlBaselineY}>webpilot.studio</text>
       </g>
 
-      <rect data-web-experience-notch fill="var(--ds-gray-1000)" height="4" rx="2" style={{ opacity: 0 }} width="22.5" x="238.75" y="28.6" />
-      <rect data-web-experience-home-indicator fill="var(--ds-gray-1000)" height="2" rx="1" style={{ opacity: 0 }} width="32.5" x="233.75" y="420.5" />
+      <rect data-web-experience-notch fill="var(--color-neutral-900)" height="4" rx="2" style={{ opacity: 0 }} width="22.5" x="238.75" y="28.6" />
+      <rect data-web-experience-home-indicator fill="var(--color-neutral-900)" height="2" rx="1" style={{ opacity: 0 }} width="32.5" x="233.75" y="420.5" />
     </g>
   );
 }
@@ -388,11 +387,11 @@ function HeroScene({ copy, scene, variant }: { copy: WebExperienceAnimationCopy;
   return (
     <g>
       <g className={isDesktop ? styles.accent : undefined} data-web-experience-part="accent" style={isDesktop ? { opacity: 0 } : undefined}>
-        <rect fill="var(--ds-blue-600)" rx="3" {...scene.accent} />
+        <rect fill="var(--color-brand-400)" rx="3" {...scene.accent} />
       </g>
 
       <g className={isDesktop ? styles.headline : undefined} data-web-experience-part="headline" style={isDesktop ? { opacity: 0 } : undefined}>
-        <text data-web-experience-headline fill="var(--ds-gray-1000)" fontFamily="inherit" fontSize="18.4" fontWeight="600" x={scene.headline.x} y={scene.headline.y}>
+        <text data-web-experience-headline fill="var(--color-neutral-900)" fontFamily="inherit" fontSize="18.4" fontWeight="600" x={scene.headline.x} y={scene.headline.y}>
           <tspan x={scene.headline.x}>{firstLine}</tspan>
           <tspan dy="1.03em" x={scene.headline.x}>{secondLine}</tspan>
         </text>
@@ -409,7 +408,7 @@ function HeroScene({ copy, scene, variant }: { copy: WebExperienceAnimationCopy;
 function IllustrationLine({ className, geometry, part }: { className?: string; geometry: RectGeometry; part: string }) {
   return (
     <g className={className} data-web-experience-part={part} style={className ? { opacity: 0 } : undefined}>
-      <rect fill="var(--ds-gray-200)" rx="3" {...geometry} />
+      <rect fill="var(--color-neutral-200)" rx="3" {...geometry} />
     </g>
   );
 }
@@ -420,7 +419,7 @@ function InquiryCta({ className, copy, geometry }: { className?: string; copy: W
 
   return (
     <g className={className} data-web-experience-part="cta" style={className ? { opacity: 0 } : undefined}>
-      <rect data-web-experience-cta-bg fill="var(--ds-gray-1000)" height={height} rx="12" width={width} x={geometry.x} y={geometry.y} />
+      <rect data-web-experience-cta-bg fill="var(--color-neutral-900)" height={height} rx="12" width={width} x={geometry.x} y={geometry.y} />
       <text
         data-web-experience-cta-label
         dominantBaseline="middle"
@@ -446,10 +445,10 @@ function CardStack({ scene, variant }: { scene: SceneGeometry; variant: SceneVar
     <g data-web-experience-part="image">
       <rect data-web-experience-image-bounds fill="transparent" {...scene.imageBounds} />
       <g className={isDesktop ? styles.backCard : undefined} data-web-experience-card="back" style={isDesktop ? { opacity: 0 } : undefined}>
-        <SvgCard fill="var(--ds-gray-100)" geometry={scene.cards.back} stroke="var(--ds-gray-500)" />
+        <SvgCard fill="var(--color-neutral-100)" geometry={scene.cards.back} stroke="var(--color-neutral-300)" />
       </g>
       <g className={isDesktop ? styles.middleCard : undefined} data-web-experience-card="middle" style={isDesktop ? { opacity: 0 } : undefined}>
-        <SvgCard fill="white" geometry={scene.cards.middle} stroke="var(--ds-gray-alpha-300)" />
+        <SvgCard fill="white" geometry={scene.cards.middle} stroke="var(--color-line-strong)" />
       </g>
       <g className={isDesktop ? styles.frontCard : undefined} data-web-experience-card="front" style={isDesktop ? { opacity: 0 } : undefined}>
         <FrontCard geometry={scene.cards.front} values={scene.frontCard} />
@@ -465,10 +464,10 @@ function SvgCard({ fill, geometry, stroke }: { fill: string; geometry: RectGeome
 function FrontCard({ geometry, values }: { geometry: RectGeometry; values: SceneGeometry["frontCard"] }) {
   return (
     <>
-      <rect fill="white" rx="8" stroke="var(--ds-blue-600)" vectorEffect="non-scaling-stroke" {...geometry} />
-      <rect fill="var(--ds-blue-600)" height={values.blueHeight} rx="6" width={values.innerWidth} x={values.innerX} y={values.innerY} />
-      <rect fill="var(--ds-gray-300)" height="5" rx="2.5" width={values.firstLineWidth} x={values.innerX} y={values.firstLineY} />
-      <rect fill="var(--ds-gray-200)" height="5" rx="2.5" width={values.secondLineWidth} x={values.innerX} y={values.secondLineY} />
+      <rect fill="white" rx="8" stroke="var(--color-brand-400)" vectorEffect="non-scaling-stroke" {...geometry} />
+      <rect fill="var(--color-brand-400)" height={values.blueHeight} rx="6" width={values.innerWidth} x={values.innerX} y={values.innerY} />
+      <rect fill="var(--color-neutral-200)" height="5" rx="2.5" width={values.firstLineWidth} x={values.innerX} y={values.firstLineY} />
+      <rect fill="var(--color-neutral-200)" height="5" rx="2.5" width={values.secondLineWidth} x={values.innerX} y={values.secondLineY} />
     </>
   );
 }

@@ -46,7 +46,7 @@ export function CampaignGrowthAnimation({ locale, copy }: { locale: Locale; copy
     <div ref={containerRef} className="grid h-full min-h-0 w-full grid-rows-[auto_1fr] gap-3">
       <div className="flex min-w-0 items-start justify-between gap-4">
         <div className="min-w-0">
-          <div data-campaign-metric className="inline-flex items-end font-mono font-medium leading-none tracking-[-.06em] tabular-nums text-[var(--ds-gray-1000)]">
+          <div data-campaign-metric className="inline-flex items-end font-mono font-medium leading-none tracking-[-.06em] tabular-nums text-neutral-900">
             <motion.span className="block text-[clamp(1.8rem,4vw,2.7rem)] leading-none">{displayCount}</motion.span>
             <motion.span
               className="relative ml-2 block -top-[.16em] text-[clamp(.95rem,1.9vw,1.3rem)] leading-none tracking-[-.01em] text-[#19a55d]"
@@ -57,7 +57,7 @@ export function CampaignGrowthAnimation({ locale, copy }: { locale: Locale; copy
               +67%
             </motion.span>
           </div>
-          <span className="mt-2 block text-[clamp(.8rem,1.3vw,1rem)] font-medium text-[var(--ds-gray-700)]">
+          <span className="mt-2 block text-[clamp(.8rem,1.3vw,1rem)] font-medium text-neutral-400">
             {copy.metricLabel}
           </span>
         </div>
@@ -73,8 +73,8 @@ export function CampaignGrowthAnimation({ locale, copy }: { locale: Locale; copy
         >
           <defs>
             <linearGradient id="campaign-growth-area" x1="0" x2="0" y1="0" y2="1">
-              <stop offset="0%" stopColor="var(--ds-blue-700)" stopOpacity="0.2" />
-              <stop offset="100%" stopColor="var(--ds-blue-700)" stopOpacity="0" />
+              <stop offset="0%" stopColor="var(--color-brand-500)" stopOpacity="0.2" />
+              <stop offset="100%" stopColor="var(--color-brand-500)" stopOpacity="0" />
             </linearGradient>
           </defs>
 
@@ -88,7 +88,7 @@ export function CampaignGrowthAnimation({ locale, copy }: { locale: Locale; copy
           <motion.path
             d={GRAPH_LINE}
             fill="none"
-            stroke="var(--ds-blue-700)"
+            stroke="var(--color-brand-500)"
             strokeLinecap="round"
             strokeLinejoin="round"
             strokeWidth="3"
@@ -100,8 +100,8 @@ export function CampaignGrowthAnimation({ locale, copy }: { locale: Locale; copy
             cx="408"
             cy="12"
             r="5"
-            fill="var(--ds-background-100)"
-            stroke="var(--ds-blue-700)"
+            fill="var(--color-white)"
+            stroke="var(--color-brand-500)"
             strokeWidth="3"
             initial={false}
             animate={{ opacity: active ? 1 : 0 }}

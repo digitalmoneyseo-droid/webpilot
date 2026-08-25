@@ -21,12 +21,13 @@ Clarity is not plainness. Create character with type, composition, pace, precise
 These sources own different parts of the system; they are not competing layers:
 
 - `DESIGN.md` defines intent, public roles, usage, exceptions, and review criteria.
-- `src/styles/typography-system.css` owns the current primitive and semantic values.
-- `src/styles/app.css` exposes those values as Tailwind utilities.
+- `src/styles/theme.css` owns the public values and exposes them as Tailwind theme utilities.
+- `src/styles/app.css` owns global stylesheet order.
+- `src/styles/global.css` owns browser defaults, complex motion, pseudo-elements, and generated visual behavior.
 - Shared components own recurring composition and behavior.
 - Page components compose those primitives without creating a parallel visual system.
 
-Tailwind is the default for ordinary component styling. Custom CSS owns global tokens, browser behavior, complex motion, pseudo-elements, and generated visuals.
+Tailwind is the default for ordinary component styling and the public design-token API. Custom CSS owns browser behavior, complex motion, pseudo-elements, and generated visuals.
 
 Before adding a visual value:
 
@@ -36,7 +37,7 @@ Before adding a visual value:
 4. Add a public semantic role only when it will recur and an existing role cannot express it.
 5. Expose a new role through Tailwind, document it here, and extend relevant design-system coverage in the same change.
 
-Primitive `--ds-*` values are raw materials, not the ordinary component API. `tests/design-system.spec.ts` protects the shared service identity palette and its Tailwind exposure. Review remains responsible for typography, spacing, borders, shadows, radii, and exceptions that need visual judgment.
+Tailwind Neutral and the compact `brand-*` scale are raw materials, not the ordinary editorial component API. Editorial components use semantic color roles. Scoped explanatory visuals may consume raw colors when category or data distinctions require them. `tests/design-system.spec.ts` protects the public theme, shared service identities, and removed legacy aliases. Review remains responsible for exceptions that need visual judgment.
 
 ## 3. Core system
 
@@ -61,16 +62,12 @@ Fluid roles use continuous `clamp()` formulas in `rem`; their ranges must not cr
 | Subsection title | `text-heading-md` | 24px / 1.2 | 500 | Real nested section or service title |
 | Card title | `text-heading-sm` | 20px / 1.25 | 500 | Peer card, FAQ question, short feature title |
 | Lead | `text-lead` | 17–20px / 1.5 | 400 | One short orientation passage below an `h1` |
-| Large body | `text-body-lg` | 18px / 1.5 | 400 | Section intro or short emphasized prose |
-| CTA copy | `text-cta-copy` | 18px / 1.5 | 400 | Supporting copy in a final CTA |
-| Body | `text-body` | 16px / 24px | 400 | Default reading copy |
-| Card body | `text-card-body` | 15px / 1.5 | 400 | Dense card or scoped-list copy |
-| Control | `text-control` | 15px / 1.5 | 600 | Primary buttons and form controls |
-| Navigation | `text-navigation` | 14px / 1.5 | 500 | Header and menu navigation |
-| Small | `text-small` | 14px / 1.5 | 400 | Helper text, labels, compact descriptions |
-| Caption / metadata | `text-caption`, `text-meta` | 13px / 1.5 | 400 | Subordinate context; aliases intentionally share a value |
-| Mono metadata | `text-mono-meta` | 12px / 1.5 | 400 | Short technical or numeric metadata |
-| Label | `text-label` | 12px / 16px | 500 | Very short eyebrow or status; uppercase is allowed here only |
+| Large body | `text-lg/7` | 18px / 28px | 400 | Section intro, CTA support, or short emphasized prose |
+| Body | `text-base/6` | 16px / 24px | 400 | Default reading copy |
+| UI copy | `text-ui` | 15px / 1.5 | 400 | Dense card or scoped-list copy; add `font-semibold` for controls |
+| Small / navigation | `text-sm` | 14px / 20px | 400 | Helper text and compact descriptions; add `font-medium` for navigation |
+| Metadata | `text-meta` | 13px / 1.5 | 400 | Subordinate context and compact numeric markers |
+| Label | `text-xs/4 font-medium tracking-widest` | 12px / 16px | 500 | Very short eyebrow or status; uppercase is allowed here only |
 
 Each page has one descriptive `h1`. The homepage uses `text-display-lg`, service pages use `text-display-service`, and other page titles use `text-display-sm`. Equivalent peers use the same role, weight, tracking, color, and line height. Never shrink one translated string to make it fit.
 
@@ -82,17 +79,18 @@ Reading prose uses `max-w-reading` (68ch); narrow introductions use `max-w-narro
 |---|---|---:|---|
 | Canvas | `bg-canvas` | `#FAF9F6` | Default page field |
 | Primary surface | `bg-surface`, `bg-white` | `#FFFFFF` | Cards, controls, raised content |
-| Secondary surface | `bg-surface-subtle` | `#FAFAFA` | Quiet input or grouped background |
+| Secondary surface | `bg-surface-subtle` | Tailwind `neutral-50` | Quiet input or grouped background |
 | Inverse surface | `bg-inverse-surface` | `#101010` | Dark controls and navigation surfaces |
 | Strong inverse field | `bg-black` | `#000000` | Footer and final CTA band |
-| Primary text | `text-ink` | `#171717` | Headings and important text |
-| Secondary text | `text-muted` | `#4D4D4D` | Body copy and supporting explanation |
-| Tertiary text | `text-subtle` | `#73736F` | Compact metadata, placeholders, secondary icons |
+| Primary text | `text-ink` | Tailwind `neutral-900` | Headings and important text |
+| Secondary text | `text-muted` | Tailwind `neutral-600` | Body copy and supporting explanation |
+| Tertiary text | `text-subtle` | Tailwind `neutral-500` | Compact metadata, placeholders, secondary icons |
 | Inverse text | `text-inverse`, `text-white` | `#FFFFFF` | Primary text on dark fields |
-| Inverse secondary | `text-inverse-muted`, `text-dark-muted` | `#929292` | Supporting text on dark fields |
+| Inverse secondary | `text-inverse-muted` | Tailwind `neutral-400` | Supporting text on dark fields |
 | Interactive text | `text-accent` | blue 800 | Links and text actions on light surfaces |
 | Focus | `outline-focus` | blue 700 | Visible keyboard focus |
 | Error | `text-error`, `outline-error` | `#B42318` | Error copy and invalid state |
+| Hero highlight | `bg-highlight` / `--color-highlight` | `#FFF500` | Homepage headline mark only |
 
 Establish hierarchy with typography and space before color. Use semantic roles for editorial text, generic surfaces, forms, and navigation. Never communicate state with color alone.
 
@@ -134,7 +132,7 @@ Compact cards use `p-5`, standard cards use `p-card-padding`, and featured cards
 
 The content field is at most `75rem` / 1200px. Page gutters expand to center it. Reading prose normally occupies no more than six or seven desktop columns. Give text-bearing flex and grid children `min-w-0`.
 
-Breakpoints describe content behavior: narrow around 600px, compact around 760px, and collapsed navigation or major split layouts around 900px. Reflow, stack, or rebalance before shrinking type. Never hide overflow to conceal a layout defect.
+Breakpoints describe content behavior and use named Tailwind variants: `narrow` at 600px, `compact` at 800px, `nav` at 900px, and `wide` at 1160px. Prefer `max-narrow`, `max-compact`, `max-nav`, and `max-wide` over repeated arbitrary viewport values. Self-contained explanatory visuals may keep local geometry breakpoints. Reflow, stack, or rebalance before shrinking type. Never hide overflow to conceal a layout defect.
 
 ### Shape, boundaries, and elevation
 

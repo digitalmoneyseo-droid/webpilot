@@ -63,17 +63,17 @@ export function LegalDraftPage({ locale, kind }: { locale: Locale; kind: LegalPa
       <section className="bg-canvas px-page pb-section">
         <div className="mx-auto max-w-reading">
           <div className="rounded-card bg-surface p-card-padding shadow-surface">
-            <span className="text-label text-muted">{t(locale, "legal.draftLabel")}</span>
+            <span className="text-xs/4 font-medium tracking-widest text-muted">{t(locale, "legal.draftLabel")}</span>
             <h2 className="mt-3 mb-0 text-heading-md">{t(locale, page.statusTitle)}</h2>
-            <p className="mt-3 mb-0 text-body text-muted">{t(locale, page.statusCopy)}</p>
+            <p className="mt-3 mb-0 text-base/6 text-muted">{t(locale, page.statusCopy)}</p>
           </div>
 
           <div className="mt-16 grid gap-12">
             {page.sections.map((section) => (
               <section className="border-t border-line pt-8" key={section.title}>
                 <h2 className="m-0 text-heading-md">{t(locale, section.title)}</h2>
-                <p className="mt-3 mb-0 text-body text-muted">{t(locale, section.copy)}</p>
-                <ul className="mt-6 mb-0 grid list-disc gap-3 pl-5 text-body text-muted">
+                <p className="mt-3 mb-0 text-base/6 text-muted">{t(locale, section.copy)}</p>
+                <ul className="mt-6 mb-0 grid list-disc gap-3 pl-5 text-base/6 text-muted">
                   {section.items.map((item) => <li key={item}>{t(locale, item)}</li>)}
                 </ul>
               </section>

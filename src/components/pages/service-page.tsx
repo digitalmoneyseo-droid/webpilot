@@ -69,14 +69,14 @@ export function ServicePage({ locale, serviceId }: { locale: Locale; serviceId: 
   return (
     <main id="main-content">
       <section className="px-page pt-page-title pb-section">
-        <div className="mx-auto grid max-w-[75rem] grid-cols-[minmax(0,1fr)_34rem] items-center gap-x-8 max-[1160px]:grid-cols-1 max-[1160px]:gap-10">
+        <div className="mx-auto grid max-w-[75rem] grid-cols-[minmax(0,1fr)_34rem] items-center gap-x-8 max-wide:grid-cols-1 max-wide:gap-10">
           <Reveal className="min-w-0 max-w-[39rem]">
             <h1 className="m-0 text-display-service text-balance">{copy.page.title}</h1>
             <p className="mt-6 max-w-[38rem] text-lead text-muted text-balance">{copy.page.intro}</p>
             <CtaButton href={contact} className="mt-8">{copy.page.finalCta}</CtaButton>
           </Reveal>
           <Reveal className="min-w-0" delay={70}>
-            <div className={`relative grid aspect-[1.1/1] min-h-[24rem] overflow-hidden rounded-card p-10 shadow-surface [&>*]:relative ${service.theme} max-[1160px]:mx-auto max-[1160px]:aspect-[4/3] max-[1160px]:min-h-0 max-[1160px]:w-full max-[1160px]:max-w-[44rem] max-[600px]:h-[clamp(19rem,68vw,25rem)] max-[600px]:aspect-auto max-[600px]:p-4`} aria-hidden="true">
+            <div className={`relative grid aspect-[1.1/1] min-h-[24rem] overflow-hidden rounded-card p-10 shadow-surface [&>*]:relative ${service.theme} max-wide:mx-auto max-wide:aspect-[4/3] max-wide:min-h-0 max-wide:w-full max-wide:max-w-[44rem] max-narrow:h-[clamp(19rem,68vw,25rem)] max-narrow:aspect-auto max-narrow:p-4`} aria-hidden="true">
               <OfferAnimation animation={service.animation} locale={locale} />
             </div>
           </Reveal>
@@ -86,17 +86,17 @@ export function ServicePage({ locale, serviceId }: { locale: Locale; serviceId: 
       <section className="bg-canvas px-page py-section">
         <div className="mx-auto max-w-[70rem]">
           <SectionHeading title={copy.page.outcomesHeading} copy={copy.page.outcomesIntro} />
-          <div className="grid grid-cols-[1.08fr_.92fr] gap-4 max-[760px]:grid-cols-1">
-            <Reveal className="row-span-2 flex min-h-[20rem] flex-col justify-between rounded-card bg-[var(--ds-blue-100)] p-card-fluid shadow-accent-surface max-[760px]:min-h-0">
+          <div className="grid grid-cols-[1.08fr_.92fr] gap-4 max-compact:grid-cols-1">
+            <Reveal className="row-span-2 flex min-h-[20rem] flex-col justify-between rounded-card bg-brand-50 p-card-fluid shadow-accent-surface max-compact:min-h-0">
               {(() => {
                 const Icon = outcomeIcons[0];
                 const item = copy.page.outcomes[0]!;
-                return <><Icon className="size-10 text-[var(--ds-blue-800)]" strokeWidth={1.7} aria-hidden="true" /><div className="mt-16 max-[760px]:mt-10"><h3 className="m-0 text-heading-md">{item.title}</h3><p className="mt-3 max-w-[42ch] text-body-lg text-muted">{item.copy}</p></div></>;
+                return <><Icon className="size-10 text-brand-600" strokeWidth={1.7} aria-hidden="true" /><div className="mt-16 max-compact:mt-10"><h3 className="m-0 text-heading-md">{item.title}</h3><p className="mt-3 max-w-[42ch] text-lg/7 text-muted">{item.copy}</p></div></>;
               })()}
             </Reveal>
             {copy.page.outcomes.slice(1).map((item, index) => {
               const Icon = outcomeIcons[index + 1]!;
-              return <Reveal className="flex min-h-[9.5rem] items-start gap-5 rounded-card bg-white p-card-padding shadow-surface" delay={(index + 1) * 50} key={item.title}><Icon className="mt-1 size-7 shrink-0" strokeWidth={1.7} aria-hidden="true" /><div><h3 className="m-0 text-heading-sm">{item.title}</h3><p className="mt-2 text-body text-muted">{item.copy}</p></div></Reveal>;
+              return <Reveal className="flex min-h-[9.5rem] items-start gap-5 rounded-card bg-white p-card-padding shadow-surface" delay={(index + 1) * 50} key={item.title}><Icon className="mt-1 size-7 shrink-0" strokeWidth={1.7} aria-hidden="true" /><div><h3 className="m-0 text-heading-sm">{item.title}</h3><p className="mt-2 text-base/6 text-muted">{item.copy}</p></div></Reveal>;
             })}
           </div>
         </div>
@@ -112,22 +112,22 @@ export function ServicePage({ locale, serviceId }: { locale: Locale; serviceId: 
       <section className="bg-canvas px-page py-section" data-service-process>
         <div className="mx-auto max-w-[70rem]">
           <SectionHeading title={copy.page.processHeading} copy={copy.page.processIntro} align="center" />
-          <ol className="process-list m-0 mx-auto grid max-w-[62rem] list-none grid-cols-3 gap-4 p-0 pt-13 max-[900px]:grid-cols-1 max-[900px]:pt-0">
+          <ol className="process-list m-0 mx-auto grid max-w-[62rem] list-none grid-cols-3 gap-4 p-0 pt-13 max-nav:grid-cols-1 max-nav:pt-0">
             {copy.page.process.map((item, index) => {
               const Icon = processIcons[serviceId][index]!;
               return (
                 <li
-                  className="process-step relative rounded-card bg-white p-card-padding shadow-surface max-[900px]:ml-12"
+                  className="process-step relative rounded-card bg-white p-card-padding shadow-surface max-nav:ml-12"
                   style={{ "--process-delay": `${index * 160}ms` } as React.CSSProperties}
                   data-reveal
                   data-reveal-threshold="half"
                   key={item.title}
                 >
-                  <span className="process-node absolute -top-13 left-[calc(50%_-_19px)] z-[1] grid size-[38px] place-items-center rounded-full bg-ink font-mono text-meta text-white tabular-nums max-[900px]:top-6 max-[900px]:-left-12" aria-hidden="true">{index + 1}</span>
+                  <span className="process-node absolute -top-13 left-[calc(50%_-_19px)] z-[1] grid size-[38px] place-items-center rounded-full bg-ink font-mono text-meta text-white tabular-nums max-nav:top-6 max-nav:-left-12" aria-hidden="true">{index + 1}</span>
                   <Icon className="block size-8" strokeWidth={1.7} aria-hidden="true" />
                   <div className="pt-4">
                     <h3 className="mt-0 mb-2 text-heading-sm">{item.title}</h3>
-                    <p className="text-body text-muted">{item.copy}</p>
+                    <p className="text-base/6 text-muted">{item.copy}</p>
                   </div>
                 </li>
               );
@@ -145,7 +145,7 @@ export function ServicePage({ locale, serviceId }: { locale: Locale; serviceId: 
       <section className="bg-canvas px-page py-section-compact">
         <div className="mx-auto max-w-[70rem]">
           <h2 className="m-0 text-heading-md">{t(locale, "service.otherServices")}</h2>
-          <nav className="mt-6 grid grid-cols-3 gap-3 max-[900px]:grid-cols-1" aria-label={t(locale, "service.otherServices")} data-other-services>
+          <nav className="mt-6 grid grid-cols-3 gap-3 max-nav:grid-cols-1" aria-label={t(locale, "service.otherServices")} data-other-services>
             {related.map((entry) => {
               const Icon = relatedServiceIcons[entry.id];
               return (
@@ -154,8 +154,8 @@ export function ServicePage({ locale, serviceId }: { locale: Locale; serviceId: 
                     <Icon className="size-4.5" strokeWidth={1.7} aria-hidden="true" />
                   </span>
                   <span className="min-w-0 flex-1">
-                    <strong className="block text-small font-semibold text-ink">{entry.copy.name}</strong>
-                    <span className="mt-1 block text-caption leading-snug text-muted">{entry.copy.navDescription}</span>
+                    <strong className="block text-sm font-semibold text-ink">{entry.copy.name}</strong>
+                    <span className="mt-1 block text-meta leading-snug text-muted">{entry.copy.navDescription}</span>
                   </span>
                   <span className="pill-button__icon relative size-8 flex-none overflow-hidden rounded-pill bg-inverse-surface text-white" aria-hidden="true">
                     <ArrowRight className="pill-button__arrow pill-button__arrow--right absolute inset-[7px] size-[18px]" strokeWidth={1.7} />
@@ -171,7 +171,7 @@ export function ServicePage({ locale, serviceId }: { locale: Locale; serviceId: 
       <section className="flex min-h-[28rem] flex-col items-center justify-center border-b border-inverse-line bg-black px-page py-section text-center text-inverse">
         <Reveal>
           <h2 className="mx-auto max-w-[18ch] text-display-sm text-white">{copy.page.finalTitle}</h2>
-          <p className="mx-auto mt-6 mb-7 max-w-[35rem] text-cta-copy text-dark-muted">{copy.page.finalCopy}</p>
+          <p className="mx-auto mt-6 mb-7 max-w-[35rem] text-lg/7 text-inverse-muted">{copy.page.finalCopy}</p>
           <CtaButton href={contact} light>{copy.page.finalCta}</CtaButton>
         </Reveal>
       </section>

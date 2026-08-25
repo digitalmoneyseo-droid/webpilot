@@ -3,7 +3,7 @@ import { ArrowRight, ArrowUpRight } from "lucide-react";
 
 export function CtaButton({ href, light = false, className = "", children }: { href: string; light?: boolean; className?: string; children: React.ReactNode }) {
   return (
-    <Link className={`pill-button inline-flex min-h-[52px] items-center gap-3.5 rounded-pill py-0 pr-2.5 pl-4 text-control shadow-dark-surface max-[600px]:justify-between ${light ? "pill-button--light bg-white text-ink" : "pill-button--dark bg-dark text-white"} ${className}`} href={href}>
+    <Link className={`pill-button inline-flex min-h-[52px] items-center gap-3.5 rounded-pill py-0 pr-2.5 pl-4 text-ui font-semibold shadow-dark-surface max-narrow:justify-between ${light ? "pill-button--light bg-white text-ink" : "pill-button--dark bg-inverse-surface text-white"} ${className}`} href={href}>
       <span className="block h-[1.5em] overflow-hidden leading-control">
         <span className="pill-button__label-track flex h-[200%] flex-col">
           <span className="flex h-[1.5em] shrink-0 items-center whitespace-nowrap">{children}</span>
