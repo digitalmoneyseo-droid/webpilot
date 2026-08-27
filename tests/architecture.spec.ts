@@ -1,6 +1,7 @@
 import { expect, test } from "bun:test";
 import { locales } from "../src/i18n/config";
 import { servicesContent } from "../src/i18n/services";
+import { legalContent, type LegalPageKind } from "../src/i18n/legal-content";
 import { budgetOptions } from "../src/lib/contact-options";
 
 test("keeps service identities equivalent across locales", () => {
@@ -14,6 +15,21 @@ test("keeps service identities equivalent across locales", () => {
 test("keeps contact budget IDs unique and complete", () => {
   expect(new Set(budgetOptions.map(({ id }) => id)).size).toBe(budgetOptions.length);
   expect(budgetOptions).toHaveLength(5);
+});
+
+test("keeps legal page structure equivalent across locales", () => {
+  const pageKinds = ["imprint", "privacy"] as const satisfies readonly LegalPageKind[];
+
+  for (const kind of pageKinds) {
+    const expectedSectionCount = legalContent.de[kind].sections.length;
+    for (const locale of locales) {
+      const page = legalContent[locale][kind];
+      expect(page.title.length).toBeGreaterThan(0);
+      expect(page.intro.length).toBeGreaterThan(0);
+      expect(page.sections).toHaveLength(expectedSectionCount);
+      expect(page.sections.every(({ title }) => title.length > 0)).toBeTrue();
+    }
+  }
 });
 
 test("keeps localization dictionaries behind server-owned component boundaries", async () => {

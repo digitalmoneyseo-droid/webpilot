@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { alternatePath, defaultLocale, localeConfig, locales, t, type Locale } from "@/lib/i18n";
 
-const siteUrl = new URL(Bun.env.NEXT_PUBLIC_SITE_URL ?? "https://webpilot.studio");
+const siteUrl = new URL(process.env.NEXT_PUBLIC_SITE_URL ?? "https://suchio.digitalmoneyseo.workers.dev");
 
 export function absoluteUrl(path: string): string {
   return new URL(path, siteUrl).toString();
@@ -18,8 +18,8 @@ export function pageMetadata({
   title?: string;
   description: string;
 }): Metadata {
-  const pageTitle = title ? `${title} | Webpilot` : t(locale, "meta.siteTitle");
-  const image = absoluteUrl("/webpilot-social-card.png");
+  const pageTitle = title ? `${title} | Suchio` : t(locale, "meta.siteTitle");
+  const image = absoluteUrl("/suchio-social-card.png");
   const languageAlternates = Object.fromEntries(locales.map((candidate) => [candidate, absoluteUrl(alternatePath(pathname, candidate))]));
   return {
     title: pageTitle,
@@ -34,7 +34,7 @@ export function pageMetadata({
     },
     openGraph: {
       type: "website",
-      siteName: "Webpilot",
+      siteName: "Suchio",
       locale: localeConfig[locale].openGraphLocale,
       alternateLocale: locales.filter((candidate) => candidate !== locale).map((candidate) => localeConfig[candidate].openGraphLocale),
       title: pageTitle,

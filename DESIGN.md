@@ -1,6 +1,6 @@
-# Webpilot design authority
+# Suchio design authority
 
-Webpilot is the multilingual website of an independent digital growth and technology studio. Its job is to create trust, explain a broad offer clearly, and move suitable clients toward a conversation.
+Suchio is the multilingual website of an independent digital growth and technology studio. Its job is to create trust, explain a broad offer clearly, and move suitable clients toward a conversation.
 
 The experience should feel precise, capable, calm, and personal. It earns distinction through strong typography, editorial composition, useful visual explanations, and refined interaction—not through visual noise.
 
@@ -14,7 +14,7 @@ When design decisions compete, protect them in this order:
 4. A clear sequence of reader questions and answers.
 5. Visual distinction that clarifies hierarchy, grouping, state, or cause and effect.
 
-Clarity is not plainness. Create character with type, composition, pace, precise details, and purposeful illustration. Spend boldness on the few elements that express Webpilot’s work; keep the surrounding interface quiet.
+Clarity is not plainness. Create character with type, composition, pace, precise details, and purposeful illustration. Spend boldness on the few elements that express Suchio’s work; keep the surrounding interface quiet.
 
 ## 2. Responsibilities and change process
 
@@ -182,7 +182,7 @@ A section should answer a new reader question and have one dominant object or re
 
 ## 5. Signature visuals and interaction
 
-Webpilot makes invisible digital systems visible. Its signature is the bespoke explanatory visual: interfaces, searches, flows, and growth systems reduced to calm, legible sequences that reveal cause and effect. These visuals should feel like working models of the studio’s thinking, not decorative technology imagery.
+Suchio makes invisible digital systems visible. Its signature is the bespoke explanatory visual: interfaces, searches, flows, and growth systems reduced to calm, legible sequences that reveal cause and effect. These visuals should feel like working models of the studio’s thinking, not decorative technology imagery.
 
 Use that signature selectively. One substantial explanatory moment is more characteristic than scattered effects. Keep surrounding typography and surfaces disciplined so the visual has room to matter.
 
@@ -234,4 +234,4 @@ Confirm that:
 - Interactive states, errors, accessible names, and reduced-motion alternatives work.
 - Any local visual exception is scoped, purposeful, and inaccessible to the editorial design API.
 
-This system draws on [WCAG 2.2](https://www.w3.org/TR/WCAG22/), [Vercel’s design guidance](https://vercel.com/design.md), [U.S. Web Design System typography](https://designsystem.digital.gov/components/typography/), [GOV.UK typography and spacing](https://design-system.service.gov.uk/styles/type-scale/), and the [Design Tokens Community Group](https://www.designtokens.org/). They are inputs, not templates; Webpilot’s values are tuned for its multilingual copy, DM Sans, explanatory visuals, and 1200px editorial field.
+This system draws on [WCAG 2.2](https://www.w3.org/TR/WCAG22/), [Vercel’s design guidance](https://vercel.com/design.md), [U.S. Web Design System typography](https://designsystem.digital.gov/components/typography/), [GOV.UK typography and spacing](https://design-system.service.gov.uk/styles/type-scale/), and the [Design Tokens Community Group](https://www.designtokens.org/). They are inputs, not templates; Suchio’s values are tuned for its multilingual copy, DM Sans, explanatory visuals, and 1200px editorial field.

@@ -9,7 +9,7 @@
 
 ## Product Scope
 
-- Webpilot is the multilingual website of an independent digital growth and technology studio. It should build trust, explain the offer clearly, and move suitable clients toward a conversation.
+- Suchio is the multilingual website of an independent digital growth and technology studio. It should build trust, explain the offer clearly, and move suitable clients toward a conversation.
 - Keep routes, content structure, metadata, navigation, forms, accessibility labels, and disclosures equivalent across all configured locales. Preserve meaning and tone rather than translating mechanically.
 - Do not invent clients, testimonials, results, performance claims, or commercial numbers. Give commercial claims a verifiable source.
 - Prefer clarity, credibility, accessibility, responsiveness, and speed over visual novelty.

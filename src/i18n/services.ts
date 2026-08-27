@@ -92,7 +92,7 @@ export const servicesContent = {
         ],
         cta: "Websites & Apps entdecken",
         page: {
-          metaDescription: "Websites, Web-Apps und digitale Produkte von Webpilot: Strategie, UX/UI Design, Entwicklung, Integrationen, Analytics und Launch.",
+          metaDescription: "Websites, Web-Apps und digitale Produkte von Suchio: Strategie, UX/UI Design, Entwicklung, Integrationen, Analytics und Launch.",
           title: "Websites und Apps, die klar, schnell und einfach zu betreiben sind.",
           intro: "Wir planen, gestalten und entwickeln schnelle, zugängliche Websites und Apps rund um deine Kunden und Geschäftsziele.",
           outcomesHeading: "Was das fertige Produkt leisten muss",
@@ -167,7 +167,7 @@ export const servicesContent = {
         ],
         cta: "SEO & KI-Sichtbarkeit entdecken",
         page: {
-          metaDescription: "SEO und KI-Sichtbarkeit von Webpilot: technische Optimierung, Content, lokale Suche und bessere Auffindbarkeit in Suchmaschinen und KI-Antworten.",
+          metaDescription: "SEO und KI-Sichtbarkeit von Suchio: technische Optimierung, Content, lokale Suche und bessere Auffindbarkeit in Suchmaschinen und KI-Antworten.",
           title: "Gefunden werden, wo Kunden nach Antworten suchen.",
           intro: "Wir verbessern Technik, Inhalte und Autorität für klassische Suche und relevante KI-gestützte Antworten.",
           outcomesHeading: "Was bessere Sichtbarkeit braucht",
@@ -242,7 +242,7 @@ export const servicesContent = {
         ],
         cta: "Werbekampagnen entdecken",
         page: {
-          metaDescription: "Werbekampagnen von Webpilot: Google Ads, Paid Social, Creative, Conversion-Optimierung, Tracking und laufende Verbesserung für qualifizierte Nachfrage.",
+          metaDescription: "Werbekampagnen von Suchio: Google Ads, Paid Social, Creative, Conversion-Optimierung, Tracking und laufende Verbesserung für qualifizierte Nachfrage.",
           title: "Werbekampagnen vom Klick bis zur qualifizierten Anfrage.",
           intro: "Wir verbinden Strategie, Anzeigen, Conversion-Pfade und Messung zu einem klaren Akquisitionsweg.",
           outcomesHeading: "Die ganze Kampagne im Blick",
@@ -317,7 +317,7 @@ export const servicesContent = {
         ],
         cta: "KI & Automatisierung entdecken",
         page: {
-          metaDescription: "Praktische KI-Lösungen und Workflow-Automatisierung von Webpilot: Prozessanalyse, Prototypen, Integrationen, CRM-Automation und produktive KI-Funktionen.",
+          metaDescription: "Praktische KI-Lösungen und Workflow-Automatisierung von Suchio: Prozessanalyse, Prototypen, Integrationen, CRM-Automation und produktive KI-Funktionen.",
           title: "Wiederkehrende Arbeit automatisieren, ohne die Kontrolle abzugeben.",
           intro: "Wir verbinden Systeme, automatisieren wiederkehrende Arbeit und entwickeln KI-Funktionen für konkrete Aufgaben.",
           outcomesHeading: "Die Arbeit zuerst, nicht das Werkzeug",
@@ -425,7 +425,7 @@ export const servicesContent = {
         ],
         cta: "Explore Websites & Apps",
         page: {
-          metaDescription: "Websites, web apps, and digital products by Webpilot: strategy, UX/UI design, development, integrations, analytics, and launch support.",
+          metaDescription: "Websites, web apps, and digital products by Suchio: strategy, UX/UI design, development, integrations, analytics, and launch support.",
           title: "Websites and apps that are clear, fast, and easy to run.",
           intro: "We plan, design, and build fast, accessible websites and apps around your customers and commercial goals.",
           outcomesHeading: "What the finished product needs to do",
@@ -500,7 +500,7 @@ export const servicesContent = {
         ],
         cta: "Explore SEO & AI Visibility",
         page: {
-          metaDescription: "SEO and AI visibility by Webpilot: technical optimization, content, local search, and stronger discoverability in search engines and AI answers.",
+          metaDescription: "SEO and AI visibility by Suchio: technical optimization, content, local search, and stronger discoverability in search engines and AI answers.",
           title: "Be found where customers look for answers.",
           intro: "We improve technology, content, and authority for traditional search and relevant AI-powered answers.",
           outcomesHeading: "What better visibility requires",
@@ -575,7 +575,7 @@ export const servicesContent = {
         ],
         cta: "Explore Paid Campaigns",
         page: {
-          metaDescription: "Paid campaigns by Webpilot: Google Ads, paid social, creative, conversion optimization, tracking, and ongoing improvement for qualified demand.",
+          metaDescription: "Paid campaigns by Suchio: Google Ads, paid social, creative, conversion optimization, tracking, and ongoing improvement for qualified demand.",
           title: "Run paid campaigns from click to qualified enquiry.",
           intro: "We connect strategy, ads, conversion journeys, and measurement into one clear acquisition path.",
           outcomesHeading: "See the whole campaign",
@@ -650,7 +650,7 @@ export const servicesContent = {
         ],
         cta: "Explore AI & Automation",
         page: {
-          metaDescription: "Practical AI solutions and workflow automation by Webpilot: process analysis, prototypes, integrations, CRM automation, and useful AI features.",
+          metaDescription: "Practical AI solutions and workflow automation by Suchio: process analysis, prototypes, integrations, CRM automation, and useful AI features.",
           title: "Automate repetitive work without losing control.",
           intro: "We connect systems, automate repetitive work, and build AI features for clearly defined tasks.",
           outcomesHeading: "Start with the work, not the tool",

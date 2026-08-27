@@ -5,10 +5,10 @@ export function BrandMark({
   inverse?: boolean;
   size?: "default" | "large";
 }) {
-  const letters = [..."WEBPILOT"];
+  const letters = [..."SUCHIO"];
   return (
     <span className={`inline-flex whitespace-nowrap font-sans leading-none font-[650] tracking-[-.025em] ${size === "large" ? "text-heading-md" : "text-base/6"} ${inverse ? "text-white" : ""}`} translate="no">
-      <span className="sr-only">Webpilot</span>
+      <span className="sr-only">Suchio</span>
       <span className="flex gap-[.035em]" aria-hidden="true">
         {letters.map((letter, index) => (
           <span className="block h-[1em] overflow-hidden" style={{ "--letter-index": index, "--letter-reverse": letters.length - index - 1 } as React.CSSProperties} key={`${letter}-${index}`}>

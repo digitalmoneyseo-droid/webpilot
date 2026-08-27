@@ -1,5 +1,5 @@
 /*
- * Webpilot's public design tokens. Tailwind generates the matching utilities.
+ * Suchio's public design tokens. Tailwind generates the matching utilities.
  * Local illustration geometry and palettes stay with their components.
  */
 @theme {
@@ -25,7 +25,7 @@
   --color-interaction: rgb(0 0 0 / 5%);
   --color-interaction-strong: rgb(0 0 0 / 8%);
 
-  /* A compact Webpilot blue scale for the brand and explanatory visuals. */
+  /* A compact Suchio blue scale for the brand and explanatory visuals. */
   --color-brand-50: hsl(212 100% 97%);
   --color-brand-100: hsl(210 100% 96%);
   --color-brand-200: hsl(210 100% 94%);

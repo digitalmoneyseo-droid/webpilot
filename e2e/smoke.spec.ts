@@ -126,7 +126,7 @@ test("keeps the email fallback when contact delivery fails", async ({ page }) =>
   await completeContactForm(page);
   await page.getByRole("button", { name: "Send project enquiry" }).click();
 
-  await expect(page.locator("form").getByRole("alert")).toContainText("digitalmoneyseo@gmail.com");
+  await expect(page.locator("form").getByRole("alert")).toContainText("lekstsen@outlook.com");
   await expect(page.getByRole("button", { name: "Send project enquiry" })).toBeEnabled();
 });
 

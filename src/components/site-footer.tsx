@@ -16,7 +16,7 @@ export function SiteFooter({ locale }: { locale: Locale }) {
           <div className="flex min-w-25 flex-col gap-2"><span className="mb-3 text-meta text-inverse-muted">{t(locale, "footer.legal")}</span><Link className="text-meta transition-colors duration-150 hover:text-white" href={localizePath("/imprint", locale)}>{t(locale, "footer.imprint")}</Link><Link className="text-meta transition-colors duration-150 hover:text-white" href={localizePath("/privacy", locale)}>{t(locale, "footer.privacy")}</Link></div>
         </div>
       </div>
-      <div className="footer-legal flex justify-between border-t border-inverse-line pt-6 text-meta text-inverse-muted max-narrow:mt-12 max-narrow:flex-col max-narrow:gap-2"><span>© 2026 Webpilot Studio</span><a className="transition-colors duration-150 hover:text-white" href={`mailto:${publicContactEmail}`}>{publicContactEmail}</a></div>
+      <div className="footer-legal flex justify-between border-t border-inverse-line pt-6 text-meta text-inverse-muted max-narrow:mt-12 max-narrow:flex-col max-narrow:gap-2"><span>© 2026 Suchio</span><a className="transition-colors duration-150 hover:text-white" href={`mailto:${publicContactEmail}`}>{publicContactEmail}</a></div>
     </footer>
   );
 }

@@ -1,12 +1,12 @@
-# Webpilot backlog
+# Suchio backlog
 
 This file records review findings that are valid but do not justify changing the current release without more evidence or design work.
 
 ## Next
 
 - Add focused tests for proxy locale negotiation, canonical and hreflang output, `robots.txt`, and `sitemap.xml`.
-- Trial a Content Security Policy in report-only mode. Account for Next.js scripts, Vercel Analytics, local fonts, and inline style usage before enforcing it.
-- Review Vercel Firewall logs for `POST /api/contact`, then publish and tune the staged rate-limit rule after confirming it does not catch legitimate enquiries.
+- Trial a Content Security Policy in report-only mode. Account for Next.js scripts, local fonts, and inline style usage before enforcing it.
+- Add and tune a Cloudflare rate-limit rule for `POST /api/contact` after the custom domain is attached, then confirm it does not catch legitimate enquiries.
 
 ## Refactoring
 

@@ -369,7 +369,7 @@ function BrowserChrome({ scene, variant }: { scene: SceneGeometry; variant: Scen
 
       <g data-web-experience-url>
         <rect data-web-experience-url-box fill="transparent" height="10" width="76" x="212" y={urlBoxY} />
-        <text fill="var(--color-neutral-400)" fontFamily="inherit" fontSize="10" textAnchor="middle" x="250" y={urlBaselineY}>webpilot.studio</text>
+        <text fill="var(--color-neutral-400)" fontFamily="inherit" fontSize="10" textAnchor="middle" x="250" y={urlBaselineY}>suchio</text>
       </g>
 
       <rect data-web-experience-notch fill="var(--color-neutral-900)" height="4" rx="2" style={{ opacity: 0 }} width="22.5" x="238.75" y="28.6" />

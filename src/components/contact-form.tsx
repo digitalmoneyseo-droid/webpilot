@@ -1,7 +1,7 @@
 "use client";
 
 import { ArrowRight, ArrowUpRight, Check, ChevronDown, CircleHelp, LoaderCircle, MonitorSmartphone, RadioTower, Search, Workflow } from "lucide-react";
-import { type FormEvent, type KeyboardEvent, type ReactNode, useEffect, useRef, useState } from "react";
+import { type FormEvent, type KeyboardEvent, type ReactNode, useEffect, useRef, useState, useSyncExternalStore } from "react";
 import type { Locale } from "@/i18n/config";
 import type { ServiceId } from "@/i18n/services";
 import type { BudgetId } from "@/lib/contact-options";
@@ -24,6 +24,7 @@ export type ContactFormCopy = {
   companyUrlPlaceholder: string;
   companyOptional: string;
   service: string;
+  selectedService: string;
   serviceUnsure: string;
   budget: string;
   budgetPlaceholder: string;
@@ -67,13 +68,11 @@ export function ContactForm({
   copy,
   locale,
   services,
-  selectedServiceId,
 }: {
   contactEmail: string;
   copy: ContactFormCopy;
   locale: Locale;
   services: ServiceOption[];
-  selectedServiceId?: ServiceId;
 }) {
   const [errors, setErrors] = useState<Errors>({});
   const [status, setStatus] = useState<Status>("idle");
@@ -81,11 +80,17 @@ export function ContactForm({
   const [isDirty, setIsDirty] = useState(false);
   const [budgetOpen, setBudgetOpen] = useState(false);
   const [selectedBudget, setSelectedBudget] = useState("");
+  const [selectedServiceId, setSelectedServiceId] = useState<ServiceChoiceId>();
   const budgetControlRef = useRef<HTMLDivElement>(null);
   const budgetButtonRef = useRef<HTMLButtonElement>(null);
   const budgetMenuRef = useRef<HTMLDivElement>(null);
   const serviceOptions: readonly { id: ServiceChoiceId; name: string }[] = [...services, { id: "not-sure", name: copy.serviceUnsure }];
   const selectedBudgetLabel = copy.budgetOptions.find(({ id }) => id === selectedBudget)?.label;
+  const locationSearch = useSyncExternalStore(subscribeToLocation, getLocationSearch, getServerLocationSearch);
+  const requestedServiceId = new URLSearchParams(locationSearch).get("service");
+  const requestedService = services.find(({ id }) => id === requestedServiceId);
+  const effectiveServiceId = selectedServiceId ?? requestedService?.id;
+  const preselectedServiceLabel = selectedServiceId === undefined ? requestedService?.name : undefined;
 
   useEffect(() => {
     if (!budgetOpen) return;
@@ -199,6 +204,7 @@ export function ContactForm({
 
   return (
     <form className="grid gap-6" noValidate onChange={() => setIsDirty(true)} onSubmit={onSubmit}>
+      {preselectedServiceLabel ? <p className="mt-0 mb-2 inline-flex justify-self-start rounded-control bg-interaction px-3 py-2 text-sm text-muted"><span>{copy.selectedService}: </span>&nbsp;<strong className="font-semibold text-ink">{preselectedServiceLabel}</strong></p> : null}
       <div className="grid grid-cols-2 gap-4 max-narrow:grid-cols-1">
         <Field id="contact-name" label={copy.name} error={errors.name} required={copy.requiredLabel}>
           <input
@@ -278,8 +284,11 @@ export function ContactForm({
                 name="service"
                 value={service.id}
                 required
-                defaultChecked={selectedServiceId === service.id}
-                onChange={() => clearError("service")}
+                checked={effectiveServiceId === service.id}
+                onChange={() => {
+                  setSelectedServiceId(service.id);
+                  clearError("service");
+                }}
               />
               <span className={`flex min-h-14 items-center gap-3 rounded-control bg-surface-subtle p-2 text-sm text-muted shadow-surface transition-[background-color,color,box-shadow,scale] duration-150 ease-[var(--ease-out)] group-hover:bg-white group-hover:shadow-surface-hover peer-focus-visible:outline-2 peer-focus-visible:outline-offset-2 peer-focus-visible:outline-focus peer-active:scale-[.96] motion-reduce:transition-none motion-reduce:peer-active:scale-100 ${styles.selected}`}>
                 <span className={`grid size-9 shrink-0 place-items-center rounded-inset shadow-surface ${styles.icon}`} aria-hidden="true">
@@ -401,6 +410,19 @@ export function ContactForm({
       </div>
     </form>
   );
+}
+
+function subscribeToLocation(onStoreChange: () => void) {
+  window.addEventListener("popstate", onStoreChange);
+  return () => window.removeEventListener("popstate", onStoreChange);
+}
+
+function getLocationSearch() {
+  return window.location.search;
+}
+
+function getServerLocationSearch() {
+  return "";
 }
 
 function moveBudgetFocus(event: KeyboardEvent<HTMLButtonElement>, index: number, optionCount: number, menu: HTMLDivElement | null) {

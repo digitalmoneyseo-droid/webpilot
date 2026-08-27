@@ -1,8 +1,12 @@
 import { NextResponse, type NextRequest } from "next/server";
 import { defaultLocale, hasLocale, localeCookie, type Locale } from "./i18n/config";
+import { securityHeaders } from "./lib/security-headers";
 
-function rememberLocale(response: NextResponse, locale: Locale) {
-  response.cookies.set(localeCookie, locale, { path: "/", maxAge: 60 * 60 * 24 * 365, sameSite: "lax" });
+function withSecurityHeaders(response: NextResponse) {
+  for (const { key, value } of securityHeaders) {
+    response.headers.set(key, value);
+  }
+
   return response;
 }
 
@@ -23,30 +27,22 @@ function preferredLocale(request: NextRequest): Locale {
 
 export function proxy(request: NextRequest) {
   const { pathname } = request.nextUrl;
-  const firstSegment = pathname.split("/").filter(Boolean)[0];
-
-  if (firstSegment === defaultLocale) {
-    const url = request.nextUrl.clone();
-    url.pathname = pathname.slice(defaultLocale.length + 1) || "/";
-    return rememberLocale(NextResponse.redirect(url, 307), defaultLocale);
-  }
-
-  if (firstSegment && hasLocale(firstSegment)) return rememberLocale(NextResponse.next(), firstSegment);
 
   if (pathname === "/") {
     const locale = preferredLocale(request);
     if (locale !== defaultLocale) {
       const url = request.nextUrl.clone();
       url.pathname = `/${locale}`;
-      return NextResponse.redirect(url, 307);
+      return withSecurityHeaders(NextResponse.redirect(url, 307));
     }
+    return withSecurityHeaders(NextResponse.next());
   }
 
   const url = request.nextUrl.clone();
-  url.pathname = `/${defaultLocale}${pathname === "/" ? "" : pathname}`;
-  return rememberLocale(NextResponse.rewrite(url), defaultLocale);
+  url.pathname = pathname.slice(defaultLocale.length + 1) || "/";
+  return withSecurityHeaders(NextResponse.redirect(url, 307));
 }
 
 export const config = {
-  matcher: ["/((?!api|_next|.*\\..*).*)"],
+  matcher: ["/", "/de", "/de/:path*"],
 };

@@ -9,3 +9,6 @@ next-start.*.log
 playwright-report/
 test-results/
 .vercel
+/dist/
+.vinext/
+.wrangler/

@@ -1,4 +1,20 @@
 import type { Locale } from "../i18n/config";
+import config from "../i18n/config.json";
+import de01 from "../content/faqs/de/01.json";
+import de02 from "../content/faqs/de/02.json";
+import de03 from "../content/faqs/de/03.json";
+import de04 from "../content/faqs/de/04.json";
+import de05 from "../content/faqs/de/05.json";
+import en01 from "../content/faqs/en/01.json";
+import en02 from "../content/faqs/en/02.json";
+import en03 from "../content/faqs/en/03.json";
+import en04 from "../content/faqs/en/04.json";
+import en05 from "../content/faqs/en/05.json";
+import fr01 from "../content/faqs/fr/01.json";
+import fr02 from "../content/faqs/fr/02.json";
+import fr03 from "../content/faqs/fr/03.json";
+import fr04 from "../content/faqs/fr/04.json";
+import fr05 from "../content/faqs/fr/05.json";
 
 export interface Faq {
   translationKey: string;
@@ -59,15 +75,21 @@ function parseFaq(value: unknown, source: string): Faq {
   };
 }
 
-async function readFaqs(locale: Locale): Promise<ContentEntry<Faq>[]> {
-  const directory = `src/content/faqs/${locale}`;
-  const files = Array.from(new Bun.Glob("*.json").scanSync({ cwd: directory, onlyFiles: true }));
-  const entries = (await Promise.all(files.map(async (file) => {
-      const source = `src/content/faqs/${locale}/${file}`;
-      const data = parseFaq(await Bun.file(`${directory}/${file}`).json(), source);
+const faqFiles: Record<Locale, readonly (readonly [id: string, value: unknown])[]> = {
+  de: [["01", de01], ["02", de02], ["03", de03], ["04", de04], ["05", de05]],
+  en: [["01", en01], ["02", en02], ["03", en03], ["04", en04], ["05", en05]],
+  fr: [["01", fr01], ["02", fr02], ["03", fr03], ["04", fr04], ["05", fr05]],
+};
+
+function readFaqs(locale: Locale): ContentEntry<Faq>[] {
+  const entries = faqFiles[locale]
+    .map(([id, value]) => {
+      const source = `src/content/faqs/${locale}/${id}.json`;
+      const data = parseFaq(value, source);
       if (data.locale !== locale) throw new Error(`Wrong locale in ${source}.`);
-      return { id: file.replace(/\.json$/, ""), data };
-    }))).sort((a, b) => a.data.order - b.data.order);
+      return { id, data };
+    })
+    .sort((a, b) => a.data.order - b.data.order);
 
   for (const field of ["translationKey", "slug", "order"] as const) {
     const values = entries.map((entry) => entry.data[field]);
@@ -81,19 +103,14 @@ function signature(entries: ContentEntry<Faq>[]): string[] {
 }
 
 export async function loadContentRepository(): Promise<ContentRepository> {
-  const config = await Bun.file("src/i18n/config.json").json() as {
-    defaultLocale: Locale;
-    locales: Record<Locale, unknown>;
-  };
   const locales = Object.keys(config.locales) as Locale[];
-  const faqs = Object.fromEntries(await Promise.all(
-    locales.map(async (locale) => [locale, await readFaqs(locale)] as const),
-  )) as LocalizedEntries<Faq>;
-  const referenceSignature = JSON.stringify(signature(faqs[config.defaultLocale]));
+  const defaultLocale = config.defaultLocale as Locale;
+  const faqs = Object.fromEntries(locales.map((locale) => [locale, readFaqs(locale)] as const)) as LocalizedEntries<Faq>;
+  const referenceSignature = JSON.stringify(signature(faqs[defaultLocale]));
 
   for (const locale of locales) {
     if (JSON.stringify(signature(faqs[locale])) !== referenceSignature) {
-      throw new Error(`faqs ${config.defaultLocale} and ${locale} entries do not match.`);
+      throw new Error(`faqs ${defaultLocale} and ${locale} entries do not match.`);
     }
   }
 
