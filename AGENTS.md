@@ -16,7 +16,7 @@
 
 ## Project Conventions
 
-- Use Bun for package management, tests, development, builds, and the production runtime. Vercel's Bun runtime is configured in `vercel.json`; run Next.js verification through Bun rather than introducing a Node-only production path.
+- Use Bun for package management, tests, development, builds, and deployment commands. Production runs on Cloudflare Workers through vinext and Wrangler; run Next.js verification through Bun rather than introducing a Node-only production path.
 - Use Next.js with the App Router, TypeScript, and Tailwind CSS.
 - Prefer Server Components and static rendering. Add Client Components only when browser-side interactivity requires them.
 - Keep architecture local and simple until another service or abstraction is demonstrably needed.

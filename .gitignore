@@ -8,7 +8,6 @@ next-start.*.log
 *.tsbuildinfo
 playwright-report/
 test-results/
-.vercel
 /dist/
 .vinext/
 .wrangler/

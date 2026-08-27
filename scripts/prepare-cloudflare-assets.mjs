@@ -1,4 +1,5 @@
 import { copyFile, cp, mkdir } from "node:fs/promises";
+import { createHash } from "node:crypto";
 import robots from "../src/app/robots.ts";
 import sitemap from "../src/app/sitemap.ts";
 import { securityHeaders } from "../src/lib/security-headers.ts";
@@ -7,6 +8,7 @@ const prerenderDirectory = "dist/server/prerendered-routes";
 const assetDirectory = "dist/client";
 
 await cp(prerenderDirectory, assetDirectory, { recursive: true });
+await versionStaticStylesheets();
 const fontCount = await copyReferencedFonts();
 await Promise.all([
   Bun.write(`${assetDirectory}/robots.txt`, serializeRobots(robots())),
@@ -16,6 +18,25 @@ await Promise.all([
 
 const htmlRouteCount = Array.from(new Bun.Glob("**/*.html").scanSync({ cwd: prerenderDirectory, onlyFiles: true })).length;
 console.log(`Prepared ${htmlRouteCount} static HTML routes, ${fontCount} fonts, robots.txt, and sitemap.xml for Cloudflare Assets.`);
+
+async function versionStaticStylesheets() {
+  const cssDirectory = `${assetDirectory}/_next/static/css`;
+  const cssFiles = Array.from(new Bun.Glob("*.css").scanSync({ cwd: cssDirectory, onlyFiles: true }));
+  const versions = new Map();
+
+  for (const file of cssFiles) {
+    const css = await Bun.file(`${cssDirectory}/${file}`).arrayBuffer();
+    versions.set(`/_next/static/css/${file}`, createHash("sha256").update(new Uint8Array(css)).digest("hex").slice(0, 12));
+  }
+
+  const htmlFiles = Array.from(new Bun.Glob("**/*.html").scanSync({ cwd: assetDirectory, onlyFiles: true }));
+  for (const file of htmlFiles) {
+    const path = `${assetDirectory}/${file}`;
+    let html = await Bun.file(path).text();
+    for (const [stylesheet, version] of versions) html = html.replaceAll(stylesheet, `${stylesheet}?v=${version}`);
+    await Bun.write(path, html);
+  }
+}
 
 async function copyReferencedFonts() {
   const cssDirectory = `${assetDirectory}/_next/static/css`;
