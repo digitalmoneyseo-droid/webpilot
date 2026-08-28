@@ -98,6 +98,21 @@ test("keeps mobile navigation keyboard-accessible and within the viewport", asyn
   await expectNoHorizontalOverflow(page);
 });
 
+test("switches from English back to German and remembers the selection", async ({ page, context }) => {
+  await page.goto("/en/about");
+  await page.getByRole("button", { name: "Select language" }).first().hover();
+  await page.getByRole("link", { name: /Deutsch/ }).first().click();
+
+  await expect(page).toHaveURL(/\/about$/);
+  await expect(page.locator("html")).toHaveAttribute("lang", "de");
+  await expect(page.getByRole("heading", { level: 1, name: "Verschiedene Disziplinen. Eine klare Richtung." })).toBeVisible();
+  await expect.poll(async () => (await context.cookies()).find(({ name }) => name === "suchio-locale")?.value).toBe("de");
+
+  await page.goto("/");
+  await expect(page).toHaveURL(/\/$/);
+  await expect(page.locator("html")).toHaveAttribute("lang", "de");
+});
+
 test("validates and submits the contact form", async ({ page }) => {
   await page.goto("/en/contact");
   await page.getByRole("button", { name: "Send project enquiry" }).click();
@@ -126,7 +141,7 @@ test("keeps the email fallback when contact delivery fails", async ({ page }) =>
   await completeContactForm(page);
   await page.getByRole("button", { name: "Send project enquiry" }).click();
 
-  await expect(page.locator("form").getByRole("alert")).toContainText("lekstsen@outlook.com");
+  await expect(page.locator("form").getByRole("alert")).toContainText("contact@suchio.net");
   await expect(page.getByRole("button", { name: "Send project enquiry" })).toBeEnabled();
 });
 

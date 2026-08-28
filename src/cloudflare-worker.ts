@@ -41,8 +41,11 @@ function preferredLocale(request: Request): Locale {
   return accepted?.find(({ locale }) => hasLocale(locale))?.locale as Locale | undefined ?? defaultLocale;
 }
 
-function redirect(location: string) {
+function redirect(location: string, locale?: Locale) {
   const headers = new Headers({ location });
+  if (locale) {
+    headers.set("set-cookie", `${localeCookie}=${locale}; Path=/; Max-Age=31536000; SameSite=Lax; Secure`);
+  }
   for (const { key, value } of securityHeaders) headers.set(key, value);
   return new Response(null, { headers, status: 307 });
 }
@@ -92,7 +95,7 @@ const worker = {
     }
 
     if (url.pathname === "/de" || url.pathname.startsWith("/de/")) {
-      return redirect(`${url.pathname.slice(defaultLocale.length + 1) || "/"}${url.search}`);
+      return redirect(`${url.pathname.slice(defaultLocale.length + 1) || "/"}${url.search}`, defaultLocale);
     }
 
     if (url.pathname === "/api/contact") return handleContactRoute(request, env);

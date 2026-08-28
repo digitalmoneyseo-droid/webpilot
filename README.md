@@ -63,7 +63,7 @@ Keep all configured locales equivalent when you change public content, metadata,
 
 ## Contact form
 
-The contact form validates enquiries in the browser and in a shared server handler, then sends them through Resend without writing them to a website database. Copy `.env.example` to `.env.local` and add a Resend API key. The example sender works only when `CONTACT_EMAIL_TO` matches the email address on the Resend account; for other recipients, use a sender address on a domain verified in Resend.
+The contact form validates enquiries in the browser and in a shared server handler, then sends them through Resend without writing them to a website database. Copy `.env.example` to `.env.local` and add a Resend API key. Verify the domain used by `CONTACT_EMAIL_FROM` in Resend before sending enquiries to recipients outside the Resend account.
 
 ## Cloudflare deployment
 

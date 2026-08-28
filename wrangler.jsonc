@@ -12,6 +12,10 @@
     {
       "pattern": "suchio.info",
       "custom_domain": true
+    },
+    {
+      "pattern": "suchio.net",
+      "custom_domain": true
     }
   ],
   "assets": {

@@ -40,7 +40,15 @@ export function proxy(request: NextRequest) {
 
   const url = request.nextUrl.clone();
   url.pathname = pathname.slice(defaultLocale.length + 1) || "/";
-  return withSecurityHeaders(NextResponse.redirect(url, 307));
+  const response = NextResponse.redirect(url, 307);
+  response.cookies.set(localeCookie, defaultLocale, {
+    httpOnly: false,
+    maxAge: 60 * 60 * 24 * 365,
+    path: "/",
+    sameSite: "lax",
+    secure: request.nextUrl.protocol === "https:",
+  });
+  return withSecurityHeaders(response);
 }
 
 export const config = {

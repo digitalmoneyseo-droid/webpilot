@@ -56,7 +56,7 @@ const de: LegalContent = {
         title: "Kontakt",
         details: [
           { label: "Telefon", value: "+49 176 42767348", href: "tel:+4917642767348" },
-          { label: "E-Mail", value: "lekstsen@outlook.com", href: "mailto:lekstsen@outlook.com" },
+          { label: "E-Mail", value: "contact@suchio.net", href: "mailto:contact@suchio.net" },
         ],
       },
       {
@@ -84,7 +84,7 @@ const de: LegalContent = {
         paragraphs: ["Aleks Tsenov\nSuchio\nBergstraße 41\n65795 Hattersheim am Main\nDeutschland"],
         details: [
           { label: "Telefon", value: "+49 176 42767348", href: "tel:+4917642767348" },
-          { label: "E-Mail", value: "lekstsen@outlook.com", href: "mailto:lekstsen@outlook.com" },
+          { label: "E-Mail", value: "contact@suchio.net", href: "mailto:contact@suchio.net" },
         ],
       },
       {
@@ -162,7 +162,7 @@ const en: LegalContent = {
     updated: "Last updated: 27 August 2026",
     sections: [
       { title: "Information pursuant to section 5 DDG", paragraphs: ["Aleks Tsenov\nTrading name: Suchio\nBergstraße 41\n65795 Hattersheim am Main\nGermany"] },
-      { title: "Contact", details: [{ label: "Phone", value: "+49 176 42767348", href: "tel:+4917642767348" }, { label: "Email", value: "lekstsen@outlook.com", href: "mailto:lekstsen@outlook.com" }] },
+      { title: "Contact", details: [{ label: "Phone", value: "+49 176 42767348", href: "tel:+4917642767348" }, { label: "Email", value: "contact@suchio.net", href: "mailto:contact@suchio.net" }] },
       { title: "Business details", paragraphs: ["Sole proprietorship not registered in the German commercial register.\nOwner: Aleks Tsenov"] },
       { title: "Responsible for content", paragraphs: ["Aleks Tsenov\nBergstraße 41\n65795 Hattersheim am Main\nGermany"] },
       { title: "Consumer dispute resolution", paragraphs: ["We are neither willing nor obliged to participate in dispute resolution proceedings before a consumer arbitration board."] },
@@ -174,7 +174,7 @@ const en: LegalContent = {
     intro: "This policy explains how Suchio processes personal data when you visit the website or contact us.",
     updated: "Last updated: 27 August 2026",
     sections: [
-      { title: "1. Controller", paragraphs: ["Aleks Tsenov\nSuchio\nBergstraße 41\n65795 Hattersheim am Main\nGermany"], details: [{ label: "Phone", value: "+49 176 42767348", href: "tel:+4917642767348" }, { label: "Email", value: "lekstsen@outlook.com", href: "mailto:lekstsen@outlook.com" }] },
+      { title: "1. Controller", paragraphs: ["Aleks Tsenov\nSuchio\nBergstraße 41\n65795 Hattersheim am Main\nGermany"], details: [{ label: "Phone", value: "+49 176 42767348", href: "tel:+4917642767348" }, { label: "Email", value: "contact@suchio.net", href: "mailto:contact@suchio.net" }] },
       {
         title: "2. Hosting, delivery, and server logs",
         paragraphs: [
@@ -214,7 +214,7 @@ const fr: LegalContent = {
     updated: "Mise à jour : 27 août 2026",
     sections: [
       { title: "Informations conformément à l’article 5 du DDG allemand", paragraphs: ["Aleks Tsenov\nNom commercial : Suchio\nBergstraße 41\n65795 Hattersheim am Main\nAllemagne"] },
-      { title: "Contact", details: [{ label: "Téléphone", value: "+49 176 42767348", href: "tel:+4917642767348" }, { label: "E-mail", value: "lekstsen@outlook.com", href: "mailto:lekstsen@outlook.com" }] },
+      { title: "Contact", details: [{ label: "Téléphone", value: "+49 176 42767348", href: "tel:+4917642767348" }, { label: "E-mail", value: "contact@suchio.net", href: "mailto:contact@suchio.net" }] },
       { title: "Informations sur l’entreprise", paragraphs: ["Entreprise individuelle non inscrite au registre du commerce allemand.\nPropriétaire : Aleks Tsenov"] },
       { title: "Responsable du contenu", paragraphs: ["Aleks Tsenov\nBergstraße 41\n65795 Hattersheim am Main\nAllemagne"] },
       { title: "Règlement des litiges de consommation", paragraphs: ["Nous ne sommes ni disposés ni tenus de participer à une procédure de règlement des litiges devant un organisme de médiation de la consommation."] },
@@ -226,7 +226,7 @@ const fr: LegalContent = {
     intro: "Cette politique explique comment Suchio traite les données personnelles lors de votre visite du site ou d’une prise de contact.",
     updated: "Mise à jour : 27 août 2026",
     sections: [
-      { title: "1. Responsable du traitement", paragraphs: ["Aleks Tsenov\nSuchio\nBergstraße 41\n65795 Hattersheim am Main\nAllemagne"], details: [{ label: "Téléphone", value: "+49 176 42767348", href: "tel:+4917642767348" }, { label: "E-mail", value: "lekstsen@outlook.com", href: "mailto:lekstsen@outlook.com" }] },
+      { title: "1. Responsable du traitement", paragraphs: ["Aleks Tsenov\nSuchio\nBergstraße 41\n65795 Hattersheim am Main\nAllemagne"], details: [{ label: "Téléphone", value: "+49 176 42767348", href: "tel:+4917642767348" }, { label: "E-mail", value: "contact@suchio.net", href: "mailto:contact@suchio.net" }] },
       {
         title: "2. Hébergement, diffusion et journaux serveur",
         paragraphs: [
