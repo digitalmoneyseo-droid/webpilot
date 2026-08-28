@@ -5,6 +5,12 @@ import { isServiceId } from "@/lib/service-catalog";
 import { budgetOptions, isBudgetId, type BudgetId } from "@/lib/contact-options";
 
 const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+const contactEmailLocale = "de" satisfies Locale;
+const languageLabels = {
+  de: "Deutsch",
+  en: "Englisch",
+  fr: "Französisch",
+} satisfies Record<Locale, string>;
 
 export interface ContactEmailConfig {
   apiKey?: string;
@@ -61,19 +67,16 @@ export async function handleContactRequest(request: Request, emailConfig: Contac
     return Response.json({ error: "Email service unavailable" }, { status: 503 });
   }
 
-  const service = isServiceId(serviceId) ? getServiceCopy(locale, serviceId).name : t(locale, "contact.formServiceUnsure");
-  const budget = budgetLabel(locale, budgetId);
-  const text = [
-    `${t(locale, "contact.formBodyName")}: ${name}`,
-    `${t(locale, "contact.formBodyEmail")}: ${email}`,
-    `${t(locale, "contact.formCompany")}: ${company || t(locale, "contact.formNotProvided")}`,
-    `${t(locale, "contact.formCompanyUrl")}: ${companyUrl || t(locale, "contact.formNotProvided")}`,
-    `${t(locale, "contact.formService")}: ${service}`,
-    `${t(locale, "contact.formBudget")}: ${budget}`,
-    "",
-    `${t(locale, "contact.formBodyMessage")}:`,
+  const emailContent = buildContactEmail({
+    name,
+    email,
+    company,
+    companyUrl,
+    serviceId,
+    budgetId,
     message,
-  ].join("\n");
+    locale,
+  });
 
   try {
     const resend = new Resend(apiKey);
@@ -81,8 +84,8 @@ export async function handleContactRequest(request: Request, emailConfig: Contac
       from,
       to,
       replyTo: email,
-      subject: `${t(locale, "contact.formSubject")}: ${name}`,
-      text,
+      subject: emailContent.subject,
+      text: emailContent.text,
     });
 
     if (error) {
@@ -95,6 +98,48 @@ export async function handleContactRequest(request: Request, emailConfig: Contac
     console.error("Resend contact email failed", error);
     return Response.json({ error: "Email delivery failed" }, { status: 502 });
   }
+}
+
+export function buildContactEmail({
+  name,
+  email,
+  company,
+  companyUrl,
+  serviceId,
+  budgetId,
+  message,
+  locale,
+}: {
+  name: string;
+  email: string;
+  company: string;
+  companyUrl: string;
+  serviceId: string;
+  budgetId: BudgetId;
+  message: string;
+  locale: Locale;
+}) {
+  const service = isServiceId(serviceId)
+    ? getServiceCopy(contactEmailLocale, serviceId).name
+    : t(contactEmailLocale, "contact.formServiceUnsure");
+  const budget = budgetLabel(contactEmailLocale, budgetId);
+  const text = [
+    `${t(contactEmailLocale, "contact.formBodyName")}: ${name}`,
+    `${t(contactEmailLocale, "contact.formBodyEmail")}: ${email}`,
+    `Sprache: ${languageLabels[locale]} (${locale})`,
+    `${t(contactEmailLocale, "contact.formCompany")}: ${company || t(contactEmailLocale, "contact.formNotProvided")}`,
+    `${t(contactEmailLocale, "contact.formCompanyUrl")}: ${companyUrl || t(contactEmailLocale, "contact.formNotProvided")}`,
+    `${t(contactEmailLocale, "contact.formService")}: ${service}`,
+    `${t(contactEmailLocale, "contact.formBudget")}: ${budget}`,
+    "",
+    `${t(contactEmailLocale, "contact.formBodyMessage")}:`,
+    message,
+  ].join("\n");
+
+  return {
+    subject: `${t(contactEmailLocale, "contact.formSubject")}: ${name}`,
+    text,
+  };
 }
 
 function cleanString(value: unknown): string {
