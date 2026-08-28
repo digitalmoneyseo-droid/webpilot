@@ -10,7 +10,11 @@
   "workers_dev": true,
   "routes": [
     {
-      "pattern": "suchio.net",
+      "pattern": "suchio.info",
+      "custom_domain": true
+    },
+    {
+      "pattern": "www.suchio.info",
       "custom_domain": true
     }
   ],
