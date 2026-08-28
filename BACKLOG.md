@@ -17,7 +17,6 @@ This file records review findings that are valid but do not justify changing the
 
 ## Performance and design-system maintenance
 
-- Audit unused compatibility aliases in `typography-system.css` with a production CSS and source-usage report before deleting them.
 - Re-evaluate the JavaScript scroll-progress bar against browser support and measured runtime cost before replacing it with scroll-driven CSS.
 - Check the Services disclosure on short mobile viewports for nested scrolling, and add listbox type-ahead if keyboard testing shows a real usability gap.
 
