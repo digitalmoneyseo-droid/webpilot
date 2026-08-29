@@ -73,6 +73,8 @@ Build the Cloudflare output and prepare prerendered routes, fonts, security head
 bun run build:vinext
 ```
 
+For Cloudflare Workers Builds, set the build command to `bun run build:vinext` and the deploy command to `bunx wrangler deploy --config dist/server/wrangler.json`. The generated Wrangler config is required because Vinext produces the deployable Worker entry during the build.
+
 Run the built Worker locally or deploy it:
 
 ```bash

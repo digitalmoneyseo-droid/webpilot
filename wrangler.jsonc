@@ -7,6 +7,12 @@
     "nodejs_compat"
   ],
   "main": "src/cloudflare-worker.ts",
+  // Vinext writes the bundled worker after the build. This alias keeps the
+  // default `wrangler deploy` command usable when Workers Builds is not given
+  // the generated config explicitly.
+  "alias": {
+    "virtual:vinext-worker-entry": "./dist/server/index.js"
+  },
   "workers_dev": true,
   "routes": [
     {
