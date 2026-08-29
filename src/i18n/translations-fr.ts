@@ -29,7 +29,6 @@ export const frMessages: Readonly<Record<MessageKey, string>> = {
   "home.heroLine2": "rentable.",
   "home.heroDescription": "Nous concevons et développons des sites web et des applications, améliorons leur visibilité dans les moteurs de recherche, pilotons des campagnes payantes et automatisons les tâches répétitives.",
   "home.ctaContact": "Parler de votre projet",
-  "home.ctaServices": "Découvrir nos services",
   "home.section1Title": "Nos services",
   "home.whyTitle": "Pourquoi Suchio",
   "home.processTitle": "Comment se déroule un projet",

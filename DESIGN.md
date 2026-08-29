@@ -172,7 +172,7 @@ If another page needs the same structural variation, extend the shared component
 
 Page openings use one of three patterns:
 
-1. Homepage: centered `text-display-lg`, one lead, one primary CTA, and one service anchor.
+1. Homepage: centered `text-display-lg`, one lead, and one primary CTA.
 2. Editorial: `EditorialHero` with `text-display-sm`, one lead, and no competing visual.
 3. Service: split title and explanatory visual with `text-display-service`, one lead, and one service-specific CTA.
 
