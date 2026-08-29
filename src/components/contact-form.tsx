@@ -183,16 +183,16 @@ export function ContactForm({
 
   if (status === "success") {
     return (
-      <div className="flex min-h-[32rem] flex-col items-start justify-center" role="status" aria-live="polite">
-        <span className="mb-6 grid size-12 place-items-center rounded-control bg-ink text-white shadow-surface" aria-hidden="true">
-          <Check className="size-5" strokeWidth={2} />
+      <div className="flex min-h-[28rem] flex-col items-center justify-center text-center" role="status" aria-live="polite">
+        <span className="mb-6 grid size-14 place-items-center rounded-pill bg-green-100 text-green-700" aria-hidden="true">
+          <Check className="size-6" strokeWidth={2} />
         </span>
         <h2 className="m-0 max-w-[32rem] text-heading-lg text-ink">{copy.successTitle}</h2>
         <p className="mt-4 mb-0 max-w-[32rem] text-base/6 text-muted">
           {copy.successCopy.replace("{email}", submittedEmail)}
         </p>
         <button
-          className="mt-8 rounded-inset bg-interaction px-3 py-2 text-sm font-medium text-ink transition-[background-color,scale] duration-150 hover:bg-interaction-strong active:scale-[.96] motion-reduce:transition-none motion-reduce:active:scale-100"
+          className="mt-8 min-h-11 rounded-control bg-interaction px-4 py-2 text-sm font-medium text-ink transition-[background-color,scale] duration-150 hover:bg-interaction-strong active:scale-[.96] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-focus motion-reduce:transition-none motion-reduce:active:scale-100"
           type="button"
           onClick={() => setStatus("idle")}
         >

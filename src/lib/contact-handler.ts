@@ -86,6 +86,7 @@ export async function handleContactRequest(request: Request, emailConfig: Contac
       replyTo: email,
       subject: emailContent.subject,
       text: emailContent.text,
+      html: emailContent.html,
     });
 
     if (error) {
@@ -123,23 +124,103 @@ export function buildContactEmail({
     ? getServiceCopy(contactEmailLocale, serviceId).name
     : t(contactEmailLocale, "contact.formServiceUnsure");
   const budget = budgetLabel(contactEmailLocale, budgetId);
+  const notProvided = t(contactEmailLocale, "contact.formNotProvided");
   const text = [
     `${t(contactEmailLocale, "contact.formBodyName")}: ${name}`,
     `${t(contactEmailLocale, "contact.formBodyEmail")}: ${email}`,
     `Sprache: ${languageLabels[locale]} (${locale})`,
-    `${t(contactEmailLocale, "contact.formCompany")}: ${company || t(contactEmailLocale, "contact.formNotProvided")}`,
-    `${t(contactEmailLocale, "contact.formCompanyUrl")}: ${companyUrl || t(contactEmailLocale, "contact.formNotProvided")}`,
+    `${t(contactEmailLocale, "contact.formCompany")}: ${company || notProvided}`,
+    `${t(contactEmailLocale, "contact.formCompanyUrl")}: ${companyUrl || notProvided}`,
     `${t(contactEmailLocale, "contact.formService")}: ${service}`,
     `${t(contactEmailLocale, "contact.formBudget")}: ${budget}`,
     "",
     `${t(contactEmailLocale, "contact.formBodyMessage")}:`,
     message,
   ].join("\n");
+  const details = [
+    { label: t(contactEmailLocale, "contact.formBodyName"), value: name },
+    { label: t(contactEmailLocale, "contact.formBodyEmail"), value: email, href: `mailto:${email}` },
+    { label: "Sprache", value: `${languageLabels[locale]} (${locale})` },
+    { label: t(contactEmailLocale, "contact.formCompany"), value: company || notProvided },
+    {
+      label: t(contactEmailLocale, "contact.formCompanyUrl"),
+      value: companyUrl || notProvided,
+      href: companyUrl || undefined,
+    },
+    { label: t(contactEmailLocale, "contact.formService"), value: service },
+    { label: t(contactEmailLocale, "contact.formBudget"), value: budget },
+  ];
+  const html = `<!doctype html>
+<html lang="de">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Neue Projektanfrage von ${escapeHtml(name)}</title>
+  </head>
+  <body style="margin:0;padding:0;background-color:#f4f4f2;color:#171717;font-family:Arial,Helvetica,sans-serif;">
+    <div style="display:none;max-height:0;overflow:hidden;opacity:0;">Neue Projektanfrage von ${escapeHtml(name)}</div>
+    <table role="presentation" width="100%" border="0" cellspacing="0" cellpadding="0" style="width:100%;background-color:#f4f4f2;">
+      <tr>
+        <td align="center" style="padding:32px 16px;">
+          <table role="presentation" width="100%" border="0" cellspacing="0" cellpadding="0" style="width:100%;max-width:640px;background-color:#ffffff;border:1px solid #e5e5e5;border-radius:16px;">
+            <tr>
+              <td style="padding:28px 36px 24px;border-top:4px solid #0075e8;border-radius:16px 16px 0 0;">
+                <p style="margin:0 0 20px;color:#0075e8;font-size:15px;font-weight:700;letter-spacing:-0.01em;">suchio.</p>
+                <h1 style="margin:0;color:#171717;font-size:28px;line-height:1.2;font-weight:600;letter-spacing:-0.02em;">Neue Projektanfrage</h1>
+                <p style="margin:8px 0 0;color:#666666;font-size:14px;line-height:1.5;">Eingegangen über das Kontaktformular auf suchio.net</p>
+              </td>
+            </tr>
+            <tr>
+              <td style="padding:0 36px 32px;">
+                <h2 style="margin:0 0 12px;color:#171717;font-size:16px;line-height:1.4;font-weight:600;">Kontaktdaten und Rahmen</h2>
+                <table width="100%" border="0" cellspacing="0" cellpadding="0" style="width:100%;border-top:1px solid #e5e5e5;">
+                  ${details.map(renderEmailDetailRow).join("")}
+                </table>
+              </td>
+            </tr>
+            <tr>
+              <td style="padding:0 36px 36px;">
+                <h2 style="margin:0 0 12px;color:#171717;font-size:16px;line-height:1.4;font-weight:600;">${escapeHtml(t(contactEmailLocale, "contact.formBodyMessage"))}</h2>
+                <table role="presentation" width="100%" border="0" cellspacing="0" cellpadding="0" style="width:100%;background-color:#f2f7ff;border:1px solid #d7e7ff;border-radius:12px;">
+                  <tr>
+                    <td style="padding:20px 22px;color:#171717;font-size:16px;line-height:1.6;">${escapeHtml(message).replaceAll("\n", "<br>")}</td>
+                  </tr>
+                </table>
+              </td>
+            </tr>
+          </table>
+          <p style="margin:16px 0 0;color:#777777;font-size:12px;line-height:1.5;">Diese Nachricht wurde über das Suchio-Kontaktformular gesendet.</p>
+        </td>
+      </tr>
+    </table>
+  </body>
+</html>`;
 
   return {
     subject: `${t(contactEmailLocale, "contact.formSubject")}: ${name}`,
     text,
+    html,
   };
+}
+
+function renderEmailDetailRow({ label, value, href }: { label: string; value: string; href?: string }): string {
+  const content = href
+    ? `<a href="${escapeHtml(href)}" style="color:#005fbd;text-decoration:underline;text-underline-offset:2px;">${escapeHtml(value)}</a>`
+    : escapeHtml(value);
+
+  return `<tr>
+    <th scope="row" align="left" valign="top" style="width:38%;padding:12px 12px 12px 0;border-bottom:1px solid #e5e5e5;color:#666666;font-size:13px;line-height:1.5;font-weight:400;">${escapeHtml(label)}</th>
+    <td valign="top" style="padding:12px 0;border-bottom:1px solid #e5e5e5;color:#171717;font-size:14px;line-height:1.5;font-weight:600;overflow-wrap:anywhere;">${content}</td>
+  </tr>`;
+}
+
+function escapeHtml(value: string): string {
+  return value
+    .replaceAll("&", "&amp;")
+    .replaceAll("<", "&lt;")
+    .replaceAll(">", "&gt;")
+    .replaceAll('"', "&quot;")
+    .replaceAll("'", "&#039;");
 }
 
 function cleanString(value: unknown): string {
