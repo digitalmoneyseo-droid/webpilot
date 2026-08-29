@@ -3,12 +3,24 @@ import { locales } from "../src/i18n/config";
 import { servicesContent } from "../src/i18n/services";
 import { legalContent, type LegalPageKind } from "../src/i18n/legal-content";
 import { budgetOptions } from "../src/lib/contact-options";
+import { getLegacyServiceRedirectPath, getServicePath, serviceOrder, serviceRouteSlugs } from "../src/lib/service-routes";
 
 test("keeps service identities equivalent across locales", () => {
   const expectedIds = servicesContent.de.services.map(({ id }) => id);
 
   for (const locale of locales) {
     expect(servicesContent[locale].services.map(({ id }) => id)).toEqual(expectedIds);
+  }
+});
+
+test("keeps public service slugs unique and redirects every legacy slug", () => {
+  expect(new Set(Object.values(serviceRouteSlugs)).size).toBe(serviceOrder.length);
+
+  for (const serviceId of serviceOrder) {
+    expect(getLegacyServiceRedirectPath(`/services/${serviceId}`)).toBe(getServicePath(serviceId, "de"));
+    expect(getLegacyServiceRedirectPath(`/en/services/${serviceId}`)).toBe(getServicePath(serviceId, "en"));
+    expect(getLegacyServiceRedirectPath(`/fr/services/${serviceId}`)).toBe(getServicePath(serviceId, "fr"));
+    expect(getLegacyServiceRedirectPath(`/de/services/${serviceId}`)).toBe(getServicePath(serviceId, "de"));
   }
 });
 

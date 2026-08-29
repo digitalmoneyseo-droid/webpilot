@@ -33,7 +33,19 @@
       "/",
       "/de",
       "/de/*",
-      "/api/contact"
+      "/api/contact",
+      "/services/websites-apps",
+      "/services/seo-ai-visibility",
+      "/services/paid-campaigns",
+      "/services/ai-automation",
+      "/en/services/websites-apps",
+      "/en/services/seo-ai-visibility",
+      "/en/services/paid-campaigns",
+      "/en/services/ai-automation",
+      "/fr/services/websites-apps",
+      "/fr/services/seo-ai-visibility",
+      "/fr/services/paid-campaigns",
+      "/fr/services/ai-automation"
     ]
   },
   "cache": {

@@ -2,6 +2,7 @@ import vinextHandler from "vinext/server/fetch-handler";
 import { defaultLocale, hasLocale, localeCookie, type Locale } from "./i18n/config";
 import { handleContactRequest } from "./lib/contact-handler";
 import { securityHeaders } from "./lib/security-headers";
+import { getLegacyServiceRedirectPath } from "./lib/service-routes";
 
 interface CloudflareEnv {
   ASSETS: {
@@ -41,13 +42,13 @@ function preferredLocale(request: Request): Locale {
   return accepted?.find(({ locale }) => hasLocale(locale))?.locale as Locale | undefined ?? defaultLocale;
 }
 
-function redirect(location: string, locale?: Locale) {
+function redirect(location: string, locale?: Locale, status = 307) {
   const headers = new Headers({ location });
   if (locale) {
     headers.set("set-cookie", `${localeCookie}=${locale}; Path=/; Max-Age=31536000; SameSite=Lax; Secure`);
   }
   for (const { key, value } of securityHeaders) headers.set(key, value);
-  return new Response(null, { headers, status: 307 });
+  return new Response(null, { headers, status });
 }
 
 function withSecurityHeaders(response: Response) {
@@ -87,6 +88,12 @@ const worker = {
     if (!env?.ASSETS) return vinextHandler.fetch(request, env, context);
 
     const url = new URL(request.url);
+
+    const legacyServiceRedirect = getLegacyServiceRedirectPath(url.pathname);
+    if (legacyServiceRedirect) {
+      const locale = url.pathname.startsWith(`/${defaultLocale}/`) ? defaultLocale : undefined;
+      return redirect(`${legacyServiceRedirect}${url.search}`, locale, 308);
+    }
 
     if (url.pathname === "/" && (request.method === "GET" || request.method === "HEAD")) {
       const locale = preferredLocale(request);

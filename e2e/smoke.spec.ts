@@ -7,13 +7,20 @@ const routeSuffixes = [
   "/contact",
   "/imprint",
   "/privacy",
-  "/services/websites-apps",
-  "/services/seo-ai-visibility",
-  "/services/paid-campaigns",
-  "/services/ai-automation",
+  "/services/websites",
+  "/services/seo",
+  "/services/ads",
+  "/services/automation",
 ] as const;
 
 const localePrefixes = ["", "/en", "/fr"] as const;
+
+const legacyServiceRoutes = [
+  ["/services/websites-apps", "/services/websites"],
+  ["/services/seo-ai-visibility", "/services/seo"],
+  ["/services/paid-campaigns", "/services/ads"],
+  ["/services/ai-automation", "/services/automation"],
+] as const;
 
 async function expectNoHorizontalOverflow(page: Page) {
   const overflow = await page.evaluate(() => document.documentElement.scrollWidth - document.documentElement.clientWidth);
@@ -62,6 +69,17 @@ test("returns a localized 404 for unknown routes", async ({ page }) => {
       expect(response?.status()).toBe(404);
       await expect(page.getByRole("heading", { level: 1, name: heading })).toBeVisible();
     });
+  }
+});
+
+test("permanently redirects legacy service routes in every locale", async ({ request }) => {
+  for (const prefix of [...localePrefixes, "/de"] as const) {
+    for (const [legacyRoute, currentRoute] of legacyServiceRoutes) {
+      const expectedPrefix = prefix === "/de" ? "" : prefix;
+      const response = await request.get(`${prefix}${legacyRoute}?source=legacy`, { maxRedirects: 0 });
+      expect(response.status()).toBe(308);
+      expect(response.headers().location).toBe(`${expectedPrefix}${currentRoute}?source=legacy`);
+    }
   }
 });
 
