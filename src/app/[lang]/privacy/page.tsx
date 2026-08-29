@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { LegalPage } from "@/components/pages/legal-page";
 import { localizePath, prefixedLocales, t } from "@/lib/i18n";
 import { getRouteLocale, type LocaleRouteParams } from "@/lib/locale-route";
-import { pageMetadata } from "@/lib/site";
+import { noIndexPageMetadata } from "@/lib/site";
 
 type Props = { params: LocaleRouteParams };
 
@@ -14,14 +14,13 @@ export function generateStaticParams() {
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const locale = await getRouteLocale(params);
-  const metadata = pageMetadata({
+  return noIndexPageMetadata({
     locale,
     pathname: localizePath("/privacy", locale),
     title: t(locale, "privacy.title"),
     description: t(locale, "meta.privacyDescription"),
   });
 
-  return { ...metadata, robots: { index: false, follow: true } };
 }
 
 export default async function Page({ params }: Props) {

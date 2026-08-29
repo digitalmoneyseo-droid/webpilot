@@ -45,11 +45,13 @@ bun run lint
 bun run validate:content
 bun run test
 bun run build
+bun run build:vinext
+bun run validate:seo
 bun run validate:bundle
 bun run test:e2e
 ```
 
-The content validator checks home FAQ structure and locale parity. Bun tests protect service locale parity, contact option IDs, client/server localization boundaries, and the shared service identity palette. The bundle validator checks the production client chunks for server-owned dictionary copy. The Chromium suite runs against the Bun production server and covers localized route rendering, correct 404 responses, mobile keyboard navigation and reflow, the contact flow, and representative accessibility and reduced-motion behavior. Run `bun run build` before `bun run validate:bundle` or `bun run test:e2e` locally. For TypeScript changes that do not need a production build, run `bun run typecheck`.
+The content validator checks home FAQ structure and locale parity. Bun tests protect service locale parity, contact option IDs, client/server localization boundaries, and the shared service identity palette. The SEO validator inspects the generated HTML, sitemap, robots directives, structured data, metadata, and internal link graph. The bundle validator checks the production client chunks for server-owned dictionary copy. The Chromium suite runs against the Bun production server and covers localized route rendering, correct 404 responses, mobile keyboard navigation and reflow, the contact flow, and representative accessibility and reduced-motion behavior. Run `bun run build:vinext` before the SEO, bundle, or end-to-end checks locally. For TypeScript changes that do not need a production build, run `bun run typecheck`.
 
 ## Localization and content
 
@@ -82,7 +84,7 @@ bun run start:vinext
 bun run deploy:vinext
 ```
 
-The production Worker is configured in `wrangler.jsonc`. Add `RESEND_API_KEY`, `CONTACT_EMAIL_TO`, and `CONTACT_EMAIL_FROM` as Worker secrets. Set `NEXT_PUBLIC_SITE_URL` to the final custom domain before the public launch so canonical URLs, Open Graph metadata, `robots.txt`, and `sitemap.xml` use it.
+The production Worker is configured in `wrangler.jsonc`. Add `RESEND_API_KEY`, `CONTACT_EMAIL_TO`, and `CONTACT_EMAIL_FROM` as Worker secrets. Canonical URLs, Open Graph metadata, `robots.txt`, and `sitemap.xml` use the production origin defined in `src/lib/site-config.ts`.
 
 ## Planned work
 

@@ -4,6 +4,8 @@ export function BrandMark({
   inverse?: boolean;
 }) {
   return (
+    // The logo is a tiny, dimensioned SVG; Next Image would not improve its transfer or layout behavior.
+    // eslint-disable-next-line @next/next/no-img-element
     <img
       src={inverse ? "/suchio-logo-dark.svg" : "/suchio-logo-light.svg"}
       alt="Suchio"

@@ -1,10 +1,19 @@
 import type { Metadata } from "next";
 import { alternatePath, defaultLocale, localeConfig, locales, t, type Locale } from "@/lib/i18n";
+import { siteOrigin } from "@/lib/site-config";
 
-const siteUrl = new URL(process.env.NEXT_PUBLIC_SITE_URL ?? "https://suchio.digitalmoneyseo.workers.dev");
+export const googleSiteVerification = "ttGSsltDw6LeGrJfs_anOu-yBfO_hJ6rXYidUt_S0xI";
+export { siteOrigin } from "@/lib/site-config";
+
+type PageMetadataInput = {
+  locale: Locale;
+  pathname: string;
+  title?: string;
+  description: string;
+};
 
 export function absoluteUrl(path: string): string {
-  return new URL(path, siteUrl).toString();
+  return new URL(path, siteOrigin).toString();
 }
 
 export function pageMetadata({
@@ -12,19 +21,24 @@ export function pageMetadata({
   pathname,
   title,
   description,
-}: {
-  locale: Locale;
-  pathname: string;
-  title?: string;
-  description: string;
-}): Metadata {
+}: PageMetadataInput): Metadata {
   const pageTitle = title ? `${title} | Suchio` : t(locale, "meta.siteTitle");
   const image = absoluteUrl("/suchio-social-card.png");
   const languageAlternates = Object.fromEntries(locales.map((candidate) => [candidate, absoluteUrl(alternatePath(pathname, candidate))]));
   return {
     title: pageTitle,
     description,
-    robots: { index: true, follow: true },
+    robots: {
+      index: true,
+      follow: true,
+      googleBot: {
+        index: true,
+        follow: true,
+        "max-image-preview": "large",
+        "max-snippet": -1,
+        "max-video-preview": -1,
+      },
+    },
     alternates: {
       canonical: absoluteUrl(pathname),
       languages: {
@@ -40,8 +54,19 @@ export function pageMetadata({
       title: pageTitle,
       description,
       url: absoluteUrl(pathname),
-      images: [image],
+      images: [{ url: image, width: 1200, height: 630, alt: "Suchio" }],
     },
-    twitter: { card: "summary_large_image", title: pageTitle, description, images: [image] },
+    twitter: { card: "summary_large_image", title: pageTitle, description, images: [{ url: image, width: 1200, height: 630, alt: "Suchio" }] },
+  };
+}
+
+export function noIndexPageMetadata(input: PageMetadataInput): Metadata {
+  return {
+    ...pageMetadata(input),
+    robots: {
+      index: false,
+      follow: true,
+      googleBot: { index: false, follow: true },
+    },
   };
 }

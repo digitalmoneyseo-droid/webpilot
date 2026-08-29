@@ -25,5 +25,6 @@ jobs:
       - run: bun run build
       - run: bun run build:vinext
       - run: bunx wrangler deploy --config wrangler.jsonc --dry-run
+      - run: bun run validate:seo
       - run: bun run validate:bundle
       - run: bun run test:e2e

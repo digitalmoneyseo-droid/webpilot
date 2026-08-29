@@ -13,17 +13,7 @@ function withSecurityHeaders(response: NextResponse) {
 
 function preferredLocale(request: NextRequest): Locale {
   const saved = request.cookies.get(localeCookie)?.value;
-  if (saved && hasLocale(saved)) return saved;
-
-  const accepted = request.headers.get("accept-language")?.split(",")
-    .map((entry) => {
-      const [tag, quality] = entry.trim().split(";q=");
-      return { locale: tag.toLowerCase().split("-")[0], quality: quality === undefined ? 1 : Number(quality) };
-    })
-    .filter(({ quality }) => quality > 0)
-    .sort((a, b) => b.quality - a.quality);
-
-  return accepted?.find(({ locale }) => hasLocale(locale))?.locale as Locale | undefined ?? defaultLocale;
+  return saved && hasLocale(saved) ? saved : defaultLocale;
 }
 
 export function proxy(request: NextRequest) {

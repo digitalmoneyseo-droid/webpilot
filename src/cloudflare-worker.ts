@@ -28,18 +28,7 @@ function cookieLocale(request: Request) {
 }
 
 function preferredLocale(request: Request): Locale {
-  const saved = cookieLocale(request);
-  if (saved) return saved;
-
-  const accepted = request.headers.get("accept-language")?.split(",")
-    .map((entry) => {
-      const [tag, quality] = entry.trim().split(";q=");
-      return { locale: tag.toLowerCase().split("-")[0], quality: quality === undefined ? 1 : Number(quality) };
-    })
-    .filter(({ quality }) => quality > 0)
-    .sort((a, b) => b.quality - a.quality);
-
-  return accepted?.find(({ locale }) => hasLocale(locale))?.locale as Locale | undefined ?? defaultLocale;
+  return cookieLocale(request) ?? defaultLocale;
 }
 
 function redirect(location: string, locale?: Locale, status = 307) {

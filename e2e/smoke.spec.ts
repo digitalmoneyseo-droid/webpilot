@@ -83,6 +83,21 @@ test("permanently redirects legacy service routes in every locale", async ({ req
   }
 });
 
+test("keeps the canonical homepage stable unless a visitor selected a language", async ({ request }) => {
+  const firstVisit = await request.get("/", {
+    headers: { "accept-language": "en-US,en;q=0.9" },
+    maxRedirects: 0,
+  });
+  expect(firstVisit.status()).toBe(200);
+
+  const returningVisitor = await request.get("/", {
+    headers: { cookie: "suchio-locale=en" },
+    maxRedirects: 0,
+  });
+  expect(returningVisitor.status()).toBe(307);
+  expect(returningVisitor.headers().location).toBe("/en");
+});
+
 test("sends the site security headers", async ({ request }) => {
   const response = await request.get("/en/about");
 

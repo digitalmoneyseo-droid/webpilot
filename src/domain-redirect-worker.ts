@@ -1,11 +1,13 @@
-const canonicalOrigin = "https://suchio.net";
+import { siteOrigin } from "./lib/site-config";
 
-export default {
+const worker = {
   fetch(request: Request) {
     const destination = new URL(request.url);
     destination.protocol = "https:";
-    destination.host = new URL(canonicalOrigin).host;
+    destination.host = new URL(siteOrigin).host;
 
     return Response.redirect(destination, 308);
   },
 };
+
+export default worker;

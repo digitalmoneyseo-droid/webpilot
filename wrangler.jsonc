@@ -13,12 +13,8 @@
   "alias": {
     "virtual:vinext-worker-entry": "./dist/server/index.js"
   },
-  "workers_dev": true,
+  "workers_dev": false,
   "routes": [
-    {
-      "pattern": "suchio.info",
-      "custom_domain": true
-    },
     {
       "pattern": "suchio.net",
       "custom_domain": true

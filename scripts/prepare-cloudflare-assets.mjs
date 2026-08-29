@@ -101,13 +101,16 @@ function appendDirective(lines, name, value) {
 function serializeSitemap(entries) {
   const urls = entries.map((entry) => {
     const fields = [`<loc>${escapeXml(entry.url)}</loc>`];
+    for (const [language, href] of Object.entries(entry.alternates?.languages ?? {})) {
+      fields.push(`<xhtml:link rel="alternate" hreflang="${escapeXml(language)}" href="${escapeXml(href)}"/>`);
+    }
     if (entry.lastModified) fields.push(`<lastmod>${escapeXml(new Date(entry.lastModified).toISOString())}</lastmod>`);
     if (entry.changeFrequency) fields.push(`<changefreq>${escapeXml(entry.changeFrequency)}</changefreq>`);
     if (entry.priority !== undefined) fields.push(`<priority>${entry.priority}</priority>`);
     return `  <url>${fields.join("")}</url>`;
   });
 
-  return `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${urls.join("\n")}\n</urlset>\n`;
+  return `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">\n${urls.join("\n")}\n</urlset>\n`;
 }
 
 function escapeXml(value) {
