@@ -26,29 +26,11 @@ export function ClientEffects() {
     });
     const observer = new IntersectionObserver(reveal, { threshold: 0, rootMargin: "0px 0px -6%" });
     const halfViewportObserver = new IntersectionObserver(reveal, { threshold: 0.5 });
-    elements.forEach((element) => element.classList.add("is-reveal-armed"));
-    const viewportEdge = window.innerHeight * .94;
-    const visibleElements = elements.filter((element) => {
-      const bounds = element.getBoundingClientRect();
-      if (element.dataset.revealThreshold === "half") {
-        const visibleHeight = Math.max(0, Math.min(bounds.bottom, window.innerHeight) - Math.max(bounds.top, 0));
-        return bounds.height > 0 && visibleHeight / bounds.height >= 0.5;
-      }
-      return bounds.top < viewportEdge && bounds.bottom > 0;
-    });
-    const visibleSet = new Set(visibleElements);
     elements.forEach((element) => {
-      if (visibleSet.has(element)) return;
+      element.classList.add("is-reveal-armed");
       (element.dataset.revealThreshold === "half" ? halfViewportObserver : observer).observe(element);
     });
-    const showVisibleElements = () => {
-      visibleElements.forEach((element) => element.classList.add("is-visible"));
-    };
-    const frame = window.requestAnimationFrame(showVisibleElements);
-    const fallback = window.setTimeout(showVisibleElements, 100);
     return () => {
-      window.cancelAnimationFrame(frame);
-      window.clearTimeout(fallback);
       observer.disconnect();
       halfViewportObserver.disconnect();
     };

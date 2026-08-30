@@ -1,7 +1,6 @@
 "use client";
 
 import { useEffect, useId, useRef } from "react";
-import styles from "@/components/offer-animations/web-experience-animation.module.css";
 import type { WebExperienceAnimationCopy } from "@/i18n/services";
 
 type SceneVariant = "desktop" | "phone";
@@ -93,15 +92,15 @@ const FRAME_BUILT = 0.13;
 const MORPH_START = 0.39;
 const INITIAL_DEVICE = { x: 210, y: 202.5, width: 80, height: 45, rx: 8 };
 const REVEALS = [
-  { className: styles.chrome, delay: 364, duration: 180 },
-  { className: styles.accent, delay: 364, duration: 336 },
-  { className: styles.backCard, delay: 364, duration: 336 },
-  { className: styles.headline, delay: 476, duration: 336 },
-  { className: styles.middleCard, delay: 532, duration: 336 },
-  { className: styles.primaryLine, delay: 644, duration: 336 },
-  { className: styles.frontCard, delay: 700, duration: 336 },
-  { className: styles.secondaryLine, delay: 756, duration: 336 },
-  { className: styles.cta, delay: 840, duration: 252 },
+  { selector: '[data-web-experience-reveal="chrome"]', delay: 364, duration: 180 },
+  { selector: '[data-web-experience-part="accent"]', delay: 364, duration: 336 },
+  { selector: '[data-web-experience-card="back"]', delay: 364, duration: 336 },
+  { selector: '[data-web-experience-part="headline"]', delay: 476, duration: 336 },
+  { selector: '[data-web-experience-card="middle"]', delay: 532, duration: 336 },
+  { selector: '[data-web-experience-part="primary-line"]', delay: 644, duration: 336 },
+  { selector: '[data-web-experience-card="front"]', delay: 700, duration: 336 },
+  { selector: '[data-web-experience-part="secondary-line"]', delay: 756, duration: 336 },
+  { selector: '[data-web-experience-part="cta"]', delay: 840, duration: 252 },
 ] as const;
 
 export function WebExperienceAnimation({ copy }: { copy: WebExperienceAnimationCopy }) {
@@ -114,16 +113,27 @@ export function WebExperienceAnimation({ copy }: { copy: WebExperienceAnimationC
     const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
     if (!container) return;
 
+    let observer: IntersectionObserver | undefined;
+    let started = false;
+
     const finishForReducedMotion = ({ matches }: MediaQueryListEvent) => {
       if (!matches) return;
+      started = true;
+      observer?.disconnect();
       if (animationFrameRef.current !== null) cancelAnimationFrame(animationFrameRef.current);
       animationFrameRef.current = null;
       renderFrame(container, 1);
     };
 
-    if (reducedMotion.matches) {
-      renderFrame(container, 1);
-    } else {
+    const start = () => {
+      if (started) return;
+      started = true;
+      observer?.disconnect();
+      if (reducedMotion.matches) {
+        renderFrame(container, 1);
+        return;
+      }
+
       let startedAt: number | null = null;
       const tick = (timestamp: number) => {
         startedAt ??= timestamp;
@@ -132,10 +142,20 @@ export function WebExperienceAnimation({ copy }: { copy: WebExperienceAnimationC
         animationFrameRef.current = progress < 1 ? requestAnimationFrame(tick) : null;
       };
       animationFrameRef.current = requestAnimationFrame(tick);
+    };
+
+    if (reducedMotion.matches || !("IntersectionObserver" in window)) {
+      start();
+    } else {
+      observer = new IntersectionObserver((entries) => {
+        if (entries.some((entry) => entry.isIntersecting)) start();
+      }, { rootMargin: "120px 0px", threshold: 0.15 });
+      observer.observe(container);
     }
 
     reducedMotion.addEventListener("change", finishForReducedMotion);
     return () => {
+      observer?.disconnect();
       reducedMotion.removeEventListener("change", finishForReducedMotion);
       if (animationFrameRef.current !== null) cancelAnimationFrame(animationFrameRef.current);
     };
@@ -144,7 +164,7 @@ export function WebExperienceAnimation({ copy }: { copy: WebExperienceAnimationC
   return (
     <div
       ref={containerRef}
-      className={`${styles.root} relative h-full min-h-0 w-full overflow-hidden`}
+      className="isolate relative h-full min-h-0 w-full overflow-hidden"
     >
       <Scene clipId={clipId} copy={copy} />
     </div>
@@ -213,8 +233,8 @@ function renderFrame(container: HTMLDivElement, progress: number) {
   });
 
   const elapsed = progress * TIMELINE_DURATION;
-  for (const { className, delay, duration } of REVEALS) {
-    const element = container.getElementsByClassName(className)[0];
+  for (const { selector, delay, duration } of REVEALS) {
+    const element = container.querySelector(selector);
     if (element instanceof SVGElement) {
       element.style.opacity = String(easeOut(clamp((elapsed - delay) / duration)));
     }
@@ -360,7 +380,7 @@ function BrowserChrome({ scene, variant }: { scene: SceneGeometry; variant: Scen
   const urlBaselineY = scene.urlCenterY + 2.45;
 
   return (
-    <g className={isDesktop ? styles.chrome : undefined} style={isDesktop ? { opacity: 0 } : undefined}>
+    <g data-web-experience-reveal="chrome" style={isDesktop ? { opacity: 0 } : undefined}>
       <rect data-web-experience-divider fill="var(--color-line)" {...scene.divider} />
 
       <g data-web-experience-desktop-controls>
@@ -386,39 +406,39 @@ function HeroScene({ copy, scene, variant }: { copy: WebExperienceAnimationCopy;
 
   return (
     <g>
-      <g className={isDesktop ? styles.accent : undefined} data-web-experience-part="accent" style={isDesktop ? { opacity: 0 } : undefined}>
+      <g data-web-experience-part="accent" style={isDesktop ? { opacity: 0 } : undefined}>
         <rect fill="var(--color-brand-400)" rx="3" {...scene.accent} />
       </g>
 
-      <g className={isDesktop ? styles.headline : undefined} data-web-experience-part="headline" style={isDesktop ? { opacity: 0 } : undefined}>
+      <g data-web-experience-part="headline" style={isDesktop ? { opacity: 0 } : undefined}>
         <text data-web-experience-headline fill="var(--color-neutral-900)" fontFamily="inherit" fontSize="18.4" fontWeight="600" x={scene.headline.x} y={scene.headline.y}>
           <tspan x={scene.headline.x}>{firstLine}</tspan>
           <tspan dy="1.03em" x={scene.headline.x}>{secondLine}</tspan>
         </text>
       </g>
 
-      <IllustrationLine className={isDesktop ? styles.primaryLine : undefined} geometry={scene.primaryLine} part="primary-line" />
-      <IllustrationLine className={isDesktop ? styles.secondaryLine : undefined} geometry={scene.secondaryLine} part="secondary-line" />
-      <InquiryCta className={isDesktop ? styles.cta : undefined} copy={copy} geometry={scene.cta} />
+      <IllustrationLine geometry={scene.primaryLine} hidden={isDesktop} part="primary-line" />
+      <IllustrationLine geometry={scene.secondaryLine} hidden={isDesktop} part="secondary-line" />
+      <InquiryCta copy={copy} geometry={scene.cta} hidden={isDesktop} />
       <CardStack scene={scene} variant={variant} />
     </g>
   );
 }
 
-function IllustrationLine({ className, geometry, part }: { className?: string; geometry: RectGeometry; part: string }) {
+function IllustrationLine({ geometry, hidden, part }: { geometry: RectGeometry; hidden: boolean; part: string }) {
   return (
-    <g className={className} data-web-experience-part={part} style={className ? { opacity: 0 } : undefined}>
+    <g data-web-experience-part={part} style={hidden ? { opacity: 0 } : undefined}>
       <rect fill="var(--color-neutral-200)" rx="3" {...geometry} />
     </g>
   );
 }
 
-function InquiryCta({ className, copy, geometry }: { className?: string; copy: WebExperienceAnimationCopy; geometry: { x: number; y: number } }) {
+function InquiryCta({ copy, geometry, hidden }: { copy: WebExperienceAnimationCopy; geometry: { x: number; y: number }; hidden: boolean }) {
   const width = 92;
   const height = 24;
 
   return (
-    <g className={className} data-web-experience-part="cta" style={className ? { opacity: 0 } : undefined}>
+    <g data-web-experience-part="cta" style={hidden ? { opacity: 0 } : undefined}>
       <rect data-web-experience-cta-bg fill="var(--color-neutral-900)" height={height} rx="12" width={width} x={geometry.x} y={geometry.y} />
       <text
         data-web-experience-cta-label
@@ -444,13 +464,13 @@ function CardStack({ scene, variant }: { scene: SceneGeometry; variant: SceneVar
   return (
     <g data-web-experience-part="image">
       <rect data-web-experience-image-bounds fill="transparent" {...scene.imageBounds} />
-      <g className={isDesktop ? styles.backCard : undefined} data-web-experience-card="back" style={isDesktop ? { opacity: 0 } : undefined}>
+      <g data-web-experience-card="back" style={isDesktop ? { opacity: 0 } : undefined}>
         <SvgCard fill="var(--color-neutral-100)" geometry={scene.cards.back} stroke="var(--color-neutral-300)" />
       </g>
-      <g className={isDesktop ? styles.middleCard : undefined} data-web-experience-card="middle" style={isDesktop ? { opacity: 0 } : undefined}>
+      <g data-web-experience-card="middle" style={isDesktop ? { opacity: 0 } : undefined}>
         <SvgCard fill="white" geometry={scene.cards.middle} stroke="var(--color-line-strong)" />
       </g>
-      <g className={isDesktop ? styles.frontCard : undefined} data-web-experience-card="front" style={isDesktop ? { opacity: 0 } : undefined}>
+      <g data-web-experience-card="front" style={isDesktop ? { opacity: 0 } : undefined}>
         <FrontCard geometry={scene.cards.front} values={scene.frontCard} />
       </g>
     </g>

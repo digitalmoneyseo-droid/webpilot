@@ -23,7 +23,8 @@ export function pageMetadata({
   description,
 }: PageMetadataInput): Metadata {
   const pageTitle = title ? `${title} | Suchio` : t(locale, "meta.siteTitle");
-  const image = absoluteUrl("/suchio-social-card.png");
+  const openGraphImage = absoluteUrl("/suchio-social-card.png");
+  const twitterImage = absoluteUrl("/suchio-twitter-card.png");
   const languageAlternates = Object.fromEntries(locales.map((candidate) => [candidate, absoluteUrl(alternatePath(pathname, candidate))]));
   return {
     title: pageTitle,
@@ -54,9 +55,9 @@ export function pageMetadata({
       title: pageTitle,
       description,
       url: absoluteUrl(pathname),
-      images: [{ url: image, width: 1200, height: 630, alt: "Suchio" }],
+      images: [{ url: openGraphImage, width: 1200, height: 630, alt: "Suchio" }],
     },
-    twitter: { card: "summary_large_image", title: pageTitle, description, images: [{ url: image, width: 1200, height: 630, alt: "Suchio" }] },
+    twitter: { card: "summary", title: pageTitle, description, images: [{ url: twitterImage, width: 400, height: 400, alt: "Suchio" }] },
   };
 }
 

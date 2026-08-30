@@ -175,7 +175,10 @@ for (const route of publicRoutes) {
   assert(metadataContent(html, "property", "og:image") === `${siteOrigin}/suchio-social-card.png`, `${pathname} has an incorrect Open Graph image`);
   assert(metadataContent(html, "property", "og:image:width") === "1200", `${pathname} is missing Open Graph image width`);
   assert(metadataContent(html, "property", "og:image:height") === "630", `${pathname} is missing Open Graph image height`);
-  assert(metadataContent(html, "name", "twitter:card") === "summary_large_image", `${pathname} has an incorrect Twitter card`);
+  assert(metadataContent(html, "name", "twitter:card") === "summary", `${pathname} has an incorrect Twitter card`);
+  assert(metadataContent(html, "name", "twitter:image") === `${siteOrigin}/suchio-twitter-card.png`, `${pathname} has an incorrect Twitter image`);
+  assert(metadataContent(html, "name", "twitter:image:width") === "400", `${pathname} is missing Twitter image width`);
+  assert(metadataContent(html, "name", "twitter:image:height") === "400", `${pathname} is missing Twitter image height`);
   assert(metadataContent(html, "name", "google-site-verification"), `${pathname} is missing Google verification metadata`);
 
   const alternates = Object.fromEntries(tags(html, "link")

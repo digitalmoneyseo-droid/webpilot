@@ -1,4 +1,12 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
-  <rect width="64" height="64" rx="10" fill="#0c0c0c"/>
-  <text x="32" y="43" fill="#fff" font-family="Arial, Helvetica, sans-serif" font-size="31" font-weight="700" text-anchor="middle">S</text>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="Suchio">
+  <rect width="64" height="64" rx="10" fill="#101010"/>
+  <g transform="translate(9.71 6.73) scale(0.18)">
+    <path
+      fill="#FFFFFF"
+      transform="translate(0 202) scale(0.24 -0.24)"
+      d="M237 -12Q175 -12 127 9Q79 30 50.5 67.5Q22 105 15 156L116 156Q122 133 135.5 112Q149 91 174.5 77.5Q200 64 237 64Q270 64 291.5 73.5Q313 83 323.5 99Q334 115 334 134Q334 158 320 172Q306 186 278.5 196.5Q251 207 214 217Q184 227 152 237Q120 247 94 262Q68 277 52 301.5Q36 326 36 362Q36 403 58.5 436Q81 469 123 488.5Q165 508 223 508Q305 508 356.5 468.5Q408 429 417 355L320 355Q316 392 290.5 412Q265 432 223 432Q180 432 157 414Q134 396 134 370Q134 351 146.5 339.5Q159 328 184 319Q209 310 248 298Q296 284 338.5 267Q381 250 407.5 223Q434 196 434 147Q435 101 410.5 65Q386 29 342 8.5Q298 -12 237 -12Z"
+    />
+    <circle cx="179.6" cy="140.38" r="55" fill="rgba(255,255,255,0.12)" stroke="#52AEFF" stroke-width="19"/>
+    <line x1="218.49" y1="179.27" x2="271.6" y2="232.38" stroke="#52AEFF" stroke-width="19" stroke-linecap="round"/>
+  </g>
 </svg>

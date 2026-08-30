@@ -10,6 +10,29 @@ button { border: 0; background: transparent; color: inherit; }
 :where(h1, h2, h3, h4) { color: var(--color-ink); text-wrap: balance; }
 :where(p, li) { text-wrap: pretty; }
 
+.scroll-progress {
+  transform: scaleX(0);
+}
+@supports (animation-timeline: scroll()) {
+  .scroll-progress {
+    animation: scroll-progress linear both;
+    animation-timeline: scroll(root block);
+  }
+}
+@keyframes scroll-progress {
+  to { transform: scaleX(1); }
+}
+
+.deferred-rendering {
+  content-visibility: auto;
+  contain-intrinsic-block-size: auto 48rem;
+}
+@media (max-width: 900px) {
+  .deferred-rendering {
+    contain-intrinsic-block-size: auto 64rem;
+  }
+}
+
 .header-language {
   transition: color 180ms var(--ease-out), scale 150ms var(--ease-out);
 }

@@ -91,7 +91,7 @@ function LanguageMenu({ dark = false, id, locale, mobile = false, onSelect, path
         ref={buttonRef}
         className={`header-language inline-flex h-11 cursor-pointer items-center justify-center gap-2 rounded-control px-3 text-sm font-medium transition-transform duration-150 active:scale-[.96] motion-reduce:transition-none motion-reduce:active:scale-100 ${dark ? "menu-language bg-transparent text-white shadow-dark-surface" : "bg-white text-subtle shadow-surface"}`}
         type="button"
-        aria-label={selectLocaleLabel}
+        aria-label={`${selectLocaleLabel}: ${localeConfig[locale].shortLabel}`}
         aria-expanded={open}
         aria-controls={id}
         onClick={() => setOpen((current) => !current)}

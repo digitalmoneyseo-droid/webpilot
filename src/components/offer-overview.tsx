@@ -13,14 +13,14 @@ export type OfferOverviewService = Pick<ServiceCatalogEntry, "id" | "animation" 
 };
 
 export function OfferOverview({ locale, services }: { locale: Locale; services: readonly OfferOverviewService[] }) {
-  return <div className="mx-auto max-w-[70rem]">{services.map((service, index) => <Service key={service.id} locale={locale} service={service} revealDelay={index * 50} />)}</div>;
+  return <div className="mx-auto max-w-[70rem]">{services.map((service, index) => <Service deferRendering={index > 0} key={service.id} locale={locale} service={service} revealDelay={index * 50} />)}</div>;
 }
 
-function Service({ locale, service, revealDelay }: { locale: Locale; service: OfferOverviewService; revealDelay: number }) {
+function Service({ deferRendering, locale, service, revealDelay }: { deferRendering: boolean; locale: Locale; service: OfferOverviewService; revealDelay: number }) {
   const [open, setOpen] = useState<number | null>(0);
   const { copy } = service;
 
-  return <div className="reveal mb-content-stack last:mb-0" data-reveal style={{ "--reveal-delay": `${revealDelay}ms` } as React.CSSProperties}>
+  return <div className={`reveal mb-content-stack last:mb-0 ${deferRendering ? "deferred-rendering" : ""}`} data-reveal style={{ "--reveal-delay": `${revealDelay}ms` } as React.CSSProperties}>
     <article className="grid grid-cols-2 items-center gap-x-8 max-nav:grid-cols-1 max-nav:gap-10">
       <div className={`min-w-0 max-w-[31rem] ${service.reverse ? "nav:order-2 nav:justify-self-end" : ""}`}>
         <h3 className="m-0 text-heading-md">{copy.name}</h3>

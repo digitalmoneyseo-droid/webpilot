@@ -146,6 +146,24 @@ test("switches from English back to German and remembers the selection", async (
   await expect(page.locator("html")).toHaveAttribute("lang", "de");
 });
 
+test("loads decorative homepage animations only as they approach the viewport", async ({ page }) => {
+  await page.setViewportSize({ width: 390, height: 844 });
+  await page.goto("/");
+
+  await expect(page.locator("[data-optimization-animation]")).toHaveCount(0);
+  await expect(page.locator("[data-campaign-metric]")).toHaveCount(0);
+  await expect(page.locator("[data-automation-flow]")).toHaveCount(0);
+
+  await page.locator('[data-offer-visual="optimization"]').scrollIntoViewIfNeeded();
+  await expect(page.locator("[data-optimization-animation]")).toBeAttached();
+
+  await page.locator('[data-offer-visual="campaign"]').scrollIntoViewIfNeeded();
+  await expect(page.locator("[data-campaign-metric]")).toBeAttached();
+
+  await page.locator('[data-offer-visual="automation"]').scrollIntoViewIfNeeded();
+  await expect(page.locator("[data-automation-flow]")).toBeAttached();
+});
+
 test("validates and submits the contact form", async ({ page }) => {
   await page.goto("/en/contact");
   await page.getByRole("button", { name: "Send project enquiry" }).click();
